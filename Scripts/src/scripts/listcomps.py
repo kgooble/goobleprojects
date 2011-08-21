@@ -9,7 +9,9 @@ def its_true(i):
 
 def print_some_cakes(i):
     print("cakes!" + str(i))
+    return i*i
 
 if __name__ == '__main__':
     print([i for i in range(5)])
-    [print_some_cakes(i) for i in range(10) if its_true(i)]
+    x = [print_some_cakes(i) for i in range(10) if its_true(i)]
+    print (x)
