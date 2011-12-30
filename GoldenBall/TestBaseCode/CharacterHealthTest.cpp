@@ -1,13 +1,13 @@
 #include "../BaseCode/Character.h"
 #include "gtest/gtest.h"
 
-void attackPerson(Attack attack, Character person){
+void attackPersonAndExpectDeadWithZeroHealth(Attack attack, Character person){
 	person.sustainDamage(attack);
 	EXPECT_EQ(0, person.getRemainingHP());
 	EXPECT_TRUE(person.isDead());
 }
 
-TEST(CharacterHealthTest, DecreaseHealthReducesHPRemainingInCharacter){
+TEST(CharacterHealthTest, SustainDamageReducesHPRemainingInCharacter){
 	Character person;
 	Attack attack;
 	EXPECT_EQ(100, person.getRemainingHP());
@@ -24,8 +24,8 @@ TEST(CharacterHealthTest, CannotGoBelowZeroHealth){
 
 	person.sustainDamage(attack);
 
-	attackPerson(attack, person);
-	attackPerson(attack, person);
+	attackPersonAndExpectDeadWithZeroHealth(attack, person);
+	attackPersonAndExpectDeadWithZeroHealth(attack, person);
 }
 
 TEST(CharacterHealthTest, CharacterGainsHealthFromPotion){

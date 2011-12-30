@@ -1,14 +1,10 @@
 #include <set>
 #include <algorithm>
 #include "Attack.h"
+#include "Potion.h"
 
 enum Item { WIND_PIECE, EARTH_PIECE, FIRE_PIECE, WATER_PIECE };
-class Potion{
-public:
-	int getHealAmount(){
-		return 25;
-	}
-};
+
 class Character{
 private:
 	std::set<Item> items;
