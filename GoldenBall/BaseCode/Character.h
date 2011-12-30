@@ -1,7 +1,7 @@
 #include <set>
 #include <algorithm>
-#include "Attack.h"
 #include "Potion.h"
+#include "CharacterClass.h"
 
 enum Item { WIND_PIECE, EARTH_PIECE, FIRE_PIECE, WATER_PIECE };
 
@@ -11,9 +11,11 @@ private:
 	std::set<Item>::iterator iter;
 	int maxHP;
 	int remainingHP;
+	CharacterClass myClass;
 
 public:
 	Character();
+	Character(CharacterClass charClass);
 
 	int getRemainingHP();
 
@@ -26,3 +28,6 @@ public:
 
 	std::set<Item> getItems();
 };
+
+const int MAGE_HP = 100;
+const CharacterClass MAGE(NO_ARMOR);

@@ -5,6 +5,7 @@ private:
 	double defenseRating;
 
 public:
+	ArmorClass();
 	ArmorClass(double defense);
 	int getMitigatedDamage(Attack attack);
 };

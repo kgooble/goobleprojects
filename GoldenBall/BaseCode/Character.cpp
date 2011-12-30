@@ -1,6 +1,13 @@
 #include "Character.h"
 
 Character::Character(){
+	myClass = MAGE;
+	maxHP = 100;
+	remainingHP = maxHP;
+}
+
+Character::Character(CharacterClass charClass=MAGE){
+	myClass = charClass;
 	maxHP = 100;
 	remainingHP = maxHP;
 }
