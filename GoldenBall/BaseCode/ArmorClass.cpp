@@ -1,9 +1,6 @@
 #include "ArmorClass.h"
 
-ArmorClass::ArmorClass(){
-	defenseRating = 0.0;
-}
-ArmorClass::ArmorClass(double defense=0.0){
+ArmorClass::ArmorClass(double defense){
 	defenseRating = defense;
 }
 

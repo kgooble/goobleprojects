@@ -14,8 +14,7 @@ private:
 	CharacterClass myClass;
 
 public:
-	Character();
-	Character(CharacterClass charClass);
+	Character(CharacterClass charClass = MAGE);
 
 	int getRemainingHP();
 
@@ -28,6 +27,3 @@ public:
 
 	std::set<Item> getItems();
 };
-
-const int MAGE_HP = 100;
-const CharacterClass MAGE(NO_ARMOR);
