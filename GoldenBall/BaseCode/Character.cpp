@@ -2,8 +2,7 @@
 
 Character::Character(CharacterClass charClass){
 	myClass = charClass;
-	maxHP = 100;
-	remainingHP = maxHP;
+	remainingHP = charClass.getMaximumHP();
 }
 
 int Character::getRemainingHP(){
@@ -24,7 +23,8 @@ void Character::addItem(Item item){
 }
 
 void Character::sustainDamage(Attack attack){
-	remainingHP -= attack.getDamage();
+	int damageDone = myClass.mitigateDamage(attack);
+	remainingHP -= damageDone;
 	if (remainingHP < 0){
 		remainingHP = 0;
 	}
@@ -32,8 +32,8 @@ void Character::sustainDamage(Attack attack){
 
 void Character::drinkPotion(Potion pot){
 	remainingHP += pot.getHealAmount();
-	if (remainingHP > maxHP){
-		remainingHP = maxHP;
+	if (remainingHP > myClass.getMaximumHP()){
+		remainingHP = myClass.getMaximumHP();
 	}
 }
 

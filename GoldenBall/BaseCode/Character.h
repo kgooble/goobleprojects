@@ -9,7 +9,6 @@ class Character{
 private:
 	std::set<Item> items;
 	std::set<Item>::iterator iter;
-	int maxHP;
 	int remainingHP;
 	CharacterClass myClass;
 
