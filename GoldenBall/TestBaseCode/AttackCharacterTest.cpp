@@ -18,3 +18,9 @@ TEST(AttackCharacterTest, RoguesTakeReducedDamageAndHaveMediumHP){
 	EXPECT_EQ(ROGUE_HP, person.getRemainingHP());
 	attackAndCheckHP(&person, ROGUE_HP - 40);
 }
+
+TEST(AttackCharacterTest, WarriorsTakeEvenMoreReducedDamageAndHaveHighHP){
+	Character person(WARRIOR);
+	EXPECT_EQ(WARRIOR_HP, person.getRemainingHP());
+	attackAndCheckHP(&person, WARRIOR_HP - 30);
+}

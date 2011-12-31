@@ -13,6 +13,8 @@ public:
 
 const int MAGE_HP = 100;
 const int ROGUE_HP = 150;
+const int WARRIOR_HP = 200;
 
 const CharacterClass MAGE(NO_ARMOR, MAGE_HP);
 const CharacterClass ROGUE(LOW_ARMOR, ROGUE_HP);
+const CharacterClass WARRIOR(HIGH_ARMOR, WARRIOR_HP);
