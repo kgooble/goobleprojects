@@ -23,10 +23,7 @@ void Character::addItem(Item item){
 }
 
 void Character::sustainDamage(Attack* attack){
-	int damageDone = attack->getDamage();
-	if (!attack->isMagicAttack()){
-		damageDone = myClass.mitigateDamage(*attack);
-	}
+	int damageDone = myClass.mitigateDamage(attack);
 	remainingHP -= damageDone;
 	if (remainingHP < 0){
 		remainingHP = 0;

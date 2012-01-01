@@ -37,3 +37,10 @@ TEST(AttackCharacterTest, WarriorsAndRoguesTakeFullDamageFromMagicSpells){
 	EXPECT_EQ(WARRIOR_HP - 50, warrior.getRemainingHP());
 	EXPECT_EQ(ROGUE_HP - 50, rogue.getRemainingHP());
 }
+
+TEST(AttackCharacterTest, MagesTakeReducedDamageFromMagicSpells){
+	Character mage(MAGE);
+	MagicAttack spell;
+	mage.sustainDamage(&spell);
+	EXPECT_EQ(MAGE_HP - 30, mage.getRemainingHP());
+}
