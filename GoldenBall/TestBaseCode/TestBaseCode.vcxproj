@@ -107,7 +107,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AdvanceLevelTest.cpp" />
-    <ClCompile Include="ArmorClassTest.cpp" />
+    <ClCompile Include="DefenseTest.cpp" />
     <ClCompile Include="AttackCharacterTest.cpp" />
     <ClCompile Include="CharacterHealthTest.cpp" />
   </ItemGroup>

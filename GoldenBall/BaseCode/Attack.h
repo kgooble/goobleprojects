@@ -1,3 +1,5 @@
+#include <string>
+
 class Attack{
 private:
 	int damage;
@@ -5,10 +7,10 @@ private:
 public:
 	Attack();
 	int getDamage();
-	virtual bool isMagicAttack();
+	virtual std::basic_string<char> getType();
 };
 
 class MagicAttack: public Attack{
 public:
-	bool isMagicAttack();
+	std::basic_string<char> getType();
 };

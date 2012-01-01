@@ -8,10 +8,10 @@ int Attack::getDamage(){
 	return damage;
 }
 
-bool Attack::isMagicAttack(){
-	return false;
+std::basic_string<char> Attack::getType(){
+	return "physical";
 }
 
-bool MagicAttack::isMagicAttack(){
-	return true;
+std::basic_string<char> MagicAttack::getType(){
+	return "magic";
 }

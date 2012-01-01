@@ -1,9 +1,9 @@
 #include "CharacterClass.h"
 
-CharacterClass::CharacterClass(ArmorClass armor, MagicResistance resistance, int maxHP){
-	armorClass = armor;
-	magicResistance = resistance;
+CharacterClass::CharacterClass(Defense armor, Defense resistance, int maxHP){
 	maximumHP = maxHP;
+	defenses["physical"] = armor;
+	defenses["magic"] = resistance;
 }
 
 int CharacterClass::getMaximumHP(){
@@ -11,8 +11,5 @@ int CharacterClass::getMaximumHP(){
 }
 
 int CharacterClass::mitigateDamage(Attack* attack){
-	if (attack->isMagicAttack()){
-		return magicResistance.getMitigatedDamage(attack);
-	}
-	return armorClass.getMitigatedDamage(attack);
+	return defenses[attack->getType()].getMitigatedDamage(attack);
 }
