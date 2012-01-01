@@ -3,7 +3,7 @@
 
 void attackAndCheckHP(Character* person, int expectedRemainingHealth){
 	Attack attack;
-	person->sustainDamage(attack);
+	person->sustainDamage(&attack);
 	EXPECT_EQ(expectedRemainingHealth, person->getRemainingHP());
 }
 
@@ -23,4 +23,17 @@ TEST(AttackCharacterTest, WarriorsTakeEvenMoreReducedDamageAndHaveHighHP){
 	Character person(WARRIOR);
 	EXPECT_EQ(WARRIOR_HP, person.getRemainingHP());
 	attackAndCheckHP(&person, WARRIOR_HP - 30);
+}
+
+TEST(AttackCharacterTest, WarriorsAndRoguesTakeFullDamageFromMagicSpells){
+	Character warrior(WARRIOR);
+	Character rogue(ROGUE);
+
+	MagicAttack spell;
+
+	warrior.sustainDamage(&spell);
+	rogue.sustainDamage(&spell);
+
+	EXPECT_EQ(WARRIOR_HP - 50, warrior.getRemainingHP());
+	EXPECT_EQ(ROGUE_HP - 50, rogue.getRemainingHP());
 }

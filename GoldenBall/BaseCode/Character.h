@@ -21,7 +21,7 @@ public:
 	bool isDead();
 
 	void addItem(Item item);
-	void sustainDamage(Attack att);
+	void sustainDamage(Attack* att);
 	void drinkPotion(Potion pot);
 
 	std::set<Item> getItems();

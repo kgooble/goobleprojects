@@ -7,3 +7,11 @@ Attack::Attack(){
 int Attack::getDamage(){
 	return damage;
 }
+
+bool Attack::isMagicAttack(){
+	return false;
+}
+
+bool MagicAttack::isMagicAttack(){
+	return true;
+}

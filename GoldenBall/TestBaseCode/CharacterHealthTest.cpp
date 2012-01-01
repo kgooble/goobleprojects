@@ -2,7 +2,7 @@
 #include "gtest/gtest.h"
 
 void attackPersonAndExpectDeadWithZeroHealth(Attack attack, Character person){
-	person.sustainDamage(attack);
+	person.sustainDamage(&attack);
 	EXPECT_EQ(0, person.getRemainingHP());
 	EXPECT_TRUE(person.isDead());
 }
@@ -12,7 +12,7 @@ TEST(CharacterHealthTest, SustainDamageReducesHPRemainingInCharacter){
 	Attack attack;
 	EXPECT_EQ(100, person.getRemainingHP());
 
-	person.sustainDamage(attack);
+	person.sustainDamage(&attack);
 	EXPECT_EQ(50, person.getRemainingHP());
 	EXPECT_FALSE(person.isDead());
 }
@@ -22,7 +22,7 @@ TEST(CharacterHealthTest, CannotGoBelowZeroHealth){
 	Attack attack;
 	EXPECT_EQ(100, person.getRemainingHP());
 
-	person.sustainDamage(attack);
+	person.sustainDamage(&attack);
 
 	attackPersonAndExpectDeadWithZeroHealth(attack, person);
 	attackPersonAndExpectDeadWithZeroHealth(attack, person);
@@ -33,7 +33,7 @@ TEST(CharacterHealthTest, CharacterGainsHealthFromPotion){
 	Attack attack;
 	Potion healthPotion;
 
-	person.sustainDamage(attack);
+	person.sustainDamage(&attack);
 	person.drinkPotion(healthPotion);
 
 	EXPECT_EQ(75, person.getRemainingHP());

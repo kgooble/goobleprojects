@@ -5,4 +5,10 @@ private:
 public:
 	Attack();
 	int getDamage();
+	virtual bool isMagicAttack();
+};
+
+class MagicAttack: public Attack{
+public:
+	bool isMagicAttack();
 };
