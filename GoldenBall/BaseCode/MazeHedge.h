@@ -7,8 +7,7 @@ private:
 	int hedgeWidth;
 	bool isVerticalLine();
 	Point MazeHedge::getWestHorizontalPoint(Point* vertPoint);
-	Point getNorthEastHorizontalPoint();
-	Point getSouthEastHorizontalPoint();
+	Point MazeHedge::getEastHorizontalPoint(Point* vertPoint);
 
 public:
 	MazeHedge(int width = 10, Point first = ORIGIN, Point second = ORIGIN);
