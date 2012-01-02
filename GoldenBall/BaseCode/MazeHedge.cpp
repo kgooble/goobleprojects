@@ -6,22 +6,25 @@ MazeHedge::MazeHedge(int width, Point first, Point second){
 	secondPoint = second;
 }
 
-bool MazeHedge::isHorizontalLine(){
+bool MazeHedge::isVerticalLine(){
 	return firstPoint.getX() == secondPoint.getX();
 }
 
-Point MazeHedge::getNorthWestHorizontalPoint(){
-	return Point(firstPoint.getX() - (int) (hedgeWidth / 2), firstPoint.getY());
+Point MazeHedge::getWestHorizontalPoint(Point* vertPoint){
+	return Point(vertPoint->getX() - (int) (hedgeWidth / 2), vertPoint->getY());
 }
 
 Point MazeHedge::getNorthEastHorizontalPoint(){
 	return Point(firstPoint.getX() + (int) (hedgeWidth / 2), firstPoint.getY());
 }
 
+Point MazeHedge::getSouthEastHorizontalPoint(){
+	return Point(firstPoint.getX() + (int) (hedgeWidth / 2), secondPoint.getY());
+}
+
 MazeHedge MazeHedge::getNorthBoundary(){
-	if (isHorizontalLine()){
-		return MazeHedge (0, 
-			getNorthWestHorizontalPoint(),
+	if (isVerticalLine()){
+		return MazeHedge (0, getWestHorizontalPoint(&firstPoint),
 			getNorthEastHorizontalPoint());
 	}
 	return MazeHedge(0,
@@ -30,10 +33,9 @@ MazeHedge MazeHedge::getNorthBoundary(){
 }
 
 MazeHedge MazeHedge::getSouthBoundary(){
-	if (isHorizontalLine()){
-		return MazeHedge (0, 
-			Point(firstPoint.getX() - (int) (hedgeWidth / 2), secondPoint.getY()),
-			Point(firstPoint.getX() + (int) (hedgeWidth / 2), secondPoint.getY()));
+	if (isVerticalLine()){
+		return MazeHedge (0, getWestHorizontalPoint(&secondPoint),
+			getSouthEastHorizontalPoint());
 	}
 	return MazeHedge (0, 
 		Point(firstPoint.getX(), firstPoint.getY() + (int) (hedgeWidth / 2)),
@@ -41,10 +43,9 @@ MazeHedge MazeHedge::getSouthBoundary(){
 }
 
 MazeHedge MazeHedge::getWestBoundary(){
-	if (isHorizontalLine()){
-		return MazeHedge (0, 
-			getNorthWestHorizontalPoint(),
-			Point(firstPoint.getX() - (int) (hedgeWidth / 2), secondPoint.getY()));
+	if (isVerticalLine()){
+		return MazeHedge (0, getWestHorizontalPoint(&firstPoint),
+			getWestHorizontalPoint(&secondPoint));
 	}
 	return MazeHedge (0, 
 		Point(firstPoint.getX(), firstPoint.getY() - (int) (hedgeWidth / 2)),
@@ -52,10 +53,10 @@ MazeHedge MazeHedge::getWestBoundary(){
 }
 
 MazeHedge MazeHedge::getEastBoundary(){
-	if (isHorizontalLine()){
+	if (isVerticalLine()){
 		return MazeHedge (0, 
 			getNorthEastHorizontalPoint(),
-			Point(firstPoint.getX() + (int) (hedgeWidth / 2), secondPoint.getY()));
+			getSouthEastHorizontalPoint());
 	}
 	return MazeHedge (0, 
 		Point(secondPoint.getX(), secondPoint.getY() - (int) (hedgeWidth / 2)),
