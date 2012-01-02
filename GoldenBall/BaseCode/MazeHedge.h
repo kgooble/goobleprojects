@@ -19,4 +19,5 @@ public:
 	MazeHedge getEastBoundary();
 	Point* getFirstPoint();
 	Point* getSecondPoint();
+	bool contains(Point p);
 };

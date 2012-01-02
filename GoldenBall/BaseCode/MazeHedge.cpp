@@ -77,3 +77,10 @@ Point* MazeHedge::getFirstPoint(){
 Point* MazeHedge::getSecondPoint(){
 	return &secondPoint;
 }
+
+bool MazeHedge::contains(Point p){
+	return getWestBoundary().getFirstPoint()->getX() <= p.getX() 
+		&& getEastBoundary().getFirstPoint()->getX() >= p.getX()
+		&& getNorthBoundary().getFirstPoint()->getY() <= p.getY()
+		&& getSouthBoundary().getFirstPoint()->getY() >= p.getY();
+}
