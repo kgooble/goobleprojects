@@ -6,11 +6,23 @@ MazeHedge::MazeHedge(int width, Point first, Point second){
 	secondPoint = second;
 }
 
+bool MazeHedge::isHorizontalLine(){
+	return firstPoint.getX() == secondPoint.getX();
+}
+
+Point MazeHedge::getNorthWestHorizontalPoint(){
+	return Point(firstPoint.getX() - (int) (hedgeWidth / 2), firstPoint.getY());
+}
+
+Point MazeHedge::getNorthEastHorizontalPoint(){
+	return Point(firstPoint.getX() + (int) (hedgeWidth / 2), firstPoint.getY());
+}
+
 MazeHedge MazeHedge::getNorthBoundary(){
-	if (firstPoint.getX() == secondPoint.getX()){
+	if (isHorizontalLine()){
 		return MazeHedge (0, 
-			Point(firstPoint.getX() - (int) (hedgeWidth / 2), firstPoint.getY()),
-			Point(firstPoint.getX() + (int) (hedgeWidth / 2), firstPoint.getY()));
+			getNorthWestHorizontalPoint(),
+			getNorthEastHorizontalPoint());
 	}
 	return MazeHedge(0,
 		Point(firstPoint.getX(), firstPoint.getY() - (int) (hedgeWidth / 2)),
@@ -18,7 +30,7 @@ MazeHedge MazeHedge::getNorthBoundary(){
 }
 
 MazeHedge MazeHedge::getSouthBoundary(){
-	if (firstPoint.getX() == secondPoint.getX()){
+	if (isHorizontalLine()){
 		return MazeHedge (0, 
 			Point(firstPoint.getX() - (int) (hedgeWidth / 2), secondPoint.getY()),
 			Point(firstPoint.getX() + (int) (hedgeWidth / 2), secondPoint.getY()));
@@ -29,9 +41,9 @@ MazeHedge MazeHedge::getSouthBoundary(){
 }
 
 MazeHedge MazeHedge::getWestBoundary(){
-	if (firstPoint.getX() == secondPoint.getX()){
+	if (isHorizontalLine()){
 		return MazeHedge (0, 
-			Point(firstPoint.getX() - (int) (hedgeWidth / 2), firstPoint.getY()),
+			getNorthWestHorizontalPoint(),
 			Point(firstPoint.getX() - (int) (hedgeWidth / 2), secondPoint.getY()));
 	}
 	return MazeHedge (0, 
@@ -40,9 +52,9 @@ MazeHedge MazeHedge::getWestBoundary(){
 }
 
 MazeHedge MazeHedge::getEastBoundary(){
-	if (firstPoint.getX() == secondPoint.getX()){
+	if (isHorizontalLine()){
 		return MazeHedge (0, 
-			Point(firstPoint.getX() + (int) (hedgeWidth / 2), firstPoint.getY()),
+			getNorthEastHorizontalPoint(),
 			Point(firstPoint.getX() + (int) (hedgeWidth / 2), secondPoint.getY()));
 	}
 	return MazeHedge (0, 

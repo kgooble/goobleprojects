@@ -5,6 +5,9 @@ private:
 	Point firstPoint;
 	Point secondPoint;
 	int hedgeWidth;
+	bool isHorizontalLine();
+	Point getNorthWestHorizontalPoint();
+	Point getNorthEastHorizontalPoint();
 
 public:
 	MazeHedge(int width = 10, Point first = ORIGIN, Point second = ORIGIN);
@@ -14,5 +17,4 @@ public:
 	MazeHedge getEastBoundary();
 	Point* getFirstPoint();
 	Point* getSecondPoint();
-
 };
