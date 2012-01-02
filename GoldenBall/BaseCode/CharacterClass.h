@@ -5,10 +5,10 @@
 class CharacterClass{
 private:
 	int maximumHP;
-	std::map<std::basic_string<char>, Defense> defenses;
+	std::map<std::basic_string<char>, double> defenses;
 
 public:
-	CharacterClass(Defense armor = NO_RESISTANCE, Defense resistance = NO_RESISTANCE, int maxHP = 100);
+	CharacterClass(double armor = NO_RESISTANCE, double resistance = NO_RESISTANCE, int maxHP = 100);
 	int getMaximumHP();
 	int mitigateDamage(Attack* attack);
 };

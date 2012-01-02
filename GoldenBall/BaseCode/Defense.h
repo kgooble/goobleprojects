@@ -9,6 +9,6 @@ public:
 	int getMitigatedDamage(Attack* attack);
 };
 
-const Defense NO_RESISTANCE(0.0);
-const Defense LOW_RESISTANCE(0.2);
-const Defense HIGH_RESISTANCE(0.4);
+const double NO_RESISTANCE(0.0);
+const double LOW_RESISTANCE(0.2);
+const double HIGH_RESISTANCE(0.4);
