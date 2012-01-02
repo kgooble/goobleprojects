@@ -1,22 +1,5 @@
 #include "MazeHedge.h"
 
-Point::Point(int X, int Y){
-	x = X;
-	y = Y;
-}
-
-int Point::getX() const{
-	return x;
-}
-
-int Point::getY() const{
-	return y;
-}
-
-bool operator ==(const Point& lhs, const Point& rhs){
-	return lhs.getX() == rhs.getX();
-}
-
 MazeHedge::MazeHedge(int width, Point first, Point second){
 	hedgeWidth = width;
 	firstPoint = first;
@@ -24,27 +7,47 @@ MazeHedge::MazeHedge(int width, Point first, Point second){
 }
 
 MazeHedge MazeHedge::getNorthBoundary(){
-	return MazeHedge (0, 
-		Point(firstPoint.getX() - (int) (hedgeWidth / 2), firstPoint.getY()),
-		Point(firstPoint.getX() + (int) (hedgeWidth / 2), firstPoint.getY()));
+	if (firstPoint.getX() == secondPoint.getX()){
+		return MazeHedge (0, 
+			Point(firstPoint.getX() - (int) (hedgeWidth / 2), firstPoint.getY()),
+			Point(firstPoint.getX() + (int) (hedgeWidth / 2), firstPoint.getY()));
+	}
+	return MazeHedge(0,
+		Point(firstPoint.getX(), firstPoint.getY() - (int) (hedgeWidth / 2)),
+		Point(secondPoint.getX(), firstPoint.getY() - (int) (hedgeWidth / 2)));
 }
 
 MazeHedge MazeHedge::getSouthBoundary(){
+	if (firstPoint.getX() == secondPoint.getX()){
+		return MazeHedge (0, 
+			Point(firstPoint.getX() - (int) (hedgeWidth / 2), secondPoint.getY()),
+			Point(firstPoint.getX() + (int) (hedgeWidth / 2), secondPoint.getY()));
+	}
 	return MazeHedge (0, 
-		Point(firstPoint.getX() - (int) (hedgeWidth / 2), secondPoint.getY()),
-		Point(firstPoint.getX() + (int) (hedgeWidth / 2), secondPoint.getY()));
+		Point(firstPoint.getX(), firstPoint.getY() + (int) (hedgeWidth / 2)),
+		Point(secondPoint.getX(), firstPoint.getY() + (int) (hedgeWidth / 2)));
 }
 
 MazeHedge MazeHedge::getWestBoundary(){
+	if (firstPoint.getX() == secondPoint.getX()){
+		return MazeHedge (0, 
+			Point(firstPoint.getX() - (int) (hedgeWidth / 2), firstPoint.getY()),
+			Point(firstPoint.getX() - (int) (hedgeWidth / 2), secondPoint.getY()));
+	}
 	return MazeHedge (0, 
-		Point(firstPoint.getX() - (int) (hedgeWidth / 2), firstPoint.getY()),
-		Point(firstPoint.getX() - (int) (hedgeWidth / 2), secondPoint.getY()));
+		Point(firstPoint.getX(), firstPoint.getY() - (int) (hedgeWidth / 2)),
+		Point(firstPoint.getX(), firstPoint.getY() + (int) (hedgeWidth / 2)));
 }
 
 MazeHedge MazeHedge::getEastBoundary(){
+	if (firstPoint.getX() == secondPoint.getX()){
+		return MazeHedge (0, 
+			Point(firstPoint.getX() + (int) (hedgeWidth / 2), firstPoint.getY()),
+			Point(firstPoint.getX() + (int) (hedgeWidth / 2), secondPoint.getY()));
+	}
 	return MazeHedge (0, 
-		Point(firstPoint.getX() + (int) (hedgeWidth / 2), firstPoint.getY()),
-		Point(firstPoint.getX() + (int) (hedgeWidth / 2), secondPoint.getY()));
+		Point(secondPoint.getX(), secondPoint.getY() - (int) (hedgeWidth / 2)),
+		Point(secondPoint.getX(), secondPoint.getY() + (int) (hedgeWidth / 2)));
 }
 
 Point* MazeHedge::getFirstPoint(){

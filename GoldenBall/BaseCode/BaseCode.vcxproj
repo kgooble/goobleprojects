@@ -80,6 +80,7 @@
     <ClInclude Include="Character.h" />
     <ClInclude Include="CharacterClass.h" />
     <ClInclude Include="MazeHedge.h" />
+    <ClInclude Include="Point.h" />
     <ClInclude Include="Potion.h" />
   </ItemGroup>
   <ItemGroup>
@@ -88,6 +89,7 @@
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="CharacterClass.cpp" />
     <ClCompile Include="MazeHedge.cpp" />
+    <ClCompile Include="Point.cpp" />
     <ClCompile Include="Potion.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
