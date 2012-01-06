@@ -18,8 +18,7 @@ bool Character::isDead(){
 }
 
 void Character::addItem(Item item){
-	iter = items.begin();
-	items.insert(iter, item);
+	items.insert(items.begin(), item);
 }
 
 void Character::sustainDamage(Attack* attack){

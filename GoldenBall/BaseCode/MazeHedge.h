@@ -12,12 +12,13 @@ private:
 	Point MazeHedge::getSouthVerticalPoint(Point* horizPoint);
 
 public:
-	MazeHedge(int width = 10, Point first = ORIGIN, Point second = ORIGIN);
+	MazeHedge(Point first = ORIGIN, Point second = ORIGIN, int width = 10);
 	MazeHedge getNorthBoundary();
 	MazeHedge getSouthBoundary();
 	MazeHedge getWestBoundary();
 	MazeHedge getEastBoundary();
 	Point* getFirstPoint();
 	Point* getSecondPoint();
-	bool contains(Point p);
+	bool contains(Point* p);
+	int getHedgeWidth();
 };

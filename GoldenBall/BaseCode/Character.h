@@ -8,7 +8,6 @@ enum Item { WIND_PIECE, EARTH_PIECE, FIRE_PIECE, WATER_PIECE };
 class Character{
 private:
 	std::set<Item> items;
-	std::set<Item>::iterator iter;
 	int remainingHP;
 	CharacterClass myClass;
 

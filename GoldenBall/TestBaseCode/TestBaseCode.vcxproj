@@ -110,6 +110,7 @@
     <ClCompile Include="DefenseTest.cpp" />
     <ClCompile Include="AttackCharacterTest.cpp" />
     <ClCompile Include="CharacterHealthTest.cpp" />
+    <ClCompile Include="LevelInstanceTest.cpp" />
     <ClCompile Include="MazeHedgeTest.cpp" />
     <ClCompile Include="MazeTest.cpp" />
   </ItemGroup>
