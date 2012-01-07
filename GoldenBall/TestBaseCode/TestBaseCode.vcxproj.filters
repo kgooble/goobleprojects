@@ -16,20 +16,11 @@
     <Filter Include="Source Files\Mazes">
       <UniqueIdentifier>{38bf247b-b0ac-4833-af75-6b19decbe410}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Characters">
+      <UniqueIdentifier>{4677e841-ef7c-4404-89e6-ddb650299def}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AdvanceLevelTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CharacterHealthTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AttackCharacterTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DefenseTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="LevelInstanceTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -38,6 +29,18 @@
     </ClCompile>
     <ClCompile Include="MazeTest.cpp">
       <Filter>Source Files\Mazes</Filter>
+    </ClCompile>
+    <ClCompile Include="AdvanceLevelTest.cpp">
+      <Filter>Source Files\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackCharacterTest.cpp">
+      <Filter>Source Files\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterHealthTest.cpp">
+      <Filter>Source Files\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="DefenseTest.cpp">
+      <Filter>Source Files\Characters</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

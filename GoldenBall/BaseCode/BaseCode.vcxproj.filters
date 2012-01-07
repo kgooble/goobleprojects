@@ -19,24 +19,15 @@
     <Filter Include="Source Files\Mazes">
       <UniqueIdentifier>{4f2e33ff-fac2-45d4-8754-a87e37bea2cc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Characters">
+      <UniqueIdentifier>{893de415-5ed8-40e7-b29d-f88cc18b194a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Characters">
+      <UniqueIdentifier>{910b592e-f485-4ff9-8572-e49e97d7b21f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Character.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Attack.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Potion.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CharacterClass.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Defense.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Point.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Maze.h">
@@ -48,24 +39,24 @@
     <ClInclude Include="BorderHedges.h">
       <Filter>Header Files\Mazes</Filter>
     </ClInclude>
+    <ClInclude Include="Defense.h">
+      <Filter>Header Files\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Attack.h">
+      <Filter>Header Files\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>Header Files\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterClass.h">
+      <Filter>Header Files\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Point.h">
+      <Filter>Header Files\Mazes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Character.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Attack.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Potion.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CharacterClass.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Defense.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Point.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Maze.cpp">
@@ -75,6 +66,21 @@
       <Filter>Source Files\Mazes</Filter>
     </ClCompile>
     <ClCompile Include="MazeHedge.cpp">
+      <Filter>Source Files\Mazes</Filter>
+    </ClCompile>
+    <ClCompile Include="Attack.cpp">
+      <Filter>Source Files\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="Defense.cpp">
+      <Filter>Source Files\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>Source Files\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterClass.cpp">
+      <Filter>Source Files\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="Point.cpp">
       <Filter>Source Files\Mazes</Filter>
     </ClCompile>
   </ItemGroup>
