@@ -12,6 +12,11 @@ TEST(MazeTest, ValidPositionInMazeIsOneWithoutHedgesInIt){
 	EXPECT_TRUE(maze.isValidLocation(&Point(75, 200)));
 }
 
+void checkPoints(MazeHedge* border, Point* firstPoint, Point* secondPoint){
+	EXPECT_EQ(*firstPoint, *border->getFirstPoint());
+	EXPECT_EQ(*secondPoint, *border->getSecondPoint());
+}
+
 TEST(BorderHedgeCreationTest, BorderHedgesAreProperlyPositioned){
 	std::vector<MazeHedge> hedges;
 	BorderHedges(600, 600, 10).addBorderHedgesTo(&hedges);
@@ -19,19 +24,16 @@ TEST(BorderHedgeCreationTest, BorderHedgesAreProperlyPositioned){
 	EXPECT_EQ(4, hedges.size());
 
 	MazeHedge north = hedges[0];
-	EXPECT_EQ(Point(0, 5), *north.getFirstPoint());
-	EXPECT_EQ(Point(600, 5), *north.getSecondPoint());
 	EXPECT_EQ(10, north.getHedgeWidth());
+	checkPoints(&north, &Point(0, 5), &Point(600, 5));
 
 	MazeHedge south = hedges[1];
-	EXPECT_EQ(Point(0, 600 - 5), *south.getFirstPoint());
-	EXPECT_EQ(Point(600, 600 - 5), *south.getSecondPoint());
+	checkPoints(&south, &Point(0, 600 - 5), &Point(600, 600 - 5));
 
 	MazeHedge east = hedges[2];
-	EXPECT_EQ(Point(600 - 5, 0), *east.getFirstPoint());
-	EXPECT_EQ(Point(600 - 5, 600), *east.getSecondPoint());
+	checkPoints(&east, &Point(600 - 5, 0), &Point(600 - 5, 600));
 
 	MazeHedge west = hedges[3];
-	EXPECT_EQ(Point(5, 0), *west.getFirstPoint());
-	EXPECT_EQ(Point(5, 600), *west.getSecondPoint());
+	checkPoints(&west, &Point(5, 0), &Point(5, 600));
 }
+

@@ -1,8 +1,7 @@
 #include "../BaseCode/Character.h"
 #include "gtest/gtest.h"
 
-TEST(AdvanceLevelTest, CannotAdvanceWhenNoItemsObtained)
-{
+TEST(AdvanceLevelTest, CannotAdvanceWhenNoItemsObtained){
 	Character person;
     EXPECT_FALSE(person.isAbleToAdvance());
 }

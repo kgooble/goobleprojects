@@ -14,7 +14,10 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
     </Filter>
     <Filter Include="Header Files\Mazes">
-      <UniqueIdentifier>{4c7f3fc1-ffb2-448b-aab6-a0af3a23f9a5}</UniqueIdentifier>
+      <UniqueIdentifier>{e9140ea4-f210-4d6d-b729-430efe85fbe7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Mazes">
+      <UniqueIdentifier>{4f2e33ff-fac2-45d4-8754-a87e37bea2cc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -33,17 +36,17 @@
     <ClInclude Include="Defense.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MazeHedge.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Point.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Maze.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Mazes</Filter>
+    </ClInclude>
+    <ClInclude Include="MazeHedge.h">
+      <Filter>Header Files\Mazes</Filter>
     </ClInclude>
     <ClInclude Include="BorderHedges.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Mazes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -62,17 +65,17 @@
     <ClCompile Include="Defense.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MazeHedge.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Point.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BorderHedges.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Maze.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Mazes</Filter>
+    </ClCompile>
+    <ClCompile Include="BorderHedges.cpp">
+      <Filter>Source Files\Mazes</Filter>
+    </ClCompile>
+    <ClCompile Include="MazeHedge.cpp">
+      <Filter>Source Files\Mazes</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
     </Filter>
+    <Filter Include="Source Files\Mazes">
+      <UniqueIdentifier>{38bf247b-b0ac-4833-af75-6b19decbe410}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AdvanceLevelTest.cpp">
@@ -27,14 +30,14 @@
     <ClCompile Include="DefenseTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MazeTest.cpp">
+    <ClCompile Include="LevelInstanceTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MazeHedgeTest.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Mazes</Filter>
     </ClCompile>
-    <ClCompile Include="LevelInstanceTest.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="MazeTest.cpp">
+      <Filter>Source Files\Mazes</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
