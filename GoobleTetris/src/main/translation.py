@@ -15,14 +15,11 @@ class Translation(object):
         
     def in_direction(self, direction):
         new_points = []
-        
         for point in self.points:
-            new_x = point.x + direction.x_dir
-            new_y = point.y + direction.y_dir
-            
-            if self.edges.is_point_outside_boundary(main.point.Point(new_x, new_y)):
+            new_row = point.row + direction.row_dir
+            new_col = point.col + direction.col_dir
+            if self.edges.is_point_outside_boundary(main.point.Point(new_row, new_col)):
                 return self.points
-            
-            new_points.append(main.point.Point(new_x, new_y))
+            new_points.append(main.point.Point(new_row, new_col))
         
         return new_points

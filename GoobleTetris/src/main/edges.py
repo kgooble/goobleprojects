@@ -18,8 +18,8 @@ class Edges(object):
         return self.edges[direction]
     
     def is_point_outside_boundary(self, point):
-        return point.x > self.get_edge(main.direction.RIGHT)\
-            or point.x < self.get_edge(main.direction.LEFT)\
-            or point.y > self.get_edge(main.direction.DOWN)
+        return point.col > self.get_edge(main.direction.RIGHT)\
+            or point.col < self.get_edge(main.direction.LEFT)\
+            or point.row > self.get_edge(main.direction.DOWN)
 
 NONE = {main.direction.LEFT:-1000, main.direction.RIGHT:1000, main.direction.DOWN:1000}

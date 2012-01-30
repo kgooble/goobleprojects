@@ -6,10 +6,10 @@ Created on 2012-01-29
 
 class Direction(object):
     
-    def __init__(self, x_dir, y_dir):
-        self.x_dir = x_dir
-        self.y_dir = y_dir
+    def __init__(self, row_dir, col_dir):
+        self.row_dir = row_dir
+        self.col_dir = col_dir
 
-LEFT = Direction(-1, 0)
-RIGHT = Direction(1, 0)
-DOWN = Direction(0, 1)
+LEFT = Direction(0, -1)
+RIGHT = Direction(0, 1)
+DOWN = Direction(1, 0)

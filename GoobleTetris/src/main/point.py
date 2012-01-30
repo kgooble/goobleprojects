@@ -7,6 +7,6 @@ Created on 2012-01-29
 
 class Point(object):
     
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
+    def __init__(self, row, col):
+        self.row = row
+        self.col = col
