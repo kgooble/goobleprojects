@@ -16,3 +16,6 @@ class Point(object):
     
     def __ne__(self, other):
         return not self == other
+    
+    def __repr__(self):
+        return "(" + str(self.row) + ", " + str(self.col) + ")"
