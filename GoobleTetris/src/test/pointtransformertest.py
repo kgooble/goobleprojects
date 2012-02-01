@@ -14,12 +14,25 @@ from main.point import Point
 class Test(unittest.TestCase):
 
     def test_translates_given_points(self):
-        transformer = PointTransformer(Shape(shapetype.T).get_points())
+        transformer = PointTransformer(Shape(shapetype.T))
         self.assertEqual([Point(1, 0),
                           Point(1, -1),
                           Point(0, 0),
                           Point(1, 1)], 
                          transformer.translate_in_dir(DOWN))
+        
+    def test_rotate_points_not_centered_at_0(self):
+        shape = Shape(shapetype.T)
+        shape.set_position([Point(4, 3),
+                            Point(4, 2),
+                            Point(4, 4),
+                            Point(3, 3)])
+        transformer = PointTransformer(shape)
+        
+        self.assertEqual([Point(4, 3),
+                          Point(3, 3),
+                          Point(5, 3),
+                          Point(4, 4)], transformer.rotate())
         
 
 if __name__ == "__main__":

@@ -3,8 +3,6 @@ Created on 2012-01-31
 
 @author: Gooble
 '''
-from main.translation import Translation
-from main.direction import LEFT
 
 class Shape(object):
     
@@ -15,6 +13,6 @@ class Shape(object):
     def get_points(self):
         return self.points
 
-    def move_left(self):
-        self.points = Translation().in_direction(self.points, LEFT)
+    def set_position(self, points):
+        self.points = points
 

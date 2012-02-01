@@ -11,6 +11,6 @@ class Rotation(object):
     def rotate_90(self, points):
         new_points = []
         for point in points:
-            new_points.append(Point(-point.col, point.row))
+            new_points.append(Point(point.col, -point.row))
                 
         return new_points

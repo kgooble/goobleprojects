@@ -21,11 +21,12 @@ class Test(unittest.TestCase):
                           Point(0, 1)], self.shape.get_points())
         
     def test_shape_move_left(self):
-        self.shape.move_left()
-        self.assertEqual([Point(0, -1),
-                          Point(0, -2),
-                          Point(-1, -1),
-                          Point(0, 0)], self.shape.get_points())
+        points = [Point(0, -1),
+          Point(0, -2),
+          Point(-1, -1),
+          Point(0, 0)]
+        self.shape.set_position(points)
+        self.assertEqual(points, self.shape.get_points())
 
     
 
