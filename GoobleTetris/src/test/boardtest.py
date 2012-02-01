@@ -44,6 +44,12 @@ class Test(unittest.TestCase):
                                                   [Point(1, 0), 
                                                    Point(2, 0),
                                                    Point(2, 1)]))
+        
+    def test_is_invalid_position_if_beyond_edge_of_board(self):
+        self.assertFalse(self.board.is_valid_move([Point(1, 0),
+                                                   Point(2, 0)], 
+                                                  [Point(1, -1), 
+                                                   Point(2, -1)]))
 
 
 if __name__ == "__main__":

@@ -12,7 +12,7 @@ class Tile(object):
         self.shapetype = shapetype
     
     def is_empty(self):
-        return self.shapetype == main.shapetype.ShapeType.NONE
+        return self.shapetype == main.shapetype.NONE
     
-EMPTY_TILE = Tile(main.shapetype.ShapeType.NONE)
-T_TILE = Tile(main.shapetype.ShapeType.T)
+EMPTY_TILE = Tile(main.shapetype.NONE)
+T_TILE = Tile(main.shapetype.T)

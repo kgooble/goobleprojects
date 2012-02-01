@@ -6,9 +6,12 @@ Created on 2012-01-29
 
 import main.direction
 
+NONE = {main.direction.LEFT:-1000, main.direction.RIGHT:1000, main.direction.DOWN:1000}
+DEFAULT = {main.direction.LEFT: 0, main.direction.RIGHT:9, main.direction.DOWN:19}
+
 class Edges(object):
     
-    def __init__(self, edges={}):
+    def __init__(self, edges=DEFAULT):
         self.edges = edges
         
     def get_edge(self, direction):
@@ -21,5 +24,3 @@ class Edges(object):
         return point.col > self.get_edge(main.direction.RIGHT)\
             or point.col < self.get_edge(main.direction.LEFT)\
             or point.row > self.get_edge(main.direction.DOWN)
-
-NONE = {main.direction.LEFT:-1000, main.direction.RIGHT:1000, main.direction.DOWN:1000}
