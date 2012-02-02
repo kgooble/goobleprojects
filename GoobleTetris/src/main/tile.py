@@ -14,5 +14,10 @@ class Tile(object):
     def is_empty(self):
         return self.shapetype == main.shapetype.NONE
     
+    def __repr__(self):
+        if self.is_empty():
+            return "0"
+        return "1"
+    
 EMPTY_TILE = Tile(main.shapetype.NONE)
 T_TILE = Tile(main.shapetype.T)

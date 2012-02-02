@@ -13,3 +13,4 @@ class Direction(object):
 LEFT = Direction(0, -1)
 RIGHT = Direction(0, 1)
 DOWN = Direction(1, 0)
+UP = Direction(-1, 0)

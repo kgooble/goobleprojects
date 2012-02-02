@@ -6,13 +6,13 @@ Created on 2012-01-31
 import unittest
 
 from main.point import Point
-from main import shapetype
+from main import tile
 from main.shape import Shape
 
 class Test(unittest.TestCase):
 
     def setUp(self):
-        self.shape = Shape(shapetype.T)
+        self.shape = Shape(tile.T_TILE)
 
     def test_create_shape_creates_correct_set_of_initial_points(self):
         self.assertEqual([Point(0, 0),

@@ -24,6 +24,10 @@ class Test(unittest.TestCase):
         self.assertTrue(self.edges.is_point_outside_boundary(Point(20, 0)))
         self.assertFalse(self.edges.is_point_outside_boundary(Point(19, 0)))
         self.assertFalse(self.edges.is_point_outside_boundary(Point(0, 0)))
+        self.assertTrue(self.edges.is_point_outside_boundary(Point(-1, 0)))
+        
+    def test_get_width(self):
+        self.assertEqual(10, self.edges.get_width())
 
 
 if __name__ == "__main__":
