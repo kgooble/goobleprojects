@@ -14,7 +14,7 @@ from main.point import Point
 class Test(unittest.TestCase):
 
     def test_translates_given_points(self):
-        transformer = PointTransformer(Shape(tile.T_TILE))
+        transformer = PointTransformer(Shape(tile.T_TILE).get_points())
         self.assertEqual([Point(1, 0),
                           Point(1, -1),
                           Point(0, 0),
@@ -27,7 +27,7 @@ class Test(unittest.TestCase):
                             Point(4, 2),
                             Point(4, 4),
                             Point(3, 3)])
-        transformer = PointTransformer(shape)
+        transformer = PointTransformer(shape.get_points())
         
         self.assertEqual([Point(4, 3),
                           Point(3, 3),

@@ -8,8 +8,6 @@ from main.board import Board
 from main.config import Configuration
 from main import tile
 from main.oneshapespawn import OneShapeSpawn
-from main.direction import DOWN, LEFT, RIGHT
-from main.edges import Edges
 from main.boarddisplay import BoardDisplay
 
 class Test(unittest.TestCase):
@@ -19,7 +17,7 @@ class Test(unittest.TestCase):
                                          "0 0 0 0 0",
                                          "0 0 0 0 0",
                                          "0 0 0 0 0"])
-        board = Board(config, OneShapeSpawn(tile.T_TILE), Edges({LEFT: 0, RIGHT: 4, DOWN: 3}))
+        board = Board(config, OneShapeSpawn(tile.T_TILE))
         display = BoardDisplay(board)
         self.assertEqual( "0 0 0 0 0 \n"\
                          +"0 0 0 0 0 \n"\
