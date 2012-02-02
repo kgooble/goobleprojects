@@ -34,7 +34,5 @@ class Test(unittest.TestCase):
                           Point(5, 3),
                           Point(4, 4)], transformer.rotate())
         
-
 if __name__ == "__main__":
-    #import sys;sys.argv = ['', 'Test.test_rotates_given_shape']
     unittest.main()

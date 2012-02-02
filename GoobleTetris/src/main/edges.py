@@ -26,5 +26,11 @@ class Edges(object):
             or point.row > self.get_edge(main.direction.DOWN)\
             or point.row < self.get_edge(main.direction.UP)
             
+    def are_points_outside_boundary(self, points):
+        for point in points:
+            if self.is_point_outside_boundary(point):
+                return True
+        return False
+            
     def get_width(self):
         return self.get_edge(main.direction.RIGHT) - self.get_edge(main.direction.LEFT) + 1
