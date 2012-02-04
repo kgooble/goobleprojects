@@ -17,7 +17,10 @@ class MoveCompletion(object):
         self.edges = EdgesFromPieces(self.pieces).create_edges()
         
     def get_next_points(self, old_points):
-        new_points = PointTransformer(old_points).translate_in_dir(DOWN)
+        return self.move(DOWN, old_points)
+        
+    def move(self, direction, old_points):
+        new_points = PointTransformer(old_points).translate_in_dir(direction)
         if self.is_valid_move(old_points, new_points):
             return new_points
         else:

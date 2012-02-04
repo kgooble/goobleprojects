@@ -24,8 +24,9 @@ class MoveValidity(object):
         return True
 
     def _outside_or_occupied_point(self, old_points, point):
-        return self.edges.is_point_outside_boundary(point) \
-            or (not self.pieces[point.row][point.col].is_empty()\
+        return self.edges.is_point_outside_boundary_except_top(point) \
+            or (self.edges.is_point_within_top_boundary(point)\
+                and not self.pieces[point.row][point.col].is_empty()\
                 and point not in old_points)
             
     def _within_boundary_and_occupied(self, point):

@@ -20,11 +20,17 @@ class Edges(object):
         
         return self.edges[direction]
     
-    def is_point_outside_boundary(self, point):
+    def is_point_outside_boundary_except_top(self, point):
         return point.col > self.get_edge(main.direction.RIGHT)\
             or point.col < self.get_edge(main.direction.LEFT)\
-            or point.row > self.get_edge(main.direction.DOWN)\
-            or point.row < self.get_edge(main.direction.UP)
+            or point.row > self.get_edge(main.direction.DOWN)
+            
+    def is_point_within_top_boundary(self, point):
+        return point.row >= self.get_edge(main.direction.UP)
+    
+    def is_point_outside_boundary(self, point):
+        return self.is_point_outside_boundary_except_top(point)\
+            or not self.is_point_within_top_boundary(point)
             
     def are_points_outside_boundary(self, points):
         for point in points:
