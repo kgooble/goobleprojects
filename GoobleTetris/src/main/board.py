@@ -6,6 +6,8 @@ Created on 2012-01-29
 from main.shapes.spawn.randomspawn import RandomSpawn
 from main.movement.movevalidity import MoveValidity
 from main.movement.movecompletion import MoveCompletion
+from main.rowclearing import RowClearing
+from main.rowshift import RowShift
 
 class Board(object):
 
@@ -27,6 +29,7 @@ class Board(object):
 
     def step(self):
         if self.cur_shape is None:
+            self._clear_full_rows()
             self.cur_shape = self.spawner.get_next_centered_shape(len(self.pieces[0]))
             self._do_first_move()
         else:
@@ -34,6 +37,11 @@ class Board(object):
             new_points = self._do_move(old_points)
             self._move_tiles(old_points, new_points)
             self._restart_cycle_if_not_moved(old_points, new_points)
+            
+    def _clear_full_rows(self):
+        rows_cleared = RowClearing(self.pieces).clear_and_get_rows()
+        for row in rows_cleared:
+            self.pieces = RowShift(self.pieces).down(row)
             
     def move(self, direction):
         if self.cur_shape is not None:

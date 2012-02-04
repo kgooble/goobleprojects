@@ -66,6 +66,19 @@ class Test(unittest.TestCase):
                  +"1 0 1 1 0 0 \n"\
                  +"1 0 0 1 0 0 \n", self.display.get_pieces_string())
         self.assertTrue(self.board.is_game_over())
+        
+    def test_step_when_row_full_clears_all_full_rows(self):
+        config = main.config.Configuration().create(["0 0 0 0 0 0",
+                                                     "1 0 0 0 0 0",
+                                                     "1 1 1 1 1 1"])
+        self.board = main.board.Board(config, OneShapeSpawn(T_TILE))
+        self.board.step()
+        self.display = BoardDisplay(self.board)
+        print(self.display.get_pieces_string())
+        self.assertEqual( 
+                  "0 0 1 1 1 0 \n"\
+                 +"0 0 0 0 0 0 \n"\
+                 +"1 0 0 0 0 0 \n", self.display.get_pieces_string())
 
 if __name__ == "__main__":
     unittest.main()
