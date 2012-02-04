@@ -5,9 +5,9 @@ Created on 2012-01-29
 '''
 from main.shapes.spawn.randomspawn import RandomSpawn
 from main.movement.movecompletion import MoveCompletion
-from main.rowclearing import RowClearing
-from main.rowshift import RowShift
 from main.config import DEFAULT_CONFIG
+from main.gameplay.rowclearing import RowClearing
+from main.gameplay.rowshift import RowShift
 
 class Board(object):
 

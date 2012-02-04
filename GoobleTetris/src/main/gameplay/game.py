@@ -3,9 +3,9 @@ Created on 2012-02-04
 
 @author: Gooble
 '''
-from main.board import Board
-from main.score import Score
-from main.speed import Speed
+from main.gameplay.board import Board
+from main.gameplay.score import Score
+from main.gameplay.speed import Speed
 
 class Game(object):
     

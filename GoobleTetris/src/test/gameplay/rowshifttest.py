@@ -6,7 +6,7 @@ Created on 2012-02-04
 import unittest
 from main.config import Configuration
 from main.boarddisplay import BoardDisplay
-from main.rowshift import RowShift
+from main.gameplay.rowshift import RowShift
 
 class Test(unittest.TestCase):
 

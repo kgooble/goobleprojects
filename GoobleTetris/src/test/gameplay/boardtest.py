@@ -5,12 +5,12 @@ Created on 2012-01-29
 '''
 import unittest
 import main.config
-import main.board
 
 from main.boarddisplay import BoardDisplay
 from main.shapes.spawn.oneshapespawn import OneShapeSpawn
 from main.shapes.tile import T_TILE
 from main.movement.direction import LEFT
+from main.gameplay.board import Board
 
 class Test(unittest.TestCase):
 
@@ -18,7 +18,7 @@ class Test(unittest.TestCase):
         config = main.config.Configuration().create(["0 0 0 0 0 0",
                                                      "1 0 0 0 0 0",
                                                      "1 0 0 0 0 0"])
-        self.board = main.board.Board(config, OneShapeSpawn(T_TILE))
+        self.board = Board(config, OneShapeSpawn(T_TILE))
         self.display = BoardDisplay(self.board)
         self.board.step()
         self.assertEqual( 
@@ -71,7 +71,7 @@ class Test(unittest.TestCase):
         config = main.config.Configuration().create(["0 0 0 0 0 0",
                                                      "1 0 0 0 0 0",
                                                      "1 1 1 1 1 1"])
-        self.board = main.board.Board(config, OneShapeSpawn(T_TILE))
+        self.board = Board(config, OneShapeSpawn(T_TILE))
         self.board.step()
         self.display = BoardDisplay(self.board)
         self.assertEqual( 
@@ -84,7 +84,7 @@ class Test(unittest.TestCase):
         config = main.config.Configuration().create(["0 0 0 0 0 0",
                                                      "1 0 0 0 0 0",
                                                      "1 1 0 0 0 1"])
-        self.board = main.board.Board(config, OneShapeSpawn(T_TILE))
+        self.board = Board(config, OneShapeSpawn(T_TILE))
         self.board.step()
         self.display = BoardDisplay(self.board)
         self.board.drop_shape()

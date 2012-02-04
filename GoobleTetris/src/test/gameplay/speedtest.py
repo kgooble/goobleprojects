@@ -4,7 +4,7 @@ Created on 2012-02-04
 @author: Gooble
 '''
 import unittest
-from main.speed import Speed
+from main.gameplay.speed import Speed
 
 class Test(unittest.TestCase):
 

@@ -5,10 +5,10 @@ Created on 2012-01-31
 '''
 import unittest
 from main.config import Configuration
-from main.board import Board
 from main.shapes.spawn.oneshapespawn import OneShapeSpawn
 from main.boarddisplay import BoardDisplay
 from main.shapes.tile import T_TILE
+from main.gameplay.board import Board
 
 class Test(unittest.TestCase):
 

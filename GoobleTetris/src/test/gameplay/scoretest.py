@@ -4,7 +4,7 @@ Created on 2012-02-04
 @author: Gooble
 '''
 import unittest
-from main.score import Score
+from main.gameplay.score import Score
 
 class Test(unittest.TestCase):
 

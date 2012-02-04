@@ -3,14 +3,14 @@ Created on 2012-02-04
 
 @author: Gooble
 '''
-import unittest
-from main.board import Board
+from main.boarddisplay import BoardDisplay
+from main.config import Configuration
+from main.gameplay.board import Board
+from main.gameplay.game import Game
+from main.movement.direction import LEFT, RIGHT
 from main.shapes.spawn.oneshapespawn import OneShapeSpawn
 from main.shapes.tile import T_TILE
-from main.config import Configuration
-from main.boarddisplay import BoardDisplay
-from main.movement.direction import LEFT, RIGHT
-from main.game import Game
+import unittest
 
 class Test(unittest.TestCase):
 

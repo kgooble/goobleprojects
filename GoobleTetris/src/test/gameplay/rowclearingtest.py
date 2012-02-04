@@ -6,7 +6,7 @@ Created on 2012-02-04
 import unittest
 from main.config import Configuration
 from main.boarddisplay import BoardDisplay
-from main.rowclearing import RowClearing
+from main.gameplay.rowclearing import RowClearing
 
 class Test(unittest.TestCase):
 
