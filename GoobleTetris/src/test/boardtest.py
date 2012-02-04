@@ -74,11 +74,33 @@ class Test(unittest.TestCase):
         self.board = main.board.Board(config, OneShapeSpawn(T_TILE))
         self.board.step()
         self.display = BoardDisplay(self.board)
-        print(self.display.get_pieces_string())
         self.assertEqual( 
                   "0 0 1 1 1 0 \n"\
                  +"0 0 0 0 0 0 \n"\
                  +"1 0 0 0 0 0 \n", self.display.get_pieces_string())
+        
+    def test_drop_shape(self):
+        config = main.config.Configuration().create(["0 0 0 0 0 0",
+                                                     "1 0 0 0 0 0",
+                                                     "1 1 0 0 0 1"])
+        self.board = main.board.Board(config, OneShapeSpawn(T_TILE))
+        self.board.step()
+        self.display = BoardDisplay(self.board)
+        self.board.drop_shape()
+        self.assertEqual( 
+                  "0 0 0 0 0 0 \n"\
+                 +"1 0 0 1 0 0 \n"\
+                 +"1 1 1 1 1 1 \n", self.display.get_pieces_string())
+        self.board.step()
+        self.assertEqual( 
+                  "0 0 1 1 1 0 \n"\
+                 +"0 0 0 0 0 0 \n"\
+                 +"1 0 0 1 0 0 \n", self.display.get_pieces_string())
+        self.board.step()
+        self.assertEqual( 
+                  "0 0 0 1 0 0 \n"\
+                 +"0 0 1 1 1 0 \n"\
+                 +"1 0 0 1 0 0 \n", self.display.get_pieces_string())
 
 if __name__ == "__main__":
     unittest.main()

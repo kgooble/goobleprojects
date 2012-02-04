@@ -26,6 +26,16 @@ class Board(object):
                 
     def get_pieces(self):
         return self.pieces
+    
+    def drop_shape(self):
+        if self.cur_shape is None:
+            return
+        old_points = self.cur_shape.get_points()
+        new_points = self._do_move(old_points)
+        while new_points != old_points:
+            old_points = new_points
+            new_points = self._do_move(old_points)
+        self._move_tiles(self.cur_shape.get_points(), new_points)
 
     def step(self):
         if self.cur_shape is None:
@@ -38,11 +48,6 @@ class Board(object):
             self._move_tiles(old_points, new_points)
             self._restart_cycle_if_not_moved(old_points, new_points)
             
-    def _clear_full_rows(self):
-        rows_cleared = RowClearing(self.pieces).clear_and_get_rows()
-        for row in rows_cleared:
-            self.pieces = RowShift(self.pieces).down(row)
-            
     def move(self, direction):
         if self.cur_shape is not None:
             new_points = MoveCompletion(self.pieces).move(direction, self.cur_shape.get_points())
@@ -52,7 +57,12 @@ class Board(object):
         if self.cur_shape is not None:
             new_points = MoveCompletion(self.pieces).rotate(self.cur_shape.get_points())
             self._move_tiles(self.cur_shape.get_points(), new_points)
-                    
+                
+    def _clear_full_rows(self):
+        rows_cleared = RowClearing(self.pieces).clear_and_get_rows()
+        for row in rows_cleared:
+            self.pieces = RowShift(self.pieces).down(row) 
+                   
     def _restart_cycle_if_not_moved(self, old_points, new_points):
         if new_points == old_points:
             self.cur_shape = None
