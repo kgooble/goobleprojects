@@ -13,8 +13,6 @@ class MoveCompletion(object):
 
     def __init__(self, pieces):
         self.pieces = pieces
-        self.validity = MoveValidity(self.pieces)
-        self.edges = EdgesFromPieces(self.pieces).create_edges()
         
     def get_next_points(self, old_points):
         return self.move(DOWN, old_points)
@@ -28,18 +26,19 @@ class MoveCompletion(object):
         return self._get_valid_points(old_points, new_points)
         
     def is_valid_move(self, old_points, new_points):
-        return self.validity.is_valid_move(old_points, new_points)
+        return MoveValidity(self.pieces).is_valid_move(old_points, new_points)
     
     def is_valid_first_move(self, old_points):
-        return self.validity.is_valid_first_move(old_points)
+        return MoveValidity(self.pieces).is_valid_first_move(old_points)
     
     def move_tiles(self, old_points, new_points, cur_tile):
         self._set_points_in_board_to_tile(old_points, EMPTY_TILE)
         self._set_points_in_board_to_tile(new_points, cur_tile)
         
     def _set_points_in_board_to_tile(self, points, tile):
+        edges = EdgesFromPieces(self.pieces).create_edges()
         for point in points:
-            if not self.edges.is_point_outside_boundary(point):
+            if not edges.is_point_outside_boundary(point):
                 self.pieces[point.row][point.col] = tile
 
     def _get_valid_points(self, old_points, new_points):
