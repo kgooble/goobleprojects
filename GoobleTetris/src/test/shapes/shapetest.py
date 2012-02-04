@@ -29,5 +29,4 @@ class Test(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    #import sys;sys.argv = ['', 'Test.test_create_shape_creates_correct_set_of_initial_points']
     unittest.main()
