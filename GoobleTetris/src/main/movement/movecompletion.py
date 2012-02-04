@@ -23,18 +23,15 @@ class MoveCompletion(object):
         new_points = PointTransformer(old_points).translate_in_dir(direction)
         return self._get_valid_points(old_points, new_points)
         
-    def _get_valid_points(self, old_points, new_points):
-        if self.is_valid_move(old_points, new_points):
-            return new_points
-        else:
-            return old_points
-        
     def rotate(self, old_points):
         new_points = PointTransformer(old_points).rotate()
         return self._get_valid_points(old_points, new_points)
         
     def is_valid_move(self, old_points, new_points):
         return self.validity.is_valid_move(old_points, new_points)
+    
+    def is_valid_first_move(self, old_points):
+        return self.validity.is_valid_first_move(old_points)
     
     def move_tiles(self, old_points, new_points, cur_tile):
         self._set_points_in_board_to_tile(old_points, EMPTY_TILE)
@@ -44,3 +41,10 @@ class MoveCompletion(object):
         for point in points:
             if not self.edges.is_point_outside_boundary(point):
                 self.pieces[point.row][point.col] = tile
+
+    def _get_valid_points(self, old_points, new_points):
+        if self.is_valid_move(old_points, new_points):
+            return new_points
+        else:
+            return old_points
+        
