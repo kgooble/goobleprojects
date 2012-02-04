@@ -78,6 +78,7 @@ class Test(unittest.TestCase):
                   "0 0 1 1 1 0 \n"\
                  +"0 0 0 0 0 0 \n"\
                  +"1 0 0 0 0 0 \n", self.display.get_pieces_string())
+        self.assertEqual(1, self.board.get_rows_cleared())
         
     def test_drop_shape(self):
         config = main.config.Configuration().create(["0 0 0 0 0 0",

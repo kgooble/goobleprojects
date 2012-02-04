@@ -21,3 +21,9 @@ class Configuration(object):
         return pieces
     
 TILE_MAP = {"0" : EMPTY_TILE, "1" : T_TILE}
+
+DEFAULT_CONFIG = []
+for i in range (0, 20):
+    DEFAULT_CONFIG.append([])
+    for j in range(0, 10):
+        DEFAULT_CONFIG[i].append(EMPTY_TILE)

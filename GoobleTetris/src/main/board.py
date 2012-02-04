@@ -7,14 +7,16 @@ from main.shapes.spawn.randomspawn import RandomSpawn
 from main.movement.movecompletion import MoveCompletion
 from main.rowclearing import RowClearing
 from main.rowshift import RowShift
+from main.config import DEFAULT_CONFIG
 
 class Board(object):
 
-    def __init__(self, pieces, spawner=RandomSpawn()):
+    def __init__(self, pieces=DEFAULT_CONFIG, spawner=RandomSpawn()):
         self.pieces = pieces
         self.spawner = spawner
         self.cur_shape = None
         self.game_over = False
+        self.num_rows_cleared = 0
         
     def is_game_over(self):
         return self.game_over
@@ -52,11 +54,17 @@ class Board(object):
         if self.cur_shape is not None:
             new_points = MoveCompletion(self.pieces).rotate(self.cur_shape.get_points())
             self._move_tiles(self.cur_shape.get_points(), new_points)
+            
+    def get_rows_cleared(self):
+        rows_cleared = self.num_rows_cleared
+        self.num_rows_cleared = 0
+        return rows_cleared
                 
     def _clear_full_rows(self):
         rows_cleared = RowClearing(self.pieces).clear_and_get_rows()
         for row in rows_cleared:
-            self.pieces = RowShift(self.pieces).down(row) 
+            self.pieces = RowShift(self.pieces).down(row)
+        self.num_rows_cleared = len(rows_cleared)
                    
     def _restart_cycle_if_not_moved(self, old_points, new_points):
         if new_points == old_points:
