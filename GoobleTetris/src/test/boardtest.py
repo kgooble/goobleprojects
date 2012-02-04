@@ -20,18 +20,52 @@ class Test(unittest.TestCase):
                                                      "1 0 0 0 0 0"])
         self.board = main.board.Board(config, OneShapeSpawn(tile.T_TILE))
         self.display = BoardDisplay(self.board)
-
-    def test_move_in_dir(self):
         self.board.step()
         self.assertEqual( 
                   "0 0 1 1 1 0 \n"\
                  +"1 0 0 0 0 0 \n"\
                  +"1 0 0 0 0 0 \n", self.display.get_pieces_string())
+
+    def test_move_in_dir(self):
         self.board.move(LEFT)
         self.assertEqual( 
                   "0 1 1 1 0 0 \n"\
                  +"1 0 0 0 0 0 \n"\
                  +"1 0 0 0 0 0 \n", self.display.get_pieces_string())
+        self.board.step()
+        self.assertEqual( 
+                  "0 0 1 0 0 0 \n"\
+                 +"1 1 1 1 0 0 \n"\
+                 +"1 0 0 0 0 0 \n", self.display.get_pieces_string())
+        self.board.move(LEFT)
+        self.assertEqual( 
+                  "0 0 1 0 0 0 \n"\
+                 +"1 1 1 1 0 0 \n"\
+                 +"1 0 0 0 0 0 \n", self.display.get_pieces_string())
+        
+    def test_rotate(self):
+        self.board.step()
+        self.board.rotate()
+        self.assertEqual( 
+                  "0 0 0 1 0 0 \n"\
+                 +"1 0 0 1 1 0 \n"\
+                 +"1 0 0 1 0 0 \n", self.display.get_pieces_string())
+        self.board.rotate()
+        self.assertEqual( 
+                  "0 0 0 0 0 0 \n"\
+                 +"1 0 1 1 1 0 \n"\
+                 +"1 0 0 1 0 0 \n", self.display.get_pieces_string())
+        self.board.rotate()
+        self.assertEqual( 
+                  "0 0 0 1 0 0 \n"\
+                 +"1 0 1 1 0 0 \n"\
+                 +"1 0 0 1 0 0 \n", self.display.get_pieces_string())
+        self.board.step()
+        self.assertEqual( 
+                  "0 0 0 1 0 0 \n"\
+                 +"1 0 1 1 0 0 \n"\
+                 +"1 0 0 1 0 0 \n", self.display.get_pieces_string())
+        self.assertTrue(self.board.is_game_over())
 
 if __name__ == "__main__":
     unittest.main()

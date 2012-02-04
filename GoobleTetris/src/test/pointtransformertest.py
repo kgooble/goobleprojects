@@ -22,17 +22,25 @@ class Test(unittest.TestCase):
                          transformer.translate_in_dir(DOWN))
         
     def test_rotate_points_not_centered_at_0(self):
-        shape = Shape(tile.T_TILE)
-        shape.set_position([Point(4, 3),
-                            Point(4, 2),
-                            Point(4, 4),
-                            Point(3, 3)])
-        transformer = PointTransformer(shape.get_points())
-        
+        transformer = PointTransformer([Point(4, 3),
+                                        Point(4, 2),
+                                        Point(4, 4),
+                                        Point(3, 3)])
         self.assertEqual([Point(4, 3),
                           Point(3, 3),
                           Point(5, 3),
                           Point(4, 4)], transformer.rotate())
+        
+    def test_rotate_points_not_centered_at_0_again(self):
+        transformer = PointTransformer([Point(1, 2),
+                                        Point(1, 1),
+                                        Point(1, 3),
+                                        Point(0, 2)])
+        
+        self.assertEqual([Point(1, 2),
+                          Point(0, 2),
+                          Point(2, 2),
+                          Point(1, 3)], transformer.rotate())
         
 if __name__ == "__main__":
     unittest.main()

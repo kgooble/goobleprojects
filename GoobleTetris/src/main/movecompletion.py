@@ -21,10 +21,17 @@ class MoveCompletion(object):
         
     def move(self, direction, old_points):
         new_points = PointTransformer(old_points).translate_in_dir(direction)
+        return self._get_valid_points(old_points, new_points)
+        
+    def _get_valid_points(self, old_points, new_points):
         if self.is_valid_move(old_points, new_points):
             return new_points
         else:
             return old_points
+        
+    def rotate(self, old_points):
+        new_points = PointTransformer(old_points).rotate()
+        return self._get_valid_points(old_points, new_points)
         
     def is_valid_move(self, old_points, new_points):
         return self.validity.is_valid_move(old_points, new_points)

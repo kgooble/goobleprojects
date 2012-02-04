@@ -37,8 +37,12 @@ class Board(object):
             
     def move(self, direction):
         if self.cur_shape is not None:
-            completion = MoveCompletion(self.pieces)
-            new_points = completion.move(direction, self.cur_shape.get_points())
+            new_points = MoveCompletion(self.pieces).move(direction, self.cur_shape.get_points())
+            self._move_tiles(self.cur_shape.get_points(), new_points)
+            
+    def rotate(self):
+        if self.cur_shape is not None:
+            new_points = MoveCompletion(self.pieces).rotate(self.cur_shape.get_points())
             self._move_tiles(self.cur_shape.get_points(), new_points)
                     
     def _restart_cycle_if_not_moved(self, old_points, new_points):
@@ -54,8 +58,8 @@ class Board(object):
 
     def _do_move(self, old_points):
         new_points = MoveCompletion(self.pieces).get_next_points(old_points)
-        self.cur_shape.set_position(new_points)
         return new_points
 
     def _move_tiles(self, old_points, new_points):
+        self.cur_shape.set_position(new_points)
         MoveCompletion(self.pieces).move_tiles(old_points, new_points, self.cur_shape.get_tile())
