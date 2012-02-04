@@ -3,7 +3,7 @@ Created on 2012-02-01
 
 @author: Gooble
 '''
-from main.edgesfrompieces import EdgesFromPieces
+from main.movement.edgesfrompieces import EdgesFromPieces
 
 class MoveValidity(object):
 

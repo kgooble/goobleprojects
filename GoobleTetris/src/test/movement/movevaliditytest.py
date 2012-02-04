@@ -3,10 +3,10 @@ Created on 2012-02-01
 
 @author: Gooble
 '''
-import unittest
-from main.point import Point
-from main.movevalidity import MoveValidity
 from main.config import Configuration
+from main.movement.movevalidity import MoveValidity
+from main.movement.transform.point import Point
+import unittest
 
 
 class Test(unittest.TestCase):

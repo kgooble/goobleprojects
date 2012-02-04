@@ -3,8 +3,7 @@ Created on 2012-01-29
 
 @author: Gooble
 '''
-
-from main.point import Point
+from main.movement.transform.point import Point
 
 class ShapeType(object):
     

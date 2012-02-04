@@ -3,11 +3,10 @@ Created on 2012-01-29
 
 @author: Gooble
 '''
+from main.movement.direction import DOWN, LEFT, RIGHT, UP
 
-import main.direction
-
-NONE = {main.direction.LEFT:-1000, main.direction.RIGHT:1000, main.direction.DOWN:1000}
-DEFAULT = {main.direction.LEFT: 0, main.direction.RIGHT:9, main.direction.DOWN:19, main.direction.UP: 0}
+NONE = {LEFT:-1000, RIGHT:1000, DOWN:1000}
+DEFAULT = {LEFT: 0, RIGHT:9, DOWN:19, UP: 0}
 
 class Edges(object):
     
@@ -21,12 +20,12 @@ class Edges(object):
         return self.edges[direction]
     
     def is_point_outside_boundary_except_top(self, point):
-        return point.col > self.get_edge(main.direction.RIGHT)\
-            or point.col < self.get_edge(main.direction.LEFT)\
-            or point.row > self.get_edge(main.direction.DOWN)
+        return point.col > self.get_edge(RIGHT)\
+            or point.col < self.get_edge(LEFT)\
+            or point.row > self.get_edge(DOWN)
             
     def is_point_within_top_boundary(self, point):
-        return point.row >= self.get_edge(main.direction.UP)
+        return point.row >= self.get_edge(UP)
     
     def is_point_outside_boundary(self, point):
         return self.is_point_outside_boundary_except_top(point)\
@@ -39,4 +38,4 @@ class Edges(object):
         return False
             
     def get_width(self):
-        return self.get_edge(main.direction.RIGHT) - self.get_edge(main.direction.LEFT) + 1
+        return self.get_edge(RIGHT) - self.get_edge(LEFT) + 1

@@ -3,8 +3,7 @@ Created on 2012-01-29
 
 @author: Gooble
 '''
-
-import main.tile
+from main.shapes.tile import EMPTY_TILE, T_TILE
 
 class Configuration(object):
     
@@ -21,4 +20,4 @@ class Configuration(object):
                 
         return pieces
     
-TILE_MAP = {"0" : main.tile.EMPTY_TILE, "1" : main.tile.T_TILE}
+TILE_MAP = {"0" : EMPTY_TILE, "1" : T_TILE}

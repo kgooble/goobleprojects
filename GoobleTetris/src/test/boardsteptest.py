@@ -4,11 +4,11 @@ Created on 2012-01-31
 @author: Gooble
 '''
 import unittest
-from main.board import Board
 from main.config import Configuration
-from main import tile
-from main.oneshapespawn import OneShapeSpawn
+from main.board import Board
+from main.shapes.spawn.oneshapespawn import OneShapeSpawn
 from main.boarddisplay import BoardDisplay
+from main.shapes.tile import T_TILE
 
 class Test(unittest.TestCase):
 
@@ -17,7 +17,7 @@ class Test(unittest.TestCase):
                                          "0 0 0 0 0",
                                          "0 0 0 0 0",
                                          "0 0 0 0 0"])
-        board = Board(config, OneShapeSpawn(tile.T_TILE))
+        board = Board(config, OneShapeSpawn(T_TILE))
         display = BoardDisplay(board)
         self.assertEqual( "0 0 0 0 0 \n"\
                          +"0 0 0 0 0 \n"\

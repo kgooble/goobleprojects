@@ -3,11 +3,11 @@ Created on 2012-02-01
 
 @author: Gooble
 '''
-from main.direction import DOWN
-from main.pointtransformer import PointTransformer
-from main.movevalidity import MoveValidity
-from main import tile
-from main.edgesfrompieces import EdgesFromPieces
+from main.movement.movevalidity import MoveValidity
+from main.movement.edgesfrompieces import EdgesFromPieces
+from main.movement.direction import DOWN
+from main.movement.transform.pointtransformer import PointTransformer
+from main.shapes.tile import EMPTY_TILE
 
 class MoveCompletion(object):
 
@@ -37,7 +37,7 @@ class MoveCompletion(object):
         return self.validity.is_valid_move(old_points, new_points)
     
     def move_tiles(self, old_points, new_points, cur_tile):
-        self._set_points_in_board_to_tile(old_points, tile.EMPTY_TILE)
+        self._set_points_in_board_to_tile(old_points, EMPTY_TILE)
         self._set_points_in_board_to_tile(new_points, cur_tile)
         
     def _set_points_in_board_to_tile(self, points, tile):

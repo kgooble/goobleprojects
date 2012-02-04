@@ -4,9 +4,8 @@ Created on 2012-01-31
 @author: Gooble
 '''
 import unittest
-from main.edges import Edges
-from main.point import Point
-
+from main.movement.edges import Edges
+from main.movement.transform.point import Point
 
 class Test(unittest.TestCase):
 

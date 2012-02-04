@@ -3,9 +3,9 @@ Created on 2012-01-31
 
 @author: Gooble
 '''
-from main.translation import Translation
-from main.rotation import Rotation
-from main.point import Point
+from main.movement.transform.rotation import Rotation
+from main.movement.transform.translation import Translation
+from main.movement.transform.point import Point
 
 class PointTransformer(object):
 

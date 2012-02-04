@@ -4,8 +4,8 @@ Created on 2012-02-01
 @author: Gooble
 '''
 import unittest
-from main.direction import LEFT, RIGHT, UP, DOWN
-from main.edgesfrompieces import EdgesFromPieces
+from main.movement.direction import LEFT, RIGHT, UP, DOWN
+from main.movement.edgesfrompieces import EdgesFromPieces
 
 class Test(unittest.TestCase):
 

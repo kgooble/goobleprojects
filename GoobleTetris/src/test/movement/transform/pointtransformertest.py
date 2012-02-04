@@ -3,18 +3,18 @@ Created on 2012-01-31
 
 @author: Gooble
 '''
+from main.movement.direction import DOWN
+from main.movement.transform.point import Point
+from main.movement.transform.pointtransformer import PointTransformer
+from main.shapes.shape import Shape
+from main.shapes.tile import T_TILE
 import unittest
 
-from main.shape import Shape
-from main import tile
-from main.pointtransformer import PointTransformer
-from main.direction import DOWN
-from main.point import Point
 
 class Test(unittest.TestCase):
 
     def test_translates_given_points(self):
-        transformer = PointTransformer(Shape(tile.T_TILE).get_points())
+        transformer = PointTransformer(Shape(T_TILE).get_points())
         self.assertEqual([Point(1, 0),
                           Point(1, -1),
                           Point(0, 0),

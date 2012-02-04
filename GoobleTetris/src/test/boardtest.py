@@ -8,9 +8,9 @@ import main.config
 import main.board
 
 from main.boarddisplay import BoardDisplay
-from main.oneshapespawn import OneShapeSpawn
-from main import tile
-from main.direction import LEFT
+from main.shapes.spawn.oneshapespawn import OneShapeSpawn
+from main.shapes.tile import T_TILE
+from main.movement.direction import LEFT
 
 class Test(unittest.TestCase):
 
@@ -18,7 +18,7 @@ class Test(unittest.TestCase):
         config = main.config.Configuration().create(["0 0 0 0 0 0",
                                                      "1 0 0 0 0 0",
                                                      "1 0 0 0 0 0"])
-        self.board = main.board.Board(config, OneShapeSpawn(tile.T_TILE))
+        self.board = main.board.Board(config, OneShapeSpawn(T_TILE))
         self.display = BoardDisplay(self.board)
         self.board.step()
         self.assertEqual( 

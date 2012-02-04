@@ -3,9 +3,9 @@ Created on 2012-01-29
 
 @author: Gooble
 '''
-from main.randomspawn import RandomSpawn
-from main.movevalidity import MoveValidity
-from main.movecompletion import MoveCompletion
+from main.shapes.spawn.randomspawn import RandomSpawn
+from main.movement.movevalidity import MoveValidity
+from main.movement.movecompletion import MoveCompletion
 
 class Board(object):
 

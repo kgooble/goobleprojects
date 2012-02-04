@@ -3,7 +3,7 @@ Created on 2012-02-01
 
 @author: Gooble
 '''
-from main.point import Point
+from main.movement.transform.point import Point
 
 class AbstractSpawn(object):
     

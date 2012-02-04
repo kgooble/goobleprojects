@@ -3,8 +3,8 @@ Created on 2012-02-01
 
 @author: Gooble
 '''
-from main.shape import Shape
-from main.spawn import AbstractSpawn
+from main.shapes.spawn.spawn import AbstractSpawn
+from main.shapes.shape import Shape
 
 class OneShapeSpawn(AbstractSpawn):
     

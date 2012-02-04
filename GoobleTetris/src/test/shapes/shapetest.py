@@ -3,16 +3,15 @@ Created on 2012-01-31
 
 @author: Gooble
 '''
+from main.movement.transform.point import Point
+from main.shapes.shape import Shape
+from main.shapes.tile import T_TILE
 import unittest
-
-from main.point import Point
-from main import tile
-from main.shape import Shape
 
 class Test(unittest.TestCase):
 
     def setUp(self):
-        self.shape = Shape(tile.T_TILE)
+        self.shape = Shape(T_TILE)
 
     def test_create_shape_creates_correct_set_of_initial_points(self):
         self.assertEqual([Point(0, 0),
@@ -27,8 +26,6 @@ class Test(unittest.TestCase):
           Point(0, 0)]
         self.shape.set_position(points)
         self.assertEqual(points, self.shape.get_points())
-
-    
 
 
 if __name__ == "__main__":

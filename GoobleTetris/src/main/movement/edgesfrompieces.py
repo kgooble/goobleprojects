@@ -3,9 +3,8 @@ Created on 2012-02-01
 
 @author: Gooble
 '''
-
-from main.direction import LEFT, RIGHT, UP, DOWN
-from main.edges import Edges
+from main.movement.direction import DOWN, RIGHT, UP, LEFT
+from main.movement.edges import Edges
 
 class EdgesFromPieces(object):
     

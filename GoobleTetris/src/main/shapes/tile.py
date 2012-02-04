@@ -3,8 +3,7 @@ Created on 2012-01-29
 
 @author: Gooble
 '''
-
-import main.shapetype
+from main.shapes import shapetype
 
 class Tile(object):
 
@@ -12,12 +11,12 @@ class Tile(object):
         self.shapetype = shapetype
     
     def is_empty(self):
-        return self.shapetype == main.shapetype.NONE
+        return self.shapetype == shapetype.NONE
     
     def __repr__(self):
         if self.is_empty():
             return "0"
         return "1"
     
-EMPTY_TILE = Tile(main.shapetype.NONE)
-T_TILE = Tile(main.shapetype.T)
+EMPTY_TILE = Tile(shapetype.NONE)
+T_TILE = Tile(shapetype.T)

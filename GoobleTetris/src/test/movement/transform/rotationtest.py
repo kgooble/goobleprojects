@@ -3,11 +3,11 @@ Created on 2012-01-30
 
 @author: Gooble
 '''
+from main.movement.transform.point import Point
+from main.movement.transform.rotation import Rotation
+from main.shapes import shapetype
 import unittest
 
-from main.point import Point
-from main.rotation import Rotation
-from main import shapetype
 
 class Test(unittest.TestCase):
 
