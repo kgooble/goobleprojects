@@ -17,6 +17,7 @@ class Test(unittest.TestCase):
                           Point(0, 4),
                           Point(-1, 5),
                           Point(0, 6)], shape.get_points())
+        self.assertEqual(T_TILE, spawner.get_next_shapetype())
         
 
 if __name__ == "__main__":

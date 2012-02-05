@@ -45,3 +45,6 @@ class Game(object):
         
     def slow_down(self):
         self.speed_modifier = 1
+        
+    def get_next_shape(self):
+        return self.board.get_next_shape()

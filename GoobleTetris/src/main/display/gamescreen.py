@@ -55,6 +55,7 @@ if __name__ == "__main__":
         screen.fill(BLACK)
         drawer.draw_board()
         drawer.write_score()
+        drawer.draw_next_shape()
         pygame.display.flip()
     
     gthread.shutdown()

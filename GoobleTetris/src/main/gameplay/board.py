@@ -59,6 +59,9 @@ class Board(object):
         rows_cleared = self.num_rows_cleared
         self.num_rows_cleared = 0
         return rows_cleared
+    
+    def get_next_shape(self):
+        return self.spawner.get_next_shapetype()
                 
     def _clear_full_rows(self):
         rows_cleared = RowClearing(self.pieces).clear_and_get_rows()

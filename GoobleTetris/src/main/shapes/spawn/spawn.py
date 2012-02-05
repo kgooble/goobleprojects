@@ -15,5 +15,8 @@ class AbstractSpawn(object):
         shape.set_position(new_points)
         return shape
     
+    def get_next_shapetype(self):
+        pass
+    
     def create_shape(self):
         pass

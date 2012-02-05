@@ -7,6 +7,9 @@ Created on 2012-02-04
 import pygame
 from main.display.tilecolors import WHITE, TILE_COLORS
 from main.display.screencoords import ScreenCoords
+from main.shapes.shape import Shape
+from main.movement.transform.translation import Translation
+from main.movement.direction import RIGHT, DOWN
 
 PADDING = 20
 SCREEN_WIDTH = 500
@@ -28,9 +31,7 @@ class DrawBoard(object):
         self.screen.blit(text, [STATS_START_X + PADDING, 250])
     
     
-    def draw_piece(self, i, j):
-        piece = self.game.get_pieces()[i][j]
-        coords = ScreenCoords(row=i, col=j, tile_width=TILE_WIDTH)
+    def draw_piece(self, coords, piece):
         color = TILE_COLORS[piece]
         pygame.draw.rect(self.screen, color, [coords.get_start_x(), 
                                          coords.get_start_y(), 
@@ -41,9 +42,25 @@ class DrawBoard(object):
                                              coords.get_start_y(), 
                                              coords.get_width(), 
                                              coords.get_height()], 1)
-    
+            
     def draw_board(self):
         pieces = self.game.get_pieces()
         for i in range(0, len(pieces)):
             for j in range(0, len(pieces[0])):
-                self.draw_piece(i, j)
+                piece = self.game.get_pieces()[i][j]
+                coords = ScreenCoords(row=i, col=j, tile_width=TILE_WIDTH)
+                self.draw_piece(coords, piece)
+                
+    def draw_next_shape(self):
+        next_shape = Shape(self.game.get_next_shape())
+        for i in range(0, 12):
+            next_shape.set_position(Translation().in_direction(next_shape.get_points(), RIGHT))
+        for i in range(0, 2):
+            next_shape.set_position(Translation().in_direction(next_shape.get_points(), DOWN))
+            
+        for point in next_shape.get_points():
+            coords = ScreenCoords(row=point.row, col=point.col, tile_width=TILE_WIDTH)
+            self.draw_piece(coords, next_shape.get_tile())
+        
+        
+        

@@ -10,6 +10,9 @@ class OneShapeSpawn(AbstractSpawn):
     
     def __init__(self, shapetypetile):
         self.tile = shapetypetile
+
+    def get_next_shapetype(self):
+        return self.tile
     
     def create_shape(self):
         return Shape(self.tile)
