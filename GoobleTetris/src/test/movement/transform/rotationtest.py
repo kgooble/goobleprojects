@@ -27,7 +27,7 @@ class Test(unittest.TestCase):
         self.assertEqual(ninety, Rotation().rotate_90(zero))
         
     def test_rotate_line_shape(self):
-        zero = shapetype.LINE.get_initial_points()
+        zero = shapetype.I.get_initial_points()
         ninety = [Point(0, 0), Point(0, 1), Point(0, -1), Point(0, -2)]
         one_eighty = [Point(0, 0), Point(1, 0), Point(-1, 0), Point(-2, 0)]
         self.assertEqual(ninety, Rotation().rotate_90(zero))

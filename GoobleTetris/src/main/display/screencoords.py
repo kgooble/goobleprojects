@@ -22,3 +22,9 @@ class ScreenCoords(object):
     
     def get_end_y(self):
         return (self.row + 1) * self.tile_width
+    
+    def get_width(self):
+        return self.tile_width
+    
+    def get_height(self):
+        return self.tile_width

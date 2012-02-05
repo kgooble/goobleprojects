@@ -20,3 +20,10 @@ class Tile(object):
     
 EMPTY_TILE = Tile(shapetype.NONE)
 T_TILE = Tile(shapetype.T)
+I_TILE = Tile(shapetype.I)
+J_TILE = Tile(shapetype.J)
+L_TILE = Tile(shapetype.L)
+S_TILE = Tile(shapetype.S)
+Z_TILE = Tile(shapetype.Z)
+O_TILE = Tile(shapetype.O)
+ALL_TILES = [T_TILE, I_TILE, J_TILE, L_TILE, S_TILE, Z_TILE, O_TILE]

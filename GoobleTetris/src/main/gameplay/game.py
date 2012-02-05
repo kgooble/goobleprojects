@@ -12,6 +12,7 @@ class Game(object):
     def __init__(self, board=Board()):
         self.board = board
         self.score = Score()
+        self.speed_modifier = 1
     
     def step(self):
         self.board.step()
@@ -31,4 +32,16 @@ class Game(object):
         return self.score.get_value()
     
     def get_speed(self):
-        return Speed().for_score(self.get_score())
+        return int(Speed().for_score(self.get_score()) / self.speed_modifier)
+    
+    def get_pieces(self):
+        return self.board.get_pieces()
+    
+    def is_game_over(self):
+        return self.board.is_game_over()
+    
+    def speed_up(self):
+        self.speed_modifier = 1.5
+        
+    def slow_down(self):
+        self.speed_modifier = 1

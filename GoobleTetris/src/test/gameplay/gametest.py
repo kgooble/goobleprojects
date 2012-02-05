@@ -83,7 +83,14 @@ class Test(unittest.TestCase):
         self.assertEqual(200, game.get_score())
         self.assertEqual(48, game.get_speed())
         
-        
+
+    def test_speed_game_up(self):
+        game = Game()
+        self.assertEqual(48, game.get_speed())
+        game.speed_up()
+        self.assertEqual(32, game.get_speed()) 
+        game.slow_down()
+        self.assertEqual(48, game.get_speed())
 
 
 if __name__ == "__main__":

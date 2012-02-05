@@ -15,11 +15,32 @@ class ShapeType(object):
     
     
 NONE = ShapeType([])
+I = ShapeType([Point(0, 0),
+               Point(-1, 0),
+               Point(1, 0),
+               Point(2, 0)])
+J = ShapeType([Point(0, 0),
+               Point(0, -1),
+               Point(0, 1),
+               Point(1, 1)])
+L = ShapeType([Point(0, 0),
+               Point(0, -1),
+               Point(0, 1),
+               Point(1, -1)])
+O = ShapeType([Point(0, 0),
+               Point(0, 1),
+               Point(-1, 0),
+               Point(-1, 1)])
+S = ShapeType([Point(0, 0),
+               Point(-1, 0),
+               Point(-1, 1),
+               Point(0, -1)]) 
 T = ShapeType([Point(0, 0),
                Point(0, -1),
                Point(-1, 0),
                Point(0, 1)])
-LINE = ShapeType([Point(0, 0),
-                  Point(-1, 0),
-                  Point(1, 0),
-                  Point(2, 0)])
+Z = ShapeType([Point(0, 0),
+               Point(-1, -1),
+               Point(-1, 0),
+               Point(0, 1)])
+ALL = [I, J, L, O, S, T, Z]
