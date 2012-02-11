@@ -19,6 +19,9 @@
     <Filter Include="Source Files\Characters">
       <UniqueIdentifier>{4677e841-ef7c-4404-89e6-ddb650299def}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Movement">
+      <UniqueIdentifier>{fe92a201-e3fa-47a9-9bc1-a6f5f8b6d728}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LevelInstanceTest.cpp">
@@ -41,6 +44,9 @@
     </ClCompile>
     <ClCompile Include="DefenseTest.cpp">
       <Filter>Source Files\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="PositionTest.cpp">
+      <Filter>Source Files\Movement</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -25,6 +25,12 @@
     <Filter Include="Source Files\Characters">
       <UniqueIdentifier>{910b592e-f485-4ff9-8572-e49e97d7b21f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Movement">
+      <UniqueIdentifier>{da7aab18-795c-4c1d-9006-7faeac167016}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Movement">
+      <UniqueIdentifier>{74fb595e-b4e7-43c5-bf4b-107277c16832}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Potion.h">
@@ -54,6 +60,9 @@
     <ClInclude Include="Point.h">
       <Filter>Header Files\Mazes</Filter>
     </ClInclude>
+    <ClInclude Include="Position.h">
+      <Filter>Header Files\Movement</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Potion.cpp">
@@ -82,6 +91,9 @@
     </ClCompile>
     <ClCompile Include="Point.cpp">
       <Filter>Source Files\Mazes</Filter>
+    </ClCompile>
+    <ClCompile Include="Position.cpp">
+      <Filter>Source Files\Movement</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
