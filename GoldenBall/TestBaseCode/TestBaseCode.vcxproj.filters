@@ -48,5 +48,8 @@
     <ClCompile Include="PositionTest.cpp">
       <Filter>Source Files\Movement</Filter>
     </ClCompile>
+    <ClCompile Include="ValidMoveTest.cpp">
+      <Filter>Source Files\Movement</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

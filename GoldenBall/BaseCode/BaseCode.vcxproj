@@ -85,6 +85,7 @@
     <ClInclude Include="Point.h" />
     <ClInclude Include="Position.h" />
     <ClInclude Include="Potion.h" />
+    <ClInclude Include="ValidMove.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BorderHedges.cpp" />
@@ -97,6 +98,7 @@
     <ClCompile Include="Point.cpp" />
     <ClCompile Include="Position.cpp" />
     <ClCompile Include="Potion.cpp" />
+    <ClCompile Include="ValidMove.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

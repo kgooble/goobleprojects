@@ -114,6 +114,7 @@
     <ClCompile Include="MazeHedgeTest.cpp" />
     <ClCompile Include="MazeTest.cpp" />
     <ClCompile Include="PositionTest.cpp" />
+    <ClCompile Include="ValidMoveTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BaseCode\BaseCode.vcxproj">
