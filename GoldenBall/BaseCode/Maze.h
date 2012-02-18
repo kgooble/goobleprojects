@@ -11,6 +11,6 @@ private:
 
 public:
 	Maze(std::vector<MazeHedge> hedges, int width = DEFAULT_MAZE_WIDTH, int height = DEFAULT_MAZE_HEIGHT);
-	bool isValidLocation(Point* p);
+	bool isValidLocation(Vector2* p);
 };
 

@@ -1,6 +1,6 @@
 #include "MazeHedge.h"
 
-MazeHedge::MazeHedge(Point first, Point second, int width){
+MazeHedge::MazeHedge(Vector2 first, Vector2 second, int width){
 	hedgeWidth = width;
 	firstPoint = first;
 	secondPoint = second;
@@ -14,20 +14,20 @@ int MazeHedge::getHedgeWidth(){
 	return hedgeWidth;
 }
 
-Point MazeHedge::getWestHorizontalPoint(Point* vertPoint){
-	return Point(vertPoint->getX() - (int) (hedgeWidth / 2), vertPoint->getY());
+Vector2 MazeHedge::getWestHorizontalPoint(Vector2* vertPoint){
+	return Vector2(vertPoint->getX() - (int) (hedgeWidth / 2), vertPoint->getY());
 }
 
-Point MazeHedge::getEastHorizontalPoint(Point* vertPoint){
-	return Point(vertPoint->getX() + (int) (hedgeWidth / 2), vertPoint->getY());
+Vector2 MazeHedge::getEastHorizontalPoint(Vector2* vertPoint){
+	return Vector2(vertPoint->getX() + (int) (hedgeWidth / 2), vertPoint->getY());
 }
 
-Point MazeHedge::getNorthVerticalPoint(Point *horizPoint){
-	return Point(horizPoint->getX(), horizPoint->getY() - (int) (hedgeWidth / 2));
+Vector2 MazeHedge::getNorthVerticalPoint(Vector2 *horizPoint){
+	return Vector2(horizPoint->getX(), horizPoint->getY() - (int) (hedgeWidth / 2));
 }
 
-Point MazeHedge::getSouthVerticalPoint(Point *horizPoint){
-	return Point(horizPoint->getX(), horizPoint->getY() + (int) (hedgeWidth / 2));
+Vector2 MazeHedge::getSouthVerticalPoint(Vector2 *horizPoint){
+	return Vector2(horizPoint->getX(), horizPoint->getY() + (int) (hedgeWidth / 2));
 }
 
 MazeHedge MazeHedge::getNorthBoundary(){
@@ -74,15 +74,15 @@ MazeHedge MazeHedge::getEastBoundary(){
 		getSouthVerticalPoint(&secondPoint), 0);
 }
 
-Point* MazeHedge::getFirstPoint(){
+Vector2* MazeHedge::getFirstPoint(){
 	return &firstPoint;
 }
 
-Point* MazeHedge::getSecondPoint(){
+Vector2* MazeHedge::getSecondPoint(){
 	return &secondPoint;
 }
 
-bool MazeHedge::contains(Point* p){
+bool MazeHedge::contains(Vector2* p){
 	return getWestBoundary().getFirstPoint()->getX() <= p->getX() 
 		&& getEastBoundary().getFirstPoint()->getX() >= p->getX()
 		&& getNorthBoundary().getFirstPoint()->getY() <= p->getY()

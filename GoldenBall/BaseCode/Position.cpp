@@ -1,6 +1,6 @@
 #include "Position.h"
 
-Position::Position(Point tl, int w, int h){
+Position::Position(Vector2 tl, int w, int h){
 	topLeft = tl;
 	width = w;
 	height = h;

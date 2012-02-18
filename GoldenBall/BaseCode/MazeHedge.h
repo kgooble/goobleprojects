@@ -1,24 +1,24 @@
-#include "Point.h"
+#include "Vector2.h"
 
 class MazeHedge{
 private:
-	Point firstPoint;
-	Point secondPoint;
+	Vector2 firstPoint;
+	Vector2 secondPoint;
 	int hedgeWidth;
 	bool isVerticalLine();
-	Point MazeHedge::getWestHorizontalPoint(Point* vertPoint);
-	Point MazeHedge::getEastHorizontalPoint(Point* vertPoint);
-	Point MazeHedge::getNorthVerticalPoint(Point* horizPoint);
-	Point MazeHedge::getSouthVerticalPoint(Point* horizPoint);
+	Vector2 MazeHedge::getWestHorizontalPoint(Vector2* vertPoint);
+	Vector2 MazeHedge::getEastHorizontalPoint(Vector2* vertPoint);
+	Vector2 MazeHedge::getNorthVerticalPoint(Vector2* horizPoint);
+	Vector2 MazeHedge::getSouthVerticalPoint(Vector2* horizPoint);
 
 public:
-	MazeHedge(Point first = ORIGIN, Point second = ORIGIN, int width = 10);
+	MazeHedge(Vector2 first = ORIGIN, Vector2 second = ORIGIN, int width = 10);
 	MazeHedge getNorthBoundary();
 	MazeHedge getSouthBoundary();
 	MazeHedge getWestBoundary();
 	MazeHedge getEastBoundary();
-	Point* getFirstPoint();
-	Point* getSecondPoint();
-	bool contains(Point* p);
+	Vector2* getFirstPoint();
+	Vector2* getSecondPoint();
+	bool contains(Vector2* p);
 	int getHedgeWidth();
 };

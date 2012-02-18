@@ -1,3 +1,5 @@
+#ifndef MOVEMENT_VALIDMOVE_H
+#define MOVEMENT_VALIDMOVE_H
 #include <list>
 #include "Position.h"
 
@@ -8,6 +10,7 @@ private:
 
 public:
 	ValidMove(Position cont, std::list<Position> allPositions);
-	Position getValidMove(Position oldPosition, Point speed);
+	Position getValidMove(Position oldPosition, Vector2 speed);
 
 };
+#endif

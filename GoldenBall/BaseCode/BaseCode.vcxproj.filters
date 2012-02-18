@@ -57,14 +57,17 @@
     <ClInclude Include="CharacterClass.h">
       <Filter>Header Files\Characters</Filter>
     </ClInclude>
-    <ClInclude Include="Point.h">
-      <Filter>Header Files\Mazes</Filter>
-    </ClInclude>
     <ClInclude Include="Position.h">
       <Filter>Header Files\Movement</Filter>
     </ClInclude>
     <ClInclude Include="ValidMove.h">
       <Filter>Header Files\Movement</Filter>
+    </ClInclude>
+    <ClInclude Include="CollidingPositions.h">
+      <Filter>Header Files\Movement</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2.h">
+      <Filter>Header Files\Mazes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -92,14 +95,17 @@
     <ClCompile Include="CharacterClass.cpp">
       <Filter>Source Files\Characters</Filter>
     </ClCompile>
-    <ClCompile Include="Point.cpp">
-      <Filter>Source Files\Mazes</Filter>
-    </ClCompile>
     <ClCompile Include="Position.cpp">
       <Filter>Source Files\Movement</Filter>
     </ClCompile>
     <ClCompile Include="ValidMove.cpp">
       <Filter>Source Files\Movement</Filter>
+    </ClCompile>
+    <ClCompile Include="CollidingPositions.cpp">
+      <Filter>Source Files\Movement</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector2.cpp">
+      <Filter>Source Files\Mazes</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

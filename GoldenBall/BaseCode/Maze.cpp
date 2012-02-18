@@ -8,7 +8,7 @@ Maze::Maze(std::vector<MazeHedge> hedges, int width, int height){
 	mazeHeight = height;
 }
 
-bool Maze::isValidLocation(Point* p){
+bool Maze::isValidLocation(Vector2* p){
 	std::vector<MazeHedge>::iterator hedge;
 	for (hedge = mazeHedges.begin(); hedge != mazeHedges.end(); hedge++){
 		if (hedge->contains(p)){
