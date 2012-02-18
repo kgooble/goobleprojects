@@ -43,7 +43,8 @@ Position ValidMove::getValidMove(Position oldPosn, Point speed){
 			colliders.push_back(*iter);
 			continue;
 		}
-		if (iter->getX() > oldPosn.getEndX() && iter->getEndX() < furthestPossible.getX()){
+		if (   0 >= unitspeed.getX() * (oldPosn.getCenterX() - iter->getCenterX()) 
+			&& 0 >= unitspeed.getX() * (iter->getCenterX() - furthestPossible.getCenterX())) {
 			Position test(Point(iter->getX(), iter->getY()), oldPosn.getWidth(), oldPosn.getHeight());
 			if (test.overlaps(*iter)){
 				colliders.push_back(*iter);

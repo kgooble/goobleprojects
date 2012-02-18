@@ -58,7 +58,7 @@ TEST(ValidMoveLeftTest, IfThinPieceCenterCloserThanThickPieceCenterThickPieceSti
 	ValidMove validity(Position(Point(0, 0), 500, 500), allPosns);
 
 	Position expectedNextMove(Point(126, 20), 50, 50);
-	Point speed(-50, 0);
+	Point speed(-150, 0);
 	Position validMove = validity.getValidMove(Position(Point(150, 20), 50, 50), speed);
 	EXPECT_EQ(validMove, expectedNextMove)<< "Got: " << validMove.getX() << " " << validMove.getY();
 }
