@@ -32,3 +32,10 @@ TEST(PositionTest, IfTwoPositionsOverLapBottomAndTopThenTheyOverlap){
 	EXPECT_TRUE(top.overlaps(bottom));
 	EXPECT_TRUE(bottom.overlaps(top));
 }
+
+TEST(PositionTest, IfTwoPositionsOverlapTopRightAndBottomLeft){
+	Position topright = Position(Point(100, 20), 50, 50);
+	Position bottomleft = Position(Point(75, 50), 50, 50);
+	EXPECT_TRUE(topright.overlaps(bottomleft));
+	EXPECT_TRUE(bottomleft.overlaps(topright));
+}

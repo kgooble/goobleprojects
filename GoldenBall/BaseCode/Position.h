@@ -11,6 +11,8 @@ public:
 	bool overlaps(Position other);
 	int getX() const;
 	int getY() const;
+	int getCenterX();
+	int getCenterY();
 	int getEndX() const;
 	int getEndY() const;
 	int getWidth() const;

@@ -1,4 +1,5 @@
 #include "ValidMove.h"
+#include <math.h>
 
 ValidMove::ValidMove(Position cont, std::list<Position> allPosns){
 	container = cont;
@@ -20,6 +21,16 @@ Position addSpeedTo(Position oldPosn, Point speed){
 	return Position(Point(oldPosn.getX() + speed.getX(), oldPosn.getY() + speed.getY()), oldPosn.getWidth(), oldPosn.getHeight());
 }
 
+int distance(Position one, Position two){
+	int xDist = one.getCenterX() - two.getCenterX();
+	int yDist = one.getCenterY() - two.getCenterY();
+	return (int) sqrt((double)(xDist*xDist + yDist*yDist));
+}
+
+bool closerThanClosestGuy(Position closestGuy, Position newGuy, Position myGuy){
+	return distance(closestGuy, myGuy) > distance(newGuy, myGuy);
+}
+
 Position ValidMove::getValidMove(Position oldPosn, Point speed){
 	Point unitspeed = getUnitSpeedVector(speed);
 	Position furthestPossible = addSpeedTo(oldPosn, speed);
@@ -28,8 +39,10 @@ Position ValidMove::getValidMove(Position oldPosn, Point speed){
 	for (std::list<Position>::iterator iter=allOccupiedPositions.begin(); iter!=allOccupiedPositions.end(); iter++){
 		if ((*iter) == oldPosn)
 			continue;
-		if (iter->overlaps(furthestPossible))
+		if (iter->overlaps(furthestPossible)){
 			colliders.push_back(*iter);
+			continue;
+		}
 		if (iter->getX() > oldPosn.getEndX() && iter->getEndX() < furthestPossible.getX()){
 			Position test(Point(iter->getX(), iter->getY()), oldPosn.getWidth(), oldPosn.getHeight());
 			if (test.overlaps(*iter)){
@@ -44,10 +57,12 @@ Position ValidMove::getValidMove(Position oldPosn, Point speed){
 
 	Position closestGuy = colliders.front();
 	for (std::list<Position>::iterator iter=colliders.begin(); iter!=colliders.end(); iter++){
-		if (iter->getX() < closestGuy.getX())
+		if (closerThanClosestGuy(closestGuy, *iter, oldPosn))
 			closestGuy = *iter;
 	}
 
-	return Position(Point(closestGuy.getX() - oldPosn.getWidth() - 1, oldPosn.getY()), oldPosn.getWidth(), oldPosn.getHeight());
+	int newX = closestGuy.getCenterX() - (int) (unitspeed.getX() * (closestGuy.getWidth() + oldPosn.getWidth())/ 2) - (unitspeed.getX() * 1);
+	newX = newX - (int) (oldPosn.getWidth() / 2);
+	return Position(Point(newX, oldPosn.getY()), oldPosn.getWidth(), oldPosn.getHeight());
 
 }
