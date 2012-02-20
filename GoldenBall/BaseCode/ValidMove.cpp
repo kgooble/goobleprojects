@@ -32,6 +32,24 @@ bool closerThanClosestGuy(Position closestGuy, Position newGuy, Position myGuy){
 	return distance(closestGuy, myGuy) > distance(newGuy, myGuy);
 }
 
+int calculateNewX(Vector2 unitspeed, Position oldPosn, Position closestGuy){
+	if (unitspeed.getX() == 0)
+		return oldPosn.getX();
+	else{
+		int newX = closestGuy.getCenterX() - (int) (unitspeed.getX() * (closestGuy.getWidth() + oldPosn.getWidth())/ 2) - unitspeed.getX();
+		return newX - (int) (oldPosn.getWidth() / 2);
+	}
+}
+
+int calculateNewY(Vector2 unitspeed, Position oldPosn, Position closestGuy){
+	if (unitspeed.getY() == 0){
+		return oldPosn.getY();
+	}else{
+		int newY = closestGuy.getCenterY() - (int) (unitspeed.getY() * (closestGuy.getHeight() + oldPosn.getHeight())/ 2) - unitspeed.getY();
+		return newY - (int) (oldPosn.getHeight() / 2);
+	}
+}
+
 Position ValidMove::getValidMove(Position oldPosn, Vector2 speed){
 	Vector2 unitspeed = getUnitSpeedVector(speed);
 	Position furthestPossible = addSpeedTo(oldPosn, speed);
@@ -47,8 +65,8 @@ Position ValidMove::getValidMove(Position oldPosn, Vector2 speed){
 			closestGuy = *iter;
 	}
 
-	int newX = closestGuy.getCenterX() - (int) (unitspeed.getX() * (closestGuy.getWidth() + oldPosn.getWidth())/ 2) - (unitspeed.getX() * 1);
-	newX = newX - (int) (oldPosn.getWidth() / 2);
-	return Position(Vector2(newX, oldPosn.getY()), oldPosn.getWidth(), oldPosn.getHeight());
+	int newX = calculateNewX(unitspeed, oldPosn, closestGuy);
+	int newY = calculateNewY(unitspeed, oldPosn, closestGuy);
+	return Position(Vector2(newX, newY), oldPosn.getWidth(), oldPosn.getHeight());
 
 }

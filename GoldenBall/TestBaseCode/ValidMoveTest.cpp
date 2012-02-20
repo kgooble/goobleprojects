@@ -62,3 +62,29 @@ TEST(ValidMoveLeftTest, IfThinPieceCenterCloserThanThickPieceCenterThickPieceSti
 	Position validMove = validity.getValidMove(Position(Vector2(150, 20), 50, 50), speed);
 	EXPECT_EQ(validMove, expectedNextMove)<< "Got: " << validMove.getX() << " " << validMove.getY();
 }
+
+TEST(ValidMoveUpTest, StandardMoveUpWorks){
+	std::list<Position> allPosns;
+	Position myPosn(Vector2(30, 30), 10, 10);
+	allPosns.push_back(myPosn);
+	allPosns.push_back(Position(Vector2(20, 10), 20, 10));
+	ValidMove validity(Position(Vector2(0, 0), 500, 500), allPosns);
+
+	Position expectedNextMove(Vector2(30, 21), 10, 10);
+	Vector2 speed(0, -50);
+	Position validMove = validity.getValidMove(myPosn, speed);
+	EXPECT_EQ(validMove, expectedNextMove)<< "Got: " << validMove.getX() << " " << validMove.getY();
+}
+
+TEST(ValidMoveDownTest, StandardMoveDownWorks){
+	std::list<Position> allPosns;
+	Position myPosn = Position(Vector2(20, 10), 20, 10);
+	allPosns.push_back(Position(Vector2(30, 30), 10, 10));
+	allPosns.push_back(myPosn);
+	ValidMove validity(Position(Vector2(0, 0), 500, 500), allPosns);
+
+	Position expectedNextMove(Vector2(20, 19), 20, 10);
+	Vector2 speed(0, 50);
+	Position validMove = validity.getValidMove(myPosn, speed);
+	EXPECT_EQ(validMove, expectedNextMove)<< "Got: " << validMove.getX() << " " << validMove.getY();
+}
