@@ -22,6 +22,11 @@ class DrawBoard(object):
         self.game = game
         self.screen = screen
 
+    def display(self):
+        self.draw_board()
+        self.write_score()
+        self.draw_next_shape()
+
     def write_score(self):
         pygame.draw.line(self.screen, WHITE, [STATS_START_X, 0], [STATS_START_X, 600], 5)
         font = pygame.font.Font(None, 25)

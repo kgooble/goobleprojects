@@ -11,6 +11,12 @@ class TaskThread(threading.Thread):
         self._finished = threading.Event()
         self._interval = 1
         self.game = game
+        self.started = False
+    
+    def startIfNotAlready(self):
+        if not self.started:
+            self.start()
+            self.started = True
     
     def setInterval(self, interval):
         self._interval = interval
