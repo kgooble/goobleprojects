@@ -3,20 +3,16 @@ Created on 2012-03-04
 
 @author: Gooble
 '''
+from main.display.state import State
 
-class GameState(object):
-    def __init__(self, gamethread, eventhandler, view):
+class GameState(State):
+    def __init__(self, eventhandler, view, gamethread):
+        State.__init__(self, eventhandler, view)
         self.gamethread = gamethread
-        self.eventhandler = eventhandler
-        self.view = view
         
-    def process(self, event):
+    def preprocess(self):
         self.gamethread.startIfNotAlready()
-        self.eventhandler.process(event)
     
-    def display(self):
-        self.view.display()
-        
     def kill(self):
         self.gamethread.shutdown()
         self.gamethread.join()

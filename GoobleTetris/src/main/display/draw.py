@@ -18,13 +18,15 @@ TILE_WIDTH = SCREEN_HEIGHT / 20
 STATS_START_X = TILE_WIDTH * 10
 
 class DrawBoard(object):
-    def __init__(self, game, screen):
+    def __init__(self, game, screen, predicting=False):
         self.game = game
         self.screen = screen
+        self.predicting = predicting
 
     def display(self):
         self.draw_board()
         self.write_score()
+        self.draw_prediction()
         self.draw_next_shape()
 
     def write_score(self):
@@ -35,9 +37,17 @@ class DrawBoard(object):
         text = font.render(str(self.game.get_score()), True, WHITE)
         self.screen.blit(text, [STATS_START_X + PADDING, 250])
     
+    def fade(self, color):
+        new_color = [color[0] - 200, color[1] - 200, color[2] - 200]
+        for i in range (0, len(new_color)):
+            if new_color[i] < 0:
+                new_color[i] = 0
+        return new_color
     
-    def draw_piece(self, coords, piece):
+    def draw_piece(self, coords, piece, faded=False):
         color = TILE_COLORS[piece]
+        if faded:
+            color = self.fade(color)
         pygame.draw.rect(self.screen, color, [coords.get_start_x(), 
                                          coords.get_start_y(), 
                                          coords.get_width(), 
@@ -47,7 +57,14 @@ class DrawBoard(object):
                                              coords.get_start_y(), 
                                              coords.get_width(), 
                                              coords.get_height()], 1)
-            
+    def draw_prediction(self):
+        cur_shape = self.game.get_current_shape()
+        if cur_shape is None or not self.predicting:
+            return
+        predicted = Shape(cur_shape.get_tile())
+        predicted.set_position(self.game.get_predicted_points())
+        self.draw_shape(predicted, faded=True)
+                    
     def draw_board(self):
         pieces = self.game.get_pieces()
         for i in range(0, len(pieces)):
@@ -62,10 +79,11 @@ class DrawBoard(object):
             next_shape.set_position(Translation().in_direction(next_shape.get_points(), RIGHT))
         for i in range(0, 2):
             next_shape.set_position(Translation().in_direction(next_shape.get_points(), DOWN))
-            
-        for point in next_shape.get_points():
+        self.draw_shape(next_shape)
+    
+    def draw_shape(self, shape, faded=False):
+        for point in shape.get_points():
             coords = ScreenCoords(row=point.row, col=point.col, tile_width=TILE_WIDTH)
-            self.draw_piece(coords, next_shape.get_tile())
-        
+            self.draw_piece(coords, shape.get_tile(), faded=faded)
         
         

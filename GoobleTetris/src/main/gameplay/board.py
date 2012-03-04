@@ -27,13 +27,16 @@ class Board(object):
     def drop_shape(self):
         if self.cur_shape is None:
             return
+        self._move_tiles(self.cur_shape.get_points(), self.get_predicted_points())
+        
+    def get_predicted_points(self):
         old_points = self.cur_shape.get_points()
         new_points = self._move_shape_down_one_row(old_points)
         while new_points != old_points:
             old_points = new_points
             new_points = self._move_shape_down_one_row(old_points)
-        self._move_tiles(self.cur_shape.get_points(), new_points)
-
+        return new_points
+        
     def step(self):
         if self.cur_shape is None:
             self._clear_full_rows()

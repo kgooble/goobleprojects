@@ -13,34 +13,31 @@ from test.display.mock.mockdisplay import MockDisplay
 
 class Test(unittest.TestCase):
     
+    def setUp(self):
+        self.game = MockGame()
+        self.gamethread = MockGameThread(self.game)
+    
     def test_use_eventhandler_and_start_thread_first_time_processing_then_draw_screen(self):
-        game = MockGame()
-        gamethread = MockGameThread(game)
-        eventhandler = MockEventHandler(game)
-        display = MockDisplay(game)
-        
-        state = GameState(gamethread, eventhandler, display)
+        eventhandler = MockEventHandler(self.game)
+        display = MockDisplay(self.game)
+        state = GameState(eventhandler, display, self.gamethread)
         
         state.process(MockEvent())
         state.display()
         
-        self.assertTrue(gamethread.started)
+        self.assertTrue(self.gamethread.started)
         self.assertTrue(eventhandler.processed)
         self.assertTrue(display.displayed)
         
     def test_kill_state_kills_thread(self):
-        game = MockGame()
-        game.set_game_over(True)
-        gamethread = MockGameThread(game)
-        eventhandler = MockEventHandler(game)
-        display = MockDisplay(game)
+        state = GameState(None, None, self.gamethread)
         
-        state = GameState(gamethread, eventhandler, display)
+        self.game.set_game_over(True)
         
         state.kill()
         
-        self.assertTrue(gamethread.gotshutdown)
-        self.assertTrue(gamethread.gotjoined)
+        self.assertTrue(self.gamethread.gotshutdown)
+        self.assertTrue(self.gamethread.gotjoined)
 
 if __name__ == "__main__":
     unittest.main()

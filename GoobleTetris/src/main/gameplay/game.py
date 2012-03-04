@@ -48,3 +48,9 @@ class Game(object):
         
     def get_next_shape(self):
         return self.board.get_next_shape()
+    
+    def get_current_shape(self):
+        return self.board.cur_shape
+    
+    def get_predicted_points(self):
+        return self.board.get_predicted_points()

@@ -26,7 +26,7 @@ if __name__ == "__main__":
     
     game = Game()
     
-    state = GameState(TaskThread(game), GameEventHandler(game), DrawBoard(game, screen))
+    state = GameState(GameEventHandler(game), DrawBoard(game, screen), TaskThread(game))
     
     while True:
         clock.tick(30)
