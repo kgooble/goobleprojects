@@ -16,8 +16,8 @@ class State(object):
         self.preprocess()
         self.eventhandler.process(event)    
     
-    def display(self):
-        self.view.display()
+    def display(self, screen):
+        self.view.display(screen)
         
     def kill(self):
         pass

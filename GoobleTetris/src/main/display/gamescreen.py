@@ -26,7 +26,7 @@ if __name__ == "__main__":
     
     game = Game()
     
-    state = GameState(GameEventHandler(game), DrawBoard(game, screen), TaskThread(game))
+    state = GameState(GameEventHandler(game), DrawBoard(game), TaskThread(game))
     
     while True:
         clock.tick(30)
@@ -34,7 +34,7 @@ if __name__ == "__main__":
         try:
             for event in pygame.event.get():
                 state.process(event)
-            state.display()
+            state.display(screen)
         except SystemExit:
             state.kill()
             break
