@@ -7,13 +7,13 @@ Created on 2012-02-04
 '''
 
 
-from main.display.tilecolors import BLACK
-import pygame
-from main.gameplay.game import Game
-from main.display.taskthread import TaskThread
 from main.display.draw import SCREEN_HEIGHT, SCREEN_WIDTH, DrawBoard
 from main.display.gameeventhandler import GameEventHandler
 from main.display.gamestate import GameState
+from main.display.taskthread import TaskThread
+from main.display.tilecolors import BLACK
+from main.gameplay.game import Game
+import pygame
 
 if __name__ == "__main__":
     pygame.init()

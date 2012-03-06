@@ -28,6 +28,10 @@ class Test(unittest.TestCase):
         self.assertEqual(50, txt.width)
         self.assertEqual(25, txt.height)
         
+        # total width of the two (including padding), max height of the two
+        self.assertEqual(10+50+50, labelledimg.get_width())
+        self.assertEqual(50, labelledimg.get_height())
+        
 
 if __name__ == "__main__":
     unittest.main()

@@ -17,3 +17,7 @@ class MockDrawableFactory(object):
         text.width = 50
         text.height = 25
         return text
+    
+    def createRectangle(self, x, y):
+        rect = MockText("", x, y)
+        return rect

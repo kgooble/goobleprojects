@@ -13,10 +13,23 @@ class LabeledImage(object):
         self.label = label
         self.x = x
         self.y = y
+        self.drawables = None
         
     def createDrawablesUsingFactory(self, factory=DrawableFactory()):
-        image = factory.createImage(self.imagefile, self.x, self.y)
-        text = factory.createText(self.label, self.x + image.width + PADDING, 0)
-        text.y = Center(start=image.y, end=image.y+image.height).objectWithLength(text.height)
-        return [image, text]
+        if self.drawables is None:
+            image = factory.createImage(self.imagefile, self.x, self.y)
+            text = factory.createText(self.label, self.x + image.width + PADDING, 0)
+            text.y = Center(start=image.y, end=image.y+image.height).objectWithLength(text.height)
+            self.drawables = [image, text]
+            
+        return self.drawables
     
+    def get_width(self):
+        if self.drawables is None:
+            raise AttributeError
+        return self.drawables[0].width + PADDING + self.drawables[1].width
+    
+    def get_height(self):
+        if self.drawables is None:
+            raise AttributeError
+        return max(self.drawables[0].height, self.drawables[1].height) 

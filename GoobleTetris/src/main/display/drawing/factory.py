@@ -17,10 +17,22 @@ class DrawableSprite(object):
 class DrawableText(object):
     def __init__(self, text, x, y):
         self.text = text
-        self.x = self.y
+        self.x = x
+        self.y = y
         
     def draw(self, screen):
         screen.blit(self.text, [self.x, self.y])
+        
+class DrawableRectangle(object):
+    def __init__(self, x, y, width=10, height=10):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+        
+    def draw(self, screen):
+        pygame.draw.rect(screen, pygame.color.THECOLORS['black'], [self.x, self.y, self.width, self.height])
+    
 
 class DrawableFactory(object):
     def createImage(self, imagefile, x, y):
@@ -36,4 +48,7 @@ class DrawableFactory(object):
         font = pygame.font.Font(None, fontsize)
         rendered_text = font.render(text, True, pygame.color.THECOLORS['white'])
         return DrawableText(rendered_text, x, y)
+    
+    def createRectangle(self, x, y):
+        return DrawableRectangle(x, y)
     
