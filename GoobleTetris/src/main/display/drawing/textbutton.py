@@ -33,9 +33,13 @@ class TextButton(object):
         return self.drawables
     
     def get_width(self):
-        return self.drawables[0].width 
+        if self.drawables is None:
+            self.create_drawables_using_factory()
+        return self.drawables[0].width
     
     def get_height(self):
+        if self.drawables is None:
+            self.create_drawables_using_factory()
         return self.drawables[0].height
     
     def contains(self, point):
