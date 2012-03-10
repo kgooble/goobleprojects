@@ -5,17 +5,13 @@ Created on 2012-02-04
 '''
 
 import pygame
-from main.display.tilecolors import WHITE, TILE_COLORS
+from main.display.game.tilecolors import WHITE, TILE_COLORS
 from main.display.screencoords import ScreenCoords
 from main.shapes.shape import Shape
 from main.movement.transform.translation import Translation
 from main.movement.direction import RIGHT, DOWN
 
 PADDING = 20
-SCREEN_WIDTH = 500
-SCREEN_HEIGHT = 600
-TILE_WIDTH = SCREEN_HEIGHT / 20
-STATS_START_X = TILE_WIDTH * 10
 
 class DrawBoard(object):
     def __init__(self, game, predicting=False):
@@ -29,12 +25,12 @@ class DrawBoard(object):
         self.draw_next_shape(screen)
 
     def write_score(self, screen):
-        pygame.draw.line(screen, WHITE, [STATS_START_X, 0], [STATS_START_X, 600], 5)
+        pygame.draw.line(screen, WHITE, [screen.get_height()/2, 0], [screen.get_height()/2, 600], 5)
         font = pygame.font.Font(None, 25)
         text = font.render("Score", True, WHITE)
-        screen.blit(text, [STATS_START_X + PADDING, 200])
+        screen.blit(text, [screen.get_height()/2 + PADDING, 200])
         text = font.render(str(self.game.get_score()), True, WHITE)
-        screen.blit(text, [STATS_START_X + PADDING, 250])
+        screen.blit(text, [screen.get_height()/2 + PADDING, 250])
     
     def fade(self, color):
         new_color = [color[0] - 200, color[1] - 200, color[2] - 200]
@@ -69,7 +65,7 @@ class DrawBoard(object):
         for i in range(0, len(pieces)):
             for j in range(0, len(pieces[0])):
                 piece = self.game.get_pieces()[i][j]
-                coords = ScreenCoords(row=i, col=j, tile_width=TILE_WIDTH)
+                coords = ScreenCoords(row=i, col=j, tile_width=(screen.get_height()/20))
                 self.draw_piece(screen, coords, piece)
                 
     def draw_next_shape(self, screen):
@@ -82,7 +78,7 @@ class DrawBoard(object):
     
     def draw_shape(self, screen, shape, faded=False):
         for point in shape.get_points():
-            coords = ScreenCoords(row=point.row, col=point.col, tile_width=TILE_WIDTH)
+            coords = ScreenCoords(row=point.row, col=point.col, tile_width=(screen.get_height()/20))
             self.draw_piece(screen, coords, shape.get_tile(), faded=faded)
         
         

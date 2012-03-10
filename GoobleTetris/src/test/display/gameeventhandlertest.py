@@ -5,9 +5,9 @@ Created on 2012-03-04
 '''
 import unittest
 import pygame
-from main.display.gameeventhandler import GameEventHandler
 from test.display.mock.mockgame import MockGame
 from test.display.mock.mockevent import MockEvent
+from main.display.game.gameeventhandler import GameEventHandler
 
 class Test(unittest.TestCase):
 

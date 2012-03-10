@@ -5,10 +5,11 @@ Created on 2012-02-04
 
 
 '''
-from main.display.draw import SCREEN_HEIGHT, SCREEN_WIDTH
-from main.display.splashstate import SplashState
-from main.display.tilecolors import BLACK
 import pygame
+from main.display.splash.splashstate import SplashState
+
+SCREEN_WIDTH = 500
+SCREEN_HEIGHT = 600
 
 if __name__ == "__main__":
     pygame.init()
@@ -23,7 +24,7 @@ if __name__ == "__main__":
     
     while True:
         clock.tick(30)
-        screen.fill(BLACK)
+        screen.fill(pygame.color.THECOLORS['black'])
         try:
             next_state = state
             for event in pygame.event.get():
