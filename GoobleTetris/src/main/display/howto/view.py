@@ -8,7 +8,7 @@ import main.display.view
 from main.display.backbutton import BackButton
 from main.display.drawing.labeledimage import LabeledImage
 
-class HowToPlayStateView(main.display.view.View):
+class HowToPlayView(main.display.view.View):
 
     def make_text(self, text):
         return main.display.drawing.factory.DrawableFactory().create_text(text)

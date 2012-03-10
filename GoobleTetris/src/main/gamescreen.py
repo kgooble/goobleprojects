@@ -6,7 +6,7 @@ Created on 2012-02-04
 
 '''
 import pygame
-from main.display.splash.splashstate import SplashState
+from main.display.splash.state import SplashState
 
 SCREEN_WIDTH = 500
 SCREEN_HEIGHT = 600

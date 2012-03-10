@@ -3,7 +3,7 @@ Created on 2012-03-10
 
 @author: Gooble
 '''
-import main.display.splash.splashstate
+import main.display.splash.state
 from main.display.drawing.textbutton import TextButton
 
 class BackButton(TextButton):
@@ -11,4 +11,4 @@ class BackButton(TextButton):
         TextButton.__init__(self, "Back")
 
     def get_state(self):
-        return main.display.splash.splashstate.SplashState()
+        return main.display.splash.state.SplashState()

@@ -9,7 +9,7 @@ from test.display.mock.mockthread import MockGameThread
 from test.display.mock.mockeventhandler import MockEventHandler
 from test.display.mock.mockevent import MockEvent
 from test.display.mock.mockdisplay import MockDisplay
-from main.display.game.gamestate import GameState
+from main.display.game.state import GameState
 
 class Test(unittest.TestCase):
     

@@ -6,10 +6,10 @@ Created on 2012-03-10
 from main.display.drawing.textbutton import TextButton
 from main.display.game.draw import DrawBoard
 from main.display.game.gameeventhandler import GameEventHandler
-from main.display.game.gamestate import GameState
-from main.display.howto.howtoplaystate import HowToPlayState
+from main.display.game.state import GameState
+from main.display.howto.state import HowToPlayState
 from main.display.quitplushandler import QuitPlusHandler
-from main.display.settings.settingsstate import SettingsState
+from main.display.settings.state import SettingsState
 from main.display.taskthread import TaskThread
 from main.display.view import View
 from main.gameplay.game import Game
@@ -36,6 +36,6 @@ class SettingsButton(TextButton):
         return SettingsState()
 
 
-class SplashStateView(View):
+class SplashView(View):
     def create_drawables(self):
         return [StartGameButton(), HowToPlayButton(), SettingsButton()]

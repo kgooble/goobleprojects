@@ -6,10 +6,10 @@ Created on 2012-03-10
 from main.display.state import State
 from main.display.buttonhandler import ButtonClickHandler
 from main.display.quitplushandler import QuitPlusHandler
-from main.display.howto.howtoplaystateview import HowToPlayStateView
+from main.display.howto.view import HowToPlayView
 
 class HowToPlayState(State):
-    def __init__(self, eventhandler=QuitPlusHandler(ButtonClickHandler(None)), view=HowToPlayStateView()):
+    def __init__(self, eventhandler=QuitPlusHandler(ButtonClickHandler(None)), view=HowToPlayView()):
         State.__init__(self, eventhandler, view)
         
     def preprocess(self):

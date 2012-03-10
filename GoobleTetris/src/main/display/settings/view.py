@@ -7,7 +7,7 @@ from main.display.backbutton import BackButton
 from main.display.view import View
 import main.display.drawing.factory
 
-class SettingsStateView(View):
+class SettingsView(View):
     def make_text(self, text):
         return main.display.drawing.factory.DrawableFactory().create_text(text)
     

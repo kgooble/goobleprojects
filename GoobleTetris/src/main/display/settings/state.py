@@ -6,10 +6,10 @@ Created on 2012-03-10
 from main.display.state import State
 from main.display.buttonhandler import ButtonClickHandler
 from main.display.quitplushandler import QuitPlusHandler
-from main.display.settings.settingsstateview import SettingsStateView
+from main.display.settings.view import SettingsView
 
 class SettingsState(State):
-    def __init__(self, eventhandler=QuitPlusHandler(ButtonClickHandler(None)), view=SettingsStateView()):
+    def __init__(self, eventhandler=QuitPlusHandler(ButtonClickHandler(None)), view=SettingsView()):
         State.__init__(self, eventhandler, view)
         
     def preprocess(self):
