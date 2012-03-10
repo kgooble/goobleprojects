@@ -4,7 +4,7 @@ Created on 2012-02-04
 @author: Gooble
 '''
 import unittest
-from main.display.screencoords import ScreenCoords
+from main.display.game.screencoords import ScreenCoords
 
 
 class Test(unittest.TestCase):

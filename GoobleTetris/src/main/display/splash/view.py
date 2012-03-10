@@ -5,7 +5,7 @@ Created on 2012-03-10
 '''
 from main.display.drawing.textbutton import TextButton
 from main.display.game.draw import DrawBoard
-from main.display.game.gameeventhandler import GameEventHandler
+from main.display.game.eventhandler import GameEventHandler
 from main.display.game.state import GameState
 from main.display.howto.state import HowToPlayState
 from main.display.quitplushandler import QuitPlusHandler

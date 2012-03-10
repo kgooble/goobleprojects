@@ -7,7 +7,7 @@ import unittest
 import pygame
 from test.display.mock.mockgame import MockGame
 from test.display.mock.mockevent import MockEvent
-from main.display.game.gameeventhandler import GameEventHandler
+from main.display.game.eventhandler import GameEventHandler
 
 class Test(unittest.TestCase):
 

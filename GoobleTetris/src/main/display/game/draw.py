@@ -6,10 +6,12 @@ Created on 2012-02-04
 
 import pygame
 from main.display.game.tilecolors import WHITE, TILE_COLORS
-from main.display.screencoords import ScreenCoords
+from main.display.game.screencoords import ScreenCoords
 from main.shapes.shape import Shape
 from main.movement.transform.translation import Translation
 from main.movement.direction import RIGHT, DOWN
+from main.display.drawing.rectangle import DrawableRectangle
+from main.display.drawing.factory import DrawableFactory
 
 PADDING = 20
 
@@ -26,11 +28,8 @@ class DrawBoard(object):
 
     def write_score(self, screen):
         pygame.draw.line(screen, WHITE, [screen.get_height()/2, 0], [screen.get_height()/2, 600], 5)
-        font = pygame.font.Font(None, 25)
-        text = font.render("Score", True, WHITE)
-        screen.blit(text, [screen.get_height()/2 + PADDING, 200])
-        text = font.render(str(self.game.get_score()), True, WHITE)
-        screen.blit(text, [screen.get_height()/2 + PADDING, 250])
+        DrawableFactory().create_text("Score", screen.get_height()/2 + PADDING, 200).draw(screen)
+        DrawableFactory().create_text(str(self.game.get_score()), screen.get_height()/2 + PADDING, 250).draw(screen)
     
     def fade(self, color):
         new_color = [color[0] - 200, color[1] - 200, color[2] - 200]
@@ -43,15 +42,12 @@ class DrawBoard(object):
         color = TILE_COLORS[piece]
         if faded:
             color = self.fade(color)
-        pygame.draw.rect(screen, color, [coords.get_start_x(), 
-                                         coords.get_start_y(), 
-                                         coords.get_width(), 
-                                         coords.get_height()])
+        DrawableRectangle(coords.get_start_x(), coords.get_start_y(), 
+                          coords.get_width(), coords.get_height(), thickness=0, colour=color).draw(screen)
         if not piece.is_empty():
-            pygame.draw.rect(screen, WHITE, [coords.get_start_x(), 
-                                             coords.get_start_y(), 
-                                             coords.get_width(), 
-                                             coords.get_height()], 1)
+            DrawableRectangle(coords.get_start_x(), coords.get_start_y(), 
+                              coords.get_width(), coords.get_height()).draw(screen)
+                          
     def draw_prediction(self, screen):
         cur_shape = self.game.get_current_shape()
         if cur_shape is None or not self.predicting:

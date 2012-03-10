@@ -9,13 +9,15 @@ from main.display.drawing.drawable import Drawable
 LINE_THICKNESS = 1
 
 class DrawableRectangle(Drawable):
-    def __init__(self, x, y, total_length=10, height=10):
+    def __init__(self, x, y, total_length=10, height=10, thickness=LINE_THICKNESS, colour=pygame.color.THECOLORS['white']):
         Drawable.__init__(self, x, y)
         self.width = total_length
         self.height = height
+        self.thickness = thickness
+        self.colour = colour
         
     def draw(self, screen):
-        pygame.draw.rect(screen, pygame.color.THECOLORS['white'], [self.x, self.y, self.width, self.height], LINE_THICKNESS)
+        pygame.draw.rect(screen, self.colour, [self.x, self.y, self.width, self.height], self.thickness)
     
     def get_width(self):
         return self.width
