@@ -9,3 +9,9 @@ class MockText(object):
         self.text = text
         self.x = x
         self.y = y
+        
+    def get_width(self):
+        return 50
+    
+    def get_height(self):
+        return 25

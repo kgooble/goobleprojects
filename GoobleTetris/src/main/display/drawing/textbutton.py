@@ -19,20 +19,20 @@ class TextButton(object):
         if self.drawables is None:
             rect = factory.createRectangle(self.x, self.y)
             text = factory.createText(self.label, self.x + PADDING, self.y + PADDING)
-            rect.width = text.width + 2 * PADDING
-            rect.height = text.height + 2 * PADDING
+            rect.width = text.get_width() + 2 * PADDING
+            rect.height = text.get_height() + 2 * PADDING
             self.drawables = [rect, text]
             
         return self.drawables
     
     def get_width(self):
-        if self.drawables is None:
-            raise AttributeError
-        
         return self.drawables[0].width 
     
     def get_height(self):
-        if self.drawables is None:
-            raise AttributeError
-        
         return self.drawables[0].height
+    
+    def contains(self, point):
+        for drawable in self.drawables:
+            if drawable.contains(point):
+                return True
+        return False

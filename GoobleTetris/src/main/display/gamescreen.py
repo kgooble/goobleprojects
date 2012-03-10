@@ -7,13 +7,10 @@ Created on 2012-02-04
 '''
 
 
-from main.display.draw import SCREEN_HEIGHT, SCREEN_WIDTH, DrawBoard
-from main.display.gameeventhandler import GameEventHandler
-from main.display.gamestate import GameState
-from main.display.taskthread import TaskThread
+from main.display.draw import SCREEN_HEIGHT, SCREEN_WIDTH
 from main.display.tilecolors import BLACK
-from main.gameplay.game import Game
 import pygame
+from main.display.splashstate import SplashState
 
 if __name__ == "__main__":
     pygame.init()
@@ -24,17 +21,17 @@ if __name__ == "__main__":
     pygame.display.set_caption("Gooble Tetris")
     clock = pygame.time.Clock()
     
-    game = Game()
-    
-    state = GameState(GameEventHandler(game), DrawBoard(game), TaskThread(game))
+    state = SplashState()
     
     while True:
         clock.tick(30)
         screen.fill(BLACK)
         try:
+            next_state = state
             for event in pygame.event.get():
-                state.process(event)
+                next_state = state.process(event)
             state.display(screen)
+            state = next_state
         except SystemExit:
             state.kill()
             break

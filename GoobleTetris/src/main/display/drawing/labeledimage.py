@@ -25,11 +25,7 @@ class LabeledImage(object):
         return self.drawables
     
     def get_width(self):
-        if self.drawables is None:
-            raise AttributeError
         return self.drawables[0].width + PADDING + self.drawables[1].width
     
     def get_height(self):
-        if self.drawables is None:
-            raise AttributeError
         return max(self.drawables[0].height, self.drawables[1].height) 

@@ -9,5 +9,5 @@ class MockDisplay(object):
     def __init__(self, game):
         self.game = game
         
-    def display(self):
+    def display(self, screen):
         self.displayed = True
