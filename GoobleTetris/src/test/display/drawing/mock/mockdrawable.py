@@ -11,10 +11,10 @@ class MockDrawable(object):
         self.y = y
         
     def get_width(self):
-        return 50
+        return self.width
     
     def get_height(self):
-        return 25
+        return self.height
     
     def set_x(self, x):
         self.x = x
@@ -22,4 +22,9 @@ class MockDrawable(object):
     def set_y(self, y):
         self.y = y
         
+    def get_y(self):
+        return self.y
+    
+    def get_x(self):
+        return self.x
     

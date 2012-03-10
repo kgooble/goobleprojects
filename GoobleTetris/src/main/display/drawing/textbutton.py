@@ -49,10 +49,10 @@ class TextButton(object):
     
     def set_x(self, x):
         distance_between_text_and_rect = self.drawables[1].x - self.drawables[0].x
-        self.drawables[0].x = x
-        self.drawables[1].x = x + distance_between_text_and_rect
+        self.drawables[0].set_x(x)
+        self.drawables[1].set_x(x + distance_between_text_and_rect)
         
     def set_y(self, y):
         distance_between_text_and_rect = self.drawables[1].y - self.drawables[0].y
-        self.drawables[0].y = y
-        self.drawables[1].y = y + distance_between_text_and_rect
+        self.drawables[0].set_y(y)
+        self.drawables[1].set_y(y + distance_between_text_and_rect)

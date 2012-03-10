@@ -30,7 +30,7 @@ class Test(unittest.TestCase):
         self.assertTrue(display.displayed)
         
     def test_kill_state_kills_thread(self):
-        state = GameState(None, None, self.gamethread)
+        state = GameState(self.game, None, self.gamethread)
         
         self.game.set_game_over(True)
         
