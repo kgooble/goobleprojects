@@ -18,6 +18,26 @@ class DrawableSprite(object):
         
     def contains(self, point):
         return self.sprite.rect.collidepoint(point)
+    
+    def get_height(self):
+        return self.sprite.rect.height
+    
+    def get_width(self):
+        return self.sprite.rect.width
+    
+    def get_x(self):
+        return self.sprite.rect.topleft[0]
+    
+    def get_y(self):
+        return self.sprite.rect.topleft[1]
+    
+    def set_x(self, x):
+        y = self.sprite.rect.topleft[1] 
+        self.sprite.rect.topleft = x, y
+        
+    def set_y(self, y):
+        x = self.sprite.rect.topleft[0]
+        self.sprite.rect.topleft = x, y
         
 class DrawableText(object):
     def __init__(self, text, x, y):
@@ -38,6 +58,19 @@ class DrawableText(object):
     
     def get_height(self):
         return self.text.get_height()
+    
+    def set_x(self, x):
+        self.x = x
+        
+    def set_y(self, y):
+        self.y = y
+        
+    def get_x(self):
+        return self.x
+
+    def get_y(self):
+        return self.y
+    
         
 class DrawableRectangle(object):
     def __init__(self, x, y, total_length=10, height=10):
@@ -61,7 +94,7 @@ class DrawableRectangle(object):
         return self.height
 
 class DrawableFactory(object):
-    def create_image(self, imagefile, x, y):
+    def create_image(self, imagefile, x=0, y=0):
         image = pygame.image.load_basic(os.path.join('resources', imagefile))
         image = image.convert()
         sprite = pygame.sprite.Sprite()
@@ -70,7 +103,7 @@ class DrawableFactory(object):
         sprite.rect.topleft = x, y
         return DrawableSprite(sprite)
     
-    def create_text(self, text, x, y, fontsize=25):
+    def create_text(self, text, x=0, y=0, fontsize=25):
         font = pygame.font.Font(None, fontsize)
         rendered_text = font.render(text, True, pygame.color.THECOLORS['white'])
         return DrawableText(rendered_text, x, y)

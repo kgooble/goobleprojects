@@ -27,7 +27,7 @@ class Test(unittest.TestCase):
         
         buttons = [button1, button2]
         
-        self.assertEqual(button2, ButtonClickHandler(buttons).get_clicked_button((55, 55)))
+        self.assertEqual(button2, ButtonClickHandler(None, buttons).get_clicked_button((55, 55)))
 
 
 if __name__ == "__main__":
