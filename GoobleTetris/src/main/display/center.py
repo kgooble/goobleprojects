@@ -5,10 +5,13 @@ Created on 2012-03-04
 '''
 
 class Center(object):
-    def __init__(self, start, end):
+    def __init__(self, start=0, end=0, total_length=0):
         self.start = start
-        self.end = end
+        if total_length == 0:
+            self.total_length = end - start
+        else:
+            self.total_length = total_length
         
-    def objectWithLength(self, length):
-        abs_start = int((self.end - self.start - length) / 2)
+    def object_with_length(self, length):
+        abs_start = int((self.total_length - length) / 2)
         return abs_start + self.start

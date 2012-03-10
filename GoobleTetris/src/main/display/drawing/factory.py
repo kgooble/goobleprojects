@@ -35,14 +35,15 @@ class DrawableText(object):
     
     def get_width(self):
         return self.text.get_width()
+    
     def get_height(self):
         return self.text.get_height()
         
 class DrawableRectangle(object):
-    def __init__(self, x, y, width=10, height=10):
+    def __init__(self, x, y, total_length=10, height=10):
         self.x = x
         self.y = y
-        self.width = width
+        self.width = total_length
         self.height = height
         
     def draw(self, screen):
@@ -52,9 +53,15 @@ class DrawableRectangle(object):
         pointx = point[0]
         pointy = point[1]
         return self.x <= pointx <= self.x + self.width and self.y <= pointy <= self.y + self.height
+    
+    def get_width(self):
+        return self.width
+    
+    def get_height(self):
+        return self.height
 
 class DrawableFactory(object):
-    def createImage(self, imagefile, x, y):
+    def create_image(self, imagefile, x, y):
         image = pygame.image.load_basic(os.path.join('resources', imagefile))
         image = image.convert()
         sprite = pygame.sprite.Sprite()
@@ -63,11 +70,11 @@ class DrawableFactory(object):
         sprite.rect.topleft = x, y
         return DrawableSprite(sprite)
     
-    def createText(self, text, x, y, fontsize=25):
+    def create_text(self, text, x, y, fontsize=25):
         font = pygame.font.Font(None, fontsize)
         rendered_text = font.render(text, True, pygame.color.THECOLORS['white'])
         return DrawableText(rendered_text, x, y)
     
-    def createRectangle(self, x, y):
+    def create_rectangle(self, x, y):
         return DrawableRectangle(x, y)
     

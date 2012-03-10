@@ -11,7 +11,7 @@ class Test(unittest.TestCase):
 
     def test_create_labeled_image_positions_text_to_right_of_image_centered(self):
         labelledimg = LabeledImage(imagefile='someimg.bmp', label='This is my text', x=0, y=40)
-        drawables = labelledimg.createDrawablesUsingFactory(MockDrawableFactory())
+        drawables = labelledimg.create_drawables_using_factory(MockDrawableFactory())
         img = drawables[0]
         txt = drawables[1]
         

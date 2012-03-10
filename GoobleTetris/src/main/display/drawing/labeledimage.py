@@ -15,11 +15,11 @@ class LabeledImage(object):
         self.y = y
         self.drawables = None
         
-    def createDrawablesUsingFactory(self, factory=DrawableFactory()):
+    def create_drawables_using_factory(self, factory=DrawableFactory()):
         if self.drawables is None:
-            image = factory.createImage(self.imagefile, self.x, self.y)
-            text = factory.createText(self.label, self.x + image.width + PADDING, 0)
-            text.y = Center(start=image.y, end=image.y+image.height).objectWithLength(text.height)
+            image = factory.create_image(self.imagefile, self.x, self.y)
+            text = factory.create_text(self.label, self.x + image.width + PADDING, 0)
+            text.y = Center(start=image.y, end=image.y+image.height).object_with_length(text.height)
             self.drawables = [image, text]
             
         return self.drawables
