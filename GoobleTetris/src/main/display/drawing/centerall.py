@@ -20,9 +20,7 @@ class CenterAll(object):
         for drawable in self.drawables:
             drawable.set_x(Center(total_length=width).object_with_length(drawable.get_width()))
             total_drawables_height += drawable.get_height()
-        
-        total_drawables_height += (len(self.drawables) - 1) * PADDING
-        return total_drawables_height
+        return total_drawables_height + (len(self.drawables) - 1) * PADDING
 
     def assign_y_values(self, height, total_drawables_height):
         y = Center(total_length=height).object_with_length(total_drawables_height)

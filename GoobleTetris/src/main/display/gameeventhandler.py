@@ -11,8 +11,6 @@ class GameEventHandler(object):
         self.game = game
     
     def process(self, event):
-        if event.type == pygame.QUIT:
-            raise SystemExit
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
                 self.game.move(LEFT)

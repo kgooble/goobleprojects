@@ -14,8 +14,7 @@ class State(object):
         
     def process(self, event):
         self.preprocess()
-        self.eventhandler.process(event)
-        return self
+        return self.eventhandler.process(event)
     
     def display(self, screen):
         self.view.display(screen)

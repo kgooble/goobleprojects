@@ -31,7 +31,7 @@ class DrawableText(object):
     def contains(self, point):
         pointx = point[0]
         pointy = point[1]
-        return self.x <= pointx <= self.x + self.width and self.y <= pointy <= self.y + self.height
+        return self.x <= pointx <= self.x + self.get_width() and self.y <= pointy <= self.y + self.get_height()
     
     def get_width(self):
         return self.text.get_width()

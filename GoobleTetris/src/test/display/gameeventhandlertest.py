@@ -15,14 +15,6 @@ class Test(unittest.TestCase):
         self.game = MockGame()
         self.handler = GameEventHandler(self.game)
 
-    def test_raise_system_exit_when_sent_exit(self):
-        event = MockEvent(type=pygame.QUIT)
-        try:
-            self.handler.process(event)
-            self.fail("shouldn't get here")
-        except SystemExit:
-            pass
-        
     def test_move_left_when_sent_left_key(self):
         event = MockEvent(key=pygame.K_LEFT, type=pygame.KEYDOWN)
         self.handler.process(event)

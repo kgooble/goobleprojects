@@ -5,12 +5,10 @@ Created on 2012-02-04
 
 
 '''
-
-
 from main.display.draw import SCREEN_HEIGHT, SCREEN_WIDTH
+from main.display.splashstate import SplashState
 from main.display.tilecolors import BLACK
 import pygame
-from main.display.splashstate import SplashState
 
 if __name__ == "__main__":
     pygame.init()
@@ -29,7 +27,9 @@ if __name__ == "__main__":
         try:
             next_state = state
             for event in pygame.event.get():
-                next_state = state.process(event)
+                possible_next_state = state.process(event)
+                if possible_next_state is not None:
+                    next_state = possible_next_state
             state.display(screen)
             state = next_state
         except SystemExit:

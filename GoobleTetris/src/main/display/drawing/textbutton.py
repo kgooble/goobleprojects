@@ -43,9 +43,8 @@ class TextButton(object):
         return self.drawables[0].height
     
     def contains(self, point):
-        for drawable in self.drawables:
-            if drawable.contains(point):
-                return True
+        if self.drawables[0].contains(point):
+            return True
         return False
     
     def set_x(self, x):

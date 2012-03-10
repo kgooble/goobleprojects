@@ -3,16 +3,24 @@ Created on 2012-03-09
 
 @author: Gooble
 '''
-from main.display.draw import DrawBoard
 from main.display.drawing.textbutton import TextButton
+from main.display.state import State
+from main.display.drawing.centerall import CenterAll
+from main.display.quitplushandler import QuitPlusHandler
+from main.display.buttonhandler import ButtonClickHandler
+from main.gameplay.game import Game
+from main.display.draw import DrawBoard
 from main.display.gameeventhandler import GameEventHandler
 from main.display.gamestate import GameState
-from main.display.state import State
 from main.display.taskthread import TaskThread
-from main.gameplay.game import Game
-import pygame
-from main.display.drawing.centerall import CenterAll
 
+
+class StartGameButton(TextButton):
+    def __init__(self):
+        TextButton.__init__(self, "Start Game")
+    def get_state(self):
+        game = Game()
+        return GameState(QuitPlusHandler(GameEventHandler(game)), DrawBoard(game), TaskThread(game))
 
 class SplashStateView(object):
     
@@ -28,15 +36,14 @@ class SplashStateView(object):
             d.draw(screen);
             
     def create_drawables(self):
-        return [TextButton("Start Game"), TextButton("How To Play"), TextButton("Settings")]
+        return [StartGameButton(), TextButton("How To Play"), TextButton("Settings")]
 
 class SplashState(State):
     
-    def __init__(self, eventhandler=None, view=SplashStateView()):
+    def __init__(self, eventhandler=QuitPlusHandler(ButtonClickHandler(None)), view=SplashStateView()):
+        self.eventhandler = eventhandler
+        self.eventhandler.state = self
         self.view = view
             
-    def process(self, event):
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            game = Game()
-            return GameState(GameEventHandler(game), DrawBoard(game), TaskThread(game))
-        return self
+    def preprocess(self):
+        self.eventhandler.otherhandler.buttons = self.view.drawables
