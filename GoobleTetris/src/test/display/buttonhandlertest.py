@@ -26,8 +26,9 @@ class Test(unittest.TestCase):
         button2.contains = self.yes
         
         buttons = [button1, button2]
-        
-        self.assertEqual(button2, ButtonClickHandler(None, buttons).get_clicked_button((55, 55)))
+        handler = ButtonClickHandler(None, {})
+        handler.buttons = buttons
+        self.assertEqual(button2, handler.get_clicked_button((55, 55)))
 
 
 if __name__ == "__main__":

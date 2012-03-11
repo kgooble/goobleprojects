@@ -22,7 +22,7 @@ class Test(unittest.TestCase):
         display = MockDisplay(self.game)
         state = GameState(eventhandler, display, self.gamethread)
         
-        state.process(MockEvent())
+        state.process(MockEvent(), {})
         state.display(None)
         
         self.assertTrue(self.gamethread.started)

@@ -8,5 +8,5 @@ class MockEventHandler(object):
     def __init__(self, game):
         self.game = game
     
-    def process(self, event):
+    def process(self, event, info):
         self.processed = True

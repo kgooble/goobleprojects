@@ -25,10 +25,11 @@ if __name__ == "__main__":
     while True:
         clock.tick(30)
         screen.fill(pygame.color.THECOLORS['black'])
+        info = {}
         try:
             next_state = state
             for event in pygame.event.get():
-                possible_next_state = state.process(event)
+                possible_next_state = state.process(event, info)
                 if possible_next_state is not None:
                     next_state = possible_next_state
             state.display(screen)

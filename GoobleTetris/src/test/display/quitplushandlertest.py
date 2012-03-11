@@ -6,16 +6,16 @@ Created on 2012-03-10
 import unittest
 from test.display.mock.mockevent import MockEvent
 import pygame
-from main.display.quitplushandler import QuitPlusHandler
+from main.display.generaleventshandler import GeneralEventsHandler
 
 
 class Test(unittest.TestCase):
 
     def test_raise_system_exit_when_sent_exit(self):
-        handler = QuitPlusHandler(None)
+        handler = GeneralEventsHandler()
         event = MockEvent(type=pygame.QUIT)
         try:
-            handler.process(event)
+            handler.process_general(event, {})
             self.fail("shouldn't get here")
         except SystemExit:
             pass

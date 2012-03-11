@@ -5,12 +5,13 @@ Created on 2012-03-04
 '''
 import pygame
 from main.movement.direction import LEFT, RIGHT
+from main.display.generaleventshandler import GeneralEventsHandler
 
-class GameEventHandler(object):
+class GameEventHandler(GeneralEventsHandler):
     def __init__(self, game):
         self.game = game
     
-    def process(self, event):
+    def process(self, event, info):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
                 self.game.move(LEFT)
