@@ -8,7 +8,18 @@ import main.display.settings.view
 from main.display.buttonhandler import ButtonClickHandler
 from main.display.backaction import BackAction
 
-ACTIONS={'Back':BackAction()}
+class TogglePredictionsAction(object):
+    
+    def __init__(self, on):
+        self.on = on
+    
+    def do_action(self, info):
+        info['predictions.enabled'] = self.on
+
+
+ACTIONS={'Back':BackAction(),
+         'TurnOnPredictions':TogglePredictionsAction(True),
+         'TurnOffPredictions':TogglePredictionsAction(False)}
 
 class SettingsState(main.display.state.State):
     def __init__(self, 
