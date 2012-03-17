@@ -10,4 +10,4 @@ setup(
         name = "GoobleTetris",
         version = "0.1",
         description = "Tetris made by Gooble",
-        executables = [Executable("gamescreen.py")])
+        executables = [Executable("src/main/tetris.py")])
