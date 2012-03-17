@@ -9,9 +9,10 @@ from main.gameplay.speed import Speed
 
 class Game(object):
     
-    def __init__(self, board=Board()):
+    def __init__(self, board=Board(), level=1):
         self.board = board
         self.score = Score()
+        self.level = level
         self.speed_modifier = 1
     
     def step(self):
@@ -32,7 +33,7 @@ class Game(object):
         return self.score.get_value()
     
     def get_speed(self):
-        return int(Speed().for_score(self.get_score()) / self.speed_modifier)
+        return int(Speed().for_start_level_and_curr_score(self.level, self.score.get_value()) / self.speed_modifier)
     
     def get_pieces(self):
         return self.board.get_pieces()

@@ -15,3 +15,7 @@ class Speed(object):
             if score >= threshold:
                 return LEVEL_THRESHOLDS[threshold]
         return 48 
+    
+    def for_start_level_and_curr_score(self, start_level, score):
+        total_score = (start_level - 1) * 5000 + score
+        return self.for_score(total_score)

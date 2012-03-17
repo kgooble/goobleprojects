@@ -24,9 +24,12 @@ class HowToPlayAction(object):
 class StartGameAction(object):
     def do_action(self, info):
         predict = False
+        level = 1
         if 'predictions.enabled' in info.keys():
             predict = info['predictions.enabled']
-        game = main.gameplay.game.Game()
+        if 'start.level' in info.keys():
+            level = info['start.level']
+        game = main.gameplay.game.Game(level=level)
         return main.display.game.state.GameState(
                          GameEventHandler(game),
                          DrawBoard(game, predicting=predict),
