@@ -14,15 +14,15 @@ from main.display.taskthread import TaskThread
 from main.display.game.draw import DrawBoard
     
 class SettingsAction(object):
-    def do_action(self, info):
+    def do_action(self, info, state):
         return main.display.settings.state.SettingsState()
     
 class HowToPlayAction(object):
-    def do_action(self, info):
+    def do_action(self, info, state):
         return main.display.howto.state.HowToPlayState()
     
 class StartGameAction(object):
-    def do_action(self, info):
+    def do_action(self, info, state):
         predict = False
         level = 1
         if 'predictions.enabled' in info.keys():

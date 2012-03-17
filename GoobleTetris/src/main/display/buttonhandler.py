@@ -22,5 +22,5 @@ class ButtonClickHandler(main.display.generaleventshandler.GeneralEventsHandler)
         if event.type == pygame.MOUSEBUTTONUP:
             button = self.get_clicked_button(event.pos)
             if button is not None:
-                return self.actions[button.get_action()].do_action(info)
+                return self.actions[button.get_action()].do_action(info, self.state)
         return self.state
