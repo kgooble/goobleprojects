@@ -3,19 +3,15 @@ Created on 2012-03-10
 
 @author: Gooble
 '''
-from main.display.drawing.centerall import CenterAll
-
 class View(object):
     def __init__(self):
-        self.drawables = None
+        self.layout = None
+        self.buttons = None
         
     def display(self, screen):
-        if self.drawables is None:
-            self.drawables = self.create_drawables()
-            CenterAll(self.drawables).in_screen_sized(screen.get_width(), screen.get_height())
+        if self.layout is None:
+            self.create_layout()
+        self.layout.draw(screen)
             
-        for d in self.drawables:
-            d.draw(screen)
-            
-    def create_drawables(self):
+    def create_layout(self):
         pass

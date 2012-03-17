@@ -10,7 +10,7 @@ from main.display.drawing.layout import Layout
 class Test(unittest.TestCase):
     
     def setUp(self):
-        self.layout = Layout(width=500, height=500)
+        self.layout = Layout()
     
     def test_add_to_row_0_aligns_one_obj_in_center(self):
         drawable = self.make_drawable()
@@ -84,11 +84,10 @@ class Test(unittest.TestCase):
         return drawable
         
     def add(self, row, *drawables):
-        for drawable in drawables:
-            self.layout.add_to_row(row, drawable)
+        self.layout.add_to_row(row, *drawables)
         
     def align(self):
-        self.layout.align_all()
+        self.layout.align_all(500, 500)
         
     def assert_x_y(self, drawable, x, y):
         self.assertEqual(x, drawable.get_x())

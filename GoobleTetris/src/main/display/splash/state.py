@@ -46,4 +46,4 @@ class SplashState(main.display.state.State):
         main.display.state.State.__init__(self, eventhandler, view)
             
     def preprocess(self):
-        self.eventhandler.buttons = self.view.drawables
+        self.eventhandler.buttons = self.view.buttons

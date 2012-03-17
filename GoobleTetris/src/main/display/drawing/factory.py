@@ -12,14 +12,14 @@ from main.display.drawing.text import DrawableText
 from main.display.drawing.piece import DrawablePiece
 
 class DrawableFactory(object):
-    def create_image(self, imagefile, x=0, y=0):
+    def create_image(self, imagefile, action='', x=0, y=0):
         image = pygame.image.load_basic(os.path.join('resources', imagefile))
         image = image.convert()
         sprite = pygame.sprite.Sprite()
         sprite.image = image
         sprite.rect = image.get_rect()
         sprite.rect.topleft = x, y
-        return DrawableSprite(sprite)
+        return DrawableSprite(sprite, action)
     
     def create_text(self, text, x=0, y=0, fontsize=25):
         font = pygame.font.Font(None, fontsize)

@@ -6,8 +6,12 @@ Created on 2012-03-10
 import pygame
 
 class DrawableSprite(object):
-    def __init__(self, sprite):
+    def __init__(self, sprite, action):
         self.sprite = sprite
+        self.action = action
+    
+    def get_action(self):
+        return self.action
     
     def draw(self, screen):
         pygame.sprite.RenderPlain(self.sprite).draw(screen)

@@ -7,25 +7,22 @@ from main.display.backbutton import BackButton
 from main.display.view import View
 import main.display.drawing.factory
 from main.display.drawing.textbutton import TextButton
-
-class TurnOnPredictionsButton(TextButton):
-    def __init__(self):
-        TextButton.__init__(self, "Turn On Predictions")
-    def get_action(self):
-        return 'TurnOnPredictions'
-
-class TurnOffPredictionsButton(TextButton):
-    def __init__(self):
-        TextButton.__init__(self, "Turn Off Predictions")
-        
-    def get_action(self):
-        return 'TurnOffPredictions'
-
+from main.display.drawing.layout import Layout
+from main.display.drawing.factory import DrawableFactory
 
 class SettingsView(View):
     def make_text(self, text):
         return main.display.drawing.factory.DrawableFactory().create_text(text)
     
-    def create_drawables(self):
-        self.buttons = [BackButton(), TurnOnPredictionsButton(), TurnOffPredictionsButton()]
-        return self.buttons
+    def create_layout(self):
+        back = BackButton()
+        turnon = DrawableFactory().create_image("leftarrow.bmp", "TurnOnPredictions")
+        turnoff = DrawableFactory().create_image("rightarrow.bmp", "TurnOffPredictions")
+        label = TextButton("Toggle Predictions")
+        
+        layout = Layout()
+        layout.add_to_row(0, turnon, label, turnoff)
+        layout.add_to_row(1, back)
+        
+        self.layout = layout        
+        self.buttons = [back, turnon, turnoff]
