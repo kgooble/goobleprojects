@@ -8,8 +8,4 @@ from main.movement.transform.point import Point
 class Rotation(object):
 
     def rotate_90(self, points):
-        new_points = []
-        for point in points:
-            new_points.append(Point(point.col, -point.row))
-                
-        return new_points
+        return [Point(point.col, -point.row) for point in points]

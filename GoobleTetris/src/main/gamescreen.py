@@ -37,4 +37,3 @@ if __name__ == "__main__":
             state.kill()
             break
         pygame.display.flip()
-                

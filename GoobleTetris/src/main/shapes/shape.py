@@ -3,7 +3,6 @@ Created on 2012-01-31
 
 @author: Gooble
 '''
-
 class Shape(object):
     
     def __init__(self, tile):
