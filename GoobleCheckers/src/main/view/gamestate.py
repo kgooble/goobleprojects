@@ -23,8 +23,10 @@ class GameState(object):
         main.view.drawing.canvas.Canvas(screen).draw(self.create_drawables(pos))
     
     def process(self, event):
-        ProcessGameState(self.game).handle(event)
-        return self
+        next_state = ProcessGameState(self.game).handle(event)
+        if next_state is None:
+            return self
+        return next_state
         
     def post_process(self):
         self.check_and_use_ai()

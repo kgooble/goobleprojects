@@ -22,6 +22,7 @@ class Drawables(object):
             drawables.append(held_drawable)
         if self.game.is_game_over():
             drawables.append(DrawableText("Game Over", 25, DEFAULT_WIDTH/4, DEFAULT_HEIGHT/2))
+            drawables.append(DrawableText("To go back to main menu, press ESC", 25, DEFAULT_WIDTH/6, DEFAULT_HEIGHT/2  + 20))
         elif self.game.is_computers_turn():
             drawables.append(DrawableThinkingText())
         return drawables
