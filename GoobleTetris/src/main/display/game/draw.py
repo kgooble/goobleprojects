@@ -5,6 +5,7 @@ Created on 2012-02-04
 '''
 
 import pygame
+import main.display.drawing.layout
 from main.display.game.tilecolors import WHITE, TILE_COLORS
 from main.display.game.screencoords import ScreenCoords
 from main.shapes.shape import Shape
@@ -26,6 +27,7 @@ class DrawBoard(object):
         self.write_score(screen)
         self.draw_prediction(screen)
         self.draw_next_shape(screen)
+        self.draw_game_over(screen)
 
     def write_score(self, screen):
         pygame.draw.line(screen, WHITE, [screen.get_height()/2, 0], [screen.get_height()/2, 600], 5)
@@ -82,5 +84,11 @@ class DrawBoard(object):
         for point in shape.get_points():
             coords = ScreenCoords(row=point.row, col=point.col, tile_width=(screen.get_height()/20))
             self.draw_piece(screen, coords, shape.get_tile(), faded=faded)
-        
+
+    def draw_game_over(self, screen):
+        if not self.game.is_game_over(): return
+        layout = main.display.drawing.layout.Layout()
+        layout.add_to_row(0, DrawableFactory().create_text("Game Over"))
+        layout.add_to_row(1, DrawableFactory().create_text("To return to menu, press escape"))
+        layout.draw(screen)
         

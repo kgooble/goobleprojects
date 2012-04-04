@@ -23,7 +23,7 @@ if __name__ == "__main__":
     clock = pygame.time.Clock()
     
     state = SplashState()
-    info = {}    
+    info = {}
     while True:
         clock.tick(30)
         screen.fill(pygame.color.THECOLORS['black'])

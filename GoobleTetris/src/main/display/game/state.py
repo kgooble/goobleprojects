@@ -10,6 +10,12 @@ class GameState(State):
         State.__init__(self, eventhandler, view)
         self.gamethread = gamethread
         
+    def process(self, event, info):
+        next_state = State.process(self, event, info)
+        if next_state is not None:
+            self.kill()
+        return next_state
+        
     def preprocess(self):
         self.gamethread.startIfNotAlready()
     

@@ -9,14 +9,21 @@ from main.config import DEFAULT_CONFIG
 from main.gameplay.rowclearing import RowClearing
 from main.gameplay.rowshift import RowShift
 
+import threading
+
 class Board(object):
 
-    def __init__(self, pieces=DEFAULT_CONFIG, spawner=RandomSpawn()):
+    def __init__(self, pieces=None, spawner=None):
+        if pieces is None:
+            pieces = [row[:] for row in DEFAULT_CONFIG]
+        if spawner is None:
+            spawner = RandomSpawn()
         self.pieces = pieces
         self.spawner = spawner
         self.cur_shape = None
         self.game_over = False
         self.num_rows_cleared = 0
+        self.movement_lock = threading.RLock()
         
     def is_game_over(self):
         return self.game_over
@@ -89,5 +96,7 @@ class Board(object):
         return new_points
 
     def _move_tiles(self, old_points, new_points):
+        self.movement_lock.acquire()
         self.cur_shape.set_position(new_points)
         MoveCompletion(self.pieces).move_tiles(old_points, new_points, self.cur_shape.get_tile())
+        self.movement_lock.release()

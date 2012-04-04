@@ -9,9 +9,13 @@ from main.gameplay.speed import Speed
 
 class Game(object):
     
-    def __init__(self, board=Board(), level=1):
+    def __init__(self, board=None, level=None):
+        if board is None:
+            board = Board()
         self.board = board
         self.score = Score()
+        if level is None:
+            level = 1
         self.level = level
         self.speed_modifier = 1
     

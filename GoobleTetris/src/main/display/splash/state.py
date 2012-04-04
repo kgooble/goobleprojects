@@ -9,7 +9,7 @@ import main.display.settings.state
 import main.display.howto.state
 import main.display.game.state
 import main.gameplay.game
-from main.display.game.eventhandler import GameEventHandler
+import main.display.game.eventhandler
 from main.display.taskthread import TaskThread
 from main.display.game.draw import DrawBoard
     
@@ -31,18 +31,23 @@ class StartGameAction(object):
             level = info['start.level']
         game = main.gameplay.game.Game(level=level)
         return main.display.game.state.GameState(
-                         GameEventHandler(game),
+                         main.display.game.eventhandler.GameEventHandler(game),
                          DrawBoard(game, predicting=predict),
                          TaskThread(game))
+        
+        
 ACTIONS = {'Settings':SettingsAction(),
              'HowToPlay':HowToPlayAction(),
              'Start':StartGameAction()}
 
 class SplashState(main.display.state.State):
     
-    def __init__(self,
-                 eventhandler=main.display.buttonhandler.ButtonClickHandler(None,ACTIONS),
-                 view=main.display.splash.view.SplashView()):
+    def __init__(self, eventhandler=None, view=None):
+        if eventhandler is None:
+            eventhandler = main.display.buttonhandler.ButtonClickHandler(None,ACTIONS)
+        if view is None:
+            view = main.display.splash.view.SplashView()
+            
         main.display.state.State.__init__(self, eventhandler, view)
             
     def preprocess(self):
