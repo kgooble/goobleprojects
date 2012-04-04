@@ -7,6 +7,8 @@ Created on 2012-02-26
 from main.view.dimensions import DEFAULT_HEIGHT, DEFAULT_WIDTH
 from main.view.splashstate import SplashState
 import pygame
+import pygame._view
+import pygame.display
 
 class GameStart(object):
     
