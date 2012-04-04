@@ -16,6 +16,7 @@ class GameEventHandler(GeneralEventsHandler):
         if self.game.is_game_over():
             if event.type == pygame.KEYUP and event.key == pygame.K_ESCAPE:
                 return main.display.splash.state.SplashState()
+            return
         
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
