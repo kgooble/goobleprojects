@@ -14,10 +14,10 @@ public class NotTest {
    @Test
    public void possible_variable_values_correct_given_domain_and_hints() throws Exception{
       Variable<String> var = new Variable<String>("cow", "monkey", "sheep");
-      assertEquals(Arrays.asList("cow", "monkey"), var.givenHints(Not("sheep")).listPossibleValues());
-      assertEquals(Arrays.asList("monkey", "sheep"), var.givenHints(Not("cow")).listPossibleValues());
-      assertEquals(Arrays.asList("cow"), var.givenHints(Not("sheep"), Not("monkey")).listPossibleValues());
-      assertEquals(Arrays.asList("cow", "monkey", "sheep"), var.givenHints(Not("bluejay")).listPossibleValues());
+      assertEquals(Arrays.asList("cow", "monkey"), var.givenHints(Not(Equals("sheep"))).listPossibleValues());
+      assertEquals(Arrays.asList("monkey", "sheep"), var.givenHints(Not(Equals("cow"))).listPossibleValues());
+      assertEquals(Arrays.asList("cow"), var.givenHints(Not(Equals("sheep")), Not(Equals("monkey"))).listPossibleValues());
+      assertEquals(Arrays.asList("cow", "monkey", "sheep"), var.givenHints(Not(Equals("bluejay"))).listPossibleValues());
    }
    
    @Test

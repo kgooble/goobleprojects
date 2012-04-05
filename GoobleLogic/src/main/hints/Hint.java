@@ -10,10 +10,6 @@ abstract public class Hint<T> {
    
    abstract public boolean contradicts(T value);
    
-   public static <X> Not<X> Not(X value){
-      return new Not<X>(Equals(value));
-   }
-   
    public static <X> Not<X> Not(Hint<X> hint){
       return new Not<X>(hint);
    }
