@@ -9,6 +9,7 @@ import main.Variable;
 
 import org.junit.Test;
 
+@SuppressWarnings("unchecked")
 public class NotTest {
    
    @Test

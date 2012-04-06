@@ -9,7 +9,9 @@ import main.Variable;
 
 import org.junit.Test;
 
+@SuppressWarnings("unchecked")
 public class LessThanTest {
+   
    @Test
    public void number_can_have_less_than_hints() throws Exception{
       Variable<Number> var = new Variable<Number>(23, 2.0, 6);

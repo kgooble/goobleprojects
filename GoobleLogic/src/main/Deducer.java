@@ -24,8 +24,8 @@ public class Deducer<T> {
 
    private void removeContradictoryValues(List<T> values) {
       for (int i = values.size() - 1; i >= 0; i--){
-         for (Hint<T> h : hints){
-            if (h.contradicts(values.get(i))){
+         for (Hint<T> hint : hints){
+            if (hint.contradicts(values.get(i))){
                values.remove(i);
                break;
             }
