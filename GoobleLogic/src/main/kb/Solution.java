@@ -10,10 +10,6 @@ public class Solution {
       replacements.add(re);
    }
    
-   public void addVariableReplacement(Variable var, Constant<?> replacement){
-      replacements.add(new Replacement(var, replacement));
-   }
-   
    @Override
    public String toString() {
       return "SOLUTION: " + replacements.toString();

@@ -1,18 +1,15 @@
 package test.kb;
 
 import static junit.framework.Assert.assertTrue;
-import static main.kb.KBEncoding.rule;
-import static main.kb.KBEncoding.statement;
+import static main.kb.KBEncoding.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 import java.util.Arrays;
 import java.util.Collections;
 
-import main.kb.Constant;
 import main.kb.KnowledgeBase;
 import main.kb.Solution;
-import main.kb.Variable;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -44,7 +41,6 @@ public class KnowledgeBaseTest {
 
    @Test
    public void prove_statement_with_multiple_variables_and_use_of_numbers() throws Exception{
-      // you're an adult if you're 18+
       kb.add(statement("age(bob, 17)"));
       kb.add(statement("age(joe, 18)"));
       kb.add(rule("age(X, Y) ^ Y > 17 => adult(X)"));
@@ -56,10 +52,7 @@ public class KnowledgeBaseTest {
    @Test
    public void find_all_values_which_make_statement_true() throws Exception{
       kb.add(statement("age(bob, 17)"));
-      
-      Solution solution = new Solution();
-      solution.addVariableReplacement(new Variable("X"), new Constant<Number>(17));
-      assertEquals(Arrays.asList(solution), kb.findSolutions(statement("age(bob, X)")));
+      assertEquals(Arrays.asList(solution(replacement("X", 17))), kb.findSolutions(statement("age(bob, X)")));
       assertEquals(Collections.<Solution>emptyList(), kb.findSolutions(statement("age(mary, X)")));
    }
    

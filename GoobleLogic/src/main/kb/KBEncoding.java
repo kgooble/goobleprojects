@@ -6,6 +6,26 @@ import java.text.ParseException;
 import main.kb.stmts.GreaterThan;
 
 public class KBEncoding {
+   public static Solution solution(Replacement... replacements){
+      Solution soln = new Solution();
+      for (Replacement re : replacements){
+         soln.addVariableReplacement(re);
+      }
+      return soln;
+   }
+   
+   public static Replacement replacement(String varName, Object value){
+      return new Replacement(variable(varName), constant(value));
+   }
+   
+   public static Variable variable(String name){
+      return new Variable(name);
+   }
+   
+   public static <T> Constant<T> constant(T value){
+      return new Constant<T>(value);
+   }
+   
    public static Statement statement(String encodedStatement){
       return parseFunction(encodedStatement);
    }
@@ -75,9 +95,9 @@ public class KBEncoding {
    
    private static Constant<?> var(Object value){
       if (value instanceof String && value.equals(((String)value).toUpperCase())){
-         return new Variable((String) value);
+         return variable((String) value);
       }else{
-         return new Constant<Object>(value);
+         return constant(value);
       }
    }
 }
