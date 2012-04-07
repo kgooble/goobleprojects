@@ -1,4 +1,4 @@
-package test;
+package test.kb;
 
 import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
