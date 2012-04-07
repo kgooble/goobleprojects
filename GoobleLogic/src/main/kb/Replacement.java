@@ -23,4 +23,12 @@ public class Replacement {
       return "(" + variable.toString() + "=" + constant.toString() + ")";
    }
 
+   public Constant<?> getValue() {
+      return constant;
+   }
+
+   public Variable getVariable() {
+      return variable;
+   }
+
 }

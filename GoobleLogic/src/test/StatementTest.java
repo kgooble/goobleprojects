@@ -1,6 +1,7 @@
 package test;
 
 import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.List;
@@ -40,6 +41,34 @@ public class StatementTest {
       Statement variable = new Statement("ageOf", new Variable("X"), new Variable("Y"));
       List<Replacement> replacements = variable.unifyWith(constant);
       assertEquals(Arrays.asList(new Replacement(new Variable("X"), new Constant<String>("bob")), new Replacement(new Variable("Y"), new Constant<Number>(17))), replacements);
+   }
+   
+   @Test
+   public void if_unification_impossible_no_replacements() throws Exception{
+      Statement constant = new Statement("ageOf", new Constant<String>("bob"), new Constant<Number>(17));
+      Statement variable = new Statement("ageOf", new Variable("X"), new Variable("X"));
+      assertTrue(variable.unifyWith(constant).isEmpty());
+   }
+   
+   @Test
+   public void three_different_variable_replacements() throws Exception{
+      Statement constant = new Statement("p", new Constant<String>("a"), new Constant<String>("b"), new Constant<String>("c"));
+      Statement variable = new Statement("p", new Variable("X"), new Variable("Y"), new Variable("Z"));
+      List<Replacement> replacements = variable.unifyWith(constant);
+      assertEquals(Arrays.asList(
+            new Replacement(new Variable("X"), new Constant<String>("a")), 
+            new Replacement(new Variable("Y"), new Constant<String>("b")),
+            new Replacement(new Variable("Z"), new Constant<String>("c"))), replacements);
+   }
+   
+   @Test
+   public void two_replacements_but_one_of_them_gets_a_bunch_of_variables() throws Exception{
+      Statement constant = new Statement("p", new Constant<String>("a"), new Constant<String>("b"), new Constant<String>("b"));
+      Statement variable = new Statement("p", new Variable("X"), new Variable("Y"), new Variable("Y"));
+      List<Replacement> replacements = variable.unifyWith(constant);
+      assertEquals(Arrays.asList(
+            new Replacement(new Variable("X"), new Constant<String>("a")), 
+            new Replacement(new Variable("Y"), new Constant<String>("b"))), replacements);
    }
 
 }

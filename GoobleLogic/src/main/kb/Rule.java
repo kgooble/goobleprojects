@@ -29,6 +29,10 @@ public class Rule {
    public Statement getAntecedent() {
       return antecedents[0];
    }
+   
+   public Statement getConsequence() {
+      return consequence;
+   }
 
    public Statement[] getAntecedents() {
       return antecedents;

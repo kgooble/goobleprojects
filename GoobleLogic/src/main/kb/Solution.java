@@ -26,4 +26,8 @@ public class Solution {
       return replacements.equals(((Solution)obj).replacements);
    }
 
+   public List<Replacement> getReplacements() {
+      return replacements;
+   }
+
 }

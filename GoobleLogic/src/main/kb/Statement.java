@@ -26,19 +26,6 @@ public class Statement {
       return other.name == this.name && allConstantsMatch;
    }
    
-   @Override
-   public String toString(){
-      return name + Arrays.asList(constants).toString();
-   }
-
-   public String getValue() {
-      return (String) constants[0].getValue();
-   }
-
-   public Statement replaceVariableWithValue(String value) {
-      return new Statement(this.name, new Constant<String>(value));
-   }
-
    public <T> Statement replaceVariableWithValue(Variable variableToReplace, Constant<T> newValue) {
       List<Constant<?>> newConstants = new ArrayList<Constant<?>>();
       for (Constant<?> c : constants){
@@ -49,7 +36,7 @@ public class Statement {
          }
       }
       
-      return new Statement(name, newConstants.toArray(new Constant<?>[constants.length]));
+      return createStatement(newConstants.toArray(new Constant<?>[constants.length]));
    }
    
    @Override
@@ -59,6 +46,11 @@ public class Statement {
       Statement other = (Statement) obj;
       return (this.name == other.name) && Arrays.equals(this.constants, other.constants);
    }
+   
+   @Override
+   public String toString(){
+      return name + Arrays.asList(constants).toString();
+   }
 
    public List<Replacement> unifyWith(Statement other) {
       List<Replacement> replacements = new ArrayList<Replacement>();
@@ -66,16 +58,41 @@ public class Statement {
       if (!other.match(this)) 
          return replacements;
       
+      Statement workingStatement = createStatement(Arrays.copyOf(constants, constants.length));
+      
       for (int i = 0; i < constants.length; i++){
-         Constant<?> myConstant = constants[i];
+         Constant<?> myConstant = workingStatement.constants[i];
          Constant<?> otherConstant = other.constants[i];
          
          if (myConstant.isVariable()){
+            workingStatement = workingStatement.replaceVariableWithValue((Variable)myConstant, otherConstant);
             replacements.add(new Replacement((Variable)myConstant, otherConstant));
-         }
+         } 
       }
       
+      if (!other.match(workingStatement))
+         return new ArrayList<Replacement>();
       return replacements;
+   }
+   
+   public Statement applyReplacements(List<Replacement> replacements) {
+      Statement newStmt = createStatement(Arrays.copyOf(constants, constants.length));
+      for (Replacement r: replacements){
+         newStmt = newStmt.replaceVariableWithValue(r.getVariable(), r.getValue());
+      }
+      return newStmt;
+   }
+
+   protected Statement createStatement(Constant<?>[] constants) {
+      return new Statement(name, constants);
+   }
+
+   public boolean evaluate() {
+      return false;
+   }
+
+   public boolean isToBeEvaluated() {
+      return false;
    }
 
 }

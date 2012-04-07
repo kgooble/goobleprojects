@@ -23,15 +23,31 @@ public class KnowledgeBase {
             return true;
          }
       }
+      if (statement.isToBeEvaluated()){
+         return statement.evaluate();
+      }
       return tryToDeriveUsingRules(statement);
    }
 
    private boolean tryToDeriveUsingRules(Statement statement) {
+      List<Solution> solutions = new ArrayList<Solution>();
       for (Rule rule : rules){
          if (rule.consequenceMatches(statement)){
             boolean answer = true;
-            for (Statement proveFirst : rule.getAntecedents()){
-               answer &= query(proveFirst.replaceVariableWithValue(statement.getValue()));
+            for (Statement currStmtToProve : rule.getAntecedents()){
+               List<Replacement> replacements = rule.getConsequence().unifyWith(statement);
+               solutions.addAll(findSolutions(currStmtToProve.applyReplacements(replacements)));
+               boolean subSoln = false;
+               Statement workingStatement = currStmtToProve.applyReplacements(replacements);
+               for (Solution sol : solutions){
+                  workingStatement = currStmtToProve.applyReplacements(sol.getReplacements());
+                  subSoln |= query(workingStatement);
+               }
+               if (solutions.isEmpty()){
+                  subSoln |= query(workingStatement);
+               }
+               
+               answer &= subSoln;
             }
             return answer;
          }
