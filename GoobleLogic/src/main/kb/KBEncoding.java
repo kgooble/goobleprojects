@@ -3,13 +3,14 @@ package main.kb;
 import java.text.NumberFormat;
 import java.text.ParseException;
 
+import main.kb.stmts.GreaterThan;
+
 public class KBEncoding {
-   public static Statement stmt(String encodedStatement){
+   public static Statement statement(String encodedStatement){
       return parseFunction(encodedStatement);
    }
    
    public static Rule rule(String encodedRule){
-      // Rule is of the format "p(X) ^ g(X) => h(X)"
       String[] ruleParts = encodedRule.split(" => ");
       String[] antecedentParts = ruleParts[0].split(" \\^ ");
       String consequent = ruleParts[1];
@@ -29,6 +30,12 @@ public class KBEncoding {
       int indexOfOpenBracket = stmtEncoding.indexOf('(');
       int indexOfClosingBracket = stmtEncoding.indexOf(')');
       
+      if (indexOfOpenBracket == -1){
+         return parseOperator(stmtEncoding);
+      } else if (indexOfClosingBracket == -1){
+         throw new RuntimeException("Invalid encoding - there was an open bracket but no closing bracket: " + stmtEncoding);
+      }
+      
       String functionName = stmtEncoding.substring(0, indexOfOpenBracket);
       String[] parameterParts = stmtEncoding.substring(indexOfOpenBracket+1, indexOfClosingBracket).split(", ");
       
@@ -36,18 +43,26 @@ public class KBEncoding {
       
       int j = 0;
       for (String paramRepr : parameterParts){
-         Object param;
-         try {
-            param = NumberFormat.getNumberInstance().parse(paramRepr);
-         } catch (ParseException e) {
-            param = paramRepr;
-         }
-         
-         realParams[j] = param;
+         realParams[j] = parseParameter(paramRepr);
          j++;
       }
       
       return stmt(functionName, realParams);
+   }
+
+   private static Statement parseOperator(String stmtEncoding) {
+      String[] stmtParts = stmtEncoding.split(" > ");
+      Constant<?> limit = var(parseParameter(stmtParts[1]));
+      Constant<?> variable = var(stmtParts[0]);
+      return new GreaterThan((Constant<Number>) limit, variable);
+   }
+
+   private static Object parseParameter(String paramRepr) {
+      try {
+         return NumberFormat.getNumberInstance().parse(paramRepr);
+      } catch (ParseException e) {
+         return paramRepr;
+      }
    }
    
    private static Statement stmt(String fn, Object... consts){
