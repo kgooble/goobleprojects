@@ -9,7 +9,7 @@ public class Variable extends Constant<String> {
    
    @Override
    public boolean match(Constant<?> other){
-      return !(other instanceof Variable) || ((Variable) other).getValue() == getValue();
+      return !(other instanceof Variable) || ((Variable) other).getValue().equals(getValue());
    }
    
    @Override
@@ -17,7 +17,7 @@ public class Variable extends Constant<String> {
       if (!(obj instanceof Variable))
          return false;
       Variable other = (Variable) obj;
-      return this.getValue() == other.getValue();
+      return this.getValue().equals(other.getValue());
    }
    
    @Override

@@ -13,7 +13,7 @@ public class KnowledgeBase {
       rules = new ArrayList<Rule>();
    }
    
-   public void addStatement(Statement statement) {
+   public void add(Statement statement) {
       stmts.add(statement);
    }
 
@@ -40,11 +40,11 @@ public class KnowledgeBase {
                boolean subSoln = false;
                Statement workingStatement = currStmtToProve.applyReplacements(replacements);
                for (Solution sol : solutions){
-                  workingStatement = currStmtToProve.applyReplacements(sol.getReplacements());
+                  workingStatement = currStmtToProve.applyReplacements(replacements).applyReplacements(sol.getReplacements());
                   subSoln |= query(workingStatement);
                }
                if (solutions.isEmpty()){
-                  subSoln |= query(workingStatement);
+                  subSoln = query(workingStatement);
                }
                
                answer &= subSoln;
@@ -58,6 +58,10 @@ public class KnowledgeBase {
 
    public void addRule(Statement consequence, Statement... antecedents) {
       rules.add(new Rule(consequence, antecedents));
+   }
+   
+   public void add(Rule rule) {
+      rules.add(rule);
    }
    
    @Override

@@ -23,7 +23,7 @@ public class Statement {
       for (int i = 0; i < constants.length; i++){
          allConstantsMatch &= (constants[i].match(other.constants[i]) || other.constants[i].match(constants[i])); 
       }
-      return other.name == this.name && allConstantsMatch;
+      return other.name.equals(this.name) && allConstantsMatch;
    }
    
    public <T> Statement replaceVariableWithValue(Variable variableToReplace, Constant<T> newValue) {
@@ -44,7 +44,7 @@ public class Statement {
       if (!(obj instanceof Statement)) 
          return false;
       Statement other = (Statement) obj;
-      return (this.name == other.name) && Arrays.equals(this.constants, other.constants);
+      return (this.name.equals(other.name)) && Arrays.equals(this.constants, other.constants);
    }
    
    @Override

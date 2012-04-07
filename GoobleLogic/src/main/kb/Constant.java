@@ -9,7 +9,7 @@ public class Constant<T> {
    }
 
    public boolean match(Constant<?> other) {
-      return this.value == other.value;
+      return this.value.equals(other.value);
    }
    
 
@@ -27,7 +27,15 @@ public class Constant<T> {
       if (!(obj instanceof Constant) || (obj instanceof Variable))
          return false;
       Constant<T> other = (Constant<T>) obj;
-      return other.value == this.value;
+      if (this.value instanceof String)
+         return other.value.equals(this.value);
+      
+      if (this.value instanceof Number && !(other.value instanceof Number))
+         return false;
+      
+      Number num1 = (Number) this.value;
+      Number num2 = (Number) other.value;
+      return num1.floatValue() == num2.floatValue();
    }
 
    public boolean isVariable() {

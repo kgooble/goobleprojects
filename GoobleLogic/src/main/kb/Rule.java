@@ -16,26 +16,27 @@ public class Rule {
       return consequence.match(statement);
    }
 
-   public boolean antecedentMatches(Statement statement) {
-      return antecedents[0].match(statement);
-   }
-   
-
-   @Override
-   public String toString(){
-      return Arrays.asList(antecedents).toString() + " => " + consequence.toString();
-   }
-
-   public Statement getAntecedent() {
-      return antecedents[0];
-   }
-   
    public Statement getConsequence() {
       return consequence;
    }
 
    public Statement[] getAntecedents() {
       return antecedents;
+   }
+   
+
+   
+   @Override
+   public boolean equals(Object obj){
+      if (!(obj instanceof Rule))
+         return false;
+      Rule other = (Rule) obj;
+      return this.consequence.equals(other.consequence) && Arrays.equals(this.antecedents, other.antecedents); 
+   }
+   
+   @Override
+   public String toString(){
+      return Arrays.asList(antecedents).toString() + " => " + consequence.toString();
    }
 
 }
