@@ -18,41 +18,7 @@ public class KnowledgeBase {
    }
 
    public boolean query(Statement statement) {
-      for (Statement stmt : stmts){
-         if (stmt.match(statement)){
-            return true;
-         }
-      }
-      if (statement.isToBeEvaluated()){
-         return statement.evaluate();
-      }
-      return tryToDeriveUsingRules(statement);
-   }
-
-   private boolean tryToDeriveUsingRules(Statement statement) {
-      List<Solution> solutions = new ArrayList<Solution>();
-      for (Rule rule : rules){
-         if (rule.consequenceMatches(statement)){
-            boolean answer = true;
-            for (Statement currStmtToProve : rule.getAntecedents()){
-               List<Replacement> replacements = rule.getConsequence().unifyWith(statement);
-               solutions.addAll(findSolutions(currStmtToProve.applyReplacements(replacements)));
-               boolean subSoln = false;
-               Statement workingStatement = currStmtToProve.applyReplacements(replacements);
-               for (Solution sol : solutions){
-                  workingStatement = currStmtToProve.applyReplacements(replacements).applyReplacements(sol.getReplacements());
-                  subSoln |= query(workingStatement);
-               }
-               if (solutions.isEmpty()){
-                  subSoln = query(workingStatement);
-               }
-
-               answer &= subSoln;
-            }
-            return answer;
-         }
-      }
-      return false;
+      return findSolutions(statement).isQueryTrue();
    }
 
    public void add(Rule rule) {
@@ -64,11 +30,13 @@ public class KnowledgeBase {
       return "STATEMENTS: " + stmts.toString() + "\n" + "RULES: " + rules.toString();
    }
 
-   public List<Solution> findSolutions(Statement statement) {
+   public SolutionSet findSolutions(Statement statement) {
       List<Solution> solns = new ArrayList<Solution>();
 
+      boolean matchesStatement = false;
       for (Statement stmt : stmts){
          if (stmt.match(statement)){
+            matchesStatement = true;
             List<Replacement> replacements = statement.unifyWith(stmt);
             if (replacements.isEmpty())
                continue;
@@ -79,16 +47,49 @@ public class KnowledgeBase {
             solns.add(soln);
          }
       }
+      if (statement.isToBeEvaluated()){
+         return new SolutionSet(new ArrayList<Solution>(), statement.evaluate());
+      }
       for (Rule rule : rules){
          if (rule.consequenceMatches(statement)){
+            List<Solution> subSolns = new ArrayList<Solution>();
+            boolean allStatementsTrue = true;
             for (Statement currStmtToProve : rule.getAntecedents()){
                List<Replacement> replacements = rule.getConsequence().unifyWith(statement);
-               solns.addAll(findSolutions(currStmtToProve.applyReplacements(replacements)));
+               if (subSolns.isEmpty()){
+                  SolutionSet statementSolutions = findSolutions(currStmtToProve.applyReplacements(replacements));
+                  subSolns.addAll(statementSolutions.getSolutions());
+                  allStatementsTrue &= statementSolutions.isQueryTrue();
+               }else{
+                  List<Solution> newSubSolns = new ArrayList<Solution>();
+                  boolean atLeastOneSolutionResultedInTrueAnswer = false;
+                  for (int i = subSolns.size() - 1; i >= 0; i--){
+                     Solution currentSolution = subSolns.get(i);
+                     
+                     Statement fullyUnifiedStatement = currStmtToProve.applyReplacements(replacements).applyReplacements(currentSolution.getReplacements());
+                     SolutionSet statementSolutions = findSolutions(fullyUnifiedStatement);
+                     atLeastOneSolutionResultedInTrueAnswer |= statementSolutions.isQueryTrue();
+                     if (!statementSolutions.isQueryTrue()){
+                        subSolns.remove(i);
+                        i--;
+                     }else if (statementSolutions.hasSolutions()){
+                        for (Solution statementSol : statementSolutions.getSolutions()){
+                           newSubSolns.add(currentSolution.mergeWith(statementSol));
+                        }
+                     }
+                  }
+                  allStatementsTrue &= atLeastOneSolutionResultedInTrueAnswer;
+                  if (!newSubSolns.isEmpty()){
+                     subSolns = newSubSolns;
+                  }
+               }
             }
+            matchesStatement |= allStatementsTrue;
+            solns.addAll(subSolns);
          }
       }
 
-      return solns;
+      return new SolutionSet(solns, matchesStatement||!solns.isEmpty());
    }
 
 }

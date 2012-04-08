@@ -26,4 +26,15 @@ public class Solution {
       return replacements;
    }
 
+   public void addReplacements(List<Replacement> replacements) {
+      this.replacements.addAll(replacements);
+   }
+
+   public Solution mergeWith(Solution other) {
+      Solution mergedSol = new Solution();
+      mergedSol.addReplacements(this.getReplacements());
+      mergedSol.addReplacements(other.getReplacements());
+      return mergedSol;
+   }
+
 }

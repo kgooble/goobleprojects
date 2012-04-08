@@ -52,8 +52,8 @@ public class KnowledgeBaseTest {
    @Test
    public void find_all_values_which_make_statement_true() throws Exception{
       kb.add(statement("age(bob, 17)"));
-      assertEquals(Arrays.asList(solution(replacement("X", 17))), kb.findSolutions(statement("age(bob, X)")));
-      assertEquals(Collections.<Solution>emptyList(), kb.findSolutions(statement("age(mary, X)")));
+      assertEquals(Arrays.asList(solution(replacement("X", 17))), kb.findSolutions(statement("age(bob, X)")).getSolutions());
+      assertEquals(Collections.<Solution>emptyList(), kb.findSolutions(statement("age(mary, X)")).getSolutions());
    }
    
    @Test
@@ -103,22 +103,36 @@ public class KnowledgeBaseTest {
       kb.add(statement("hairColour(chestnut)"));
       kb.add(statement("hairColour(grey)"));
       
-      kb.add(rule("house(X), woman(Y) => livesAtHouse(X, Y)"));
-      kb.add(rule("hairColour(C), woman(W) => hairOf(W, C)"));
-      kb.add(rule("woman(A), livesAtHouse(B, A), hairOf(A, C) => everythingAbout(A, B, C)"));
+      kb.add(rule("house(X) ^ woman(Y) => livesAtHouse(X, Y)"));
+      kb.add(rule("hairColour(C) ^ woman(W) => hairOf(W, C)"));
+      kb.add(rule("woman(A) ^ livesAtHouse(B, A) ^ hairOf(A, C) => everythingAbout(A, B, C)"));
       
       assertEquals(Arrays.asList(solution(replacement("C", "black")),
             solution(replacement("C", "blonde")),
             solution(replacement("C", "brown")),
             solution(replacement("C", "chestnut")),
             solution(replacement("C", "grey"))),
-            kb.findSolutions(statement("hairOf(molly, C)")));
+            kb.findSolutions(statement("hairOf(molly, C)")).getSolutions());
       assertEquals(Arrays.asList(solution(replacement("H", 2)),
             solution(replacement("H", 4)),
             solution(replacement("H", 5)),
             solution(replacement("H", 1)),
             solution(replacement("H", 3))),
-            kb.findSolutions(statement("livesAtHouse(H, molly)")));
+            kb.findSolutions(statement("livesAtHouse(H, molly)")).getSolutions());
+      assertEquals(25, kb.findSolutions(statement("everythingAbout(molly, X, Y)")).getSolutions().size());
+      System.out.println(kb.findSolutions(statement("everythingAbout(molly, 3, Y)")));
+   }
+   
+   
+   @Test
+   public void solutions_do_not_contradict_each_other() throws Exception{
+      kb.add(statement("p(a)"));
+      kb.add(statement("p(c)"));
+      kb.add(statement("h(c)"));
+      
+      kb.add(rule("p(X) ^ h(X) => g(X)"));
+      
+      assertEquals(Arrays.asList(solution(replacement("X", "c"))), kb.findSolutions(statement("g(X)")).getSolutions());
    }
    
    private boolean query(String stmtEncoding) {

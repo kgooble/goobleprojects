@@ -94,4 +94,12 @@ public class Statement {
       return false;
    }
 
+   public boolean containsVariables() {
+      for (Term<?> t : terms){
+         if (t.isVariable())
+            return true;
+      }
+      return false;
+   }
+
 }

@@ -37,7 +37,7 @@ abstract public class Operator extends Statement {
    
    @Override
    public String toString(){
-      return "(" + limit + " " + name + " " + constant + ")";
+      return "(" + constant + " " + name + " " + limit + ")";
    }
 
 }
