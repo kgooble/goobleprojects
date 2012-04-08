@@ -14,7 +14,7 @@ public class Constant<T> implements Term<T>{
 
    @Override
    public String toString(){
-      return value.toString();
+      return "CONST:" + value.toString();
    }
 
    public T getValue() {

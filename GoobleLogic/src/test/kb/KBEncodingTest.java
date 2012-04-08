@@ -40,6 +40,7 @@ public class KBEncodingTest {
       Solution solution = new Solution();
       solution.addVariableReplacement(new Replacement(new Variable("X"), new Constant<Number>(5)));
       solution.addVariableReplacement(new Replacement(new Variable("Y"), new Constant<String>("sixty")));
-      assertEquals(solution, solution(replacement("X", 5), replacement("Y", "sixty")));
+      solution.addVariableReplacement(new Replacement(new Variable("T"), new Variable("Z")));
+      assertEquals(solution, solution(replacement("X", 5), replacement("Y", "sixty"), replacement("T", "Z")));
    }
 }

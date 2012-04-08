@@ -26,6 +26,15 @@ public class StatementTest {
    }
    
    @Test
+   public void unify_with_statement_with_different_variable_names() throws Exception{
+      Statement s1 = statement("p(A, B)");
+      Statement s2 = statement("p(X, Y)");
+      assertTrue(s1.match(s2));
+      assertEquals(Arrays.asList(replacement("A", "X"), replacement("B", "Y")), s1.unifyWith(s2));
+      assertEquals(Arrays.asList(replacement("X", "A"), replacement("Y", "B")), s2.unifyWith(s1));
+   }
+   
+   @Test
    public void replace_multiple_variables_of_same_name() throws Exception{
       Statement original = statement("loveTriangle(X, X, Y)");
       Statement newStatement = original.replaceVariableWithValue(variable("X"), constant("bob"));

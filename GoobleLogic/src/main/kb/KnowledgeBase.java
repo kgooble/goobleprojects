@@ -52,7 +52,6 @@ public class KnowledgeBase {
             return answer;
          }
       }
-
       return false;
    }
 
@@ -78,6 +77,14 @@ public class KnowledgeBase {
                soln.addVariableReplacement(re);
             }
             solns.add(soln);
+         }
+      }
+      for (Rule rule : rules){
+         if (rule.consequenceMatches(statement)){
+            for (Statement currStmtToProve : rule.getAntecedents()){
+               List<Replacement> replacements = rule.getConsequence().unifyWith(statement);
+               solns.addAll(findSolutions(currStmtToProve.applyReplacements(replacements)));
+            }
          }
       }
 

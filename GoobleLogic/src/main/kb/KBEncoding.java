@@ -16,7 +16,7 @@ public class KBEncoding {
    }
    
    public static Replacement replacement(String varName, Object value){
-      return new Replacement(variable(varName), constant(value));
+      return new Replacement(variable(varName), var(value));
    }
    
    public static Variable variable(String name){

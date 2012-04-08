@@ -28,7 +28,7 @@ public class Statement {
    public <T> Statement replaceVariableWithValue(Variable variableToReplace, Term<T> newValue) {
       List<Term<?>> newConstants = new ArrayList<Term<?>>();
       for (Term<?> c : terms){
-         if (c.match(variableToReplace)){
+         if (c.equals(variableToReplace)){
             newConstants.add(newValue);
          }else{
             newConstants.add(c);
@@ -54,7 +54,7 @@ public class Statement {
    public List<Replacement> unifyWith(Statement other) {
       List<Replacement> replacements = new ArrayList<Replacement>();
       
-      if (!other.match(this)) 
+      if (!this.match(other)) 
          return replacements;
       
       Statement workingStatement = createStatement(Arrays.copyOf(terms, terms.length));

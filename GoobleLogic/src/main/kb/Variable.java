@@ -24,12 +24,17 @@ public class Variable implements Term<String> {
 
    @Override
    public boolean match(Term<?> other) {
-      return !(other instanceof Variable) || ((Variable) other).getValue().equals(getValue());
+      return true;
    }
 
    @Override
    public String getValue() {
       return name;
+   }
+   
+   @Override
+   public String toString(){
+      return "VAR:" + name.toString();
    }
 
 }
