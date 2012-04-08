@@ -50,32 +50,35 @@ public class KnowledgeBase {
    }
 
    private SolutionSet collectSolutionsForRule(Statement statement, Rule rule) {
-      SolutionSet subSolSet = new SolutionSet(new ArrayList<Solution>(), true);
+      SolutionSet ruleSolutionSet = new SolutionSet(new ArrayList<Solution>(), true);
       for (Statement currStmtToProve : rule.getAntecedents()){
          List<Replacement> replacements = rule.getConsequence().unifyWith(statement);
-         if (!subSolSet.hasSolutions()){
-            SolutionSet statementSolutions = findSolutions(currStmtToProve.applyReplacements(replacements));
-            subSolSet.add(statementSolutions);
+         if (ruleSolutionSet.hasSolutions()){
+            expandSolutionSet(ruleSolutionSet, currStmtToProve, replacements);
          }else{
-            SolutionSet newSubSolSet = new SolutionSet(new ArrayList<Solution>(), false);
-            for (int i = subSolSet.size() - 1; i >= 0; i--){
-               Solution currentSolution = subSolSet.get(i);
-               Statement fullyUnifiedStatement = currStmtToProve.applyReplacements(replacements).applyReplacements(currentSolution.getReplacements());
-               SolutionSet statementSolutions = findSolutions(fullyUnifiedStatement);
-
-               if (!statementSolutions.isQueryTrue()){
-                  subSolSet.remove(i);
-                  i--;
-               }else if (statementSolutions.hasSolutions()){
-                  for (Solution statementSol : statementSolutions.getSolutions()){
-                     newSubSolSet.add(currentSolution.mergeWith(statementSol));
-                  }
-               }
-            }
-            subSolSet.replaceSolutionsIfNotEmpty(newSubSolSet);
+            ruleSolutionSet.add(findSolutions(currStmtToProve.applyReplacements(replacements)));
          }
       }
-      return subSolSet;
+      return ruleSolutionSet;
+   }
+
+   private void expandSolutionSet(SolutionSet ruleSolutionSet, Statement statementToProve, List<Replacement> replacements) {
+      SolutionSet expandedRuleSolutionSet = new SolutionSet(new ArrayList<Solution>(), false);
+      for (int i = ruleSolutionSet.size() - 1; i >= 0; i--){
+         Solution currentSolution = ruleSolutionSet.get(i);
+         Statement fullyUnifiedStatement = statementToProve.applyReplacements(replacements).applyReplacements(currentSolution.getReplacements());
+         SolutionSet statementSolutions = findSolutions(fullyUnifiedStatement);
+
+         if (!statementSolutions.isQueryTrue()){
+            ruleSolutionSet.remove(i);
+            i--;
+         }else if (statementSolutions.hasSolutions()){
+            for (Solution statementSol : statementSolutions.getSolutions()){
+               expandedRuleSolutionSet.add(currentSolution.mergeWith(statementSol));
+            }
+         }
+      }
+      ruleSolutionSet.replaceSolutionsIfNotEmpty(expandedRuleSolutionSet);
    }
 
    private boolean matchesStatement(Statement statement, List<Solution> solns) {
