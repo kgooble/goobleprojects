@@ -32,7 +32,54 @@ public class KnowledgeBase {
 
    public SolutionSet findSolutions(Statement statement) {
       List<Solution> solns = new ArrayList<Solution>();
+      
+      boolean queryWithNoVariablesTrue = checkIfMatchesStatement(statement, solns);
+      SolutionSet solution = new SolutionSet(solns, queryWithNoVariablesTrue);
+      if (queryWithNoVariablesTrue)
+         return solution;
+      if (statement.isToBeEvaluated()){
+         return new SolutionSet(solns, statement.evaluate());
+      }
+      for (Rule rule : rules){
+         if (rule.consequenceMatches(statement)){
+            SolutionSet subSolSet = new SolutionSet(new ArrayList<Solution>(), true);
+            
+            for (Statement currStmtToProve : rule.getAntecedents()){
+               List<Replacement> replacements = rule.getConsequence().unifyWith(statement);
+               if (!subSolSet.hasSolutions()){
+                  SolutionSet statementSolutions = findSolutions(currStmtToProve.applyReplacements(replacements));
+                  subSolSet.add(statementSolutions);
+               }else{
+                  SolutionSet newSubSolSet = new SolutionSet(new ArrayList<Solution>(), false);
+                  
+                  for (int i = subSolSet.size() - 1; i >= 0; i--){
+                     Solution currentSolution = subSolSet.get(i);
+                     Statement fullyUnifiedStatement = currStmtToProve.applyReplacements(replacements).applyReplacements(currentSolution.getReplacements());
+                     SolutionSet statementSolutions = findSolutions(fullyUnifiedStatement);
+                     
+                     if (!statementSolutions.isQueryTrue()){
+                        subSolSet.remove(i);
+                        i--;
+                     }else if (statementSolutions.hasSolutions()){
+                        for (Solution statementSol : statementSolutions.getSolutions()){
+                           newSubSolSet.add(currentSolution.mergeWith(statementSol));
+                        }
+                     }
+                  }
+                  subSolSet.replaceSolutionsIfNotEmpty(newSubSolSet);
+               }
+            }
+            
+            queryWithNoVariablesTrue |= subSolSet.isQueryTrue();
+            solution.add(subSolSet);
+         }
+      }
 
+      solution.setSucceeded(queryWithNoVariablesTrue);
+      return solution;
+   }
+
+   private boolean checkIfMatchesStatement(Statement statement, List<Solution> solns) {
       boolean matchesStatement = false;
       for (Statement stmt : stmts){
          if (stmt.match(statement)){
@@ -47,49 +94,7 @@ public class KnowledgeBase {
             solns.add(soln);
          }
       }
-      if (statement.isToBeEvaluated()){
-         return new SolutionSet(solns, statement.evaluate());
-      }
-      for (Rule rule : rules){
-         if (rule.consequenceMatches(statement)){
-            List<Solution> subSolns = new ArrayList<Solution>();
-            boolean allStatementsTrue = true;
-            for (Statement currStmtToProve : rule.getAntecedents()){
-               List<Replacement> replacements = rule.getConsequence().unifyWith(statement);
-               if (subSolns.isEmpty()){
-                  SolutionSet statementSolutions = findSolutions(currStmtToProve.applyReplacements(replacements));
-                  subSolns.addAll(statementSolutions.getSolutions());
-                  allStatementsTrue &= statementSolutions.isQueryTrue();
-               }else{
-                  List<Solution> newSubSolns = new ArrayList<Solution>();
-                  boolean atLeastOneSolutionResultedInTrueAnswer = false;
-                  for (int i = subSolns.size() - 1; i >= 0; i--){
-                     Solution currentSolution = subSolns.get(i);
-                     
-                     Statement fullyUnifiedStatement = currStmtToProve.applyReplacements(replacements).applyReplacements(currentSolution.getReplacements());
-                     SolutionSet statementSolutions = findSolutions(fullyUnifiedStatement);
-                     atLeastOneSolutionResultedInTrueAnswer |= statementSolutions.isQueryTrue();
-                     if (!statementSolutions.isQueryTrue()){
-                        subSolns.remove(i);
-                        i--;
-                     }else if (statementSolutions.hasSolutions()){
-                        for (Solution statementSol : statementSolutions.getSolutions()){
-                           newSubSolns.add(currentSolution.mergeWith(statementSol));
-                        }
-                     }
-                  }
-                  allStatementsTrue &= atLeastOneSolutionResultedInTrueAnswer;
-                  if (!newSubSolns.isEmpty()){
-                     subSolns = newSubSolns;
-                  }
-               }
-            }
-            matchesStatement |= allStatementsTrue;
-            solns.addAll(subSolns);
-         }
-      }
-
-      return new SolutionSet(solns, matchesStatement||!solns.isEmpty());
+      return matchesStatement;
    }
 
 }

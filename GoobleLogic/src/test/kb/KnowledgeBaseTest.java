@@ -120,7 +120,6 @@ public class KnowledgeBaseTest {
             solution(replacement("H", 3))),
             kb.findSolutions(statement("livesAtHouse(H, molly)")).getSolutions());
       assertEquals(25, kb.findSolutions(statement("everythingAbout(molly, X, Y)")).getSolutions().size());
-      System.out.println(kb.findSolutions(statement("everythingAbout(molly, 3, Y)")));
    }
    
    
