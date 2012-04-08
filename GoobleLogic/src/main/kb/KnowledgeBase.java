@@ -48,7 +48,7 @@ public class KnowledgeBase {
          }
       }
       if (statement.isToBeEvaluated()){
-         return new SolutionSet(new ArrayList<Solution>(), statement.evaluate());
+         return new SolutionSet(solns, statement.evaluate());
       }
       for (Rule rule : rules){
          if (rule.consequenceMatches(statement)){
