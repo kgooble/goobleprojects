@@ -5,6 +5,7 @@ import main.kb.Rule;
 import main.kb.Statement;
 import main.kb.Variable;
 import main.kb.stmts.GreaterThan;
+import main.kb.stmts.LessThan;
 
 import org.junit.Test;
 
@@ -29,5 +30,6 @@ public class KBEncodingTest {
    @Test
    public void encode_rule_with_operator() throws Exception{
       assertEquals(new Rule(new Statement("p", new Variable("X")), new GreaterThan(new Constant<Number>(17), new Variable("X"))), rule("X > 17 => p(X)"));
+      assertEquals(new Rule(new Statement("p", new Variable("X")), new LessThan(new Constant<Number>(17), new Variable("X"))), rule("X < 17 => p(X)"));
    }
 }

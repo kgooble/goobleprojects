@@ -4,6 +4,7 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 
 import main.kb.stmts.GreaterThan;
+import main.kb.stmts.LessThan;
 
 public class KBEncoding {
    public static Solution solution(Replacement... replacements){
@@ -71,10 +72,18 @@ public class KBEncoding {
    }
 
    private static Statement parseOperator(String stmtEncoding) {
-      String[] stmtParts = stmtEncoding.split(" > ");
-      Constant<?> limit = var(parseParameter(stmtParts[1]));
-      Constant<?> variable = var(stmtParts[0]);
-      return new GreaterThan((Constant<Number>) limit, variable);
+      if (stmtEncoding.indexOf(">") > 0){
+         String[] stmtParts = stmtEncoding.split(" > ");
+         Constant<?> limit = var(parseParameter(stmtParts[1]));
+         Constant<?> variable = var(stmtParts[0]);
+         return new GreaterThan((Constant<Number>) limit, variable);
+      } else if (stmtEncoding.indexOf("<") > 0){
+         String[] stmtParts = stmtEncoding.split(" < ");
+         Constant<?> limit = var(parseParameter(stmtParts[1]));
+         Constant<?> variable = var(stmtParts[0]);
+         return new LessThan((Constant<Number>) limit, variable);
+      }  
+      return null;
    }
 
    private static Object parseParameter(String paramRepr) {
