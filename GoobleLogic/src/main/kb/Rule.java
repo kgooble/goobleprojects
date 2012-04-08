@@ -24,8 +24,6 @@ public class Rule {
       return antecedents;
    }
    
-
-   
    @Override
    public boolean equals(Object obj){
       if (!(obj instanceof Rule))

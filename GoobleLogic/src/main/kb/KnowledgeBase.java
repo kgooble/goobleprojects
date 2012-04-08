@@ -12,7 +12,7 @@ public class KnowledgeBase {
       stmts = new ArrayList<Statement>();
       rules = new ArrayList<Rule>();
    }
-   
+
    public void add(Statement statement) {
       stmts.add(statement);
    }
@@ -46,24 +46,20 @@ public class KnowledgeBase {
                if (solutions.isEmpty()){
                   subSoln = query(workingStatement);
                }
-               
+
                answer &= subSoln;
             }
             return answer;
          }
       }
-      
+
       return false;
    }
 
-   public void addRule(Statement consequence, Statement... antecedents) {
-      rules.add(new Rule(consequence, antecedents));
-   }
-   
    public void add(Rule rule) {
       rules.add(rule);
    }
-   
+
    @Override
    public String toString(){
       return "STATEMENTS: " + stmts.toString() + "\n" + "RULES: " + rules.toString();
@@ -71,7 +67,7 @@ public class KnowledgeBase {
 
    public List<Solution> findSolutions(Statement statement) {
       List<Solution> solns = new ArrayList<Solution>();
-      
+
       for (Statement stmt : stmts){
          if (stmt.match(statement)){
             List<Replacement> replacements = statement.unifyWith(stmt);
@@ -84,7 +80,7 @@ public class KnowledgeBase {
             solns.add(soln);
          }
       }
-      
+
       return solns;
    }
 

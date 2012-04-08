@@ -2,13 +2,14 @@ package main.kb.stmts;
 
 import main.kb.Constant;
 import main.kb.Statement;
+import main.kb.Term;
 
 abstract public class Operator extends Statement {
 
-   private final Constant<?> constant;
+   private final Term<?> constant;
    private final Constant<Number> limit;
    
-   public Operator(String name, Constant<Number> limit, Constant<?> constant) {
+   public Operator(String name, Constant<Number> limit, Term<?> constant) {
       super(name, limit, constant);
       this.limit = limit;
       this.constant = constant;
@@ -30,7 +31,7 @@ abstract public class Operator extends Statement {
    }
    
    @Override
-   protected Statement createStatement(Constant<?>[] constants){
+   protected Statement createStatement(Term<?>[] constants){
       throw new UnsupportedOperationException("Subclass of operator has not overridden create statement method!");
    }
    

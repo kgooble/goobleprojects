@@ -2,15 +2,16 @@ package main.kb.stmts;
 
 import main.kb.Constant;
 import main.kb.Statement;
+import main.kb.Term;
 
 public class LessThan extends Operator {
 
-   public LessThan(Constant<Number> limit, Constant<?> constant) {
+   public LessThan(Constant<Number> limit, Term<?> constant) {
       super("<", limit, constant);
    }
    
    @Override
-   protected Statement createStatement(Constant<?>[] constants){
+   protected Statement createStatement(Term<?>[] constants){
       return new LessThan((Constant<Number>) constants[0], constants[1]);
    }
 

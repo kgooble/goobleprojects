@@ -1,6 +1,6 @@
 package main.kb;
 
-public class Constant<T> {
+public class Constant<T> implements Term<T>{
 
    private final T value;
 
@@ -8,10 +8,9 @@ public class Constant<T> {
       this.value = value;
    }
 
-   public boolean match(Constant<?> other) {
-      return this.value.equals(other.value);
+   public boolean match(Term<?> other) {
+      return this.getValue().equals(other.getValue());
    }
-   
 
    @Override
    public String toString(){
@@ -24,12 +23,11 @@ public class Constant<T> {
    
    @Override
    public boolean equals(Object obj) {
-      if (!(obj instanceof Constant) || (obj instanceof Variable))
+      if (!(obj instanceof Constant))
          return false;
       Constant<T> other = (Constant<T>) obj;
       if (this.value instanceof String)
          return other.value.equals(this.value);
-      
       if (this.value instanceof Number && !(other.value instanceof Number))
          return false;
       
@@ -41,6 +39,5 @@ public class Constant<T> {
    public boolean isVariable() {
       return false;
    }
-
 
 }

@@ -2,12 +2,12 @@ package main.kb;
 
 public class Replacement {
 
-   private final Constant<?> constant;
+   private final Term<?> replacement;
    private final Variable variable;
 
-   public Replacement(Variable variable, Constant<?> replacement) {
+   public Replacement(Variable variable, Term<?> replacement) {
       this.variable = variable;
-      this.constant = replacement;
+      this.replacement = replacement;
    }
    
    @Override
@@ -15,16 +15,16 @@ public class Replacement {
       if (!(obj instanceof Replacement))
          return false;
       Replacement other = (Replacement) obj;
-      return other.variable.equals(this.variable) && other.constant.equals(this.constant);
+      return other.variable.equals(this.variable) && other.replacement.equals(this.replacement);
    }
    
    @Override
    public String toString() {
-      return "(" + variable.toString() + "=" + constant.toString() + ")";
+      return "(" + variable.toString() + "=" + replacement.toString() + ")";
    }
 
-   public Constant<?> getValue() {
-      return constant;
+   public Term<?> getValue() {
+      return replacement;
    }
 
    public Variable getVariable() {

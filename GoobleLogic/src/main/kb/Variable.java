@@ -1,15 +1,12 @@
 package main.kb;
 
 
-public class Variable extends Constant<String> {
+public class Variable implements Term<String> {
+
+   private final String name;
 
    public Variable(String name) {
-      super(name);
-   }
-   
-   @Override
-   public boolean match(Constant<?> other){
-      return !(other instanceof Variable) || ((Variable) other).getValue().equals(getValue());
+      this.name = name;
    }
    
    @Override
@@ -23,6 +20,16 @@ public class Variable extends Constant<String> {
    @Override
    public boolean isVariable() {
       return true;
+   }
+
+   @Override
+   public boolean match(Term<?> other) {
+      return !(other instanceof Variable) || ((Variable) other).getValue().equals(getValue());
+   }
+
+   @Override
+   public String getValue() {
+      return name;
    }
 
 }

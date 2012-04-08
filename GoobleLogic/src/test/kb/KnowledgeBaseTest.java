@@ -70,48 +70,48 @@ public class KnowledgeBaseTest {
       assertFalse(query("p(b)"));
    }
    
-   @Test
-   public void logic_puzzle_2_from_book_case_test() throws Exception{
-      kb.add(statement("livesDirectlyEastOf(laura, adele)"));
-      kb.add(statement("livesNextTo(molly, sarah)"));
-      kb.add(statement("livesSouthOf(molly, sarah)"));
-      
-      kb.add(statement("westHouse(1)"));
-      kb.add(statement("westHouse(3)"));
-      
-      kb.add(statement("eastHouse(2)"));
-      kb.add(statement("eastHouse(4)"));
-      kb.add(statement("eastHouse(5)"));
-      
-      kb.add(statement("hairColour(black)"));
-      kb.add(statement("hairColour(blonde)"));
-      kb.add(statement("hairColour(brown)"));
-      kb.add(statement("hairColour(chestnut)"));
-      kb.add(statement("hairColour(grey)"));
-      
-      kb.add(rule("eastHouse(X) => house(X)"));
-      kb.add(rule("westHouse(X) => house(X)"));
-      
-      kb.add(statement("directlyEastOf(1, 2)"));
-      kb.add(statement("directlyEastOf(3, 4)"));
-      
-      kb.add(statement("oneOfThemIsHouseFour(4, Y)"));
-      kb.add(statement("oneOfThemIsHouseFour(X, 4)"));
-
-      kb.add(rule("X < Y => northOf(X, Y)"));
-      kb.add(rule("X > Y => southOf(X, Y)"));
-      
-      kb.add(rule("livesAtHouse(A, X), livesAtHouse(B, Y), westHouse(A), westHouse(B) => livesNextTo(X, Y)"));
-      kb.add(rule("livesAtHouse(A, X), livesAtHouse(B, Y), eastHouse(A), eastHouse(B), oneOfThemIsHouseFour(A, B) => livesNextTo(X, Y)"));
-      
-      
-      kb.add(rule("hairOf(X, blonde) => livesNextTo(adele, X)"));
-      kb.add(rule("livesNextTo(adele, X) => hairOf(X, blonde)"));
-      
-      kb.add(rule("woman(A), livesAtHouse(A, B), house(B), hairOf(A, C), hairColour(C) => everythingAbout(A, B, C)"));
-      
-      //assertTrue(query("hairOf(molly, blonde)"));
-   }
+//   @Test
+//   public void logic_puzzle_2_from_book_case_test() throws Exception{
+//      kb.add(statement("livesDirectlyEastOf(laura, adele)"));
+//      kb.add(statement("livesNextTo(molly, sarah)"));
+//      kb.add(statement("livesSouthOf(molly, sarah)"));
+//      
+//      kb.add(statement("westHouse(1)"));
+//      kb.add(statement("westHouse(3)"));
+//      
+//      kb.add(statement("eastHouse(2)"));
+//      kb.add(statement("eastHouse(4)"));
+//      kb.add(statement("eastHouse(5)"));
+//      
+//      kb.add(statement("hairColour(black)"));
+//      kb.add(statement("hairColour(blonde)"));
+//      kb.add(statement("hairColour(brown)"));
+//      kb.add(statement("hairColour(chestnut)"));
+//      kb.add(statement("hairColour(grey)"));
+//      
+//      kb.add(rule("eastHouse(X) => house(X)"));
+//      kb.add(rule("westHouse(X) => house(X)"));
+//      
+//      kb.add(statement("directlyEastOf(1, 2)"));
+//      kb.add(statement("directlyEastOf(3, 4)"));
+//      
+//      kb.add(statement("oneOfThemIsHouseFour(4, Y)"));
+//      kb.add(statement("oneOfThemIsHouseFour(X, 4)"));
+//
+//      kb.add(rule("house(X), house(Y), X < Y => northOf(X, Y)"));
+//      kb.add(rule("house(X), house(Y), X > Y => southOf(X, Y)"));
+//      
+//      kb.add(rule("livesAtHouse(A, X), livesAtHouse(B, Y), westHouse(A), westHouse(B) => livesNextTo(X, Y)"));
+//      kb.add(rule("livesAtHouse(A, X), livesAtHouse(B, Y), eastHouse(A), eastHouse(B), oneOfThemIsHouseFour(A, B) => livesNextTo(X, Y)"));
+//      
+//      
+//      kb.add(rule("hairOf(X, blonde) => livesNextTo(adele, X)"));
+//      kb.add(rule("livesNextTo(adele, X) => hairOf(X, blonde)"));
+//      
+//      kb.add(rule("woman(A), livesAtHouse(A, B), house(B), hairOf(A, C), hairColour(C) => everythingAbout(A, B, C)"));
+//      
+//      assertTrue(query("oneOfThemIsHouseFour(4, 6)"));
+//   }
    
    private boolean query(String stmtEncoding) {
       return kb.query(statement(stmtEncoding));

@@ -4,31 +4,30 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
 public class Statement {
 
    protected final String name;
-   protected final Constant<?>[] constants;
+   protected final Term<?>[] terms;
 
-   public Statement(String name, Constant<?>... constants) {
+   public Statement(String name, Term<?>... terms) {
       this.name = name;
-      this.constants = constants;
+      this.terms = terms;
    }
 
    public boolean match(Statement other) {
-      if (other.constants.length != this.constants.length)
+      if (other.terms.length != this.terms.length)
          return false;
       
       boolean allConstantsMatch = true;
-      for (int i = 0; i < constants.length; i++){
-         allConstantsMatch &= (constants[i].match(other.constants[i]) || other.constants[i].match(constants[i])); 
+      for (int i = 0; i < terms.length; i++){
+         allConstantsMatch &= (terms[i].match(other.terms[i]) || other.terms[i].match(terms[i])); 
       }
       return other.name.equals(this.name) && allConstantsMatch;
    }
    
-   public <T> Statement replaceVariableWithValue(Variable variableToReplace, Constant<T> newValue) {
-      List<Constant<?>> newConstants = new ArrayList<Constant<?>>();
-      for (Constant<?> c : constants){
+   public <T> Statement replaceVariableWithValue(Variable variableToReplace, Term<T> newValue) {
+      List<Term<?>> newConstants = new ArrayList<Term<?>>();
+      for (Term<?> c : terms){
          if (c.match(variableToReplace)){
             newConstants.add(newValue);
          }else{
@@ -36,7 +35,7 @@ public class Statement {
          }
       }
       
-      return createStatement(newConstants.toArray(new Constant<?>[constants.length]));
+      return createStatement(newConstants.toArray(new Term<?>[terms.length]));
    }
    
    @Override
@@ -44,12 +43,12 @@ public class Statement {
       if (!(obj instanceof Statement)) 
          return false;
       Statement other = (Statement) obj;
-      return (this.name.equals(other.name)) && Arrays.equals(this.constants, other.constants);
+      return (this.name.equals(other.name)) && Arrays.equals(this.terms, other.terms);
    }
    
    @Override
    public String toString(){
-      return name + Arrays.asList(constants).toString();
+      return name + Arrays.asList(terms).toString();
    }
 
    public List<Replacement> unifyWith(Statement other) {
@@ -58,11 +57,11 @@ public class Statement {
       if (!other.match(this)) 
          return replacements;
       
-      Statement workingStatement = createStatement(Arrays.copyOf(constants, constants.length));
+      Statement workingStatement = createStatement(Arrays.copyOf(terms, terms.length));
       
-      for (int i = 0; i < constants.length; i++){
-         Constant<?> myConstant = workingStatement.constants[i];
-         Constant<?> otherConstant = other.constants[i];
+      for (int i = 0; i < terms.length; i++){
+         Term<?> myConstant = workingStatement.terms[i];
+         Term<?> otherConstant = other.terms[i];
          
          if (myConstant.isVariable()){
             workingStatement = workingStatement.replaceVariableWithValue((Variable)myConstant, otherConstant);
@@ -76,19 +75,19 @@ public class Statement {
    }
    
    public Statement applyReplacements(List<Replacement> replacements) {
-      Statement newStmt = createStatement(Arrays.copyOf(constants, constants.length));
+      Statement newStmt = createStatement(Arrays.copyOf(terms, terms.length));
       for (Replacement r: replacements){
          newStmt = newStmt.replaceVariableWithValue(r.getVariable(), r.getValue());
       }
       return newStmt;
    }
 
-   protected Statement createStatement(Constant<?>[] constants) {
+   protected Statement createStatement(Term<?>[] constants) {
       return new Statement(name, constants);
    }
 
    public boolean evaluate() {
-      return false;
+      throw new UnsupportedOperationException("this should not be called; override in operator");
    }
 
    public boolean isToBeEvaluated() {
