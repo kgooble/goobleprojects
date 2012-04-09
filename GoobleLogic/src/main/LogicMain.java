@@ -4,7 +4,6 @@ import static main.kb.KBEncoding.rule;
 import static main.kb.KBEncoding.statement;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 
 import main.kb.KnowledgeBase;
@@ -14,8 +13,8 @@ public class LogicMain {
    public static void main(String[] args) {
       KnowledgeBase kb = new KnowledgeBase();
       
-      System.out.println("Hello Saman");
       System.out.println("Type QUIT to quit");
+      System.out.println("Note, spacing matters:");
       System.out.println("Rule format: 'p(X) ^ g(X) => h(X).' (^ symbolizes logical AND)");
       System.out.println("Fact format: 'p(X).', 'g(a).'");
       System.out.println("Names in all upper-case count as Variables (e.g X, COW, K_1)");
