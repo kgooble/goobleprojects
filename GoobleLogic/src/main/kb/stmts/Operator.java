@@ -7,9 +7,9 @@ import main.kb.Term;
 abstract public class Operator extends Statement {
 
    private final Term<?> constant;
-   private final Constant<Number> limit;
+   private final Term<?> limit;
    
-   public Operator(String name, Constant<Number> limit, Term<?> constant) {
+   public Operator(String name, Term<?> limit, Term<?> constant) {
       super(name, limit, constant);
       this.limit = limit;
       this.constant = constant;
@@ -20,7 +20,7 @@ abstract public class Operator extends Statement {
       if (!(constant.getValue() instanceof Number))
          return false;
       else
-         return evaluateInternal(limit, (Constant<Number>) constant);
+         return evaluateInternal((Constant<Number>) limit, (Constant<Number>) constant);
    }
    
    abstract protected boolean evaluateInternal(Constant<Number> limit, Constant<Number> constant);

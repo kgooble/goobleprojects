@@ -6,13 +6,13 @@ import main.kb.Term;
 
 public class LessThan extends Operator {
 
-   public LessThan(Constant<Number> limit, Term<?> constant) {
+   public LessThan(Term<?> limit, Term<?> constant) {
       super("<", limit, constant);
    }
    
    @Override
    protected Statement createStatement(Term<?>[] constants){
-      return new LessThan((Constant<Number>) constants[0], constants[1]);
+      return new LessThan(constants[0], constants[1]);
    }
 
    @Override

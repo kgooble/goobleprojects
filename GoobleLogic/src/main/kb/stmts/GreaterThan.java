@@ -6,13 +6,13 @@ import main.kb.Term;
 
 public class GreaterThan extends Operator{
 
-   public GreaterThan(Constant<Number> limit, Term<?> constant) {
+   public GreaterThan(Term<?> limit, Term<?> constant) {
       super(">", limit, constant);
    }
    
    @Override
    protected Statement createStatement(Term<?>[] constants){
-      return new GreaterThan((Constant<Number>) constants[0], constants[1]);
+      return new GreaterThan(constants[0], constants[1]);
    }
 
    @Override
