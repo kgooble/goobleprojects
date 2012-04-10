@@ -16,7 +16,7 @@ public class KBEncoding {
    }
    
    public static Replacement replacement(String varName, Object value){
-      return new Replacement(variable(varName), var(value));
+      return new Replacement(variable(varName), term(value));
    }
    
    public static Variable variable(String name){
@@ -74,13 +74,13 @@ public class KBEncoding {
    private static Statement parseOperator(String stmtEncoding) {
       if (stmtEncoding.indexOf(">") > 0){
          String[] stmtParts = stmtEncoding.split(" > ");
-         Term<?> limit = var(parseParameter(stmtParts[1]));
-         Term<?> variable = var(stmtParts[0]);
+         Term<?> limit = term(parseParameter(stmtParts[1]));
+         Term<?> variable = term(stmtParts[0]);
          return new GreaterThan(limit, variable);
       } else if (stmtEncoding.indexOf("<") > 0){
          String[] stmtParts = stmtEncoding.split(" < ");
-         Term<?> limit = var(parseParameter(stmtParts[1]));
-         Term<?> variable = var(stmtParts[0]);
+         Term<?> limit = term(parseParameter(stmtParts[1]));
+         Term<?> variable = term(stmtParts[0]);
          return new LessThan(limit, variable);
       }  
       throw new RuntimeException("unexpected operator in encoding: " + stmtEncoding);
@@ -97,12 +97,12 @@ public class KBEncoding {
    private static Statement stmt(String fn, Object... consts){
       Term<?>[] constants = new Term[consts.length];
       for (int i = 0; i < consts.length; i++){
-         constants[i] = var(consts[i]);
+         constants[i] = term(consts[i]);
       }
       return new Statement(fn, constants);
    }
    
-   private static Term<?> var(Object value){
+   private static Term<?> term(Object value){
       if (value instanceof String && value.equals(((String)value).toUpperCase())){
          return variable((String) value);
       }else{

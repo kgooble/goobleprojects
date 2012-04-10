@@ -81,6 +81,19 @@ public class KnowledgeBaseTest {
       assertEquals(Arrays.asList(solution(replacement("X", "c"))), kb.findSolutions(statement("g(X)")).getSolutions());
    }
    
+   @Test
+   public void get_all_solutions() throws Exception{
+      // BUG - try orphan(X), parentOf(X, Y) => dead(X)
+      // then parentOf(bob, alfred). parentOf(bob, betty).
+      // then dead(X)? --> only gives one solution
+      kb.add(rule("orphan(X) ^ parentOf(X, Y) => dead(Y)"));
+      kb.add(statement("parentOf(bob, alfred)"));
+      kb.add(statement("parentOf(bob, betty)"));
+      kb.add(statement("orphan(bob)"));
+      
+      assertEquals(Arrays.asList(solution(replacement("X", "alfred")), solution(replacement("X", "betty"))), kb.findSolutions(statement("dead(X)")));
+   }
+   
    private boolean query(String stmtEncoding) {
       return kb.query(statement(stmtEncoding));
    }
