@@ -85,8 +85,8 @@ public class KnowledgeBase {
       boolean matchesStatement = false;
       for (Statement stmt : stmts){
          if (stmt.match(statement)){
-            matchesStatement = true;
             List<Replacement> replacements = statement.unifyWith(stmt);
+            matchesStatement |= (statement.containsVariables() != replacements.isEmpty());
             if (replacements.isEmpty())
                continue;
             Solution soln = new Solution();
