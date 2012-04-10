@@ -1,9 +1,9 @@
 package test.kb;
 
+import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 import static main.kb.KBEncoding.*;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -83,6 +83,14 @@ public class KnowledgeBaseTest {
       solns = kb.findSolutions(statement("h(Y, X, X)"));
       assertTrue(solns.isQueryTrue());
       assertEquals(Arrays.asList(solution(replacement("Y", "b"), replacement("X", "a"))), solns.getSolutions());
+   }
+   
+   @Test
+   public void evaluating_operators() throws Exception{
+      SolutionSet solns = kb.findSolutions(statement("17 > 18"));
+      assertFalse(solns.isQueryTrue());
+      solns = kb.findSolutions(statement("17 < 18"));
+      assertTrue(solns.isQueryTrue());
    }
    
    

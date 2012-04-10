@@ -17,7 +17,7 @@ abstract public class Operator extends Statement {
    
    @Override
    public boolean evaluate(){
-      if (!(constant.getValue() instanceof Number))
+      if (!(constant.getValue() instanceof Number) || !(limit.getValue() instanceof Number))
          return false;
       else
          return evaluateInternal((Constant<Number>) limit, (Constant<Number>) constant);

@@ -75,12 +75,12 @@ public class KBEncoding {
       if (stmtEncoding.indexOf(">") > 0){
          String[] stmtParts = stmtEncoding.split(" > ");
          Term<?> limit = term(parseParameter(stmtParts[1]));
-         Term<?> variable = term(stmtParts[0]);
+         Term<?> variable = term(parseParameter(stmtParts[0]));
          return new GreaterThan(limit, variable);
       } else if (stmtEncoding.indexOf("<") > 0){
          String[] stmtParts = stmtEncoding.split(" < ");
          Term<?> limit = term(parseParameter(stmtParts[1]));
-         Term<?> variable = term(stmtParts[0]);
+         Term<?> variable = term(parseParameter(stmtParts[0]));
          return new LessThan(limit, variable);
       }  
       throw new RuntimeException("unexpected operator in encoding: " + stmtEncoding);

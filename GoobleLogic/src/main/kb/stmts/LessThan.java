@@ -17,7 +17,7 @@ public class LessThan extends Operator {
 
    @Override
    protected boolean evaluateInternal(Constant<Number> limit, Constant<Number> constant) {
-      return ((Number) constant.getValue()).floatValue() < limit.getValue().floatValue();
+      return ((Number) constant.getValue()).floatValue() < ((Number) limit.getValue()).floatValue();
    }
 
 }
