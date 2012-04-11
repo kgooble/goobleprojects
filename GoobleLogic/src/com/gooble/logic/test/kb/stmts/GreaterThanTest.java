@@ -1,4 +1,4 @@
-package test.kb.stmts;
+package com.gooble.logic.test.kb.stmts;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
