@@ -13,7 +13,6 @@ import main.kb.Solution;
 import main.kb.SolutionSet;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class KnowledgeBaseTest {
@@ -152,7 +151,7 @@ public class KnowledgeBaseTest {
       assertEquals(Arrays.asList(solution(replacement("X", "c"))), kb.findSolutions(statement("g(X)")).getSolutions());
    }
    
-   @Ignore ("Not Yet Working") 
+//   @Ignore ("Not Yet Working") 
    @Test
    public void get_all_solutions() throws Exception{
       // BUG - try orphan(X), parentOf(X, Y) => dead(X)
@@ -163,7 +162,7 @@ public class KnowledgeBaseTest {
       kb.add(statement("parentOf(bob, betty)"));
       kb.add(statement("orphan(bob)"));
       
-      assertEquals(Arrays.asList(solution(replacement("X", "alfred")), solution(replacement("X", "betty"))), kb.findSolutions(statement("dead(X)")));
+      assertEquals(Arrays.asList(solution(replacement("X", "alfred")), solution(replacement("X", "betty"))), kb.findSolutions(statement("dead(X)")).getSolutions());
    }
    
    private boolean query(String stmtEncoding) {

@@ -40,9 +40,11 @@ public class KnowledgeBase {
       boolean atLeastOneRuleSucceeded = false;
       for (Rule rule : rules){
          if (rule.consequenceMatches(statement)){
-            SolutionSet subSolSet = collectSolutionsForRule(statement, rule);
+            List<Replacement> originalReplacements = statement.unifyWith(rule.getConsequence());
+            Statement workingStatement = statement.applyReplacements(originalReplacements);
+            SolutionSet subSolSet = collectSolutionsForRule(workingStatement, rule);
             atLeastOneRuleSucceeded |= subSolSet.isQueryTrue();
-            solution.add(subSolSet);
+            solution.add(new SolutionNormalizer(originalReplacements).normalize(subSolSet));
          }
       }
       solution.setSucceeded(atLeastOneRuleSucceeded);

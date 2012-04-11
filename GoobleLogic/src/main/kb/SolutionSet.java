@@ -23,11 +23,6 @@ public class SolutionSet {
    public boolean hasSolutions() {
       return !solutions.isEmpty();
    }
-   
-   @Override
-   public String toString(){
-      return "QUERY " + queryTrue + ", SOLUTIONS: " + solutions.toString();
-   }
 
    public void add(SolutionSet statementSolutions) {
       this.solutions.addAll(statementSolutions.getSolutions());
@@ -60,6 +55,20 @@ public class SolutionSet {
    public void add(Solution solution) {
       solutions.add(solution);
       queryTrue = true;
+   }
+   
+   
+   @Override
+   public boolean equals(Object obj){
+      if (!(obj instanceof SolutionSet))
+         return false;
+      SolutionSet other = (SolutionSet) obj;
+      return other.isQueryTrue() == this.isQueryTrue() && this.solutions.equals(other.solutions);
+   }
+   
+   @Override
+   public String toString(){
+      return "QUERY " + queryTrue + ", SOLUTIONS: " + solutions.toString();
    }
    
 }
