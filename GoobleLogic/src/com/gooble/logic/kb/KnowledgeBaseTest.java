@@ -1,4 +1,4 @@
-package test.kb;
+package com.gooble.logic.kb;
 
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;

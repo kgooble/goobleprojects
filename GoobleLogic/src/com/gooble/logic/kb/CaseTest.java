@@ -1,4 +1,4 @@
-package test.kb;
+package com.gooble.logic.kb;
 
 import static main.kb.KBEncoding.replacement;
 import static main.kb.KBEncoding.rule;

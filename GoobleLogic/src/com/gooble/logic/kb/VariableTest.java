@@ -1,4 +1,4 @@
-package test.kb;
+package com.gooble.logic.kb;
 
 import static junit.framework.Assert.assertTrue;
 import static main.kb.KBEncoding.constant;
