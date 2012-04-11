@@ -3,8 +3,9 @@ package main.kb;
 import java.text.NumberFormat;
 import java.text.ParseException;
 
-import main.kb.stmts.GreaterThan;
-import main.kb.stmts.LessThan;
+import com.gooble.logic.kb.stmts.GreaterThan;
+import com.gooble.logic.kb.stmts.LessThan;
+
 
 public class KBEncoding {
    public static Solution solution(Replacement... replacements){

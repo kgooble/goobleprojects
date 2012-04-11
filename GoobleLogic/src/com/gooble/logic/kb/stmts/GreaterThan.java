@@ -1,4 +1,4 @@
-package main.kb.stmts;
+package com.gooble.logic.kb.stmts;
 
 import main.kb.Constant;
 import main.kb.Statement;

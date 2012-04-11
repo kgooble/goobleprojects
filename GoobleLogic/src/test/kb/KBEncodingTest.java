@@ -11,10 +11,11 @@ import main.kb.Rule;
 import main.kb.Solution;
 import main.kb.Statement;
 import main.kb.Variable;
-import main.kb.stmts.GreaterThan;
-import main.kb.stmts.LessThan;
 
 import org.junit.Test;
+
+import com.gooble.logic.kb.stmts.GreaterThan;
+import com.gooble.logic.kb.stmts.LessThan;
 
 public class KBEncodingTest {
    

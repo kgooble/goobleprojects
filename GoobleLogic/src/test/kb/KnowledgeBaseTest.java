@@ -37,7 +37,6 @@ public class KnowledgeBaseTest {
       kb.add(statement("p(X)"));
       SolutionSet solns = kb.findSolutions(statement("p(a)"));
       assertTrue(solns.isQueryTrue());
-      System.out.println(solns);
       assertFalse(solns.hasSolutions());
       solns = kb.findSolutions(statement("p(X)"));
       assertTrue(solns.isQueryTrue());
