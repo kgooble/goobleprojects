@@ -1,5 +1,10 @@
 package test.kb;
 
+import static junit.framework.Assert.assertEquals;
+import static main.kb.KBEncoding.replacement;
+import static main.kb.KBEncoding.rule;
+import static main.kb.KBEncoding.solution;
+import static main.kb.KBEncoding.statement;
 import main.kb.Constant;
 import main.kb.Replacement;
 import main.kb.Rule;
@@ -10,9 +15,6 @@ import main.kb.stmts.GreaterThan;
 import main.kb.stmts.LessThan;
 
 import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
-import static main.kb.KBEncoding.*;
 
 public class KBEncodingTest {
    
