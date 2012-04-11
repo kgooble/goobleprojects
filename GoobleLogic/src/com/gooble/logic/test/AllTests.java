@@ -1,4 +1,4 @@
-package test;
+package com.gooble.logic.test;
 
 import org.junit.extensions.cpsuite.ClasspathSuite;
 import org.junit.extensions.cpsuite.ClasspathSuite.*;
