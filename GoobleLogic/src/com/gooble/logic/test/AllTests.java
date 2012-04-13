@@ -6,7 +6,7 @@ import org.junit.extensions.cpsuite.ClasspathSuite.*;
 import org.junit.runner.RunWith;
 
 @RunWith(ClasspathSuite.class)
-@ClassnameFilters({"test.*"})
+@ClassnameFilters({"com.gooble.logic.test.*"})
 public class AllTests {
 
 }
