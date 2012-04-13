@@ -1,14 +1,15 @@
-package com.gooble.logic.kb;
+package com.gooble.logic.test.kb;
 
+import static com.gooble.logic.kb.KBEncoding.*;
 import static junit.framework.Assert.assertEquals;
-import static main.kb.KBEncoding.*;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 
-import main.kb.Statement;
 
 import org.junit.Test;
+
+import com.gooble.logic.kb.Statement;
 
 public class StatementTest {
    

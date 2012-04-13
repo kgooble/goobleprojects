@@ -1,15 +1,16 @@
-package com.gooble.logic.kb;
+package com.gooble.logic.test.kb;
 
+import static com.gooble.logic.kb.KBEncoding.replacement;
+import static com.gooble.logic.kb.KBEncoding.solution;
 import static junit.framework.Assert.assertEquals;
-import static main.kb.KBEncoding.replacement;
-import static main.kb.KBEncoding.solution;
 
 import java.util.Arrays;
 
-import main.kb.SolutionNormalizer;
-import main.kb.SolutionSet;
 
 import org.junit.Test;
+
+import com.gooble.logic.kb.SolutionNormalizer;
+import com.gooble.logic.kb.SolutionSet;
 
 public class SolutionNormalizerTest {
 

@@ -1,19 +1,19 @@
-package com.gooble.logic.kb;
+package com.gooble.logic.test.kb;
 
+import static com.gooble.logic.kb.KBEncoding.replacement;
+import static com.gooble.logic.kb.KBEncoding.rule;
+import static com.gooble.logic.kb.KBEncoding.solution;
+import static com.gooble.logic.kb.KBEncoding.statement;
 import static junit.framework.Assert.assertEquals;
-import static main.kb.KBEncoding.replacement;
-import static main.kb.KBEncoding.rule;
-import static main.kb.KBEncoding.solution;
-import static main.kb.KBEncoding.statement;
-import main.kb.Constant;
-import main.kb.Replacement;
-import main.kb.Rule;
-import main.kb.Solution;
-import main.kb.Statement;
-import main.kb.Variable;
 
 import org.junit.Test;
 
+import com.gooble.logic.kb.Constant;
+import com.gooble.logic.kb.Replacement;
+import com.gooble.logic.kb.Rule;
+import com.gooble.logic.kb.Solution;
+import com.gooble.logic.kb.Statement;
+import com.gooble.logic.kb.Variable;
 import com.gooble.logic.kb.stmts.GreaterThan;
 import com.gooble.logic.kb.stmts.LessThan;
 

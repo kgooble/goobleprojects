@@ -1,8 +1,8 @@
 package com.gooble.logic.test.kb.stmts;
 
+import static com.gooble.logic.kb.KBEncoding.statement;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
-import static main.kb.KBEncoding.statement;
 import static org.junit.Assert.*;
 
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package main.kb;
+package com.gooble.logic.kb;
 
 import java.util.Arrays;
 

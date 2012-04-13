@@ -1,12 +1,13 @@
-package main;
+package com.gooble.logic;
 
-import static main.kb.KBEncoding.rule;
-import static main.kb.KBEncoding.statement;
+import static com.gooble.logic.kb.KBEncoding.rule;
+import static com.gooble.logic.kb.KBEncoding.statement;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-import main.kb.KnowledgeBase;
+import com.gooble.logic.kb.KnowledgeBase;
+
 
 public class LogicMain {
 

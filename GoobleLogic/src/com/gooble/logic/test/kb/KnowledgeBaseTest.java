@@ -1,19 +1,20 @@
-package com.gooble.logic.kb;
+package com.gooble.logic.test.kb;
 
+import static com.gooble.logic.kb.KBEncoding.*;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
-import static main.kb.KBEncoding.*;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
 import java.util.Collections;
 
-import main.kb.KnowledgeBase;
-import main.kb.Solution;
-import main.kb.SolutionSet;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import com.gooble.logic.kb.KnowledgeBase;
+import com.gooble.logic.kb.Solution;
+import com.gooble.logic.kb.SolutionSet;
 
 public class KnowledgeBaseTest {
 

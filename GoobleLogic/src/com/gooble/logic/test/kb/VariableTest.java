@@ -1,13 +1,14 @@
-package com.gooble.logic.kb;
+package com.gooble.logic.test.kb;
 
+import static com.gooble.logic.kb.KBEncoding.constant;
+import static com.gooble.logic.kb.KBEncoding.variable;
 import static junit.framework.Assert.assertTrue;
-import static main.kb.KBEncoding.constant;
-import static main.kb.KBEncoding.variable;
 import static org.junit.Assert.assertFalse;
-import main.kb.Variable;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import com.gooble.logic.kb.Variable;
 
 public class VariableTest {
 

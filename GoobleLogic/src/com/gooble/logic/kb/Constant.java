@@ -1,4 +1,5 @@
-package main.kb;
+package com.gooble.logic.kb;
+
 
 public class Constant<T> implements Term<T>{
 

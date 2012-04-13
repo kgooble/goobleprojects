@@ -1,17 +1,18 @@
-package com.gooble.logic.kb;
+package com.gooble.logic.test.kb;
 
-import static main.kb.KBEncoding.replacement;
-import static main.kb.KBEncoding.rule;
-import static main.kb.KBEncoding.solution;
-import static main.kb.KBEncoding.statement;
+import static com.gooble.logic.kb.KBEncoding.replacement;
+import static com.gooble.logic.kb.KBEncoding.rule;
+import static com.gooble.logic.kb.KBEncoding.solution;
+import static com.gooble.logic.kb.KBEncoding.statement;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
 
-import main.kb.KnowledgeBase;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import com.gooble.logic.kb.KnowledgeBase;
 
 public class CaseTest {
    

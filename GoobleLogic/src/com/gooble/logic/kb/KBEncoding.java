@@ -1,4 +1,4 @@
-package main.kb;
+package com.gooble.logic.kb;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
