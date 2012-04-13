@@ -1,5 +1,7 @@
 package com.gooble.logic.kb.stmts;
 
+import static com.gooble.logic.Logger.log;
+
 import com.gooble.logic.kb.Constant;
 import com.gooble.logic.kb.Statement;
 import com.gooble.logic.kb.Term;
@@ -18,6 +20,7 @@ abstract public class Operator extends Statement {
    
    @Override
    public boolean evaluate(){
+      log("evaluating statement: " + this);
       if (!(constant.getValue() instanceof Number) || !(limit.getValue() instanceof Number))
          return false;
       else

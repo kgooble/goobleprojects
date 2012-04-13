@@ -1,5 +1,7 @@
 package com.gooble.logic.kb;
 
+import static com.gooble.logic.Logger.log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,10 +16,12 @@ public class KnowledgeBase {
    }
 
    public void add(Statement statement) {
+      log("Adding statement: <<" + statement + ">>");
       stmts.add(statement);
    }
 
    public void add(Rule rule) {
+      log("Adding rule: <<" + rule + ">>");
       rules.add(rule);
    }
 
@@ -26,28 +30,39 @@ public class KnowledgeBase {
    }
 
    public SolutionSet findSolutions(Statement statement) {
+      log("---------");
+      log("Begin find solutions on statement: <<" + statement + ">>");
+      log();
       List<Solution> solns = new ArrayList<Solution>();
       if (matchesStatement(statement, solns))
          return new SolutionSet(solns, true);
-      if (statement.isToBeEvaluated()){
+      if (statement.isToBeEvaluated())
          return new SolutionSet(solns, statement.evaluate());
-      }
       return collectSolutionsUsingRules(statement);
    }
 
    private SolutionSet collectSolutionsUsingRules(Statement statement) {
       SolutionSet solution = new SolutionSet(new ArrayList<Solution>(), false);
       boolean atLeastOneRuleSucceeded = false;
+      log();
+      log("Applying rules for <<" + statement + ">>");
+      log();
       for (Rule rule : rules){
          if (rule.consequenceMatches(statement)){
             List<Replacement> originalReplacements = statement.unifyWith(rule.getConsequence());
             Statement workingStatement = statement.applyReplacements(originalReplacements);
+            System.out.println("Applying rule <<" + rule + ">> on working statement <<" + workingStatement + ">>");
             SolutionSet subSolSet = collectSolutionsForRule(workingStatement, rule);
             atLeastOneRuleSucceeded |= subSolSet.isQueryTrue();
-            solution.add(new SolutionNormalizer(originalReplacements).normalize(subSolSet));
+            SolutionSet normalizedSoln = new SolutionNormalizer(originalReplacements).normalize(subSolSet);
+            log("found solution, normalized: <<" + normalizedSoln + ">>");
+            log();
+            solution.add(normalizedSoln);
          }
       }
       solution.setSucceeded(atLeastOneRuleSucceeded);
+      log("final solution for statement <<" + statement +">> : <<" + solution + ">>");
+      log();
       return solution;
    }
 
@@ -69,6 +84,8 @@ public class KnowledgeBase {
       for (int i = ruleSolutionSet.size() - 1; i >= 0; i--){
          Solution currentSolution = ruleSolutionSet.get(i);
          Statement fullyUnifiedStatement = statementToProve.applyReplacements(replacements).applyReplacements(currentSolution.getReplacements());
+         log("Working on solution: <<" + currentSolution + ">>");
+         log("Fully unified: " + fullyUnifiedStatement);
          SolutionSet statementSolutions = findSolutions(fullyUnifiedStatement);
 
          if (!statementSolutions.isQueryTrue()){
@@ -87,6 +104,7 @@ public class KnowledgeBase {
       boolean matchesStatement = false;
       for (Statement stmt : stmts){
          if (stmt.match(statement)){
+            log("statement : <<" + statement + ">> matched <<" + stmt + ">>");
             List<Replacement> replacements = statement.unifyWith(stmt);
             matchesStatement |= (statement.containsVariables() != replacements.isEmpty());
             if (replacements.isEmpty())
@@ -96,6 +114,7 @@ public class KnowledgeBase {
                soln.addVariableReplacement(re);
             }
             solns.add(soln);
+            log("added solution for <<" + statement + ">> : solution: <<" + soln + ">>");
          }
       }
       return matchesStatement;
