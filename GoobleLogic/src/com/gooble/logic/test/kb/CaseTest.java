@@ -76,7 +76,7 @@ public class CaseTest {
             solution(replacement("H", 3))),
             kb.findSolutions(statement("livesAtHouse(H, molly)")).getSolutions());
       assertEquals(25, kb.findSolutions(statement("everythingAbout(molly, X, Y)")).getSolutions().size());
-//      assertEquals(Arrays.asList(solution(replacement("X", 5)), solution(replacement("X", 4))), kb.findSolutions(statement("northOf(X, 3)")).getSolutions());
+      assertEquals(Arrays.asList(solution(replacement("H", 4)), solution(replacement("H", 5))), kb.findSolutions(statement("northOf(H, 3)")).getSolutions());
    }
    
    @Test

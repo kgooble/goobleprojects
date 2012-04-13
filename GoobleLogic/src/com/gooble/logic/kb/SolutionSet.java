@@ -1,5 +1,7 @@
 package com.gooble.logic.kb;
 
+import static com.gooble.logic.Logger.log;
+
 import java.util.List;
 
 public class SolutionSet {
@@ -43,6 +45,7 @@ public class SolutionSet {
 
    public void replaceSolutionsIfNotEmpty(SolutionSet newSolSet) {
       if (newSolSet.hasSolutions()){
+         log("expanded solution set: " + newSolSet);
          solutions = newSolSet.getSolutions();
       }
       queryTrue &= newSolSet.isQueryTrue();
