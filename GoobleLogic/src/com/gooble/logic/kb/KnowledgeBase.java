@@ -65,6 +65,7 @@ public class KnowledgeBase {
             solution.add(normalizedSoln);
          }
       }
+      log("at least one rule succeeded? " + atLeastOneRuleSucceeded);
       solution.setSucceeded(atLeastOneRuleSucceeded);
       log("final solution for statement <<" + statement +">> : <<" + solution + ">>");
       log();
@@ -127,6 +128,7 @@ public class KnowledgeBase {
             log("added solution for <<" + statement + ">> : solution: <<" + soln + ">>");
          }
       }
+      log("Matches statement? " + matchesStatement);
       return matchesStatement;
    }
 

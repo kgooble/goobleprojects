@@ -25,19 +25,6 @@ public class Statement {
       return other.name.equals(this.name) && allConstantsMatch;
    }
    
-   public <T> Statement replaceVariableWithValue(Variable variableToReplace, Term<T> newValue) {
-      List<Term<?>> newConstants = new ArrayList<Term<?>>();
-      for (Term<?> c : terms){
-         if (c.equals(variableToReplace)){
-            newConstants.add(newValue);
-         }else{
-            newConstants.add(c);
-         }
-      }
-      
-      return createStatement(newConstants.toArray(new Term<?>[terms.length]));
-   }
-   
    @Override
    public boolean equals(Object obj){
       if (!(obj instanceof Statement)) 
@@ -60,11 +47,12 @@ public class Statement {
       Statement workingStatement = createStatement(Arrays.copyOf(terms, terms.length));
       
       for (int i = 0; i < terms.length; i++){
+         List<Integer> replacedIndices = new ArrayList<Integer>();
          Term<?> myConstant = workingStatement.terms[i];
          Term<?> otherConstant = other.terms[i];
          
          if (myConstant.isVariable()){
-            workingStatement = workingStatement.replaceVariableWithValue((Variable)myConstant, otherConstant);
+            workingStatement = workingStatement.replaceVariableWithValue((Variable)myConstant, otherConstant, replacedIndices);
             replacements.add(new Replacement((Variable)myConstant, otherConstant));
          } 
       }
@@ -76,10 +64,26 @@ public class Statement {
    
    public Statement applyReplacements(List<Replacement> replacements) {
       Statement newStmt = createStatement(Arrays.copyOf(terms, terms.length));
+      List<Integer> replacedIndices = new ArrayList<Integer>();
       for (Replacement r: replacements){
-         newStmt = newStmt.replaceVariableWithValue(r.getVariable(), r.getValue());
+         newStmt =  newStmt.replaceVariableWithValue(r.getVariable(), r.getValue(), replacedIndices);
       }
       return newStmt;
+   }
+   
+   private <T> Statement replaceVariableWithValue(Variable variableToReplace, Term<T> newValue, List<Integer> alreadyReplaced) {
+      List<Term<?>> newConstants = new ArrayList<Term<?>>();
+      for (int i = 0; i < terms.length; i++){
+         Term<?> c = terms[i];
+         if (!alreadyReplaced.contains(i) && c.equals(variableToReplace)){
+            newConstants.add(newValue);
+            alreadyReplaced.add(i);
+         }else{
+            newConstants.add(c);
+         }
+      }
+      
+      return createStatement(newConstants.toArray(new Term<?>[terms.length]));
    }
 
    protected Statement createStatement(Term<?>[] constants) {

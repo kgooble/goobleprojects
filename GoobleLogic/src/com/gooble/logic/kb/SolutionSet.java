@@ -71,7 +71,10 @@ public class SolutionSet {
    
    @Override
    public String toString(){
-      return "QUERY " + queryTrue + ", SOLUTIONS: " + solutions.toString();
+      StringBuffer solns = new StringBuffer();
+      for (Solution soln : solutions)
+         solns.append(soln + "\n");
+      return "QUERY " + queryTrue + ", SOLUTIONS: " + solns.toString();
    }
    
 }
