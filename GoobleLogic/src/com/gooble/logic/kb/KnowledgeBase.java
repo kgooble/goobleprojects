@@ -52,9 +52,7 @@ public class KnowledgeBase {
    private SolutionSet collectSolutionsUsingRules(Statement statement) {
       SolutionSet solution = new SolutionSet(new ArrayList<Solution>(), false);
       boolean atLeastOneRuleSucceeded = false;
-      log();
-      log("Applying rules for <<" + statement + ">>");
-      log();
+      log("", "Applying rules for <<" + statement + ">>", "");
       for (Rule rule : rules){
          if (rule.consequenceMatches(statement)){
             List<Replacement> originalReplacements = statement.unifyWith(rule.getConsequence());
@@ -64,16 +62,13 @@ public class KnowledgeBase {
             SolutionSet subSolSet = collectSolutionsForRule(workingStatement, rule);
             atLeastOneRuleSucceeded |= subSolSet.isQueryTrue();
             SolutionSet normalizedSoln = new SolutionNormalizer(originalReplacements).normalize(subSolSet);
-            log();
-            log("found solution, normalized: <<" + normalizedSoln + ">>");
-            log();
+            log("", "found solution, normalized: <<" + normalizedSoln + ">>", "");
             solution.add(normalizedSoln);
          }
       }
       log("at least one rule succeeded? " + atLeastOneRuleSucceeded);
       solution.setSucceeded(atLeastOneRuleSucceeded);
-      log("final solution for statement <<" + statement +">> : <<" + solution + ">>");
-      log();
+      log("final solution for statement <<" + statement +">> : <<" + solution + ">>", "");
       return solution;
    }
 

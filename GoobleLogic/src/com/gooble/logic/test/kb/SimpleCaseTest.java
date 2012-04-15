@@ -34,7 +34,8 @@ public class SimpleCaseTest {
       kb.add(rule("age(X) ^ man(Y) => ageOf(Y, X)"));
       kb.add(rule("shoes(X) ^ man(Y) => wears(X, Y)"));
       
-      kb.add(rule("ageOf(bob, X) ^ ageOf(G, Y) ^ X < Y ^ wears(blue, G) => solution(X, Y, G)"));
+      // bob is younger than the guy wearing blue shoes
+      kb.add(rule("ageOf(bob, X) ^ ageOf(G, Y) ^ X < Y ^ wears(blue, G) => solution1(X, Y, G)"));
       
       assertEquals(Arrays.asList(
             solution(replacement("AGEBOB", 22), replacement("AGEOTHER", 33), replacement("OTHER", "bob")),
@@ -46,7 +47,7 @@ public class SimpleCaseTest {
             solution(replacement("AGEBOB", 17), replacement("AGEOTHER", 22), replacement("OTHER", "bob")),
             solution(replacement("AGEBOB", 17), replacement("AGEOTHER", 22), replacement("OTHER", "alex")),
             solution(replacement("AGEBOB", 17), replacement("AGEOTHER", 22), replacement("OTHER", "john"))),
-            kb.findSolutions(statement("solution(AGEBOB, AGEOTHER, OTHER)")).getSolutions());
+            kb.findSolutions(statement("solution1(AGEBOB, AGEOTHER, OTHER)")).getSolutions());
    }
    
    @After
