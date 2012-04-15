@@ -1,7 +1,6 @@
 package com.gooble.logic.kb.stmts;
 
 import com.gooble.logic.kb.Constant;
-import com.gooble.logic.kb.Statement;
 import com.gooble.logic.kb.Term;
 
 
@@ -12,7 +11,7 @@ public class LessThan extends Operator {
    }
    
    @Override
-   protected Statement createStatement(Term<?>[] constants){
+   public Statement createCopyWithTerms(Term<?>[] constants){
       return new LessThan(constants[0], constants[1]);
    }
 

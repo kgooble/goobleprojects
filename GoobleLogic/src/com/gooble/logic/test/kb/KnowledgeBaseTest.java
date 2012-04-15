@@ -13,8 +13,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.gooble.logic.kb.KnowledgeBase;
-import com.gooble.logic.kb.Solution;
-import com.gooble.logic.kb.SolutionSet;
+import com.gooble.logic.kb.solutions.Solution;
+import com.gooble.logic.kb.solutions.SolutionSet;
 
 public class KnowledgeBaseTest {
 

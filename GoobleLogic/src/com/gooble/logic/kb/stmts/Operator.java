@@ -3,7 +3,6 @@ package com.gooble.logic.kb.stmts;
 import static com.gooble.logic.Logger.log;
 
 import com.gooble.logic.kb.Constant;
-import com.gooble.logic.kb.Statement;
 import com.gooble.logic.kb.Term;
 
 
@@ -27,8 +26,8 @@ abstract public class Operator extends Statement {
          return evaluateInternal((Constant<Number>) limit, (Constant<Number>) constant);
    }
    
+   abstract public Statement createCopyWithTerms(Term<?>[] constants);
    abstract protected boolean evaluateInternal(Constant<Number> limit, Constant<Number> constant);
-   abstract protected Statement createStatement(Term<?>[] constants);
    
    @Override
    public boolean isToBeEvaluated() {

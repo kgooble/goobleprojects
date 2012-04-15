@@ -1,7 +1,9 @@
-package com.gooble.logic.kb;
+package com.gooble.logic.kb.solutions;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.gooble.logic.kb.Replacement;
 
 
 public class SolutionNormalizer {

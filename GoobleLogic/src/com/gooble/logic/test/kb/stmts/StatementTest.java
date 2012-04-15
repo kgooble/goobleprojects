@@ -1,4 +1,4 @@
-package com.gooble.logic.test.kb;
+package com.gooble.logic.test.kb.stmts;
 
 import static com.gooble.logic.kb.KBEncoding.*;
 import static junit.framework.Assert.assertEquals;
@@ -9,7 +9,7 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-import com.gooble.logic.kb.Statement;
+import com.gooble.logic.kb.stmts.Statement;
 
 public class StatementTest {
    

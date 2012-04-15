@@ -5,6 +5,11 @@ import static com.gooble.logic.Logger.log;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.gooble.logic.kb.solutions.Solution;
+import com.gooble.logic.kb.solutions.SolutionNormalizer;
+import com.gooble.logic.kb.solutions.SolutionSet;
+import com.gooble.logic.kb.stmts.Statement;
+
 public class KnowledgeBase {
 
    private List<Statement> stmts;

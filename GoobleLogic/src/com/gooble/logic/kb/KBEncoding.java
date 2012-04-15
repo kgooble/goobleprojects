@@ -3,8 +3,10 @@ package com.gooble.logic.kb;
 import java.text.NumberFormat;
 import java.text.ParseException;
 
+import com.gooble.logic.kb.solutions.Solution;
 import com.gooble.logic.kb.stmts.GreaterThan;
 import com.gooble.logic.kb.stmts.LessThan;
+import com.gooble.logic.kb.stmts.Statement;
 
 
 public class KBEncoding {

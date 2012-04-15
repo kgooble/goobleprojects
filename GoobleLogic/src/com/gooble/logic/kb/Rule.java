@@ -2,6 +2,8 @@ package com.gooble.logic.kb;
 
 import java.util.Arrays;
 
+import com.gooble.logic.kb.stmts.Statement;
+
 public class Rule {
 
    private final Statement consequence;

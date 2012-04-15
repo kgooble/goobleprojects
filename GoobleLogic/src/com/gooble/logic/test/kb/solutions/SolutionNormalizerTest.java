@@ -1,4 +1,4 @@
-package com.gooble.logic.test.kb;
+package com.gooble.logic.test.kb.solutions;
 
 import static com.gooble.logic.kb.KBEncoding.replacement;
 import static com.gooble.logic.kb.KBEncoding.solution;
@@ -9,8 +9,8 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-import com.gooble.logic.kb.SolutionNormalizer;
-import com.gooble.logic.kb.SolutionSet;
+import com.gooble.logic.kb.solutions.SolutionNormalizer;
+import com.gooble.logic.kb.solutions.SolutionSet;
 
 public class SolutionNormalizerTest {
 

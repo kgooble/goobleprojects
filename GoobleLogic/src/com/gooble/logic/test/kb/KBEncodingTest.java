@@ -11,11 +11,11 @@ import org.junit.Test;
 import com.gooble.logic.kb.Constant;
 import com.gooble.logic.kb.Replacement;
 import com.gooble.logic.kb.Rule;
-import com.gooble.logic.kb.Solution;
-import com.gooble.logic.kb.Statement;
 import com.gooble.logic.kb.Variable;
+import com.gooble.logic.kb.solutions.Solution;
 import com.gooble.logic.kb.stmts.GreaterThan;
 import com.gooble.logic.kb.stmts.LessThan;
+import com.gooble.logic.kb.stmts.Statement;
 
 public class KBEncodingTest {
    

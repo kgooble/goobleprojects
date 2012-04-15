@@ -1,4 +1,4 @@
-package com.gooble.logic.kb;
+package com.gooble.logic.kb.solutions;
 
 import static com.gooble.logic.Logger.log;
 
