@@ -35,6 +35,10 @@ public class Statement{
       return new VariableReplacement(this).applyReplacements(replacements);
    }
    
+   public String getName(){
+      return name;
+   }
+   
    public Term<?>[] getTerms(){
       return terms;
    }
