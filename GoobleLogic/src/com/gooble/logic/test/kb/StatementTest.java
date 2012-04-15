@@ -14,15 +14,21 @@ import com.gooble.logic.kb.Statement;
 public class StatementTest {
    
    @Test
+   public void replace_G_with_Y_and_Y_with_X_works_on_original_statement_doesnt_override_already_replaced_things() throws Exception{
+      Statement workingStatement = statement("ageOf(G, Y)").applyReplacements(Arrays.asList(replacement("G", "Y"), replacement("Y", "X")));
+      assertEquals(statement("ageOf(Y, X)"), workingStatement);
+   }
+   
+   @Test
    public void replace_variable_with_constant_value() throws Exception{
       Statement original = statement("ageOf(X, Y)");
-      Statement newStatement = original.replaceVariableWithValue(variable("X"), constant("bob"));
+      Statement newStatement = original.applyReplacements(Arrays.asList(replacement("X", "bob")));
       assertEquals(statement("ageOf(bob, Y)"), newStatement);
       
-      Statement newStatement2 = original.replaceVariableWithValue(variable("Y"), constant(20));
+      Statement newStatement2 = original.applyReplacements(Arrays.asList(replacement("Y", 20)));
       assertEquals(statement("ageOf(X, 20)"), newStatement2);
       
-      Statement newStatement3 = newStatement2.replaceVariableWithValue(variable("X"), constant("bob"));
+      Statement newStatement3 = newStatement2.applyReplacements(Arrays.asList(replacement("X", "bob")));
       assertEquals(statement("ageOf(bob, 20)"), newStatement3);
    }
    
@@ -38,7 +44,7 @@ public class StatementTest {
    @Test
    public void replace_multiple_variables_of_same_name() throws Exception{
       Statement original = statement("loveTriangle(X, X, Y)");
-      Statement newStatement = original.replaceVariableWithValue(variable("X"), constant("bob"));
+      Statement newStatement = original.applyReplacements(Arrays.asList(replacement("X", "bob")));
       assertEquals(statement("loveTriangle(bob, bob, Y)"), newStatement);
    }
    

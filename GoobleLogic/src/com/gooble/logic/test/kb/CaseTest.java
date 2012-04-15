@@ -4,14 +4,17 @@ import static com.gooble.logic.kb.KBEncoding.replacement;
 import static com.gooble.logic.kb.KBEncoding.rule;
 import static com.gooble.logic.kb.KBEncoding.solution;
 import static com.gooble.logic.kb.KBEncoding.statement;
+import static junit.framework.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
 
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.gooble.logic.Logger;
 import com.gooble.logic.kb.KnowledgeBase;
 
 public class CaseTest {
@@ -27,7 +30,6 @@ public class CaseTest {
       kb.add(statement("woman(laura)"));
       kb.add(statement("woman(molly)"));
       kb.add(statement("woman(sarah)"));
-      
       
       // All houses
       kb.add(statement("westHouse(1)"));
@@ -77,17 +79,12 @@ public class CaseTest {
             kb.findSolutions(statement("livesAtHouse(H, molly)")).getSolutions());
       assertEquals(25, kb.findSolutions(statement("everythingAbout(molly, X, Y)")).getSolutions().size());
       assertEquals(Arrays.asList(solution(replacement("H", 4)), solution(replacement("H", 5))), kb.findSolutions(statement("northOf(H, 3)")).getSolutions());
+      assertFalse(kb.query(statement("nextTo(1, 2)")));
    }
    
-   @Test
-   public void encoding_actual_rules_of_problem() throws Exception{
-      kb.add(rule("house(X) ^ woman(Y) => livesAtHouse(X, Y)"));
-      kb.add(rule("hairColour(C) ^ woman(W) => hairOf(W, C)"));
-      
-      kb.add(rule("livesAtHouse(B, A) ^ hairOf(A, blonde) ^ southOf(X, B) ^ nextTo(X, B) ^ livesAtHouse(X, adele) => everythingAbout(A, B, blonde)"));
-      kb.add(rule("livesAtHouse(B, A) ^ hairOf(A, C) ^ directlyEastOf(X, B) ^ livesAtHouse(X, laura) => everythingAbout(adele, B, C)"));
-      kb.add(rule("livesAtHouse(B, A) ^ hairOf(A, C) ^ nextTo(X, B) ^ livesAtHouse(X, molly) ^ southOf(X, B) => everythingAbout(sarah, B, C)"));
-      
+   @After
+   public void close(){
+      Logger.close();
    }
    
 }

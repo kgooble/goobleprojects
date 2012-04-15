@@ -28,15 +28,11 @@ abstract public class Operator extends Statement {
    }
    
    abstract protected boolean evaluateInternal(Constant<Number> limit, Constant<Number> constant);
+   abstract protected Statement createStatement(Term<?>[] constants);
    
    @Override
    public boolean isToBeEvaluated() {
       return true;
-   }
-   
-   @Override
-   protected Statement createStatement(Term<?>[] constants){
-      throw new UnsupportedOperationException("Subclass of operator has not overridden create statement method!");
    }
    
    @Override
