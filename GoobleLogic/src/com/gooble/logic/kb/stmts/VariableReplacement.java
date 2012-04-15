@@ -10,38 +10,44 @@ import com.gooble.logic.kb.Variable;
 
 public class VariableReplacement {
 
-   public Statement applyReplacementsTo(Statement stmt, List<Replacement> replacements){
-      Term<?>[] terms = stmt.getTerms();
-      Statement newStmt = stmt.createCopyWithTerms(Arrays.copyOf(terms, terms.length));
-      List<Integer> replacedIndices = new ArrayList<Integer>();
-      for (Replacement r: replacements){
-         newStmt =  replaceVariableWithValue(newStmt, r.getVariable(), r.getValue(), replacedIndices);
-      }
-      return newStmt;
+   private Statement stmt;
+
+   public VariableReplacement(Statement stmt){
+      this.stmt = stmt;
    }
    
-   public List<Replacement> unifyStatements(Statement first, Statement second){
+   public Statement applyReplacements(List<Replacement> replacements){
+      Term<?>[] terms = stmt.getTerms();
+      stmt = stmt.createCopyWithTerms(Arrays.copyOf(terms, terms.length));
+      List<Integer> replacedIndices = new ArrayList<Integer>();
+      for (Replacement r: replacements){
+         stmt =  replaceVariableWithValue(r.getVariable(), r.getValue(), replacedIndices);
+      }
+      return stmt;
+   }
+   
+   public List<Replacement> unifyWith(Statement second){
       List<Replacement> replacements = new ArrayList<Replacement>();
-      if (!first.match(second)) 
+      if (!stmt.match(second)) 
          return replacements;
-      Statement workingStatement = first.createCopyWithTerms(Arrays.copyOf(first.getTerms(), first.getTerms().length));
-      for (int i = 0; i < first.getTerms().length; i++){
+      stmt = stmt.createCopyWithTerms(Arrays.copyOf(stmt.getTerms(), stmt.getTerms().length));
+      for (int i = 0; i < stmt.getTerms().length; i++){
          List<Integer> replacedIndices = new ArrayList<Integer>();
-         Term<?> myConstant = workingStatement.getTerms()[i];
+         Term<?> myConstant = stmt.getTerms()[i];
          Term<?> otherConstant = second.getTerms()[i];
          
          if (myConstant.isVariable()){
-            workingStatement = replaceVariableWithValue(workingStatement, (Variable)myConstant, otherConstant, replacedIndices);
+            stmt = replaceVariableWithValue((Variable)myConstant, otherConstant, replacedIndices);
             replacements.add(new Replacement((Variable)myConstant, otherConstant));
-         } 
+         }
       }
       
-      if (!second.match(workingStatement))
+      if (!second.match(stmt))
          return new ArrayList<Replacement>();
       return replacements;
    }
    
-   private <T> Statement replaceVariableWithValue(Statement stmt, Variable variableToReplace, Term<T> newValue, List<Integer> alreadyReplaced) {
+   private <T> Statement replaceVariableWithValue(Variable variableToReplace, Term<T> newValue, List<Integer> alreadyReplaced) {
       List<Term<?>> newConstants = new ArrayList<Term<?>>();
       Term<?>[] terms = stmt.getTerms();
       for (int i = 0; i < terms.length; i++){

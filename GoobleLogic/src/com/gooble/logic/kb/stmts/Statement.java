@@ -28,11 +28,11 @@ public class Statement{
    }
 
    public List<Replacement> unifyWith(Statement other) {
-      return new VariableReplacement().unifyStatements(this, other);
+      return new VariableReplacement(this).unifyWith(other);
    }
    
    public Statement applyReplacements(List<Replacement> replacements) {
-      return new VariableReplacement().applyReplacementsTo(this, replacements);
+      return new VariableReplacement(this).applyReplacements(replacements);
    }
    
    public Term<?>[] getTerms(){
