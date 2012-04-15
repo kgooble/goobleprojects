@@ -21,9 +21,11 @@ public class KBEncodingTest {
    
    @Test
    public void encode_statement() throws Exception{
+      assertEquals(new Statement("p", new Constant<String>("a")), statement("p(a)"));
       assertEquals(new Statement("p", new Variable("X")), statement("p(X)"));
       assertEquals(new Statement("p", new Variable("X"), new Variable("Y")), statement("p(X, Y)"));
       assertEquals(new Statement("p", new Constant<String>("a"), new Variable("Y")), statement("p(a, Y)"));
+      assertEquals(new GreaterThan(new Constant<Number>(17), new Variable("X")), statement("X > 17"));
    }
    
    @Test
