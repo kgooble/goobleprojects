@@ -24,7 +24,9 @@ public class ConsistentMergeTest {
       Rule rule2 = rule("p(X, Y) => h(X, Y)");
       SolutionSet solutions1 = new SolutionSet(Arrays.asList(solution(replacement("X", "bob"), replacement("Y", "joe"))), true);
       SolutionSet solutions2 = new SolutionSet(Arrays.asList(solution(replacement("X", "bob"), replacement("Y", "mark"))), true);
-      SolutionSet mergedSolutions = new ConsistentMerge(rule1, solutions1, rule2, solutions2).ignoring(Collections.<Statement>emptyList());
+      ConsistentMerge consistentMerge = new ConsistentMerge(rule1, solutions1, rule2, solutions2);
+      consistentMerge.ignore(Collections.<Statement>emptyList());
+      SolutionSet mergedSolutions = consistentMerge.getMergedSolutions();
       assertFalse(mergedSolutions.hasSolutions());
    }
    
@@ -34,7 +36,9 @@ public class ConsistentMergeTest {
       Rule rule2 = rule("p(X, Y) => h(X, Y)");
       SolutionSet solutions1 = new SolutionSet(Arrays.asList(solution(replacement("X", "bob"), replacement("Y", "joe"))), true);
       SolutionSet solutions2 = new SolutionSet(Arrays.asList(solution(replacement("X", "gary"), replacement("Y", "mark"))), true);
-      SolutionSet mergedSolutions = new ConsistentMerge(rule1, solutions1, rule2, solutions2).ignoring(Collections.<Statement>emptyList());
+      ConsistentMerge consistentMerge = new ConsistentMerge(rule1, solutions1, rule2, solutions2);
+      consistentMerge.ignore(Collections.<Statement>emptyList());
+      SolutionSet mergedSolutions = consistentMerge.getMergedSolutions();
       assertEquals(Arrays.asList(solution(replacement("X1", "bob"), replacement("Y1", "joe"), replacement("X2", "gary"), replacement("Y2", "mark"))), mergedSolutions.list());
    }
 

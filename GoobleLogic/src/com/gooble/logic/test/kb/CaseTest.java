@@ -14,6 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.gooble.logic.Logger;
+import com.gooble.logic.kb.ConsistentMerge;
 import com.gooble.logic.kb.ContradictingSolutions;
 import com.gooble.logic.kb.KnowledgeBase;
 import com.gooble.logic.kb.Rule;
@@ -108,10 +109,26 @@ public class CaseTest {
 //      System.out.println(kb.findSolutions(statement("solution3(H6, W2, H7, H8, W3)")));
 //      System.out.println(kb.findSolutions(statement("solution4(W4, H9, H10, W5)")));
 
-      System.out.println(new SolutionSet(new ContradictingSolutions(rule1, statement("solution1(W1, H1, H2, H3)"), kb.findSolutions(statement("solution1(W1, H1, H2, H3)")).list()).remove(), true));
-      System.out.println(new SolutionSet(new ContradictingSolutions(rule2, statement("solution2(H4, H5)"), kb.findSolutions(statement("solution2(H4, H5)")).list()).remove(), true));
-      System.out.println(new SolutionSet(new ContradictingSolutions(rule3, statement("solution3(H6, W2, H7, H8, W3)"), kb.findSolutions(statement("solution3(H6, W2, H7, H8, W3)")).list()).remove(), false));
-      System.out.println(new SolutionSet(new ContradictingSolutions(rule4, statement("solution4(W4, H9, H10, W5)"), kb.findSolutions(statement("solution4(W4, H9, H10, W5)")).list()).remove(), true));
+      SolutionSet solns1 = kb.findSolutions(statement("solution1(W1, H1, H2, H3)"));
+      SolutionSet solns2 = kb.findSolutions(statement("solution2(H4, H5)"));
+      SolutionSet solns3 = kb.findSolutions(statement("solution3(H6, W2, H7, H8, W3)"));
+      SolutionSet solns4 = kb.findSolutions(statement("solution4(W4, H9, H10, W5)"));
+
+      ConsistentMerge consistentMerge = new ConsistentMerge(rule1, solns1, rule2, solns2);
+      consistentMerge.ignore(Arrays.asList(statement("nextTo(X, Y)")));
+      
+      consistentMerge = new ConsistentMerge(consistentMerge.getMergedRule(), consistentMerge.getMergedSolutions(), rule3, solns3);
+      consistentMerge.ignore(Arrays.asList(statement("nextTo(X, Y)")));
+      
+      consistentMerge = new ConsistentMerge(consistentMerge.getMergedRule(), consistentMerge.getMergedSolutions(), rule4, solns4);
+      consistentMerge.ignore(Arrays.asList(statement("nextTo(X, Y)")));
+      
+      System.out.println(consistentMerge);
+      
+//      System.out.println(new SolutionSet(new ContradictingSolutions(rule1, statement("solution1(W1, H1, H2, H3)"), solns1.list()).remove(), true));
+//      System.out.println(new SolutionSet(new ContradictingSolutions(rule2, statement("solution2(H4, H5)"), solns2.list()).remove(), true));
+//      System.out.println(new SolutionSet(new ContradictingSolutions(rule3, statement("solution3(H6, W2, H7, H8, W3)"), solns3.list()).remove(), false));
+//      System.out.println(new SolutionSet(new ContradictingSolutions(rule4, statement("solution4(W4, H9, H10, W5)"), solns4.list()).remove(), true));
 
 //      Rule rule = rule("hairOf(W1, blonde) ^ livesAtHouse(H1, W1) ^ nextTo(H1, H2) ^ southOf(H2, H1) ^ livesAtHouse(H2, adele) ^ " +
 //            "directlyEastOf(H3, H2) ^ livesAtHouse(H3, laura) ^ livesAtHouse(H4, sarah) ^ nextTo(H5, H4) ^ southOf(H5, H4) ^ livesAtHouse(H5, molly) ^ " +

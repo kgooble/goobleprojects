@@ -13,6 +13,8 @@ public class ConsistentMerge {
    private final SolutionSet solutions2;
    private final Rule rule2;
    private final SolutionSet solutions1;
+   private SolutionSet mergedSolutions;
+   private Rule mergedRule;
 
    public ConsistentMerge(Rule rule1, SolutionSet solutions1, Rule rule2, SolutionSet solutions2) {
       this.rule1 = rule1;
@@ -21,13 +23,13 @@ public class ConsistentMerge {
       this.solutions2 = solutions2;
    }
 
-   public SolutionSet ignoring(List<Statement> ignoreList) {
+   public void ignore(List<Statement> ignoreList) {
       List<Solution> mergedSolutions = new ArrayList<Solution>();
       SolutionSet solutionSet = new SolutionSet(mergedSolutions, solutions1.isQueryTrue() && solutions2.isQueryTrue());
       
       List<Solution> newSolns1 = SolutionSuffixer.suffix(solutions1.list(), "1");
       List<Solution> newSolns2 = SolutionSuffixer.suffix(solutions2.list(), "2");
-      Rule mergedRule = RuleMerger.merge(rule1, rule2);
+      mergedRule = RuleMerger.merge(rule1, rule2);
       
       for (Solution s1 : newSolns1){
          for (Solution s2 : newSolns2){
@@ -40,11 +42,23 @@ public class ConsistentMerge {
          }
       }
       
-      return solutionSet;
+      this.mergedSolutions = solutionSet;
+   }
+   
+   public Rule getMergedRule(){
+      return mergedRule;
+   }
+   public SolutionSet getMergedSolutions(){
+      return mergedSolutions;
    }
 
    private boolean isNotContradictory(Solution soln, Rule rule, List<Statement> ignoreList) {
       return !new ContradictingSolution(soln).isContradictoryBasedOnRule(rule, ignoreList);
+   }
+   
+   @Override
+   public String toString(){
+      return mergedRule + "\n" + mergedSolutions;
    }
 
 }
