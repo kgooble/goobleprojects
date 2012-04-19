@@ -1,6 +1,7 @@
 package com.gooble.logic.kb;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.gooble.logic.kb.solutions.Solution;
@@ -21,54 +22,25 @@ public class ContradictingSolutions {
    }
 
    public List<Solution> remove() {
-      List<Replacement> originalReplacements = rule.getConsequence().unifyWith(statement);
-      List<Solution> normalizedSolns = new SolutionNormalizer(originalReplacements).normalize(new SolutionSet(solns, true)).getSolutions();
-      List<Solution> goodOnes = new ArrayList<Solution>();
-      for (Solution s : normalizedSolns) {
-         filterSolution(goodOnes, s);
-      }
-      originalReplacements = statement.unifyWith(rule.getConsequence());
-      return new SolutionNormalizer(originalReplacements).normalize(new SolutionSet(goodOnes, true)).getSolutions();
+      return removeIgnoring(Collections.<Statement>emptyList());
    }
 
-   private void filterSolution(List<Solution> goodOnes, Solution s) {
-      Statement[] antes = rule.getAntecedents();
-      List<Statement> resolvedAntes = new ArrayList<Statement>(antes.length);
-      for (Statement ante : antes) {
-         resolvedAntes.add(ante.applyReplacements(s.getReplacements()));
+   public List<Solution> removeIgnoring(List<Statement> ignoreList) {
+      List<Replacement> originalReplacements = rule.getConsequence().unifyWith(statement);
+      List<Solution> normalizedSolns = new SolutionNormalizer(originalReplacements).normalize(new SolutionSet(solns, true)).list();
+      List<Solution> goodOnes = new ArrayList<Solution>();
+      for (Solution s : normalizedSolns) {
+         filterSolution(goodOnes, s, ignoreList);
       }
-      boolean thisOneIsBad = false;
-      for (int i = 0; i < resolvedAntes.size(); i++) {
-         for (int j = 0; j < resolvedAntes.size(); j++) {
-            if (j == i) continue;
-            if (oneSameValueButRestDifferent(resolvedAntes.get(i), resolvedAntes.get(j))){
-               thisOneIsBad = true;
-               break;
-            }
-         }
-         if (thisOneIsBad) break;
-      }
+      originalReplacements = statement.unifyWith(rule.getConsequence());
+      return new SolutionNormalizer(originalReplacements).normalize(new SolutionSet(goodOnes, true)).list();
+   }
+   
+   private void filterSolution(List<Solution> goodOnes, Solution s, List<Statement> ignoreList) {
+      boolean thisOneIsBad = new ContradictingSolution(s).isContradictoryBasedOnRule(rule, ignoreList);
       if (!thisOneIsBad){
          goodOnes.add(s);
       }
-   }
-
-   private boolean oneSameValueButRestDifferent(Statement first, Statement second) {
-      if (first.getName().equals(second.getName()) && first.getTerms().length == second.getTerms().length){
-         boolean allMatch = false;
-         boolean onlySomeMatch = false;
-         for (int i = 0; i < first.getTerms().length; i++){
-            if (first.getTerms()[i].match(second.getTerms()[i])){
-               allMatch = true;
-            } else{
-               if (allMatch)
-                  onlySomeMatch = true;
-            }
-         }
-         return onlySomeMatch;
-      }
-      
-      return false;
    }
 
 }

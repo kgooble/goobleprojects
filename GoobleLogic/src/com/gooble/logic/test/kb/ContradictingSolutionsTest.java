@@ -32,6 +32,17 @@ public class ContradictingSolutionsTest {
    }
    
    @Test
+   public void ignore_certain_statements_when_checking_for_contradictions() throws Exception{
+      List<Solution> originalSolutions = Arrays.asList(solution(replacement("X", 1), replacement("Y", 2), replacement("Z", 3)));
+      List<Solution> newSolutions = new ContradictingSolutions(
+            rule("nextTo(Y, X) ^ nextTo(Y, Z) => notNextTo(Z, X, Y)"),
+            statement("notNextTo(Z, X, Y)"),
+            originalSolutions
+            ).removeIgnoring(Arrays.asList(statement("nextTo(X, Y)")));
+      assertEquals(originalSolutions, newSolutions);
+   }
+   
+   @Test
    public void merged_solution_with_subset() throws Exception{
       List<Solution> newSolutions = new ContradictingSolutions(
             rule("ageOf(bob, X) ^ ageOf(G, Y) ^ X < Y ^ wears(blue, G) ^ ageOf(G1, A1) ^ ageOf(G2, A2) ^ A1 < A2 ^ wears(green, G2) ^ wears(red, G1) => solution1(X, Y, G, G1, G2, A1, A2)"),

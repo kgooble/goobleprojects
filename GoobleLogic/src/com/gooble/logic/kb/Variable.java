@@ -37,4 +37,9 @@ public class Variable implements Term<String> {
       return "VAR:" + name.toString();
    }
 
+   @Override
+   public Term<?> copyWithSuffix(String suffix) {
+      return new Variable(name + suffix);
+   }
+
 }

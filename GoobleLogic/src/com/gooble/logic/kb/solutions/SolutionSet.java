@@ -14,7 +14,7 @@ public class SolutionSet {
       this.queryTrue = queryTrue;
    }
    
-   public List<Solution> getSolutions(){
+   public List<Solution> list(){
       return solutions;
    }
    
@@ -27,7 +27,7 @@ public class SolutionSet {
    }
 
    public void add(SolutionSet statementSolutions) {
-      this.solutions.addAll(statementSolutions.getSolutions());
+      this.solutions.addAll(statementSolutions.list());
       queryTrue &= statementSolutions.isQueryTrue();
    }
 
@@ -46,7 +46,7 @@ public class SolutionSet {
    public void replaceSolutionsIfNotEmpty(SolutionSet newSolSet) {
       if (newSolSet.hasSolutions()){
          log("expanded solution set: " + newSolSet);
-         solutions = newSolSet.getSolutions();
+         solutions = newSolSet.list();
       }
       queryTrue &= newSolSet.isQueryTrue();
    }

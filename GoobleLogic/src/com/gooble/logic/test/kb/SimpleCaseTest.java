@@ -55,7 +55,7 @@ public class SimpleCaseTest {
             solution(replacement("AGEBOB", 17), replacement("AGEOTHER", 22), replacement("OTHER", "bob")),
             solution(replacement("AGEBOB", 17), replacement("AGEOTHER", 22), replacement("OTHER", "alex")),
             solution(replacement("AGEBOB", 17), replacement("AGEOTHER", 22), replacement("OTHER", "john"))),
-            kb.findSolutions(statement("solution1(AGEBOB, AGEOTHER, OTHER)")).getSolutions());
+            kb.findSolutions(statement("solution1(AGEBOB, AGEOTHER, OTHER)")).list());
       
       assertEquals(Arrays.asList(
             // ageOf(john, 17) ^ ageOf(bob, 33) ^ wears(green, john) ^ wears(red, bob)   
@@ -87,7 +87,7 @@ public class SimpleCaseTest {
             solution(replacement("YOUNGAGE", 22), replacement("YOUNGGUY", "bob"), replacement("OLDAGE", 33), replacement("OLDGUY", "alex")), 
             solution(replacement("YOUNGAGE", 22), replacement("YOUNGGUY", "bob"), replacement("OLDAGE", 33), replacement("OLDGUY", "john"))
             ), 
-            kb.findSolutions(statement("solution2(YOUNGGUY, OLDGUY, YOUNGAGE, OLDAGE)")).getSolutions());
+            kb.findSolutions(statement("solution2(YOUNGGUY, OLDGUY, YOUNGAGE, OLDAGE)")).list());
    }
    
    @After

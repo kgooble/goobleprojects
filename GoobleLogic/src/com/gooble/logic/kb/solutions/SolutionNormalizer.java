@@ -17,7 +17,7 @@ public class SolutionNormalizer {
    public SolutionSet normalize(SolutionSet solution){
       List<Solution> properSolns = new ArrayList<Solution>();
       SolutionSet newSolns = new SolutionSet(properSolns, solution.isQueryTrue());
-      for (Solution soln : solution.getSolutions()){
+      for (Solution soln : solution.list()){
          properSolns.add(normalizeSolution(soln));
       }
       return newSolns;

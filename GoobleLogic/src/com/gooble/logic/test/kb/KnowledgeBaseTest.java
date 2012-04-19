@@ -41,7 +41,7 @@ public class KnowledgeBaseTest {
       assertFalse(solns.hasSolutions());
       solns = kb.findSolutions(statement("p(X)"));
       assertTrue(solns.isQueryTrue());
-      assertEquals(Arrays.asList(solution(replacement("X", "X"))), solns.getSolutions());
+      assertEquals(Arrays.asList(solution(replacement("X", "X"))), solns.list());
    }
 
    @Test
@@ -52,26 +52,26 @@ public class KnowledgeBaseTest {
       
       SolutionSet solns = kb.findSolutions(statement("p(X, Z, Y)"));
       assertTrue(solns.isQueryTrue());
-      assertEquals(Arrays.asList(solution(replacement("X", "X"), replacement("Z", "a"), replacement("Y", "Z"))), solns.getSolutions());
+      assertEquals(Arrays.asList(solution(replacement("X", "X"), replacement("Z", "a"), replacement("Y", "Z"))), solns.list());
       
       solns = kb.findSolutions(statement("p(X, a, Y)"));
       assertTrue(solns.isQueryTrue());
-      assertEquals(Arrays.asList(solution(replacement("X", "X"), replacement("Y", "Z"))), solns.getSolutions());
+      assertEquals(Arrays.asList(solution(replacement("X", "X"), replacement("Y", "Z"))), solns.list());
       
       solns = kb.findSolutions(statement("p(X, b, Y)"));
       assertFalse(solns.isQueryTrue());
       
       solns = kb.findSolutions(statement("g(X, Y, Y)"));
       assertTrue(solns.isQueryTrue());
-      assertEquals(Arrays.asList(solution(replacement("X", "X"), replacement("Y", "a"))), solns.getSolutions());
+      assertEquals(Arrays.asList(solution(replacement("X", "X"), replacement("Y", "a"))), solns.list());
       
       solns = kb.findSolutions(statement("g(X, Y, Z)"));
       assertTrue(solns.isQueryTrue());
-      assertEquals(Arrays.asList(solution(replacement("X", "X"), replacement("Y", "a"), replacement("Z", "a"))), solns.getSolutions());
+      assertEquals(Arrays.asList(solution(replacement("X", "X"), replacement("Y", "a"), replacement("Z", "a"))), solns.list());
       
       solns = kb.findSolutions(statement("h(X, Y, Z)"));
       assertTrue(solns.isQueryTrue());
-      assertEquals(Arrays.asList(solution(replacement("X", "b"), replacement("Y", "a"), replacement("Z", "a"))), solns.getSolutions());
+      assertEquals(Arrays.asList(solution(replacement("X", "b"), replacement("Y", "a"), replacement("Z", "a"))), solns.list());
       
       solns = kb.findSolutions(statement("h(X, X, Z)"));
       assertFalse(solns.isQueryTrue());
@@ -81,7 +81,7 @@ public class KnowledgeBaseTest {
       
       solns = kb.findSolutions(statement("h(Y, X, X)"));
       assertTrue(solns.isQueryTrue());
-      assertEquals(Arrays.asList(solution(replacement("Y", "b"), replacement("X", "a"))), solns.getSolutions());
+      assertEquals(Arrays.asList(solution(replacement("Y", "b"), replacement("X", "a"))), solns.list());
    }
    
    @Test
@@ -122,8 +122,8 @@ public class KnowledgeBaseTest {
    @Test
    public void find_all_values_which_make_statement_true() throws Exception{
       kb.add(statement("age(bob, 17)"));
-      assertEquals(Arrays.asList(solution(replacement("X", 17))), kb.findSolutions(statement("age(bob, X)")).getSolutions());
-      assertEquals(Collections.<Solution>emptyList(), kb.findSolutions(statement("age(mary, X)")).getSolutions());
+      assertEquals(Arrays.asList(solution(replacement("X", 17))), kb.findSolutions(statement("age(bob, X)")).list());
+      assertEquals(Collections.<Solution>emptyList(), kb.findSolutions(statement("age(mary, X)")).list());
    }
    
    @Test
@@ -148,7 +148,7 @@ public class KnowledgeBaseTest {
       
       kb.add(rule("p(X) ^ h(X) => g(X)"));
       
-      assertEquals(Arrays.asList(solution(replacement("X", "c"))), kb.findSolutions(statement("g(X)")).getSolutions());
+      assertEquals(Arrays.asList(solution(replacement("X", "c"))), kb.findSolutions(statement("g(X)")).list());
    }
    
    @Test
@@ -158,7 +158,7 @@ public class KnowledgeBaseTest {
       kb.add(statement("parentOf(bob, betty)"));
       kb.add(statement("orphan(bob)"));
       
-      assertEquals(Arrays.asList(solution(replacement("X", "alfred")), solution(replacement("X", "betty"))), kb.findSolutions(statement("dead(X)")).getSolutions());
+      assertEquals(Arrays.asList(solution(replacement("X", "alfred")), solution(replacement("X", "betty"))), kb.findSolutions(statement("dead(X)")).list());
    }
    
    private boolean query(String stmtEncoding) {

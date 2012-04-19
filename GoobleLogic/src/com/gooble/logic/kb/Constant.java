@@ -41,4 +41,9 @@ public class Constant<T> implements Term<T>{
       return false;
    }
 
+   @Override
+   public Term<?> copyWithSuffix(String suffix) {
+      return this;
+   }
+
 }
