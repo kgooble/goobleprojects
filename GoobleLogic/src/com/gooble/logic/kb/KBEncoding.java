@@ -2,8 +2,10 @@ package com.gooble.logic.kb;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.util.Arrays;
 
 import com.gooble.logic.kb.solutions.Solution;
+import com.gooble.logic.kb.solutions.SolutionSet;
 import com.gooble.logic.kb.stmts.GreaterThan;
 import com.gooble.logic.kb.stmts.LessThan;
 import com.gooble.logic.kb.stmts.Statement;
@@ -16,6 +18,9 @@ public class KBEncoding {
          soln.addVariableReplacement(re);
       }
       return soln;
+   }
+   public static SolutionSet solutions(boolean isQueryTrue, Solution... solutions){
+      return new SolutionSet(Arrays.asList(solutions), isQueryTrue);
    }
    
    public static Replacement replacement(String varName, Object value){

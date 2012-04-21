@@ -23,14 +23,17 @@ public class ConsistentMerge {
       this.solutions2 = solutions2;
    }
 
-   public void ignore(List<Statement> ignoreList) {
+   public void ignoring(List<Statement> ignoreList) {
       List<Solution> mergedSolutions = new ArrayList<Solution>();
       SolutionSet solutionSet = new SolutionSet(mergedSolutions, solutions1.isQueryTrue() && solutions2.isQueryTrue());
-      
+      mergedRule = RuleMerger.merge(rule1, rule2);
+      mergeSolutions(ignoreList, mergedSolutions);
+      this.mergedSolutions = solutionSet;
+   }
+
+   private void mergeSolutions(List<Statement> ignoreList, List<Solution> mergedSolutions) {
       List<Solution> newSolns1 = SolutionSuffixer.suffix(solutions1.list(), "1");
       List<Solution> newSolns2 = SolutionSuffixer.suffix(solutions2.list(), "2");
-      mergedRule = RuleMerger.merge(rule1, rule2);
-      
       for (Solution s1 : newSolns1){
          for (Solution s2 : newSolns2){
             Solution soln = new Solution();
@@ -41,8 +44,6 @@ public class ConsistentMerge {
             }
          }
       }
-      
-      this.mergedSolutions = solutionSet;
    }
    
    public Rule getMergedRule(){

@@ -115,15 +115,35 @@ public class CaseTest {
       SolutionSet solns4 = kb.findSolutions(statement("solution4(W4, H9, H10, W5)"));
 
       ConsistentMerge consistentMerge = new ConsistentMerge(rule1, solns1, rule2, solns2);
-      consistentMerge.ignore(Arrays.asList(statement("nextTo(X, Y)")));
+      consistentMerge.ignoring(Arrays.asList(statement("nextTo(X, Y)")));
       
       consistentMerge = new ConsistentMerge(consistentMerge.getMergedRule(), consistentMerge.getMergedSolutions(), rule3, solns3);
-      consistentMerge.ignore(Arrays.asList(statement("nextTo(X, Y)")));
+      consistentMerge.ignoring(Arrays.asList(statement("nextTo(X, Y)")));
       
       consistentMerge = new ConsistentMerge(consistentMerge.getMergedRule(), consistentMerge.getMergedSolutions(), rule4, solns4);
-      consistentMerge.ignore(Arrays.asList(statement("nextTo(X, Y)")));
+      consistentMerge.ignoring(Arrays.asList(statement("nextTo(X, Y)")));
       
       System.out.println(consistentMerge);
+      
+      /*
+       * QUERY true, SOLUTIONS: SOLUTION: 
+
+[(VAR:W1111=CONST:molly),  -> molly is blonde
+(VAR:H1111=CONST:4),  -> molly lives at house 4
+(VAR:H2111=CONST:2),  -> adele lives at house 2
+(VAR:H3111=CONST:1),  -> laura lives at house 1
+(VAR:H4211=CONST:5),  -> sarah lives at house 5
+(VAR:H5211=CONST:4),  -> molly lives at house 4
+(VAR:H621=CONST:4),   -> molly lives at house 4
+(VAR:W221=CONST:molly), -> molly is woman 2
+(VAR:H721=CONST:3),   -> jane lives at house 3
+(VAR:H821=CONST:5),   -> grey haired woman lives at house 5 -> sarah has grey hair
+(VAR:W321=CONST:sarah), -> sarah has grey hair & lives at house 5
+(VAR:W42=CONST:laura), -> laura has chestnut hair
+(VAR:H92=CONST:1), -> laura lives at house 1
+(VAR:H102=CONST:3), -> h10 is 3
+(VAR:W52=CONST:jane)] -> jane has black hair, lives at house 3
+       */
       
 //      System.out.println(new SolutionSet(new ContradictingSolutions(rule1, statement("solution1(W1, H1, H2, H3)"), solns1.list()).remove(), true));
 //      System.out.println(new SolutionSet(new ContradictingSolutions(rule2, statement("solution2(H4, H5)"), solns2.list()).remove(), true));
