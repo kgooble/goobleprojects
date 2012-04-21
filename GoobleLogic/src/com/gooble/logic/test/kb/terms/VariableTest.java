@@ -1,4 +1,4 @@
-package com.gooble.logic.test.kb;
+package com.gooble.logic.test.kb.terms;
 
 import static com.gooble.logic.kb.KBEncoding.constant;
 import static com.gooble.logic.kb.KBEncoding.variable;
@@ -8,7 +8,7 @@ import static org.junit.Assert.assertFalse;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.gooble.logic.kb.Variable;
+import com.gooble.logic.kb.terms.Variable;
 
 public class VariableTest {
 

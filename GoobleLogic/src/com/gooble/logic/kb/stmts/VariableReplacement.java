@@ -5,8 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.gooble.logic.kb.Replacement;
-import com.gooble.logic.kb.Term;
-import com.gooble.logic.kb.Variable;
+import com.gooble.logic.kb.terms.Term;
+import com.gooble.logic.kb.terms.Variable;
 
 public class VariableReplacement {
 

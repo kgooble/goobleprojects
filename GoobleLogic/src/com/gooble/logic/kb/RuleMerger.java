@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.gooble.logic.kb.stmts.Statement;
+import com.gooble.logic.kb.terms.Term;
 
 public class RuleMerger {
 

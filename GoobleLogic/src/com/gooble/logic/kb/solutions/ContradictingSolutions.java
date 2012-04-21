@@ -1,12 +1,11 @@
-package com.gooble.logic.kb;
+package com.gooble.logic.kb.solutions;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.gooble.logic.kb.solutions.Solution;
-import com.gooble.logic.kb.solutions.SolutionNormalizer;
-import com.gooble.logic.kb.solutions.SolutionSet;
+import com.gooble.logic.kb.Replacement;
+import com.gooble.logic.kb.Rule;
 import com.gooble.logic.kb.stmts.Statement;
 
 public class ContradictingSolutions {

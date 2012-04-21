@@ -1,4 +1,4 @@
-package com.gooble.logic.kb;
+package com.gooble.logic.kb.terms;
 
 
 public class Variable implements Term<String> {

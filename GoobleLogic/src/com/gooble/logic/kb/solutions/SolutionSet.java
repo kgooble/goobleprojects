@@ -60,7 +60,6 @@ public class SolutionSet {
       queryTrue = true;
    }
    
-   
    @Override
    public boolean equals(Object obj){
       if (!(obj instanceof SolutionSet))

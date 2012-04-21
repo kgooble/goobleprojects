@@ -1,4 +1,4 @@
-package com.gooble.logic.test.kb;
+package com.gooble.logic.test.kb.solutions;
 
 import static com.gooble.logic.kb.KBEncoding.replacement;
 import static com.gooble.logic.kb.KBEncoding.rule;
@@ -11,8 +11,8 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-import com.gooble.logic.kb.ContradictingSolution;
 import com.gooble.logic.kb.Rule;
+import com.gooble.logic.kb.solutions.ContradictingSolution;
 import com.gooble.logic.kb.solutions.Solution;
 import com.gooble.logic.kb.stmts.Statement;
 

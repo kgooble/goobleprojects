@@ -15,9 +15,9 @@ import org.junit.Test;
 
 import com.gooble.logic.Logger;
 import com.gooble.logic.kb.ConsistentMerge;
-import com.gooble.logic.kb.ContradictingSolutions;
 import com.gooble.logic.kb.KnowledgeBase;
 import com.gooble.logic.kb.Rule;
+import com.gooble.logic.kb.solutions.ContradictingSolutions;
 import com.gooble.logic.kb.solutions.SolutionSet;
 
 public class CaseTest {

@@ -3,8 +3,10 @@ package com.gooble.logic.kb;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.gooble.logic.kb.solutions.ContradictingSolution;
 import com.gooble.logic.kb.solutions.Solution;
 import com.gooble.logic.kb.solutions.SolutionSet;
+import com.gooble.logic.kb.solutions.SolutionSuffixer;
 import com.gooble.logic.kb.stmts.Statement;
 
 public class ConsistentMerge {

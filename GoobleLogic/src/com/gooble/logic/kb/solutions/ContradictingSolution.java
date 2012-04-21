@@ -1,9 +1,9 @@
-package com.gooble.logic.kb;
+package com.gooble.logic.kb.solutions;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.gooble.logic.kb.solutions.Solution;
+import com.gooble.logic.kb.Rule;
 import com.gooble.logic.kb.stmts.Statement;
 
 public class ContradictingSolution {

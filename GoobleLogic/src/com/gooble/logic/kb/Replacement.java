@@ -1,5 +1,8 @@
 package com.gooble.logic.kb;
 
+import com.gooble.logic.kb.terms.Term;
+import com.gooble.logic.kb.terms.Variable;
+
 public class Replacement {
 
    private final Term<?> replacement;

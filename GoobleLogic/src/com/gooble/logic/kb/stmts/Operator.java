@@ -2,8 +2,8 @@ package com.gooble.logic.kb.stmts;
 
 import static com.gooble.logic.Logger.log;
 
-import com.gooble.logic.kb.Constant;
-import com.gooble.logic.kb.Term;
+import com.gooble.logic.kb.terms.Constant;
+import com.gooble.logic.kb.terms.Term;
 
 
 abstract public class Operator extends Statement {

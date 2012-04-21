@@ -9,6 +9,9 @@ import com.gooble.logic.kb.solutions.SolutionSet;
 import com.gooble.logic.kb.stmts.GreaterThan;
 import com.gooble.logic.kb.stmts.LessThan;
 import com.gooble.logic.kb.stmts.Statement;
+import com.gooble.logic.kb.terms.Constant;
+import com.gooble.logic.kb.terms.Term;
+import com.gooble.logic.kb.terms.Variable;
 
 
 public class KBEncoding {

@@ -1,7 +1,7 @@
 package com.gooble.logic.kb.stmts;
 
-import com.gooble.logic.kb.Constant;
-import com.gooble.logic.kb.Term;
+import com.gooble.logic.kb.terms.Constant;
+import com.gooble.logic.kb.terms.Term;
 
 
 public class LessThan extends Operator {
