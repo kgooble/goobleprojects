@@ -2,6 +2,7 @@ package com.gooble.logic.test.kb.stmts;
 
 import static com.gooble.logic.kb.KBEncoding.*;
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
@@ -79,6 +80,17 @@ public class StatementTest {
       assertEquals(Arrays.asList(
             replacement("X", "a"), 
             replacement("Y", "b")), variable.unifyWith(constant));
+   }
+   
+   @Test(expected=UnsupportedOperationException.class)
+   public void cannot_call_evaluate_on_statement() throws Exception{
+      statement("p(X)").evaluate();
+   }
+   
+   @Test
+   public void equals_other_statement_with_same_number_of_terms_and_same_name() throws Exception{
+      assertFalse(statement("p(X)").equals(statement("p(X, Y)")));
+      assertTrue(statement("p(X)").equals(statement("p(X)")));
    }
 
 }
