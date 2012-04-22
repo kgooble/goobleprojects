@@ -5,14 +5,14 @@ import static junit.framework.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.gooble.logic.kb.RuleMerger;
+import com.gooble.logic.kb.Rules;
 
-public class RuleMergerTest {
+public class RulesTest {
 
    @Test
    public void merge() throws Exception{
       assertEquals(rule("p(X1) ^ p(X2) ^ h(X2) => gq(X1, X2)"), 
-            new RuleMerger(rule("p(X) => g(X)"), rule("p(X) ^ h(X) => q(X)")).merge());
+            new Rules(rule("p(X) => g(X)"), rule("p(X) ^ h(X) => q(X)")).merge());
    }
    
 }

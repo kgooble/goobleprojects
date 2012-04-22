@@ -6,7 +6,6 @@ import java.util.List;
 import com.gooble.logic.kb.solutions.ContradictingSolution;
 import com.gooble.logic.kb.solutions.Solution;
 import com.gooble.logic.kb.solutions.SolutionSet;
-import com.gooble.logic.kb.solutions.SolutionSuffixer;
 import com.gooble.logic.kb.stmts.Statement;
 
 public class ConsistentMerge {
@@ -28,14 +27,14 @@ public class ConsistentMerge {
    public void ignoring(List<Statement> ignoreList) {
       List<Solution> mergedSolutions = new ArrayList<Solution>();
       SolutionSet solutionSet = new SolutionSet(mergedSolutions, solutions1.isQueryTrue() && solutions2.isQueryTrue());
-      mergedRule = new RuleMerger(rule1, rule2).merge();
+      mergedRule = new Rules(rule1, rule2).merge();
       mergeSolutions(ignoreList, mergedSolutions);
       this.mergedSolutions = solutionSet;
    }
 
    private void mergeSolutions(List<Statement> ignoreList, List<Solution> mergedSolutions) {
-      List<Solution> newSolns1 = SolutionSuffixer.suffix(solutions1.list(), "1");
-      List<Solution> newSolns2 = SolutionSuffixer.suffix(solutions2.list(), "2");
+      List<Solution> newSolns1 = Suffix.solutions(solutions1.list(), "1");
+      List<Solution> newSolns2 = Suffix.solutions(solutions2.list(), "2");
       for (Solution s1 : newSolns1){
          for (Solution s2 : newSolns2){
             Solution soln = new Solution();
