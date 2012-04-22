@@ -9,15 +9,15 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-import com.gooble.logic.kb.solutions.SolutionNormalizer;
+import com.gooble.logic.kb.solutions.Normalize;
 import com.gooble.logic.kb.solutions.SolutionSet;
 
-public class SolutionNormalizerTest {
+public class NormalizeTest {
 
    @Test
    public void normalize_simple_solution() throws Exception{
       SolutionSet solns = new SolutionSet(Arrays.asList(solution(replacement("X", 1))), true);
-      SolutionSet newSolns = new SolutionNormalizer(Arrays.asList(replacement("H", "X"))).normalize(solns);
+      SolutionSet newSolns = new Normalize(Arrays.asList(replacement("H", "X"))).solutions(solns);
       SolutionSet expectedSolns = new SolutionSet(Arrays.asList(solution(replacement("H", 1))), true);
       assertEquals(expectedSolns, newSolns);
    }
@@ -25,7 +25,7 @@ public class SolutionNormalizerTest {
    @Test
    public void remove_extraneous_variables_accumulated_from_sub_solutions() throws Exception{
       SolutionSet solns = new SolutionSet(Arrays.asList(solution(replacement("X", 1), replacement("H", "bob"))), true);
-      SolutionSet newSolns = new SolutionNormalizer(Arrays.asList(replacement("H", "X"))).normalize(solns);
+      SolutionSet newSolns = new Normalize(Arrays.asList(replacement("H", "X"))).solutions(solns);
       SolutionSet expectedSolns = new SolutionSet(Arrays.asList(solution(replacement("H", 1))), true);
       assertEquals(expectedSolns, newSolns);
    }

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.gooble.logic.kb.solutions.Solution;
-import com.gooble.logic.kb.solutions.SolutionNormalizer;
+import com.gooble.logic.kb.solutions.Normalize;
 import com.gooble.logic.kb.solutions.SolutionSet;
 import com.gooble.logic.kb.stmts.Statement;
 
@@ -61,7 +61,7 @@ public class KnowledgeBase {
 //            log("Applying rule <<" + rule + ">> on working statement <<" + workingStatement + ">>");
             SolutionSet subSolSet = collectSolutionsForRule(workingStatement, rule);
             atLeastOneRuleSucceeded |= subSolSet.isQueryTrue();
-            SolutionSet normalizedSoln = new SolutionNormalizer(originalReplacements).normalize(subSolSet);
+            SolutionSet normalizedSoln = new Normalize(originalReplacements).solutions(subSolSet);
 //            log("", "found solution, normalized: <<" + normalizedSoln + ">>", "");
             solution.add(normalizedSoln);
          }

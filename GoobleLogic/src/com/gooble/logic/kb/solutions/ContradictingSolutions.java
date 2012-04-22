@@ -26,19 +26,19 @@ public class ContradictingSolutions {
 
    public List<Solution> removeIgnoring(List<Statement> ignoreList) {
       List<Replacement> originalReplacements = rule.getConsequence().unifyWith(statement);
-      List<Solution> normalizedSolns = new SolutionNormalizer(originalReplacements).normalize(new SolutionSet(solns, true)).list();
+      List<Solution> normalizedSolns = new Normalize(originalReplacements).solutions(new SolutionSet(solns, true)).list();
       List<Solution> goodOnes = new ArrayList<Solution>();
       for (Solution s : normalizedSolns) {
          filterSolution(goodOnes, s, ignoreList);
       }
       originalReplacements = statement.unifyWith(rule.getConsequence());
-      return new SolutionNormalizer(originalReplacements).normalize(new SolutionSet(goodOnes, true)).list();
+      return new Normalize(originalReplacements).solutions(new SolutionSet(goodOnes, true)).list();
    }
    
-   private void filterSolution(List<Solution> goodOnes, Solution s, List<Statement> ignoreList) {
-      boolean thisOneIsBad = new ContradictingSolution(s).isContradictoryBasedOnRule(rule, ignoreList);
+   private void filterSolution(List<Solution> goodOnes, Solution soln, List<Statement> ignoreList) {
+      boolean thisOneIsBad = new ContradictingSolution(soln).isContradictoryBasedOnRule(rule, ignoreList);
       if (!thisOneIsBad){
-         goodOnes.add(s);
+         goodOnes.add(soln);
       }
    }
 

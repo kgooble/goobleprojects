@@ -1,4 +1,4 @@
-package com.gooble.logic.test.kb.solutions;
+package com.gooble.logic.test.kb;
 
 import static com.gooble.logic.kb.KBEncoding.constant;
 import static com.gooble.logic.kb.KBEncoding.replacement;

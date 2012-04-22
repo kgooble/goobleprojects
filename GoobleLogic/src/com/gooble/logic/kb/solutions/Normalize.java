@@ -6,32 +6,32 @@ import java.util.List;
 import com.gooble.logic.kb.Replacement;
 
 
-public class SolutionNormalizer {
+public class Normalize {
    
    private final List<Replacement> originalReplacements;
 
-   public SolutionNormalizer(List<Replacement> originalReplacements) {
+   public Normalize(List<Replacement> originalReplacements) {
       this.originalReplacements = originalReplacements;
    }
 
-   public SolutionSet normalize(SolutionSet solution){
+   public SolutionSet solutions(SolutionSet solution){
       List<Solution> properSolns = new ArrayList<Solution>();
       SolutionSet newSolns = new SolutionSet(properSolns, solution.isQueryTrue());
       for (Solution soln : solution.list()){
-         properSolns.add(normalizeSolution(soln));
+         properSolns.add(normalized(soln));
       }
       return newSolns;
    }
 
-   private Solution normalizeSolution(Solution soln) {
+   private Solution normalized(Solution soln) {
       Solution properSoln = new Solution();
       for (Replacement re : soln.getReplacements()){
-         nroamlizeReplacement(properSoln, re);
+         normalizeReplacement(properSoln, re);
       }
       return properSoln;
    }
 
-   private void nroamlizeReplacement(Solution properSoln, Replacement re) {
+   private void normalizeReplacement(Solution properSoln, Replacement re) {
       for (Replacement originalReplacement : originalReplacements){
          if (re.getVariable().equals(originalReplacement.getValue())){
             properSoln.addVariableReplacement(new Replacement(originalReplacement.getVariable(), re.getValue()));
