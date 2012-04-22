@@ -57,12 +57,9 @@ public class KnowledgeBase {
          if (rule.consequenceMatches(statement)){
             List<Replacement> originalReplacements = statement.unifyWith(rule.getConsequence());
             Statement workingStatement = statement.applyReplacements(originalReplacements);
-//            log("applied replacements: <<"+originalReplacements+">>");
-//            log("Applying rule <<" + rule + ">> on working statement <<" + workingStatement + ">>");
             SolutionSet subSolSet = collectSolutionsForRule(workingStatement, rule);
             atLeastOneRuleSucceeded |= subSolSet.isQueryTrue();
             SolutionSet normalizedSoln = new Normalize(originalReplacements).solutions(subSolSet);
-//            log("", "found solution, normalized: <<" + normalizedSoln + ">>", "");
             solution.add(normalizedSoln);
          }
       }
@@ -79,7 +76,6 @@ public class KnowledgeBase {
          log();
          List<Replacement> replacements = rule.getConsequence().unifyWith(statement);
          if (ruleSolutionSet.hasSolutions()){
-//            log("Already have some solutions, so expand using replacements <<" + replacements + ">>");
             expandSolutionSet(ruleSolutionSet, currStmtToProve, replacements);
          }else{
             log("Adding initial solutions");

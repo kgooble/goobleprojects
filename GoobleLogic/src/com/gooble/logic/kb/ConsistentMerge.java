@@ -37,13 +37,17 @@ public class ConsistentMerge {
       List<Solution> newSolns2 = Suffix.solutions(solutions2.list(), "2");
       for (Solution s1 : newSolns1){
          for (Solution s2 : newSolns2){
-            Solution soln = new Solution();
-            soln.addReplacements(s1.getReplacements());
-            soln.addReplacements(s2.getReplacements());
-            if (isNotContradictory(soln, mergedRule, ignoreList)){
-               mergedSolutions.add(soln);
-            }
+            mergeIfNotContradictory(ignoreList, mergedSolutions, s1, s2);
          }
+      }
+   }
+
+   private void mergeIfNotContradictory(List<Statement> ignoreList, List<Solution> mergedSolutions, Solution s1, Solution s2) {
+      Solution soln = new Solution();
+      soln.addReplacements(s1.getReplacements());
+      soln.addReplacements(s2.getReplacements());
+      if (isNotContradictory(soln, mergedRule, ignoreList)){
+         mergedSolutions.add(soln);
       }
    }
    
