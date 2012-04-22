@@ -28,7 +28,7 @@ public class ConsistentMerge {
    public void ignoring(List<Statement> ignoreList) {
       List<Solution> mergedSolutions = new ArrayList<Solution>();
       SolutionSet solutionSet = new SolutionSet(mergedSolutions, solutions1.isQueryTrue() && solutions2.isQueryTrue());
-      mergedRule = RuleMerger.merge(rule1, rule2);
+      mergedRule = new RuleMerger(rule1, rule2).merge();
       mergeSolutions(ignoreList, mergedSolutions);
       this.mergedSolutions = solutionSet;
    }

@@ -12,7 +12,7 @@ public class RuleMergerTest {
    @Test
    public void merge() throws Exception{
       assertEquals(rule("p(X1) ^ p(X2) ^ h(X2) => gq(X1, X2)"), 
-            RuleMerger.merge(rule("p(X) => g(X)"), rule("p(X) ^ h(X) => q(X)")));
+            new RuleMerger(rule("p(X) => g(X)"), rule("p(X) ^ h(X) => q(X)")).merge());
    }
    
 }
