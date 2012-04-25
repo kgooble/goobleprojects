@@ -6,7 +6,7 @@ import java.util.List;
 import com.gooble.logic.kb.Replacement;
 import com.gooble.logic.kb.terms.Term;
 
-public class Statement{
+public class Statement implements Comparable<Statement>{
 
    protected final String name;
    protected final Term<?>[] terms;
@@ -74,6 +74,11 @@ public class Statement{
    @Override
    public String toString(){
       return name + Arrays.asList(terms).toString();
+   }
+
+   @Override
+   public int compareTo(Statement other) {
+      return this.name.compareTo(other.name);
    }
 
 }

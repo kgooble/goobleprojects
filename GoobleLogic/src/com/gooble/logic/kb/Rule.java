@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import com.gooble.logic.kb.stmts.Statement;
 
-public class Rule {
+public class Rule implements Comparable<Rule>{
 
    private final Statement consequence;
    private final Statement[] antecedents;
@@ -37,6 +37,11 @@ public class Rule {
    @Override
    public String toString(){
       return Arrays.asList(antecedents).toString() + " => " + consequence.toString();
+   }
+
+   @Override
+   public int compareTo(Rule other) {
+      return consequence.compareTo(other.consequence);
    }
 
 }

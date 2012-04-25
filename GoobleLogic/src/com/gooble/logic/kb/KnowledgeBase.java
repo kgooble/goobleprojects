@@ -10,7 +10,7 @@ import com.gooble.logic.kb.solutions.Normalize;
 import com.gooble.logic.kb.solutions.SolutionSet;
 import com.gooble.logic.kb.stmts.Statement;
 
-public class KnowledgeBase {
+public class KnowledgeBase implements KnowledgeBaseFacade{
 
    private List<Statement> stmts;
    private List<Rule> rules;
