@@ -24,9 +24,7 @@ public class RelationDefinition implements Encoding{
       this.nonUniques = new HashSet<Statement>();
       this.varName = varName;
    }
-
-   @Override
-   public void augment(KnowledgeBaseFacade kb) {
+   @Override public void augment(KnowledgeBaseFacade kb) {
       for (Statement stmt : relations){
          kb.add(stmt);
       }
@@ -34,41 +32,37 @@ public class RelationDefinition implements Encoding{
          kb.add(rule);
       }
    }
-
    public void add(String nameOfRelation, Term<?> term1, Term<?> term2, Statement... antecedents) {
       Statement consequence = new Statement(nameOfRelation, term1, term2);
       if (antecedents.length == 0) {
          relations.add(consequence);
       } else{
-         List<Statement> allAntes = new ArrayList<Statement>();
-         allAntes.add(new Statement(varName, term1));
-         allAntes.add(new Statement(varName, term2));
-         allAntes.addAll(Arrays.asList(antecedents));
-         ruleRelations.add(new Rule(consequence, allAntes.toArray(new Statement[allAntes.size()])));
+         ruleRelations.add(new Rule(consequence, createFullAntecedents(term1, term2, antecedents)));
       }
    }
-
    public void addBidirectional(String nameOfRelation, Term<?> term1, Term<?> term2) {
       add(nameOfRelation, term1, term2);
       add(nameOfRelation, term2, term1);
    }
-
    public void addNonUnique(String nameOfRelation, Term<?> term1, Term<?> term2) {
       add(nameOfRelation, term1, term2);
       addGenericNonUnique(nameOfRelation);
    }
-
    public void addBidirectionalNonUnique(String nameOfRelation, Term<?> term1, Term<?> term2) {
       addBidirectional(nameOfRelation, term1, term2);
       addGenericNonUnique(nameOfRelation);
    }
-   
    public Set<Statement> getNonUniqueStatements() {
       return nonUniques;
    }
-
    private void addGenericNonUnique(String nameOfRelation) {
       nonUniques.add(new Statement(nameOfRelation, new Variable("X"), new Variable("Y")));
    }
-   
+   private Statement[] createFullAntecedents(Term<?> term1, Term<?> term2, Statement... antecedents) {
+      List<Statement> allAntes = new ArrayList<Statement>();
+      allAntes.add(new Statement(varName, term1));
+      allAntes.add(new Statement(varName, term2));
+      allAntes.addAll(Arrays.asList(antecedents));
+      return allAntes.toArray(new Statement[allAntes.size()]);
+   }
 }
