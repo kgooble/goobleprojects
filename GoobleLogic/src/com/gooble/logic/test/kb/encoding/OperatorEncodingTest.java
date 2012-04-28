@@ -1,4 +1,4 @@
-package com.gooble.logic.test.kb;
+package com.gooble.logic.test.kb.encoding;
 
 import static com.gooble.logic.kb.encoding.OperatorEncoding.operator;
 import static com.gooble.logic.kb.encoding.TermEncoding.constant;
@@ -11,7 +11,7 @@ import com.gooble.logic.kb.Equals;
 import com.gooble.logic.kb.stmts.GreaterThan;
 import com.gooble.logic.kb.stmts.LessThan;
 
-public class OperatorFactoryTest {
+public class OperatorEncodingTest {
    @Test
    public void create_greater_than_operator() throws Exception {
       assertEquals(new GreaterThan(constant(17), variable("X")), operator("X > 17"));
