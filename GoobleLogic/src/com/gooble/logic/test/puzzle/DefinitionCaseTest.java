@@ -1,6 +1,8 @@
 package com.gooble.logic.test.puzzle;
 
+import static com.gooble.logic.kb.encoding.KBEncoding.statement;
 import static com.gooble.logic.kb.encoding.TermEncoding.constant;
+import static com.gooble.logic.kb.encoding.TermEncoding.variable;
 
 import org.junit.Test;
 
@@ -20,10 +22,12 @@ public class DefinitionCaseTest {
       varDef.setMain("woman");
       varDef.augment(kb);
 
-      RelationDefinition relDef = new RelationDefinition();
-      relDef.addBidirectionalNonUnique(constant(1), constant(3), "nextTo");
-      relDef.addBidirectionalNonUnique(constant(2), constant(4), "nextTo");
-      relDef.addBidirectionalNonUnique(constant(4), constant(5), "nextTo");
+      RelationDefinition relDef = new RelationDefinition("house");
+      relDef.addBidirectionalNonUnique("nextTo", constant(1), constant(3));
+      relDef.addBidirectionalNonUnique("nextTo", constant(2), constant(4));
+      relDef.addBidirectionalNonUnique("nextTo", constant(4), constant(5));
+      relDef.add("northOf", variable("X"), variable("Y"), statement("X > Y"));
+      relDef.add("southOf", variable("X"), variable("Y"), statement("X < Y"));
       relDef.augment(kb);
       
       System.out.println();

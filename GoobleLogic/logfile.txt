@@ -1,0 +1,903 @@
+Adding statement: <<woman[CONST:adele]>>
+Adding statement: <<woman[CONST:jane]>>
+Adding statement: <<woman[CONST:laura]>>
+Adding statement: <<woman[CONST:molly]>>
+Adding statement: <<woman[CONST:sarah]>>
+Adding statement: <<house[CONST:1]>>
+Adding statement: <<house[CONST:3]>>
+Adding statement: <<house[CONST:2]>>
+Adding statement: <<house[CONST:4]>>
+Adding statement: <<house[CONST:5]>>
+Adding statement: <<directlyEastOf[CONST:1, CONST:2]>>
+Adding statement: <<directlyEastOf[CONST:3, CONST:4]>>
+Adding statement: <<nextTo[CONST:1, CONST:3]>>
+Adding statement: <<nextTo[CONST:3, CONST:1]>>
+Adding statement: <<nextTo[CONST:2, CONST:4]>>
+Adding statement: <<nextTo[CONST:4, CONST:2]>>
+Adding statement: <<nextTo[CONST:4, CONST:5]>>
+Adding statement: <<nextTo[CONST:5, CONST:4]>>
+Adding rule: <<[house[VAR:X], house[VAR:Y], (VAR:X > VAR:Y)] => northOf[VAR:X, VAR:Y]>>
+Adding rule: <<[house[VAR:X], house[VAR:Y], (VAR:X < VAR:Y)] => southOf[VAR:X, VAR:Y]>>
+Adding statement: <<hairColour[CONST:black]>>
+Adding statement: <<hairColour[CONST:blonde]>>
+Adding statement: <<hairColour[CONST:brown]>>
+Adding statement: <<hairColour[CONST:chestnut]>>
+Adding statement: <<hairColour[CONST:grey]>>
+Adding rule: <<[house[VAR:X], woman[VAR:Y]] => livesAtHouse[VAR:X, VAR:Y]>>
+Adding rule: <<[hairColour[VAR:C], woman[VAR:W]] => hairOf[VAR:W, VAR:C]>>
+Adding rule: <<[woman[VAR:A], livesAtHouse[VAR:B, VAR:A], hairOf[VAR:A, VAR:C]] => everythingAbout[VAR:A, VAR:B, VAR:C]>>
+---------
+Begin find solutions on statement: <<hairOf[CONST:molly, VAR:C]>>
+
+Matches statement? false
+
+Applying rules for <<hairOf[CONST:molly, VAR:C]>>
+
+proving antecedent : <<hairColour[VAR:C]>>
+
+Adding initial solutions
+---------
+Begin find solutions on statement: <<hairColour[VAR:C]>>
+
+statement : <<hairColour[VAR:C]>> matched <<hairColour[CONST:black]>>
+added solution for <<hairColour[VAR:C]>> : solution: <<SOLUTION: [(VAR:C=CONST:black)]>>
+statement : <<hairColour[VAR:C]>> matched <<hairColour[CONST:blonde]>>
+added solution for <<hairColour[VAR:C]>> : solution: <<SOLUTION: [(VAR:C=CONST:blonde)]>>
+statement : <<hairColour[VAR:C]>> matched <<hairColour[CONST:brown]>>
+added solution for <<hairColour[VAR:C]>> : solution: <<SOLUTION: [(VAR:C=CONST:brown)]>>
+statement : <<hairColour[VAR:C]>> matched <<hairColour[CONST:chestnut]>>
+added solution for <<hairColour[VAR:C]>> : solution: <<SOLUTION: [(VAR:C=CONST:chestnut)]>>
+statement : <<hairColour[VAR:C]>> matched <<hairColour[CONST:grey]>>
+added solution for <<hairColour[VAR:C]>> : solution: <<SOLUTION: [(VAR:C=CONST:grey)]>>
+Matches statement? true
+proving antecedent : <<woman[VAR:W]>>
+
+Expanding solution set <<QUERY true, SOLUTIONS: SOLUTION: [(VAR:C=CONST:black)]
+SOLUTION: [(VAR:C=CONST:blonde)]
+SOLUTION: [(VAR:C=CONST:brown)]
+SOLUTION: [(VAR:C=CONST:chestnut)]
+SOLUTION: [(VAR:C=CONST:grey)]
+>> with replacements <<[(VAR:W=CONST:molly), (VAR:C=VAR:C)]>>
+current statement to prove while expanding: <<woman[VAR:W]>>
+Working on solution: <<SOLUTION: [(VAR:C=CONST:grey)]>>
+Fully unified: woman[CONST:molly]
+---------
+Begin find solutions on statement: <<woman[CONST:molly]>>
+
+statement : <<woman[CONST:molly]>> matched <<woman[CONST:molly]>>
+Matches statement? true
+current statement to prove while expanding: <<woman[VAR:W]>>
+Working on solution: <<SOLUTION: [(VAR:C=CONST:chestnut)]>>
+Fully unified: woman[CONST:molly]
+---------
+Begin find solutions on statement: <<woman[CONST:molly]>>
+
+statement : <<woman[CONST:molly]>> matched <<woman[CONST:molly]>>
+Matches statement? true
+current statement to prove while expanding: <<woman[VAR:W]>>
+Working on solution: <<SOLUTION: [(VAR:C=CONST:brown)]>>
+Fully unified: woman[CONST:molly]
+---------
+Begin find solutions on statement: <<woman[CONST:molly]>>
+
+statement : <<woman[CONST:molly]>> matched <<woman[CONST:molly]>>
+Matches statement? true
+current statement to prove while expanding: <<woman[VAR:W]>>
+Working on solution: <<SOLUTION: [(VAR:C=CONST:blonde)]>>
+Fully unified: woman[CONST:molly]
+---------
+Begin find solutions on statement: <<woman[CONST:molly]>>
+
+statement : <<woman[CONST:molly]>> matched <<woman[CONST:molly]>>
+Matches statement? true
+current statement to prove while expanding: <<woman[VAR:W]>>
+Working on solution: <<SOLUTION: [(VAR:C=CONST:black)]>>
+Fully unified: woman[CONST:molly]
+---------
+Begin find solutions on statement: <<woman[CONST:molly]>>
+
+statement : <<woman[CONST:molly]>> matched <<woman[CONST:molly]>>
+Matches statement? true
+at least one rule succeeded? true
+final solution for statement <<hairOf[CONST:molly, VAR:C]>> : <<QUERY true, SOLUTIONS: SOLUTION: [(VAR:C=CONST:black)]
+SOLUTION: [(VAR:C=CONST:blonde)]
+SOLUTION: [(VAR:C=CONST:brown)]
+SOLUTION: [(VAR:C=CONST:chestnut)]
+SOLUTION: [(VAR:C=CONST:grey)]
+>>
+
+---------
+Begin find solutions on statement: <<livesAtHouse[VAR:H, CONST:molly]>>
+
+Matches statement? false
+
+Applying rules for <<livesAtHouse[VAR:H, CONST:molly]>>
+
+proving antecedent : <<house[VAR:X]>>
+
+Adding initial solutions
+---------
+Begin find solutions on statement: <<house[VAR:X]>>
+
+statement : <<house[VAR:X]>> matched <<house[CONST:1]>>
+added solution for <<house[VAR:X]>> : solution: <<SOLUTION: [(VAR:X=CONST:1)]>>
+statement : <<house[VAR:X]>> matched <<house[CONST:3]>>
+added solution for <<house[VAR:X]>> : solution: <<SOLUTION: [(VAR:X=CONST:3)]>>
+statement : <<house[VAR:X]>> matched <<house[CONST:2]>>
+added solution for <<house[VAR:X]>> : solution: <<SOLUTION: [(VAR:X=CONST:2)]>>
+statement : <<house[VAR:X]>> matched <<house[CONST:4]>>
+added solution for <<house[VAR:X]>> : solution: <<SOLUTION: [(VAR:X=CONST:4)]>>
+statement : <<house[VAR:X]>> matched <<house[CONST:5]>>
+added solution for <<house[VAR:X]>> : solution: <<SOLUTION: [(VAR:X=CONST:5)]>>
+Matches statement? true
+proving antecedent : <<woman[VAR:Y]>>
+
+Expanding solution set <<QUERY true, SOLUTIONS: SOLUTION: [(VAR:X=CONST:1)]
+SOLUTION: [(VAR:X=CONST:3)]
+SOLUTION: [(VAR:X=CONST:2)]
+SOLUTION: [(VAR:X=CONST:4)]
+SOLUTION: [(VAR:X=CONST:5)]
+>> with replacements <<[(VAR:X=VAR:X), (VAR:Y=CONST:molly)]>>
+current statement to prove while expanding: <<woman[VAR:Y]>>
+Working on solution: <<SOLUTION: [(VAR:X=CONST:5)]>>
+Fully unified: woman[CONST:molly]
+---------
+Begin find solutions on statement: <<woman[CONST:molly]>>
+
+statement : <<woman[CONST:molly]>> matched <<woman[CONST:molly]>>
+Matches statement? true
+current statement to prove while expanding: <<woman[VAR:Y]>>
+Working on solution: <<SOLUTION: [(VAR:X=CONST:4)]>>
+Fully unified: woman[CONST:molly]
+---------
+Begin find solutions on statement: <<woman[CONST:molly]>>
+
+statement : <<woman[CONST:molly]>> matched <<woman[CONST:molly]>>
+Matches statement? true
+current statement to prove while expanding: <<woman[VAR:Y]>>
+Working on solution: <<SOLUTION: [(VAR:X=CONST:2)]>>
+Fully unified: woman[CONST:molly]
+---------
+Begin find solutions on statement: <<woman[CONST:molly]>>
+
+statement : <<woman[CONST:molly]>> matched <<woman[CONST:molly]>>
+Matches statement? true
+current statement to prove while expanding: <<woman[VAR:Y]>>
+Working on solution: <<SOLUTION: [(VAR:X=CONST:3)]>>
+Fully unified: woman[CONST:molly]
+---------
+Begin find solutions on statement: <<woman[CONST:molly]>>
+
+statement : <<woman[CONST:molly]>> matched <<woman[CONST:molly]>>
+Matches statement? true
+current statement to prove while expanding: <<woman[VAR:Y]>>
+Working on solution: <<SOLUTION: [(VAR:X=CONST:1)]>>
+Fully unified: woman[CONST:molly]
+---------
+Begin find solutions on statement: <<woman[CONST:molly]>>
+
+statement : <<woman[CONST:molly]>> matched <<woman[CONST:molly]>>
+Matches statement? true
+at least one rule succeeded? true
+final solution for statement <<livesAtHouse[VAR:H, CONST:molly]>> : <<QUERY true, SOLUTIONS: SOLUTION: [(VAR:H=CONST:1)]
+SOLUTION: [(VAR:H=CONST:3)]
+SOLUTION: [(VAR:H=CONST:2)]
+SOLUTION: [(VAR:H=CONST:4)]
+SOLUTION: [(VAR:H=CONST:5)]
+>>
+
+---------
+Begin find solutions on statement: <<everythingAbout[CONST:molly, VAR:X, VAR:Y]>>
+
+Matches statement? false
+
+Applying rules for <<everythingAbout[CONST:molly, VAR:X, VAR:Y]>>
+
+proving antecedent : <<woman[VAR:A]>>
+
+Adding initial solutions
+---------
+Begin find solutions on statement: <<woman[CONST:molly]>>
+
+statement : <<woman[CONST:molly]>> matched <<woman[CONST:molly]>>
+Matches statement? true
+proving antecedent : <<livesAtHouse[VAR:B, VAR:A]>>
+
+Adding initial solutions
+---------
+Begin find solutions on statement: <<livesAtHouse[VAR:B, CONST:molly]>>
+
+Matches statement? false
+
+Applying rules for <<livesAtHouse[VAR:B, CONST:molly]>>
+
+proving antecedent : <<house[VAR:X]>>
+
+Adding initial solutions
+---------
+Begin find solutions on statement: <<house[VAR:X]>>
+
+statement : <<house[VAR:X]>> matched <<house[CONST:1]>>
+added solution for <<house[VAR:X]>> : solution: <<SOLUTION: [(VAR:X=CONST:1)]>>
+statement : <<house[VAR:X]>> matched <<house[CONST:3]>>
+added solution for <<house[VAR:X]>> : solution: <<SOLUTION: [(VAR:X=CONST:3)]>>
+statement : <<house[VAR:X]>> matched <<house[CONST:2]>>
+added solution for <<house[VAR:X]>> : solution: <<SOLUTION: [(VAR:X=CONST:2)]>>
+statement : <<house[VAR:X]>> matched <<house[CONST:4]>>
+added solution for <<house[VAR:X]>> : solution: <<SOLUTION: [(VAR:X=CONST:4)]>>
+statement : <<house[VAR:X]>> matched <<house[CONST:5]>>
+added solution for <<house[VAR:X]>> : solution: <<SOLUTION: [(VAR:X=CONST:5)]>>
+Matches statement? true
+proving antecedent : <<woman[VAR:Y]>>
+
+Expanding solution set <<QUERY true, SOLUTIONS: SOLUTION: [(VAR:X=CONST:1)]
+SOLUTION: [(VAR:X=CONST:3)]
+SOLUTION: [(VAR:X=CONST:2)]
+SOLUTION: [(VAR:X=CONST:4)]
+SOLUTION: [(VAR:X=CONST:5)]
+>> with replacements <<[(VAR:X=VAR:X), (VAR:Y=CONST:molly)]>>
+current statement to prove while expanding: <<woman[VAR:Y]>>
+Working on solution: <<SOLUTION: [(VAR:X=CONST:5)]>>
+Fully unified: woman[CONST:molly]
+---------
+Begin find solutions on statement: <<woman[CONST:molly]>>
+
+statement : <<woman[CONST:molly]>> matched <<woman[CONST:molly]>>
+Matches statement? true
+current statement to prove while expanding: <<woman[VAR:Y]>>
+Working on solution: <<SOLUTION: [(VAR:X=CONST:4)]>>
+Fully unified: woman[CONST:molly]
+---------
+Begin find solutions on statement: <<woman[CONST:molly]>>
+
+statement : <<woman[CONST:molly]>> matched <<woman[CONST:molly]>>
+Matches statement? true
+current statement to prove while expanding: <<woman[VAR:Y]>>
+Working on solution: <<SOLUTION: [(VAR:X=CONST:2)]>>
+Fully unified: woman[CONST:molly]
+---------
+Begin find solutions on statement: <<woman[CONST:molly]>>
+
+statement : <<woman[CONST:molly]>> matched <<woman[CONST:molly]>>
+Matches statement? true
+current statement to prove while expanding: <<woman[VAR:Y]>>
+Working on solution: <<SOLUTION: [(VAR:X=CONST:3)]>>
+Fully unified: woman[CONST:molly]
+---------
+Begin find solutions on statement: <<woman[CONST:molly]>>
+
+statement : <<woman[CONST:molly]>> matched <<woman[CONST:molly]>>
+Matches statement? true
+current statement to prove while expanding: <<woman[VAR:Y]>>
+Working on solution: <<SOLUTION: [(VAR:X=CONST:1)]>>
+Fully unified: woman[CONST:molly]
+---------
+Begin find solutions on statement: <<woman[CONST:molly]>>
+
+statement : <<woman[CONST:molly]>> matched <<woman[CONST:molly]>>
+Matches statement? true
+at least one rule succeeded? true
+final solution for statement <<livesAtHouse[VAR:B, CONST:molly]>> : <<QUERY true, SOLUTIONS: SOLUTION: [(VAR:B=CONST:1)]
+SOLUTION: [(VAR:B=CONST:3)]
+SOLUTION: [(VAR:B=CONST:2)]
+SOLUTION: [(VAR:B=CONST:4)]
+SOLUTION: [(VAR:B=CONST:5)]
+>>
+
+proving antecedent : <<hairOf[VAR:A, VAR:C]>>
+
+Expanding solution set <<QUERY true, SOLUTIONS: SOLUTION: [(VAR:B=CONST:1)]
+SOLUTION: [(VAR:B=CONST:3)]
+SOLUTION: [(VAR:B=CONST:2)]
+SOLUTION: [(VAR:B=CONST:4)]
+SOLUTION: [(VAR:B=CONST:5)]
+>> with replacements <<[(VAR:A=CONST:molly), (VAR:B=VAR:B), (VAR:C=VAR:C)]>>
+current statement to prove while expanding: <<hairOf[VAR:A, VAR:C]>>
+Working on solution: <<SOLUTION: [(VAR:B=CONST:5)]>>
+Fully unified: hairOf[CONST:molly, VAR:C]
+---------
+Begin find solutions on statement: <<hairOf[CONST:molly, VAR:C]>>
+
+Matches statement? false
+
+Applying rules for <<hairOf[CONST:molly, VAR:C]>>
+
+proving antecedent : <<hairColour[VAR:C]>>
+
+Adding initial solutions
+---------
+Begin find solutions on statement: <<hairColour[VAR:C]>>
+
+statement : <<hairColour[VAR:C]>> matched <<hairColour[CONST:black]>>
+added solution for <<hairColour[VAR:C]>> : solution: <<SOLUTION: [(VAR:C=CONST:black)]>>
+statement : <<hairColour[VAR:C]>> matched <<hairColour[CONST:blonde]>>
+added solution for <<hairColour[VAR:C]>> : solution: <<SOLUTION: [(VAR:C=CONST:blonde)]>>
+statement : <<hairColour[VAR:C]>> matched <<hairColour[CONST:brown]>>
+added solution for <<hairColour[VAR:C]>> : solution: <<SOLUTION: [(VAR:C=CONST:brown)]>>
+statement : <<hairColour[VAR:C]>> matched <<hairColour[CONST:chestnut]>>
+added solution for <<hairColour[VAR:C]>> : solution: <<SOLUTION: [(VAR:C=CONST:chestnut)]>>
+statement : <<hairColour[VAR:C]>> matched <<hairColour[CONST:grey]>>
+added solution for <<hairColour[VAR:C]>> : solution: <<SOLUTION: [(VAR:C=CONST:grey)]>>
+Matches statement? true
+proving antecedent : <<woman[VAR:W]>>
+
+Expanding solution set <<QUERY true, SOLUTIONS: SOLUTION: [(VAR:C=CONST:black)]
+SOLUTION: [(VAR:C=CONST:blonde)]
+SOLUTION: [(VAR:C=CONST:brown)]
+SOLUTION: [(VAR:C=CONST:chestnut)]
+SOLUTION: [(VAR:C=CONST:grey)]
+>> with replacements <<[(VAR:W=CONST:molly), (VAR:C=VAR:C)]>>
+current statement to prove while expanding: <<woman[VAR:W]>>
+Working on solution: <<SOLUTION: [(VAR:C=CONST:grey)]>>
+Fully unified: woman[CONST:molly]
+---------
+Begin find solutions on statement: <<woman[CONST:molly]>>
+
+statement : <<woman[CONST:molly]>> matched <<woman[CONST:molly]>>
+Matches statement? true
+current statement to prove while expanding: <<woman[VAR:W]>>
+Working on solution: <<SOLUTION: [(VAR:C=CONST:chestnut)]>>
+Fully unified: woman[CONST:molly]
+---------
+Begin find solutions on statement: <<woman[CONST:molly]>>
+
+statement : <<woman[CONST:molly]>> matched <<woman[CONST:molly]>>
+Matches statement? true
+current statement to prove while expanding: <<woman[VAR:W]>>
+Working on solution: <<SOLUTION: [(VAR:C=CONST:brown)]>>
+Fully unified: woman[CONST:molly]
+---------
+Begin find solutions on statement: <<woman[CONST:molly]>>
+
+statement : <<woman[CONST:molly]>> matched <<woman[CONST:molly]>>
+Matches statement? true
+current statement to prove while expanding: <<woman[VAR:W]>>
+Working on solution: <<SOLUTION: [(VAR:C=CONST:blonde)]>>
+Fully unified: woman[CONST:molly]
+---------
+Begin find solutions on statement: <<woman[CONST:molly]>>
+
+statement : <<woman[CONST:molly]>> matched <<woman[CONST:molly]>>
+Matches statement? true
+current statement to prove while expanding: <<woman[VAR:W]>>
+Working on solution: <<SOLUTION: [(VAR:C=CONST:black)]>>
+Fully unified: woman[CONST:molly]
+---------
+Begin find solutions on statement: <<woman[CONST:molly]>>
+
+statement : <<woman[CONST:molly]>> matched <<woman[CONST:molly]>>
+Matches statement? true
+at least one rule succeeded? true
+final solution for statement <<hairOf[CONST:molly, VAR:C]>> : <<QUERY true, SOLUTIONS: SOLUTION: [(VAR:C=CONST:black)]
+SOLUTION: [(VAR:C=CONST:blonde)]
+SOLUTION: [(VAR:C=CONST:brown)]
+SOLUTION: [(VAR:C=CONST:chestnut)]
+SOLUTION: [(VAR:C=CONST:grey)]
+>>
+
+current statement to prove while expanding: <<hairOf[VAR:A, VAR:C]>>
+Working on solution: <<SOLUTION: [(VAR:B=CONST:4)]>>
+Fully unified: hairOf[CONST:molly, VAR:C]
+---------
+Begin find solutions on statement: <<hairOf[CONST:molly, VAR:C]>>
+
+Matches statement? false
+
+Applying rules for <<hairOf[CONST:molly, VAR:C]>>
+
+proving antecedent : <<hairColour[VAR:C]>>
+
+Adding initial solutions
+---------
+Begin find solutions on statement: <<hairColour[VAR:C]>>
+
+statement : <<hairColour[VAR:C]>> matched <<hairColour[CONST:black]>>
+added solution for <<hairColour[VAR:C]>> : solution: <<SOLUTION: [(VAR:C=CONST:black)]>>
+statement : <<hairColour[VAR:C]>> matched <<hairColour[CONST:blonde]>>
+added solution for <<hairColour[VAR:C]>> : solution: <<SOLUTION: [(VAR:C=CONST:blonde)]>>
+statement : <<hairColour[VAR:C]>> matched <<hairColour[CONST:brown]>>
+added solution for <<hairColour[VAR:C]>> : solution: <<SOLUTION: [(VAR:C=CONST:brown)]>>
+statement : <<hairColour[VAR:C]>> matched <<hairColour[CONST:chestnut]>>
+added solution for <<hairColour[VAR:C]>> : solution: <<SOLUTION: [(VAR:C=CONST:chestnut)]>>
+statement : <<hairColour[VAR:C]>> matched <<hairColour[CONST:grey]>>
+added solution for <<hairColour[VAR:C]>> : solution: <<SOLUTION: [(VAR:C=CONST:grey)]>>
+Matches statement? true
+proving antecedent : <<woman[VAR:W]>>
+
+Expanding solution set <<QUERY true, SOLUTIONS: SOLUTION: [(VAR:C=CONST:black)]
+SOLUTION: [(VAR:C=CONST:blonde)]
+SOLUTION: [(VAR:C=CONST:brown)]
+SOLUTION: [(VAR:C=CONST:chestnut)]
+SOLUTION: [(VAR:C=CONST:grey)]
+>> with replacements <<[(VAR:W=CONST:molly), (VAR:C=VAR:C)]>>
+current statement to prove while expanding: <<woman[VAR:W]>>
+Working on solution: <<SOLUTION: [(VAR:C=CONST:grey)]>>
+Fully unified: woman[CONST:molly]
+---------
+Begin find solutions on statement: <<woman[CONST:molly]>>
+
+statement : <<woman[CONST:molly]>> matched <<woman[CONST:molly]>>
+Matches statement? true
+current statement to prove while expanding: <<woman[VAR:W]>>
+Working on solution: <<SOLUTION: [(VAR:C=CONST:chestnut)]>>
+Fully unified: woman[CONST:molly]
+---------
+Begin find solutions on statement: <<woman[CONST:molly]>>
+
+statement : <<woman[CONST:molly]>> matched <<woman[CONST:molly]>>
+Matches statement? true
+current statement to prove while expanding: <<woman[VAR:W]>>
+Working on solution: <<SOLUTION: [(VAR:C=CONST:brown)]>>
+Fully unified: woman[CONST:molly]
+---------
+Begin find solutions on statement: <<woman[CONST:molly]>>
+
+statement : <<woman[CONST:molly]>> matched <<woman[CONST:molly]>>
+Matches statement? true
+current statement to prove while expanding: <<woman[VAR:W]>>
+Working on solution: <<SOLUTION: [(VAR:C=CONST:blonde)]>>
+Fully unified: woman[CONST:molly]
+---------
+Begin find solutions on statement: <<woman[CONST:molly]>>
+
+statement : <<woman[CONST:molly]>> matched <<woman[CONST:molly]>>
+Matches statement? true
+current statement to prove while expanding: <<woman[VAR:W]>>
+Working on solution: <<SOLUTION: [(VAR:C=CONST:black)]>>
+Fully unified: woman[CONST:molly]
+---------
+Begin find solutions on statement: <<woman[CONST:molly]>>
+
+statement : <<woman[CONST:molly]>> matched <<woman[CONST:molly]>>
+Matches statement? true
+at least one rule succeeded? true
+final solution for statement <<hairOf[CONST:molly, VAR:C]>> : <<QUERY true, SOLUTIONS: SOLUTION: [(VAR:C=CONST:black)]
+SOLUTION: [(VAR:C=CONST:blonde)]
+SOLUTION: [(VAR:C=CONST:brown)]
+SOLUTION: [(VAR:C=CONST:chestnut)]
+SOLUTION: [(VAR:C=CONST:grey)]
+>>
+
+current statement to prove while expanding: <<hairOf[VAR:A, VAR:C]>>
+Working on solution: <<SOLUTION: [(VAR:B=CONST:2)]>>
+Fully unified: hairOf[CONST:molly, VAR:C]
+---------
+Begin find solutions on statement: <<hairOf[CONST:molly, VAR:C]>>
+
+Matches statement? false
+
+Applying rules for <<hairOf[CONST:molly, VAR:C]>>
+
+proving antecedent : <<hairColour[VAR:C]>>
+
+Adding initial solutions
+---------
+Begin find solutions on statement: <<hairColour[VAR:C]>>
+
+statement : <<hairColour[VAR:C]>> matched <<hairColour[CONST:black]>>
+added solution for <<hairColour[VAR:C]>> : solution: <<SOLUTION: [(VAR:C=CONST:black)]>>
+statement : <<hairColour[VAR:C]>> matched <<hairColour[CONST:blonde]>>
+added solution for <<hairColour[VAR:C]>> : solution: <<SOLUTION: [(VAR:C=CONST:blonde)]>>
+statement : <<hairColour[VAR:C]>> matched <<hairColour[CONST:brown]>>
+added solution for <<hairColour[VAR:C]>> : solution: <<SOLUTION: [(VAR:C=CONST:brown)]>>
+statement : <<hairColour[VAR:C]>> matched <<hairColour[CONST:chestnut]>>
+added solution for <<hairColour[VAR:C]>> : solution: <<SOLUTION: [(VAR:C=CONST:chestnut)]>>
+statement : <<hairColour[VAR:C]>> matched <<hairColour[CONST:grey]>>
+added solution for <<hairColour[VAR:C]>> : solution: <<SOLUTION: [(VAR:C=CONST:grey)]>>
+Matches statement? true
+proving antecedent : <<woman[VAR:W]>>
+
+Expanding solution set <<QUERY true, SOLUTIONS: SOLUTION: [(VAR:C=CONST:black)]
+SOLUTION: [(VAR:C=CONST:blonde)]
+SOLUTION: [(VAR:C=CONST:brown)]
+SOLUTION: [(VAR:C=CONST:chestnut)]
+SOLUTION: [(VAR:C=CONST:grey)]
+>> with replacements <<[(VAR:W=CONST:molly), (VAR:C=VAR:C)]>>
+current statement to prove while expanding: <<woman[VAR:W]>>
+Working on solution: <<SOLUTION: [(VAR:C=CONST:grey)]>>
+Fully unified: woman[CONST:molly]
+---------
+Begin find solutions on statement: <<woman[CONST:molly]>>
+
+statement : <<woman[CONST:molly]>> matched <<woman[CONST:molly]>>
+Matches statement? true
+current statement to prove while expanding: <<woman[VAR:W]>>
+Working on solution: <<SOLUTION: [(VAR:C=CONST:chestnut)]>>
+Fully unified: woman[CONST:molly]
+---------
+Begin find solutions on statement: <<woman[CONST:molly]>>
+
+statement : <<woman[CONST:molly]>> matched <<woman[CONST:molly]>>
+Matches statement? true
+current statement to prove while expanding: <<woman[VAR:W]>>
+Working on solution: <<SOLUTION: [(VAR:C=CONST:brown)]>>
+Fully unified: woman[CONST:molly]
+---------
+Begin find solutions on statement: <<woman[CONST:molly]>>
+
+statement : <<woman[CONST:molly]>> matched <<woman[CONST:molly]>>
+Matches statement? true
+current statement to prove while expanding: <<woman[VAR:W]>>
+Working on solution: <<SOLUTION: [(VAR:C=CONST:blonde)]>>
+Fully unified: woman[CONST:molly]
+---------
+Begin find solutions on statement: <<woman[CONST:molly]>>
+
+statement : <<woman[CONST:molly]>> matched <<woman[CONST:molly]>>
+Matches statement? true
+current statement to prove while expanding: <<woman[VAR:W]>>
+Working on solution: <<SOLUTION: [(VAR:C=CONST:black)]>>
+Fully unified: woman[CONST:molly]
+---------
+Begin find solutions on statement: <<woman[CONST:molly]>>
+
+statement : <<woman[CONST:molly]>> matched <<woman[CONST:molly]>>
+Matches statement? true
+at least one rule succeeded? true
+final solution for statement <<hairOf[CONST:molly, VAR:C]>> : <<QUERY true, SOLUTIONS: SOLUTION: [(VAR:C=CONST:black)]
+SOLUTION: [(VAR:C=CONST:blonde)]
+SOLUTION: [(VAR:C=CONST:brown)]
+SOLUTION: [(VAR:C=CONST:chestnut)]
+SOLUTION: [(VAR:C=CONST:grey)]
+>>
+
+current statement to prove while expanding: <<hairOf[VAR:A, VAR:C]>>
+Working on solution: <<SOLUTION: [(VAR:B=CONST:3)]>>
+Fully unified: hairOf[CONST:molly, VAR:C]
+---------
+Begin find solutions on statement: <<hairOf[CONST:molly, VAR:C]>>
+
+Matches statement? false
+
+Applying rules for <<hairOf[CONST:molly, VAR:C]>>
+
+proving antecedent : <<hairColour[VAR:C]>>
+
+Adding initial solutions
+---------
+Begin find solutions on statement: <<hairColour[VAR:C]>>
+
+statement : <<hairColour[VAR:C]>> matched <<hairColour[CONST:black]>>
+added solution for <<hairColour[VAR:C]>> : solution: <<SOLUTION: [(VAR:C=CONST:black)]>>
+statement : <<hairColour[VAR:C]>> matched <<hairColour[CONST:blonde]>>
+added solution for <<hairColour[VAR:C]>> : solution: <<SOLUTION: [(VAR:C=CONST:blonde)]>>
+statement : <<hairColour[VAR:C]>> matched <<hairColour[CONST:brown]>>
+added solution for <<hairColour[VAR:C]>> : solution: <<SOLUTION: [(VAR:C=CONST:brown)]>>
+statement : <<hairColour[VAR:C]>> matched <<hairColour[CONST:chestnut]>>
+added solution for <<hairColour[VAR:C]>> : solution: <<SOLUTION: [(VAR:C=CONST:chestnut)]>>
+statement : <<hairColour[VAR:C]>> matched <<hairColour[CONST:grey]>>
+added solution for <<hairColour[VAR:C]>> : solution: <<SOLUTION: [(VAR:C=CONST:grey)]>>
+Matches statement? true
+proving antecedent : <<woman[VAR:W]>>
+
+Expanding solution set <<QUERY true, SOLUTIONS: SOLUTION: [(VAR:C=CONST:black)]
+SOLUTION: [(VAR:C=CONST:blonde)]
+SOLUTION: [(VAR:C=CONST:brown)]
+SOLUTION: [(VAR:C=CONST:chestnut)]
+SOLUTION: [(VAR:C=CONST:grey)]
+>> with replacements <<[(VAR:W=CONST:molly), (VAR:C=VAR:C)]>>
+current statement to prove while expanding: <<woman[VAR:W]>>
+Working on solution: <<SOLUTION: [(VAR:C=CONST:grey)]>>
+Fully unified: woman[CONST:molly]
+---------
+Begin find solutions on statement: <<woman[CONST:molly]>>
+
+statement : <<woman[CONST:molly]>> matched <<woman[CONST:molly]>>
+Matches statement? true
+current statement to prove while expanding: <<woman[VAR:W]>>
+Working on solution: <<SOLUTION: [(VAR:C=CONST:chestnut)]>>
+Fully unified: woman[CONST:molly]
+---------
+Begin find solutions on statement: <<woman[CONST:molly]>>
+
+statement : <<woman[CONST:molly]>> matched <<woman[CONST:molly]>>
+Matches statement? true
+current statement to prove while expanding: <<woman[VAR:W]>>
+Working on solution: <<SOLUTION: [(VAR:C=CONST:brown)]>>
+Fully unified: woman[CONST:molly]
+---------
+Begin find solutions on statement: <<woman[CONST:molly]>>
+
+statement : <<woman[CONST:molly]>> matched <<woman[CONST:molly]>>
+Matches statement? true
+current statement to prove while expanding: <<woman[VAR:W]>>
+Working on solution: <<SOLUTION: [(VAR:C=CONST:blonde)]>>
+Fully unified: woman[CONST:molly]
+---------
+Begin find solutions on statement: <<woman[CONST:molly]>>
+
+statement : <<woman[CONST:molly]>> matched <<woman[CONST:molly]>>
+Matches statement? true
+current statement to prove while expanding: <<woman[VAR:W]>>
+Working on solution: <<SOLUTION: [(VAR:C=CONST:black)]>>
+Fully unified: woman[CONST:molly]
+---------
+Begin find solutions on statement: <<woman[CONST:molly]>>
+
+statement : <<woman[CONST:molly]>> matched <<woman[CONST:molly]>>
+Matches statement? true
+at least one rule succeeded? true
+final solution for statement <<hairOf[CONST:molly, VAR:C]>> : <<QUERY true, SOLUTIONS: SOLUTION: [(VAR:C=CONST:black)]
+SOLUTION: [(VAR:C=CONST:blonde)]
+SOLUTION: [(VAR:C=CONST:brown)]
+SOLUTION: [(VAR:C=CONST:chestnut)]
+SOLUTION: [(VAR:C=CONST:grey)]
+>>
+
+current statement to prove while expanding: <<hairOf[VAR:A, VAR:C]>>
+Working on solution: <<SOLUTION: [(VAR:B=CONST:1)]>>
+Fully unified: hairOf[CONST:molly, VAR:C]
+---------
+Begin find solutions on statement: <<hairOf[CONST:molly, VAR:C]>>
+
+Matches statement? false
+
+Applying rules for <<hairOf[CONST:molly, VAR:C]>>
+
+proving antecedent : <<hairColour[VAR:C]>>
+
+Adding initial solutions
+---------
+Begin find solutions on statement: <<hairColour[VAR:C]>>
+
+statement : <<hairColour[VAR:C]>> matched <<hairColour[CONST:black]>>
+added solution for <<hairColour[VAR:C]>> : solution: <<SOLUTION: [(VAR:C=CONST:black)]>>
+statement : <<hairColour[VAR:C]>> matched <<hairColour[CONST:blonde]>>
+added solution for <<hairColour[VAR:C]>> : solution: <<SOLUTION: [(VAR:C=CONST:blonde)]>>
+statement : <<hairColour[VAR:C]>> matched <<hairColour[CONST:brown]>>
+added solution for <<hairColour[VAR:C]>> : solution: <<SOLUTION: [(VAR:C=CONST:brown)]>>
+statement : <<hairColour[VAR:C]>> matched <<hairColour[CONST:chestnut]>>
+added solution for <<hairColour[VAR:C]>> : solution: <<SOLUTION: [(VAR:C=CONST:chestnut)]>>
+statement : <<hairColour[VAR:C]>> matched <<hairColour[CONST:grey]>>
+added solution for <<hairColour[VAR:C]>> : solution: <<SOLUTION: [(VAR:C=CONST:grey)]>>
+Matches statement? true
+proving antecedent : <<woman[VAR:W]>>
+
+Expanding solution set <<QUERY true, SOLUTIONS: SOLUTION: [(VAR:C=CONST:black)]
+SOLUTION: [(VAR:C=CONST:blonde)]
+SOLUTION: [(VAR:C=CONST:brown)]
+SOLUTION: [(VAR:C=CONST:chestnut)]
+SOLUTION: [(VAR:C=CONST:grey)]
+>> with replacements <<[(VAR:W=CONST:molly), (VAR:C=VAR:C)]>>
+current statement to prove while expanding: <<woman[VAR:W]>>
+Working on solution: <<SOLUTION: [(VAR:C=CONST:grey)]>>
+Fully unified: woman[CONST:molly]
+---------
+Begin find solutions on statement: <<woman[CONST:molly]>>
+
+statement : <<woman[CONST:molly]>> matched <<woman[CONST:molly]>>
+Matches statement? true
+current statement to prove while expanding: <<woman[VAR:W]>>
+Working on solution: <<SOLUTION: [(VAR:C=CONST:chestnut)]>>
+Fully unified: woman[CONST:molly]
+---------
+Begin find solutions on statement: <<woman[CONST:molly]>>
+
+statement : <<woman[CONST:molly]>> matched <<woman[CONST:molly]>>
+Matches statement? true
+current statement to prove while expanding: <<woman[VAR:W]>>
+Working on solution: <<SOLUTION: [(VAR:C=CONST:brown)]>>
+Fully unified: woman[CONST:molly]
+---------
+Begin find solutions on statement: <<woman[CONST:molly]>>
+
+statement : <<woman[CONST:molly]>> matched <<woman[CONST:molly]>>
+Matches statement? true
+current statement to prove while expanding: <<woman[VAR:W]>>
+Working on solution: <<SOLUTION: [(VAR:C=CONST:blonde)]>>
+Fully unified: woman[CONST:molly]
+---------
+Begin find solutions on statement: <<woman[CONST:molly]>>
+
+statement : <<woman[CONST:molly]>> matched <<woman[CONST:molly]>>
+Matches statement? true
+current statement to prove while expanding: <<woman[VAR:W]>>
+Working on solution: <<SOLUTION: [(VAR:C=CONST:black)]>>
+Fully unified: woman[CONST:molly]
+---------
+Begin find solutions on statement: <<woman[CONST:molly]>>
+
+statement : <<woman[CONST:molly]>> matched <<woman[CONST:molly]>>
+Matches statement? true
+at least one rule succeeded? true
+final solution for statement <<hairOf[CONST:molly, VAR:C]>> : <<QUERY true, SOLUTIONS: SOLUTION: [(VAR:C=CONST:black)]
+SOLUTION: [(VAR:C=CONST:blonde)]
+SOLUTION: [(VAR:C=CONST:brown)]
+SOLUTION: [(VAR:C=CONST:chestnut)]
+SOLUTION: [(VAR:C=CONST:grey)]
+>>
+
+expanded solution set: QUERY true, SOLUTIONS: SOLUTION: [(VAR:B=CONST:5), (VAR:C=CONST:black)]
+SOLUTION: [(VAR:B=CONST:5), (VAR:C=CONST:blonde)]
+SOLUTION: [(VAR:B=CONST:5), (VAR:C=CONST:brown)]
+SOLUTION: [(VAR:B=CONST:5), (VAR:C=CONST:chestnut)]
+SOLUTION: [(VAR:B=CONST:5), (VAR:C=CONST:grey)]
+SOLUTION: [(VAR:B=CONST:4), (VAR:C=CONST:black)]
+SOLUTION: [(VAR:B=CONST:4), (VAR:C=CONST:blonde)]
+SOLUTION: [(VAR:B=CONST:4), (VAR:C=CONST:brown)]
+SOLUTION: [(VAR:B=CONST:4), (VAR:C=CONST:chestnut)]
+SOLUTION: [(VAR:B=CONST:4), (VAR:C=CONST:grey)]
+SOLUTION: [(VAR:B=CONST:2), (VAR:C=CONST:black)]
+SOLUTION: [(VAR:B=CONST:2), (VAR:C=CONST:blonde)]
+SOLUTION: [(VAR:B=CONST:2), (VAR:C=CONST:brown)]
+SOLUTION: [(VAR:B=CONST:2), (VAR:C=CONST:chestnut)]
+SOLUTION: [(VAR:B=CONST:2), (VAR:C=CONST:grey)]
+SOLUTION: [(VAR:B=CONST:3), (VAR:C=CONST:black)]
+SOLUTION: [(VAR:B=CONST:3), (VAR:C=CONST:blonde)]
+SOLUTION: [(VAR:B=CONST:3), (VAR:C=CONST:brown)]
+SOLUTION: [(VAR:B=CONST:3), (VAR:C=CONST:chestnut)]
+SOLUTION: [(VAR:B=CONST:3), (VAR:C=CONST:grey)]
+SOLUTION: [(VAR:B=CONST:1), (VAR:C=CONST:black)]
+SOLUTION: [(VAR:B=CONST:1), (VAR:C=CONST:blonde)]
+SOLUTION: [(VAR:B=CONST:1), (VAR:C=CONST:brown)]
+SOLUTION: [(VAR:B=CONST:1), (VAR:C=CONST:chestnut)]
+SOLUTION: [(VAR:B=CONST:1), (VAR:C=CONST:grey)]
+
+at least one rule succeeded? true
+final solution for statement <<everythingAbout[CONST:molly, VAR:X, VAR:Y]>> : <<QUERY true, SOLUTIONS: SOLUTION: [(VAR:X=CONST:5), (VAR:Y=CONST:black)]
+SOLUTION: [(VAR:X=CONST:5), (VAR:Y=CONST:blonde)]
+SOLUTION: [(VAR:X=CONST:5), (VAR:Y=CONST:brown)]
+SOLUTION: [(VAR:X=CONST:5), (VAR:Y=CONST:chestnut)]
+SOLUTION: [(VAR:X=CONST:5), (VAR:Y=CONST:grey)]
+SOLUTION: [(VAR:X=CONST:4), (VAR:Y=CONST:black)]
+SOLUTION: [(VAR:X=CONST:4), (VAR:Y=CONST:blonde)]
+SOLUTION: [(VAR:X=CONST:4), (VAR:Y=CONST:brown)]
+SOLUTION: [(VAR:X=CONST:4), (VAR:Y=CONST:chestnut)]
+SOLUTION: [(VAR:X=CONST:4), (VAR:Y=CONST:grey)]
+SOLUTION: [(VAR:X=CONST:2), (VAR:Y=CONST:black)]
+SOLUTION: [(VAR:X=CONST:2), (VAR:Y=CONST:blonde)]
+SOLUTION: [(VAR:X=CONST:2), (VAR:Y=CONST:brown)]
+SOLUTION: [(VAR:X=CONST:2), (VAR:Y=CONST:chestnut)]
+SOLUTION: [(VAR:X=CONST:2), (VAR:Y=CONST:grey)]
+SOLUTION: [(VAR:X=CONST:3), (VAR:Y=CONST:black)]
+SOLUTION: [(VAR:X=CONST:3), (VAR:Y=CONST:blonde)]
+SOLUTION: [(VAR:X=CONST:3), (VAR:Y=CONST:brown)]
+SOLUTION: [(VAR:X=CONST:3), (VAR:Y=CONST:chestnut)]
+SOLUTION: [(VAR:X=CONST:3), (VAR:Y=CONST:grey)]
+SOLUTION: [(VAR:X=CONST:1), (VAR:Y=CONST:black)]
+SOLUTION: [(VAR:X=CONST:1), (VAR:Y=CONST:blonde)]
+SOLUTION: [(VAR:X=CONST:1), (VAR:Y=CONST:brown)]
+SOLUTION: [(VAR:X=CONST:1), (VAR:Y=CONST:chestnut)]
+SOLUTION: [(VAR:X=CONST:1), (VAR:Y=CONST:grey)]
+>>
+
+---------
+Begin find solutions on statement: <<northOf[VAR:H, CONST:3]>>
+
+Matches statement? false
+
+Applying rules for <<northOf[VAR:H, CONST:3]>>
+
+proving antecedent : <<house[VAR:X]>>
+
+Adding initial solutions
+---------
+Begin find solutions on statement: <<house[VAR:X]>>
+
+statement : <<house[VAR:X]>> matched <<house[CONST:1]>>
+added solution for <<house[VAR:X]>> : solution: <<SOLUTION: [(VAR:X=CONST:1)]>>
+statement : <<house[VAR:X]>> matched <<house[CONST:3]>>
+added solution for <<house[VAR:X]>> : solution: <<SOLUTION: [(VAR:X=CONST:3)]>>
+statement : <<house[VAR:X]>> matched <<house[CONST:2]>>
+added solution for <<house[VAR:X]>> : solution: <<SOLUTION: [(VAR:X=CONST:2)]>>
+statement : <<house[VAR:X]>> matched <<house[CONST:4]>>
+added solution for <<house[VAR:X]>> : solution: <<SOLUTION: [(VAR:X=CONST:4)]>>
+statement : <<house[VAR:X]>> matched <<house[CONST:5]>>
+added solution for <<house[VAR:X]>> : solution: <<SOLUTION: [(VAR:X=CONST:5)]>>
+Matches statement? true
+proving antecedent : <<house[VAR:Y]>>
+
+Expanding solution set <<QUERY true, SOLUTIONS: SOLUTION: [(VAR:X=CONST:1)]
+SOLUTION: [(VAR:X=CONST:3)]
+SOLUTION: [(VAR:X=CONST:2)]
+SOLUTION: [(VAR:X=CONST:4)]
+SOLUTION: [(VAR:X=CONST:5)]
+>> with replacements <<[(VAR:X=VAR:X), (VAR:Y=CONST:3)]>>
+current statement to prove while expanding: <<house[VAR:Y]>>
+Working on solution: <<SOLUTION: [(VAR:X=CONST:5)]>>
+Fully unified: house[CONST:3]
+---------
+Begin find solutions on statement: <<house[CONST:3]>>
+
+statement : <<house[CONST:3]>> matched <<house[CONST:3]>>
+Matches statement? true
+current statement to prove while expanding: <<house[VAR:Y]>>
+Working on solution: <<SOLUTION: [(VAR:X=CONST:4)]>>
+Fully unified: house[CONST:3]
+---------
+Begin find solutions on statement: <<house[CONST:3]>>
+
+statement : <<house[CONST:3]>> matched <<house[CONST:3]>>
+Matches statement? true
+current statement to prove while expanding: <<house[VAR:Y]>>
+Working on solution: <<SOLUTION: [(VAR:X=CONST:2)]>>
+Fully unified: house[CONST:3]
+---------
+Begin find solutions on statement: <<house[CONST:3]>>
+
+statement : <<house[CONST:3]>> matched <<house[CONST:3]>>
+Matches statement? true
+current statement to prove while expanding: <<house[VAR:Y]>>
+Working on solution: <<SOLUTION: [(VAR:X=CONST:3)]>>
+Fully unified: house[CONST:3]
+---------
+Begin find solutions on statement: <<house[CONST:3]>>
+
+statement : <<house[CONST:3]>> matched <<house[CONST:3]>>
+Matches statement? true
+current statement to prove while expanding: <<house[VAR:Y]>>
+Working on solution: <<SOLUTION: [(VAR:X=CONST:1)]>>
+Fully unified: house[CONST:3]
+---------
+Begin find solutions on statement: <<house[CONST:3]>>
+
+statement : <<house[CONST:3]>> matched <<house[CONST:3]>>
+Matches statement? true
+proving antecedent : <<(VAR:X > VAR:Y)>>
+
+Expanding solution set <<QUERY false, SOLUTIONS: SOLUTION: [(VAR:X=CONST:1)]
+SOLUTION: [(VAR:X=CONST:3)]
+SOLUTION: [(VAR:X=CONST:2)]
+SOLUTION: [(VAR:X=CONST:4)]
+SOLUTION: [(VAR:X=CONST:5)]
+>> with replacements <<[(VAR:X=VAR:X), (VAR:Y=CONST:3)]>>
+current statement to prove while expanding: <<(VAR:X > VAR:Y)>>
+Working on solution: <<SOLUTION: [(VAR:X=CONST:5)]>>
+Fully unified: (CONST:5 > CONST:3)
+---------
+Begin find solutions on statement: <<(CONST:5 > CONST:3)>>
+
+Matches statement? false
+evaluating statement: (CONST:5 > CONST:3)
+evaluated to true
+current statement to prove while expanding: <<(VAR:X > VAR:Y)>>
+Working on solution: <<SOLUTION: [(VAR:X=CONST:4)]>>
+Fully unified: (CONST:4 > CONST:3)
+---------
+Begin find solutions on statement: <<(CONST:4 > CONST:3)>>
+
+Matches statement? false
+evaluating statement: (CONST:4 > CONST:3)
+evaluated to true
+current statement to prove while expanding: <<(VAR:X > VAR:Y)>>
+Working on solution: <<SOLUTION: [(VAR:X=CONST:2)]>>
+Fully unified: (CONST:2 > CONST:3)
+---------
+Begin find solutions on statement: <<(CONST:2 > CONST:3)>>
+
+Matches statement? false
+evaluating statement: (CONST:2 > CONST:3)
+evaluated to false
+current statement to prove while expanding: <<(VAR:X > VAR:Y)>>
+Working on solution: <<SOLUTION: [(VAR:X=CONST:3)]>>
+Fully unified: (CONST:3 > CONST:3)
+---------
+Begin find solutions on statement: <<(CONST:3 > CONST:3)>>
+
+Matches statement? false
+evaluating statement: (CONST:3 > CONST:3)
+evaluated to false
+current statement to prove while expanding: <<(VAR:X > VAR:Y)>>
+Working on solution: <<SOLUTION: [(VAR:X=CONST:1)]>>
+Fully unified: (CONST:1 > CONST:3)
+---------
+Begin find solutions on statement: <<(CONST:1 > CONST:3)>>
+
+Matches statement? false
+evaluating statement: (CONST:1 > CONST:3)
+evaluated to false
+at least one rule succeeded? true
+final solution for statement <<northOf[VAR:H, CONST:3]>> : <<QUERY true, SOLUTIONS: SOLUTION: [(VAR:H=CONST:4)]
+SOLUTION: [(VAR:H=CONST:5)]
+>>
+
+---------
+Begin find solutions on statement: <<nextTo[CONST:1, CONST:2]>>
+
+Matches statement? false
+
+Applying rules for <<nextTo[CONST:1, CONST:2]>>
+
+at least one rule succeeded? false
+final solution for statement <<nextTo[CONST:1, CONST:2]>> : <<QUERY false, SOLUTIONS: >>
+

@@ -115,8 +115,6 @@ public class CaseTest {
       consistentMerge = new ConsistentMerge(consistentMerge.getMergedRule(), consistentMerge.getMergedSolutions(), rule4, solns4);
       consistentMerge.ignoring(Arrays.asList(statement("nextTo(X, Y)")));
       
-      System.out.println(consistentMerge);
-      
       /*
        * QUERY true, SOLUTIONS: SOLUTION: 
 
@@ -137,23 +135,6 @@ public class CaseTest {
 (VAR:W52=CONST:jane)] -> jane has black hair, lives at house 3
        */
       
-//      System.out.println(new SolutionSet(new ContradictingSolutions(rule1, statement("solution1(W1, H1, H2, H3)"), solns1.list()).remove(), true));
-//      System.out.println(new SolutionSet(new ContradictingSolutions(rule2, statement("solution2(H4, H5)"), solns2.list()).remove(), true));
-//      System.out.println(new SolutionSet(new ContradictingSolutions(rule3, statement("solution3(H6, W2, H7, H8, W3)"), solns3.list()).remove(), false));
-//      System.out.println(new SolutionSet(new ContradictingSolutions(rule4, statement("solution4(W4, H9, H10, W5)"), solns4.list()).remove(), true));
-
-//      Rule rule = rule("hairOf(W1, blonde) ^ livesAtHouse(H1, W1) ^ nextTo(H1, H2) ^ southOf(H2, H1) ^ livesAtHouse(H2, adele) ^ " +
-//            "directlyEastOf(H3, H2) ^ livesAtHouse(H3, laura) ^ livesAtHouse(H4, sarah) ^ nextTo(H5, H4) ^ southOf(H5, H4) ^ livesAtHouse(H5, molly) ^ " +
-//            "livesAtHouse(H6, W2) ^ directlyEastOf(H7, H6) ^ livesAtHouse(H7, jane) ^ northOf(H8, H7) ^ livesAtHouse(H8, W3) ^ hairOf(W3, grey) ^ " +
-//            "hairOf(W4, chestnut) ^ livesAtHouse(H9, W4) ^ nextTo(H10, H9) ^ northOf(H10, H9) ^ livesAtHouse(H10, W5) ^ hairOf(W5, black) " +
-//            "=> solution(W1, H1, H2, H3, H4, H5, H6, W2, H7, H8, W3, W4, H9, H10, W5)"
-//            );
-//      kb.add(rule);
-//      Statement statement = statement("solution(W1, H1, H2, H3, H4, H5, H6, W2, H7, H8, W3, W4, H9, H10, W5)");
-//      SolutionSet solns = kb.findSolutions(statement);
-//      System.out.println(solns);
-//      System.out.println(new ContradictingSolutions(rule, statement, solns.getSolutions()).remove());
-
    }
 
    @After
