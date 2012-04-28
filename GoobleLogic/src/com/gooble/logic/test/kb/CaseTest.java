@@ -84,9 +84,7 @@ public class CaseTest {
       assertFalse(kb.query(statement("nextTo(1, 2)")));
    }
 
-   //   @Ignore ("Way Too Big... need a new algorithm or something - for some reason, cuts out a bunch of variable replacements... probably cause it's so big.")
    @Test
-   // Well Most of these guys aren't even related - so many can be removed into separate solution sets, and use the contradictory thing on them...
    public void solve() throws Exception{
       kb.add(rule("house(X) ^ woman(Y) => livesAtHouse(X, Y)"));
       kb.add(rule("hairColour(C) ^ woman(W) => hairOf(W, C)"));
@@ -102,11 +100,6 @@ public class CaseTest {
       kb.add(rule2);
       kb.add(rule3);
       kb.add(rule4);
-
-//      System.out.println(kb.findSolutions(statement("solution1(W1, H1, H2, H3)")));
-//      System.out.println(kb.findSolutions(statement("solution2(H4, H5)")));
-//      System.out.println(kb.findSolutions(statement("solution3(H6, W2, H7, H8, W3)")));
-//      System.out.println(kb.findSolutions(statement("solution4(W4, H9, H10, W5)")));
 
       SolutionSet solns1 = kb.findSolutions(statement("solution1(W1, H1, H2, H3)"));
       SolutionSet solns2 = kb.findSolutions(statement("solution2(H4, H5)"));
