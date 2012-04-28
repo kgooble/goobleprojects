@@ -1,29 +1,20 @@
 package com.gooble.logic.test.puzzle;
 
-import static com.gooble.logic.kb.KBEncoding.rule;
-import static com.gooble.logic.kb.KBEncoding.statement;
+import static com.gooble.logic.kb.encoding.KBEncoding.rule;
+import static com.gooble.logic.kb.encoding.KBEncoding.statement;
+import static com.gooble.logic.test.puzzle.TestUtilities.set;
+import static com.gooble.logic.test.puzzle.TestUtilities.setFromList;
 import static junit.framework.Assert.assertEquals;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import org.junit.Test;
 
-import com.gooble.logic.puzzle.VariableEncoding;
+import com.gooble.logic.puzzle.VariableDefinition;
 
-public class VariableEncodingTest {
-   private <T> SortedSet<T> set(T... stuff){
-      return setFromList(Arrays.asList(stuff));
-   }
-   private <T> SortedSet<T> setFromList(List<T> stuff){
-      return new TreeSet<T>(stuff);
-   }
+public class VariableDefinitionTest{
    @Test
    public void encode_variables_into_knowledge_base() throws Exception {
       KBStub kb = new KBStub();
-      VariableEncoding varEnc = new VariableEncoding();
+      VariableDefinition varEnc = new VariableDefinition();
       varEnc.add("name", "alice", "bob", "carl");
       varEnc.add("age", 17, 18, 19);
       varEnc.add("height", 5.5, 6.0, 5.1);

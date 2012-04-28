@@ -1,9 +1,9 @@
 package com.gooble.logic.test.kb;
 
-import static com.gooble.logic.kb.KBEncoding.replacement;
-import static com.gooble.logic.kb.KBEncoding.rule;
-import static com.gooble.logic.kb.KBEncoding.solution;
-import static com.gooble.logic.kb.KBEncoding.statement;
+import static com.gooble.logic.kb.encoding.KBEncoding.replacement;
+import static com.gooble.logic.kb.encoding.KBEncoding.rule;
+import static com.gooble.logic.kb.encoding.KBEncoding.solution;
+import static com.gooble.logic.kb.encoding.KBEncoding.statement;
 import static junit.framework.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
 
@@ -17,7 +17,6 @@ import com.gooble.logic.Logger;
 import com.gooble.logic.kb.ConsistentMerge;
 import com.gooble.logic.kb.KnowledgeBase;
 import com.gooble.logic.kb.Rule;
-import com.gooble.logic.kb.solutions.ContradictingSolutions;
 import com.gooble.logic.kb.solutions.SolutionSet;
 
 public class CaseTest {

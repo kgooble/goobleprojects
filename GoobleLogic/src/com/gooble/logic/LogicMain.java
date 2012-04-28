@@ -1,7 +1,7 @@
 package com.gooble.logic;
 
-import static com.gooble.logic.kb.KBEncoding.rule;
-import static com.gooble.logic.kb.KBEncoding.statement;
+import static com.gooble.logic.kb.encoding.KBEncoding.rule;
+import static com.gooble.logic.kb.encoding.KBEncoding.statement;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

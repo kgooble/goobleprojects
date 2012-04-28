@@ -1,6 +1,6 @@
 package com.gooble.logic.test.kb;
 
-import static com.gooble.logic.kb.KBEncoding.*;
+import static com.gooble.logic.kb.encoding.KBEncoding.*;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;

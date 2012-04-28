@@ -1,9 +1,9 @@
 package com.gooble.logic.test.kb;
 
-import static com.gooble.logic.kb.KBEncoding.constant;
-import static com.gooble.logic.kb.KBEncoding.replacement;
-import static com.gooble.logic.kb.KBEncoding.solution;
-import static com.gooble.logic.kb.KBEncoding.variable;
+import static com.gooble.logic.kb.encoding.KBEncoding.replacement;
+import static com.gooble.logic.kb.encoding.KBEncoding.solution;
+import static com.gooble.logic.kb.encoding.TermEncoding.constant;
+import static com.gooble.logic.kb.encoding.TermEncoding.variable;
 import static junit.framework.Assert.assertEquals;
 
 import java.util.Arrays;

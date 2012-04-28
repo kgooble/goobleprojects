@@ -1,7 +1,7 @@
 package com.gooble.logic.test.kb.terms;
 
-import static com.gooble.logic.kb.KBEncoding.constant;
-import static com.gooble.logic.kb.KBEncoding.variable;
+import static com.gooble.logic.kb.encoding.TermEncoding.constant;
+import static com.gooble.logic.kb.encoding.TermEncoding.variable;
 import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 
