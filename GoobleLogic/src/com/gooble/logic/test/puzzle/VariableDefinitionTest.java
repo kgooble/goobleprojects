@@ -2,8 +2,8 @@ package com.gooble.logic.test.puzzle;
 
 import static com.gooble.logic.kb.encoding.KBEncoding.rule;
 import static com.gooble.logic.kb.encoding.KBEncoding.statement;
-import static com.gooble.logic.test.puzzle.TestUtilities.set;
-import static com.gooble.logic.test.puzzle.TestUtilities.setFromList;
+import static com.gooble.logic.test.TestUtilities.set;
+import static com.gooble.logic.test.TestUtilities.setFromList;
 import static junit.framework.Assert.assertEquals;
 
 import org.junit.Test;

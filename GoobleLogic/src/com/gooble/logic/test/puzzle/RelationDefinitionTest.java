@@ -1,39 +1,44 @@
 package com.gooble.logic.test.puzzle;
 
 import static com.gooble.logic.kb.encoding.KBEncoding.statement;
-import static com.gooble.logic.kb.encoding.TermEncoding.variable;
-import static com.gooble.logic.test.puzzle.TestUtilities.set;
+import static com.gooble.logic.kb.encoding.TermEncoding.constant;
+import static com.gooble.logic.test.TestUtilities.set;
+import static com.gooble.logic.test.TestUtilities.setFromList;
 import static junit.framework.Assert.assertEquals;
 
-import java.util.regex.Pattern;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.gooble.logic.kb.KnowledgeBaseFacade;
 import com.gooble.logic.kb.stmts.Statement;
-import com.gooble.logic.kb.terms.Variable;
+import com.gooble.logic.kb.terms.Term;
 import com.gooble.logic.puzzle.Encoding;
 
 public class RelationDefinitionTest {
    class RelationEncoding implements Encoding{
 
-      private final Pattern ENCODING_REGEX = Pattern.compile("([A-Z]+)\\s+([a-zA-Z]+)\\s+([A-Z]+)\\s+if\\s+");
+      private final List<Statement> relations;
+      public RelationEncoding(){
+         this.relations = new ArrayList<Statement>();
+      }
       
       @Override
       public void augment(KnowledgeBaseFacade kb) {
-         
+         for (Statement stmt : relations){
+            kb.add(stmt);
+         }
       }
 
-      public void add(Variable variable1, Variable variable2, String nameOfRelation, Statement... antecedents) {
-         
+      public void add(Term<?> term1, Term<?> term2, String nameOfRelation, Statement... antecedents) {
+         relations.add(new Statement(nameOfRelation, term1, term2));
       }
       
    }
    
-   @Ignore("WIP")
    @Test
-   public void if_statements_are_equals_statements_replace_variables_with_values_when_augmenting() throws Exception {
+   public void add_simple_statement_like_relation() throws Exception {
       // Relation: _ is ______ _ if _____________
       // e.g       X is nextTo Y if X = 5 and Y = 7
       
@@ -50,11 +55,11 @@ public class RelationDefinitionTest {
       
       KBStub kb = new KBStub();
       RelationEncoding relationEncoding = new RelationEncoding();
-      relationEncoding.add(variable("X"), variable("Y"), "nextTo", statement("X = 5"), statement("Y = 7")); //"X is nextTo Y if X = 5 and Y = 7"
+      relationEncoding.add(constant(5), constant(7), "nextTo"); //"X is nextTo Y if X = 5 and Y = 7"
       relationEncoding.augment(kb);
       
 
-      assertEquals(set(statement("nextTo(5, 7)")), kb.stmts);
+      assertEquals(set(statement("nextTo(5, 7)")), setFromList(kb.stmts));
    }
    
 }
