@@ -12,7 +12,7 @@ import com.gooble.logic.kb.terms.Constant;
 import com.gooble.logic.kb.terms.Term;
 import com.gooble.logic.kb.terms.Variable;
 
-public class VariableDefinition implements Encoding {
+public class VariableDefinition implements Definition {
    private Map<String, List<?>> variables = new HashMap<String, List<?>>();
    private String main;
 

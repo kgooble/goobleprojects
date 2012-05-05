@@ -12,7 +12,7 @@ import com.gooble.logic.kb.stmts.Statement;
 import com.gooble.logic.kb.terms.Term;
 import com.gooble.logic.kb.terms.Variable;
 
-public class RelationDefinition implements Encoding{
+public class RelationDefinition implements Definition{
 
    private final List<Rule> ruleRelations;
    private final List<Statement> relations;
