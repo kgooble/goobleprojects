@@ -1,7 +1,7 @@
 package com.gooble.logic.kb.terms;
 
 
-public class Variable implements Term<String> {
+public class Variable implements Term<String>, Comparable<Variable> {
 
    private final String name;
 
@@ -15,6 +15,10 @@ public class Variable implements Term<String> {
          return false;
       Variable other = (Variable) obj;
       return this.getValue().equals(other.getValue());
+   }
+   @Override
+   public int hashCode(){
+      return name.hashCode();
    }
    
    @Override
@@ -40,6 +44,11 @@ public class Variable implements Term<String> {
    @Override
    public Term<?> copyWithSuffix(String suffix) {
       return new Variable(name + suffix);
+   }
+
+   @Override
+   public int compareTo(Variable other) {
+      return this.name.compareTo(other.name);
    }
 
 }

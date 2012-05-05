@@ -36,6 +36,10 @@ public class Constant<T> implements Term<T>{
       Number num2 = (Number) other.value;
       return num1.floatValue() == num2.floatValue();
    }
+   @Override
+   public int hashCode(){
+      return value.hashCode();
+   }
 
    public boolean isVariable() {
       return false;

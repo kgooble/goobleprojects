@@ -1,10 +1,13 @@
 package com.gooble.logic.kb.stmts;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.gooble.logic.kb.Replacement;
 import com.gooble.logic.kb.terms.Term;
+import com.gooble.logic.kb.terms.Variable;
 
 public class Statement implements Comparable<Statement>{
 
@@ -55,12 +58,16 @@ public class Statement implements Comparable<Statement>{
       return false;
    }
 
-   public boolean containsVariables() {
+   public Set<Variable> getVariables() {
+      Set<Variable> myVars = new HashSet<Variable>();
       for (Term<?> t : terms){
          if (t.isVariable())
-            return true;
+            myVars.add((Variable) t);
       }
-      return false;
+      return myVars;
+   }
+   public boolean containsVariables() {
+      return !getVariables().isEmpty();
    }
    
    @Override
@@ -69,6 +76,10 @@ public class Statement implements Comparable<Statement>{
          return false;
       Statement other = (Statement) obj;
       return (this.name.equals(other.name)) && Arrays.equals(this.terms, other.terms);
+   }
+   @Override
+   public int hashCode(){
+      return this.name.hashCode() + this.terms.hashCode();
    }
    
    @Override
