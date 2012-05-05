@@ -1,5 +1,7 @@
 package com.gooble.logic.puzzle;
 
+import com.gooble.logic.TwoObjectsEqual;
+
 
 public class Relation implements HintPart{
    private final String name;
@@ -11,11 +13,8 @@ public class Relation implements HintPart{
       this.term2 = term2;
    }
    @Override
-   public boolean equals(Object obj){
-      if (!(obj instanceof Relation))
-         return false;
-      Relation other = (Relation) obj;
-      return this.name.equals(other.name) && this.term1.equals(other.term1) && this.term2.equals(other.term2);
+   public boolean equals(Object other){
+      return TwoObjectsEqual.byReflection(this, other);
    }
    @Override
    public String toString(){

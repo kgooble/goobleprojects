@@ -9,16 +9,16 @@ import org.junit.Test;
 import com.gooble.logic.TwoObjectsEqual;
 
 public class TwoObjectsEqualsTest {
-   class TestObject{
+   public class TestObject{
       private final String value;
       public TestObject(String value) {
          this.value = value;
       }
-      public String getValue(){
+      public String getValue() {
          return value;
       }
    }
-   class TestObjectChild extends TestObject{
+   public class TestObjectChild extends TestObject{
       public TestObjectChild(String value){
          super(value);
       }
@@ -28,6 +28,7 @@ public class TwoObjectsEqualsTest {
       TestObject obj1 = new TestObject("cow");
       TestObject obj2 = new TestObject("cow");
       TestObject obj3 = new TestObject("monkey");
+      assertEquals(obj1.getValue(), obj2.getValue());
       assertTrue(TwoObjectsEqual.byReflection(obj1, obj2));
       assertFalse(TwoObjectsEqual.byReflection(obj1, obj3));
    }

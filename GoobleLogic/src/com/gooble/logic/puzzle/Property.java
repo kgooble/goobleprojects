@@ -1,5 +1,7 @@
 package com.gooble.logic.puzzle;
 
+import com.gooble.logic.TwoObjectsEqual;
+
 
 public class Property implements HintPart{
    private final String name;
@@ -11,11 +13,8 @@ public class Property implements HintPart{
       this.value = value;
    }
    @Override
-   public boolean equals(Object obj){
-      if (!(obj instanceof Property))
-         return false;
-      Property other = (Property) obj;
-      return this.name.equals(other.name) && this.owner.equals(other.owner) && this.value.equals(other.value);
+   public boolean equals(Object other){
+      return TwoObjectsEqual.byReflection(this, other);
    }
    @Override
    public String toString(){
