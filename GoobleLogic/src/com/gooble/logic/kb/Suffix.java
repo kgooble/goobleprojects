@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.gooble.logic.kb.solutions.Solution;
+import com.gooble.logic.kb.stmts.Statement;
 import com.gooble.logic.kb.terms.Term;
 import com.gooble.logic.kb.terms.Variable;
 
@@ -28,6 +29,10 @@ public class Suffix {
          newSolns.add(soln);
       }
       return newSolns;
+   }
+
+   public static Statement statement(Statement statement, String suffix) {
+      return new Statement(statement.getName() + suffix, statement.getTerms());
    }
 
 }

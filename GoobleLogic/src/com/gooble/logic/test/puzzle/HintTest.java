@@ -11,7 +11,6 @@ import com.gooble.logic.puzzle.Property;
 import com.gooble.logic.puzzle.Relation;
 
 public class HintTest {
-   
    @Test
    public void convert_hint_to_rule_generates_rule_from_statements() throws Exception {
       Hint hint = new Hint(new Relation("olderThan", "X", "bob"), new Property("shoes", "X", "red"));

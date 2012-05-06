@@ -2,6 +2,7 @@ package com.gooble.logic.test.kb;
 
 import static com.gooble.logic.kb.encoding.KBEncoding.replacement;
 import static com.gooble.logic.kb.encoding.KBEncoding.solution;
+import static com.gooble.logic.kb.encoding.KBEncoding.statement;
 import static com.gooble.logic.kb.encoding.TermEncoding.constant;
 import static com.gooble.logic.kb.encoding.TermEncoding.variable;
 import static junit.framework.Assert.assertEquals;
@@ -14,7 +15,6 @@ import com.gooble.logic.kb.Suffix;
 import com.gooble.logic.kb.terms.Term;
 
 public class SuffixTest {
-   
    @Test
    public void suffix_solutions() throws Exception{
       assertEquals(Arrays.asList(solution(replacement("X1", "bob"))), 
@@ -26,5 +26,10 @@ public class SuffixTest {
       Term<?>[] expectedTerms = new Term<?>[]{ constant("bob"), variable("Y1"), constant(49)};
       assertEquals(Arrays.asList(expectedTerms), Arrays.asList(Suffix.terms(oldTerms, "1")));
    }
-
+   
+   @Test
+   public void suffix_statement_name() throws Exception {
+      assertEquals(statement("solution1(X, Y, Z)"), 
+            Suffix.statement(statement("solution(X, Y, Z)"), "1"));
+   }
 }

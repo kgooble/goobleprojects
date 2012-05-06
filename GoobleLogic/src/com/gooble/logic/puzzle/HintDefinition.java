@@ -4,20 +4,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.gooble.logic.kb.KnowledgeBaseFacade;
+import com.gooble.logic.kb.Rule;
+import com.gooble.logic.kb.Suffix;
+import com.gooble.logic.kb.stmts.Statement;
 
 public class HintDefinition implements Definition{
-   private final VariableDefinition varDef;
    private final List<Hint> hints;
    private String currentValue;
    private Hint currentHint;
 
-   public HintDefinition(VariableDefinition varDef) {
-      this.varDef = varDef;
+   public HintDefinition() {
       this.hints = new ArrayList<Hint>();
    }
 
    @Override
    public void augment(KnowledgeBaseFacade kb) {
+      Integer i = 1;
+      for (Hint hint : hints){
+         Rule rule = hint.toRule();
+         Statement suffixedConsequence = Suffix.statement(rule.getConsequence(), i.toString());
+         kb.add(new Rule(suffixedConsequence, rule.getAntecedents()));
+         i++;
+      }
    }
 
    public HintDefinition about(String value) {
@@ -30,16 +38,6 @@ public class HintDefinition implements Definition{
       return this;
    }
 
-   private Hint currentHint() {
-      if (currentHint == null)
-         currentHint = new Hint();
-      return currentHint;
-   }
-
-   public HintDefinition type(String variable) {
-      return this;
-   }
-
    public HintDefinition property(String variable, String valueOfProperty) {
       currentHint().add(new Property(variable, currentValue, valueOfProperty));
       return this;
@@ -49,8 +47,15 @@ public class HintDefinition implements Definition{
       return hints;
    }
 
-   public void end() {
+   public HintDefinition end() {
       hints.add(currentHint);
       currentHint = null;
+      return this;
+   }
+
+   private Hint currentHint() {
+      if (currentHint == null)
+         currentHint = new Hint();
+      return currentHint;
    }
 }
