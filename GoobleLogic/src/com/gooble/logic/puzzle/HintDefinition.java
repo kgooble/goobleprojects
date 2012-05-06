@@ -10,10 +10,17 @@ import com.gooble.logic.kb.stmts.Statement;
 
 public class HintDefinition implements Definition{
    private final List<Hint> hints;
+   private final VariableDefinition varDef;
    private String currentValue;
    private Hint currentHint;
+   private String currentType;
 
    public HintDefinition() {
+      this(new VariableDefinition());
+   }
+
+   public HintDefinition(VariableDefinition varDef) {
+      this.varDef = varDef;
       this.hints = new ArrayList<Hint>();
    }
 
@@ -28,7 +35,8 @@ public class HintDefinition implements Definition{
       }
    }
 
-   public HintDefinition about(String value) {
+   public HintDefinition about(String type, String value) {
+      currentType = type;
       currentValue = value;
       return this;
    }
@@ -38,8 +46,12 @@ public class HintDefinition implements Definition{
       return this;
    }
 
-   public HintDefinition property(String variable, String valueOfProperty) {
-      currentHint().add(new Property(variable, currentValue, valueOfProperty));
+   public HintDefinition property(String type, String value) {
+      if (varDef.isMain(type)){
+         currentHint().add(new Property(currentType, value, currentValue));
+      }else{
+         currentHint().add(new Property(type, currentValue, value));
+      }
       return this;
    }
 
@@ -50,6 +62,7 @@ public class HintDefinition implements Definition{
    public HintDefinition end() {
       hints.add(currentHint);
       currentHint = null;
+      currentType = null;
       return this;
    }
 

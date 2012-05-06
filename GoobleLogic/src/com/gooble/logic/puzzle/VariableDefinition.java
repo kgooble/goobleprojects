@@ -12,29 +12,21 @@ public class VariableDefinition implements Definition {
       variables = new DomainVariables();
    }
    
-   public void add(String varName, Object... domainValues) {
-      variables.put(varName, domainValues);
+   public void add(String type, Object... domainValues) {
+      variables.put(type, domainValues);
    }
 
-   public void setMain(String varName) {
-      variables.setMain(varName);
+   public void setMain(String type) {
+      variables.setMain(type);
    }
 
    public void augment(KnowledgeBaseFacade kb) {
-      addStatements(kb);
-      addRules(kb);
-      addSolutions(kb);
-   }
-
-   private void addStatements(KnowledgeBaseFacade kb) {
-      new DomainStatements(variables).add(kb);
-   }
-
-   private void addRules(KnowledgeBaseFacade kb) {
+      new DomainStatements(variables).forValues(kb);
       new DomainRules(variables).forProperties(kb);
+      new DomainRules(variables).forSolution(kb);
    }
 
-   private void addSolutions(KnowledgeBaseFacade kb) {
-      new DomainRules(variables).forSolution(kb);
+   public boolean isMain(String type) {
+      return type.equals(variables.getMain());
    }
 }

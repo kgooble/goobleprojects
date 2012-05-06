@@ -16,8 +16,8 @@ public class DomainVariables {
       this.variables = new HashMap<String, List<?>>();
    }
    
-   public void put(String varName, Object... domainValues) {
-      variables.put(varName, Arrays.asList(domainValues));
+   public void put(String type, Object... domainValues) {
+      variables.put(type, Arrays.asList(domainValues));
    }
 
    public Set<String> types() {
@@ -39,15 +39,15 @@ public class DomainVariables {
    public String getMain(){
       return main;
    }
-   public void setMain(String varName) {
-      main = varName;
+   public void setMain(String type) {
+      main = type;
    }
 
    public List<?> mainValues() {
       return values(main);
    }
-   public List<?> values(String varName) {
-      return variables.get(varName);
+   public List<?> values(String type) {
+      return variables.get(type);
    }
 
 }

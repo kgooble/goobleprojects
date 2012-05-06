@@ -10,7 +10,7 @@ public class DomainStatements {
    public DomainStatements(DomainVariables variables) {
       this.variables = variables;
    }
-   public void add(KnowledgeBaseFacade kb){
+   public void forValues(KnowledgeBaseFacade kb){
       for (String varName : variables.types()){
          for (Object domainVal : variables.values(varName)){
             Term<?> term = new Constant<Object>(domainVal);
