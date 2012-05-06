@@ -12,7 +12,7 @@ import com.gooble.logic.puzzle.VariableDefinition;
 
 public class VariableDefinitionTest{
    @Test
-   public void encode_variables_into_knowledge_base() throws Exception {
+   public void encode_variables_rules_and_solution_rules_into_knowledge_base() throws Exception {
       KBStub kb = new KBStub();
       VariableDefinition varEnc = new VariableDefinition();
       varEnc.add("name", "alice", "bob", "carl");
@@ -27,6 +27,10 @@ public class VariableDefinitionTest{
             setFromList(kb.stmts));
       assertEquals(set(
             rule("name(X) ^ age(Y) => ageOf(X, Y)"),
-            rule("name(X) ^ height(Y) => heightOf(X, Y)")), setFromList(kb.rules));
+            rule("name(X) ^ height(Y) => heightOf(X, Y)"), 
+            rule("ageOf(alice, V1) ^ heightOf(alice, V2) => solution1(V1, V2)"), 
+            rule("ageOf(bob, V1) ^ heightOf(bob, V2) => solution2(V1, V2)"),
+            rule("ageOf(carl, V1) ^ heightOf(carl, V2) => solution3(V1, V2)")),
+            setFromList(kb.rules));
    }
 }

@@ -52,8 +52,8 @@ public class HintDefinitionTest {
          .about("Y").property("shoes", "red").end();
       hintDef.augment(kb);
       assertEquals(Arrays.asList(
-            rule("olderThan(X, bob) ^ shoesOf(X, red) => solution1(X)"),
-            rule("shoesOf(X, blue) ^ youngerThan(Y, X) ^ shoesOf(Y, red) => solution2(Y, X)")
+            rule("olderThan(X, bob) ^ shoesOf(X, red) => hint1(X)"),
+            rule("shoesOf(X, blue) ^ youngerThan(Y, X) ^ shoesOf(Y, red) => hint2(Y, X)")
             ), kb.rules);
    }
 }

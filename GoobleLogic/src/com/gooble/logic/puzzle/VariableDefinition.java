@@ -1,5 +1,6 @@
 package com.gooble.logic.puzzle;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -27,6 +28,7 @@ public class VariableDefinition implements Definition {
    public void augment(KnowledgeBaseFacade kb) {
       addStatements(kb);
       addRules(kb);
+      addSolutions(kb);
    }
 
    private void addStatements(KnowledgeBaseFacade kb) {
@@ -43,8 +45,38 @@ public class VariableDefinition implements Definition {
          if (varName.equals(main)) 
             continue;
          kb.add(new Rule(
-               new Statement(varName + "Of", new Variable[]{new Variable("X"), new Variable("Y")}), 
+               propertyStatement(varName, new Variable("X"), new Variable("Y")),
                new Statement(main, new Variable("X")), new Statement(varName, new Variable("Y"))));
       }
+   }
+
+   private void addSolutions(KnowledgeBaseFacade kb) {
+      int numberOfOtherVariables = variables.keySet().size() - 1;
+      int solutionIndex = 1;
+      for (Object mainVal : variables.get(main)){
+         Statement consequence = new StatementFrom("solution" + solutionIndex).numberOfVariables(numberOfOtherVariables);
+         Statement[] antecedents = createAntecedentsForOtherVariables(mainVal, numberOfOtherVariables);
+         kb.add(new Rule(consequence, antecedents));
+         solutionIndex++;
+      }
+   }
+
+   private Statement[] createAntecedentsForOtherVariables(Object mainVal, int numberOfOtherVariables) {
+      List<Statement> antecedents = new ArrayList<Statement>();
+      int variableIndex = 1;
+      for (String varName : variables.keySet()){
+         if (varName.equals(main)) 
+            continue;
+         antecedents.add(propertyStatement(varName, 
+               new Constant<Object>(mainVal),
+               new Variable("V" + variableIndex)
+               ));
+         variableIndex++;
+      }
+      return antecedents.toArray(new Statement[numberOfOtherVariables]);
+   }
+   
+   private Statement propertyStatement(String varName, Term<?> term1, Term<?> term2){
+      return new Statement(varName + "Of", new Term<?>[]{term1, term2});
    }
 }

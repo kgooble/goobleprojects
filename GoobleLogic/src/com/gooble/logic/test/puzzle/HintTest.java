@@ -14,7 +14,7 @@ public class HintTest {
    @Test
    public void convert_hint_to_rule_generates_rule_from_statements() throws Exception {
       Hint hint = new Hint(new Relation("olderThan", "X", "bob"), new Property("shoes", "X", "red"));
-      Rule expectedRule = rule("olderThan(X, bob) ^ shoesOf(X, red) => solution(X)");
+      Rule expectedRule = rule("olderThan(X, bob) ^ shoesOf(X, red) => hint(X)");
       Rule actualRule = hint.toRule();
       assertEquals(expectedRule, actualRule);
    }

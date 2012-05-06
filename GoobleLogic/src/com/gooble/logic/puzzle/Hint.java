@@ -27,7 +27,7 @@ public class Hint{
          antecedentsList.add(part.toStatement());
       }
       Set<Variable> variables = new StatementVariables(antecedentsList).find();
-      Statement consequence = new Statement("solution", variables.toArray(new Variable[variables.size()]));
+      Statement consequence = new Statement("hint", variables.toArray(new Variable[variables.size()]));
       Statement[] antecedents = antecedentsList.toArray(new Statement[antecedentsList.size()]);
       return new Rule(consequence, antecedents);
    }
