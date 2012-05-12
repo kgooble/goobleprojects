@@ -15,6 +15,7 @@ import org.junit.Test;
 import com.gooble.logic.kb.Rule;
 import com.gooble.logic.kb.stmts.Statement;
 import com.gooble.logic.puzzle.RelationDefinition;
+import com.gooble.logic.test.puzzle.stubs.KBStub;
 
 
 public class RelationDefinitionTest {

@@ -1,4 +1,4 @@
-package com.gooble.logic.test.puzzle;
+package com.gooble.logic.test.puzzle.stubs;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.gooble.logic.test.puzzle;
+package com.gooble.logic.test.puzzle.stubs;
 
 import com.gooble.logic.kb.KnowledgeBaseFacade;
 import com.gooble.logic.kb.Rule;

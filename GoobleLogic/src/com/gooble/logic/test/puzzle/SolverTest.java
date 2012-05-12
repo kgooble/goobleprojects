@@ -17,6 +17,9 @@ import com.gooble.logic.kb.Rule;
 import com.gooble.logic.kb.stmts.Statement;
 import com.gooble.logic.puzzle.Definition;
 import com.gooble.logic.puzzle.Solver;
+import com.gooble.logic.test.puzzle.stubs.DefinitionStub;
+import com.gooble.logic.test.puzzle.stubs.KBStub;
+import com.gooble.logic.test.puzzle.stubs.MergerStub;
 
 public class SolverTest {
    private KBStub kbStub;

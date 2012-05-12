@@ -9,6 +9,7 @@ import static junit.framework.Assert.assertEquals;
 import org.junit.Test;
 
 import com.gooble.logic.puzzle.VariableDefinition;
+import com.gooble.logic.test.puzzle.stubs.KBStub;
 
 public class VariableDefinitionTest{
    @Test

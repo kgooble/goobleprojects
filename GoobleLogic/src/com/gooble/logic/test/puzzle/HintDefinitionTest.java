@@ -13,6 +13,7 @@ import com.gooble.logic.puzzle.HintDefinition;
 import com.gooble.logic.puzzle.Property;
 import com.gooble.logic.puzzle.Relation;
 import com.gooble.logic.puzzle.VariableDefinition;
+import com.gooble.logic.test.puzzle.stubs.KBStub;
 
 public class HintDefinitionTest {
    private KBStub kb;
