@@ -8,14 +8,11 @@ import com.gooble.logic.kb.stmts.Statement;
 public class SolutionDefinition {
 
    private final List<Statement> statements;
-   private String[] expectedOrder;
+   private final String[] expectedOrder;
 
-   public SolutionDefinition() {
-      statements = new ArrayList<Statement>();
-   }
-
-   public void setExpectedOrder(String... expectedOrder) {
+   public SolutionDefinition(String... expectedOrder) {
       this.expectedOrder = expectedOrder;
+      this.statements = new ArrayList<Statement>();
    }
 
    public void add(String mainValue, Object... theRest) {
