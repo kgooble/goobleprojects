@@ -13,7 +13,6 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.gooble.logic.kb.KnowledgeBaseFacade;
 import com.gooble.logic.kb.Rule;
 import com.gooble.logic.kb.stmts.Statement;
 import com.gooble.logic.puzzle.Definition;
@@ -22,11 +21,7 @@ import com.gooble.logic.puzzle.Solver;
 public class SolverTest {
    private KBStub kbStub;
    private Solver solver;
-   /*
-    * 2. then uses the hints to merge a bunch of stuff.
-    * 3. then uses the solutions to merge more stuff.
-    * 4. then does the error checking.
-    */
+
    @Before
    public void init() throws Exception{
       kbStub = new KBStub();
@@ -34,14 +29,11 @@ public class SolverTest {
    }
    @Test
    public void test_augment_uses_given_definitions() throws Exception {
-      final Rule fakeRule = rule("p(X) => g(X)");
-      Definition defStub = new Definition(){
-         @Override
-         public void augment(KnowledgeBaseFacade kb) {
-            kb.add(fakeRule);
-         }
-      };
+      Rule fakeRule = rule("p(X) => g(X)");
+      Definition defStub = new DefinitionStub(fakeRule);
+      
       solver.augment(defStub, defStub, defStub);
+      
       assertEquals(Arrays.asList(fakeRule, fakeRule, fakeRule), kbStub.rules);
    }
    
@@ -49,11 +41,12 @@ public class SolverTest {
    public void merge_given_rules_using_merger_and_given_ignore_list() throws Exception{
       MergerStub mergerStub = new MergerStub();
       List<Statement> ignoreList = Arrays.asList(statement("q(X, Y)"));
-      List<Rule> mergingRules = Arrays.asList(rule("p(X, A) ^ g(X) ^ r(A) => h(A, X)"), 
-                    rule("h(X) ^ m(X) => n(X)"));
+      List<Rule> mergingRules = Arrays.asList(
+            rule("p(X, A) ^ g(X) ^ r(A) => h(A, X)"), 
+            rule("h(X) ^ m(X) => n(X)"));
       
       solver.merge(mergerStub, ignoreList, mergingRules);
-      
+
       assertEquals(Arrays.asList(ignoreList, ignoreList), mergerStub.ignoredListsInOrder);
       assertEquals(mergingRules, mergerStub.mergedRulesInOrder);
       assertEquals(Arrays.asList(
