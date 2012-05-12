@@ -1,10 +1,15 @@
 package com.gooble.logic.test.puzzle;
 
+import static com.gooble.logic.kb.encoding.KBEncoding.replacement;
+import static com.gooble.logic.kb.encoding.KBEncoding.solution;
+import static com.gooble.logic.kb.encoding.KBEncoding.solutions;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import com.gooble.logic.kb.KnowledgeBaseFacade;
 import com.gooble.logic.kb.Rule;
+import com.gooble.logic.kb.solutions.SolutionSet;
 import com.gooble.logic.kb.stmts.Statement;
 
 public class KBStub implements KnowledgeBaseFacade {
@@ -20,6 +25,11 @@ public class KBStub implements KnowledgeBaseFacade {
    @Override
    public void add(Statement stmt) {
       stmts.add(stmt);
+   }
+
+   @Override
+   public SolutionSet findSolutions(Statement statement) {
+      return solutions(true, solution(replacement(statement.toString(), 1)));
    }
 
 }
