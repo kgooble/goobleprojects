@@ -55,7 +55,6 @@ public class HintDefinitionTest {
             rule("shoesOf(X, blue) ^ youngerThan(Y, X) ^ shoesOf(Y, red) => hint2(Y, X)")
             ), kb.rules);
    }
-   
    @Test
    public void adding_property_of_a_non_main_variable_makes_it_a_property_of_a_main_variable() throws Exception {
       VariableDefinition varDef = new VariableDefinition();
