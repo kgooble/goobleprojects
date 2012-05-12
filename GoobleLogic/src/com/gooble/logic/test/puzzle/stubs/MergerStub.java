@@ -18,4 +18,12 @@ public class MergerStub implements MergerFacade{
       mergedSolnsInOrder.add(soln);
       ignoredListsInOrder.add(ignoreList);
    }
+   @Override
+   public Rule getMergedRule() {
+      return null;
+   }
+   @Override
+   public SolutionSet getMergedSolutions() {
+      return null;
+   }
 }
