@@ -88,3 +88,14 @@ TEST(ValidMoveDownTest, StandardMoveDownWorks){
 	Position validMove = validity.getValidMove(myPosn, speed);
 	EXPECT_EQ(validMove, expectedNextMove)<< "Got: " << validMove.getX() << " " << validMove.getY();
 }
+
+TEST(MoveTest, CannotMoveOutOfNorthOrWestBoundaries){
+	std::list<Position> allPosns;
+	Position myPosn = Position(Vector2(0, 0), 10, 10);
+	allPosns.push_back(myPosn);
+	ValidMove validity(Position(Vector2(0, 0), 500, 500), allPosns);
+
+	Vector2 speed(-10, 0);
+	Position validMove = validity.getValidMove(myPosn, speed);
+	EXPECT_EQ(validMove, myPosn)<< "Got: " << validMove.getX() << " " << validMove.getY();
+}

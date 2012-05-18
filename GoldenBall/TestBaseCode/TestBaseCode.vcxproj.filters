@@ -22,11 +22,11 @@
     <Filter Include="Source Files\Movement">
       <UniqueIdentifier>{fe92a201-e3fa-47a9-9bc1-a6f5f8b6d728}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Gameplay">
+      <UniqueIdentifier>{67957420-3636-4a6f-bd32-39fdc0f7d505}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="LevelInstanceTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="MazeHedgeTest.cpp">
       <Filter>Source Files\Mazes</Filter>
     </ClCompile>
@@ -50,6 +50,9 @@
     </ClCompile>
     <ClCompile Include="ValidMoveTest.cpp">
       <Filter>Source Files\Movement</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelInstanceTest.cpp">
+      <Filter>Source Files\Gameplay</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
