@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\chapter7">
+      <UniqueIdentifier>{6044e442-2753-44ce-bc01-70dc2c337443}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\chapter8">
+      <UniqueIdentifier>{2eb17745-fdb6-446a-bb76-e56c8491e939}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="problem5.cpp">
+      <Filter>Source Files\chapter7</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="problem13.cpp">
+      <Filter>Source Files\chapter7</Filter>
+    </ClCompile>
+    <ClCompile Include="problem3.cpp">
+      <Filter>Source Files\chapter8</Filter>
+    </ClCompile>
+    <ClCompile Include="problem8.cpp">
+      <Filter>Source Files\chapter8</Filter>
+    </ClCompile>
+    <ClCompile Include="problem9.cpp">
+      <Filter>Source Files\chapter8</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="problems.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
