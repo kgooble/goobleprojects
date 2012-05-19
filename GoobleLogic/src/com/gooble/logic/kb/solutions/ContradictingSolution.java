@@ -1,6 +1,7 @@
 package com.gooble.logic.kb.solutions;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import com.gooble.logic.kb.Rule;
@@ -14,7 +15,7 @@ public class ContradictingSolution {
       this.soln = soln;
    }
    
-   public boolean isContradictoryBasedOnRule(Rule rule, List<Statement> ignoreList){
+   public boolean isContradictoryBasedOnRule(Rule rule, Collection<Statement> ignoreList){
       Statement[] antes = rule.getAntecedents();
       List<Statement> resolvedAntes = new ArrayList<Statement>(antes.length);
       for (Statement ante : antes) {
@@ -51,7 +52,7 @@ public class ContradictingSolution {
       
       return false;
    }
-   private boolean inIgnoreList(Statement statement, List<Statement> ignoreList) {
+   private boolean inIgnoreList(Statement statement, Collection<Statement> ignoreList) {
       for (Statement s : ignoreList){
          if (s.match(statement)) 
             return true;

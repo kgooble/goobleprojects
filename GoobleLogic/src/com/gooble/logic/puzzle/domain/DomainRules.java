@@ -19,21 +19,30 @@ public class DomainRules {
       this.variables = variables;
    }
    public void forProperties(KnowledgeBaseFacade kb){
-      for (String varName : variables.secondaryTypes()){
-         kb.add(new Rule(
-               propertyStatement(varName, new Variable("X"), new Variable("Y")),
-               new Statement(variables.getMain(), new Variable("X")), new Statement(varName, new Variable("Y"))));
+      for (Object mainValue : variables.mainValues()){
+         for (String varName : variables.secondaryTypes()){
+   //         kb.add(new Rule(
+   //               propertyStatement(varName, new Variable("X"), new Variable("Y")),
+   //               new Statement(variables.getMain(), new Variable("X")), new Statement(varName, new Variable("Y"))));
+            for (Object value : variables.values(varName)) {
+               kb.add(propertyStatement(varName, new Constant<Object>(mainValue), new Constant<Object>(value)));
+            }
+         }
       }
    }
-   public void forSolution(KnowledgeBaseFacade kb){
+   public List<Rule> forSolution(KnowledgeBaseFacade kb){
       int numberOfOtherVariables = variables.numberOfSecondaryVariables();
       int solutionIndex = 1;
+      List<Rule> addedRules = new ArrayList<Rule>();
       for (Object mainVal : variables.mainValues()){
          Statement consequence = new StatementFrom("solution" + solutionIndex).numberOfVariables(numberOfOtherVariables);
          Statement[] antecedents = createAntecedentsForOtherVariables(mainVal, numberOfOtherVariables);
-         kb.add(new Rule(consequence, antecedents));
+         Rule rule = new Rule(consequence, antecedents);
+         addedRules.add(rule);
+         kb.add(rule);
          solutionIndex++;
       }
+      return addedRules;
    }
    private Statement[] createAntecedentsForOtherVariables(Object mainVal, int numberOfOtherVariables) {
       List<Statement> antecedents = new ArrayList<Statement>();

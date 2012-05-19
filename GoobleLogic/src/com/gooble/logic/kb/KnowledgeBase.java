@@ -130,6 +130,15 @@ public class KnowledgeBase implements KnowledgeBaseFacade{
 
    @Override
    public String toString(){
-      return "STATEMENTS: " + stmts.toString() + "\n" + "RULES: " + rules.toString();
+      StringBuilder sb = new StringBuilder();
+      sb.append("STATEMENTS: \n");
+      for (Statement stmt : stmts){
+         sb.append(stmt.toString() + "\n");
+      }
+      sb.append("\n\nRULES: \n");
+      for (Rule rule : rules){
+         sb.append(rule.toString() + "\n");
+      }
+      return sb.toString();
    }
 }

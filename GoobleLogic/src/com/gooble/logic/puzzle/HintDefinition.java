@@ -14,6 +14,7 @@ public class HintDefinition implements Definition{
    private String currentValue;
    private Hint currentHint;
    private String currentType;
+   private List<Rule> hintRules;
 
    public HintDefinition() {
       this(new VariableDefinition());
@@ -26,13 +27,20 @@ public class HintDefinition implements Definition{
 
    @Override
    public void augment(KnowledgeBaseFacade kb) {
+      hintRules = new ArrayList<Rule>();
       Integer i = 1;
       for (Hint hint : hints){
          Rule rule = hint.toRule();
          Statement suffixedConsequence = Suffix.statement(rule.getConsequence(), i.toString());
-         kb.add(new Rule(suffixedConsequence, rule.getAntecedents()));
+         Rule finalRule = new Rule(suffixedConsequence, rule.getAntecedents());
+         hintRules.add(finalRule);
+         kb.add(finalRule);
          i++;
       }
+   }
+   
+   public List<Rule> getHintRules(){
+      return hintRules;
    }
 
    public HintDefinition about(String type, String value) {

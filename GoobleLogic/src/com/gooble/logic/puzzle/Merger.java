@@ -1,6 +1,6 @@
 package com.gooble.logic.puzzle;
 
-import java.util.List;
+import java.util.Collection;
 
 import com.gooble.logic.kb.ConsistentMerge;
 import com.gooble.logic.kb.Rule;
@@ -13,7 +13,7 @@ public class Merger implements MergerFacade{
    private SolutionSet mergedSolns;
    
    @Override
-   public void mergeWith(Rule rule, SolutionSet solutions, List<Statement> ignoreList) {
+   public void mergeWith(Rule rule, SolutionSet solutions, Collection<Statement> ignoreList) {
       if (didNotPreviouslyMerge()){
          assignMergedToNew(rule, solutions);
       }else{
@@ -25,7 +25,7 @@ public class Merger implements MergerFacade{
       return mergedRule == null && mergedSolns == null;
    }
 
-   private void mergeWithOld(Rule rule, SolutionSet solutions, List<Statement> ignoreList) {
+   private void mergeWithOld(Rule rule, SolutionSet solutions, Collection<Statement> ignoreList) {
       ConsistentMerge merge = new ConsistentMerge(mergedRule, mergedSolns, rule, solutions);
       merge.ignoring(ignoreList);
       mergedRule = merge.getMergedRule();

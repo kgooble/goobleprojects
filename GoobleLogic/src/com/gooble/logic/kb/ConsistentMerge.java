@@ -1,6 +1,7 @@
 package com.gooble.logic.kb;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import com.gooble.logic.kb.solutions.ContradictingSolution;
@@ -24,7 +25,7 @@ public class ConsistentMerge {
       this.solutions2 = solutions2;
    }
 
-   public void ignoring(List<Statement> ignoreList) {
+   public void ignoring(Collection<Statement> ignoreList) {
       List<Solution> mergedSolutions = new ArrayList<Solution>();
       SolutionSet solutionSet = new SolutionSet(mergedSolutions, solutions1.isQueryTrue() && solutions2.isQueryTrue());
       mergedRule = new Rules(rule1, rule2).merge();
@@ -32,7 +33,7 @@ public class ConsistentMerge {
       this.mergedSolutions = solutionSet;
    }
 
-   private void mergeSolutions(List<Statement> ignoreList, List<Solution> mergedSolutions) {
+   private void mergeSolutions(Collection<Statement> ignoreList, List<Solution> mergedSolutions) {
       List<Solution> newSolns1 = Suffix.solutions(solutions1.list(), "1");
       List<Solution> newSolns2 = Suffix.solutions(solutions2.list(), "2");
       for (Solution s1 : newSolns1){
@@ -42,7 +43,7 @@ public class ConsistentMerge {
       }
    }
 
-   private void mergeIfNotContradictory(List<Statement> ignoreList, List<Solution> mergedSolutions, Solution s1, Solution s2) {
+   private void mergeIfNotContradictory(Collection<Statement> ignoreList, List<Solution> mergedSolutions, Solution s1, Solution s2) {
       Solution soln = new Solution();
       soln.addReplacements(s1.getReplacements());
       soln.addReplacements(s2.getReplacements());
@@ -58,7 +59,7 @@ public class ConsistentMerge {
       return mergedSolutions;
    }
 
-   private boolean isNotContradictory(Solution soln, Rule rule, List<Statement> ignoreList) {
+   private boolean isNotContradictory(Solution soln, Rule rule, Collection<Statement> ignoreList) {
       return !new ContradictingSolution(soln).isContradictoryBasedOnRule(rule, ignoreList);
    }
    

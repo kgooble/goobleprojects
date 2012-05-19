@@ -1,5 +1,6 @@
 package com.gooble.logic.puzzle;
 
+import java.util.Collection;
 import java.util.List;
 
 import com.gooble.logic.kb.KnowledgeBaseFacade;
@@ -20,7 +21,7 @@ public class Solver{
       }
    }
 
-   public void merge(MergerFacade merger, List<Statement> ignoreList, List<Rule> mergingRules) {
+   public void merge(MergerFacade merger, Collection<Statement> ignoreList, List<Rule> mergingRules) {
       for (Rule rule : mergingRules){
          merger.mergeWith(rule, kb.findSolutions(rule.getConsequence()), ignoreList);
       }
