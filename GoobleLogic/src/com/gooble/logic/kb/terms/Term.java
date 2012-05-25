@@ -1,6 +1,6 @@
 package com.gooble.logic.kb.terms;
 
-public interface Term<T> {
+public interface Term<T> extends Comparable<Term<?>>{
    
    boolean isVariable();
    boolean match(Term<?> other);

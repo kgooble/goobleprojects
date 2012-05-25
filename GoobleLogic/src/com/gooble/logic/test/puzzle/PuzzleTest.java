@@ -3,9 +3,11 @@ package com.gooble.logic.test.puzzle;
 import static com.gooble.logic.kb.encoding.KBEncoding.statement;
 import static com.gooble.logic.kb.encoding.TermEncoding.constant;
 import static com.gooble.logic.kb.encoding.TermEncoding.variable;
+import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
 
+import org.junit.After;
 import org.junit.Test;
 
 import com.gooble.logic.Logger;
@@ -17,6 +19,25 @@ import com.gooble.logic.puzzle.SolutionDefinition;
 import com.gooble.logic.puzzle.VariableDefinition;
 
 public class PuzzleTest {
+   
+   @Test
+   public void contradictory_puzzle_has_no_solutions() throws Exception {
+      VariableDefinition varDefStub = new VariableDefinition();
+      varDefStub.setMain("person");
+      varDefStub.add("person", "alice", "bob", "carl");
+      varDefStub.add("shoes", "red", "blue", "green");
+      varDefStub.add("age", 17, 18, 19);
+      RelationDefinition relDefStub = new RelationDefinition("age");
+      relDefStub.addNonUnique("olderThan", variable("X"), variable("Y"), statement("Y > X"));
+      HintDefinition hintDefStub = new HintDefinition(varDefStub);
+      hintDefStub.about("person", "alice").property("shoes", "red").property("shoes", "blue");
+      SolutionDefinition solnDefStub = new SolutionDefinition("person", "shoes", "age");
+      
+      Puzzle puzzle = new Puzzle(varDefStub, hintDefStub, solnDefStub, relDefStub);
+      Result result = puzzle.solve();
+      assertFalse(result.isPuzzleSolvable());
+   }
+   
    @Test
    public void augment_then_hints_then_solutions_then_error_check() throws Exception {
       VariableDefinition varDefStub = createVariableDefinition();
@@ -25,8 +46,13 @@ public class PuzzleTest {
       SolutionDefinition solnDefStub = createSolutionDefinition();
       
       Result result = new Puzzle(varDefStub, hintDefStub, solnDefStub, relDefStub).solve();
-      Logger.close();
       assertTrue(result.isPuzzleSolvable());
+      // We need to check whether the solution to the puzzle is the same as that
+      // encoded by the solution definition.
+   }
+   @After
+   public void closeLogger(){
+      Logger.close();
    }
    private VariableDefinition createVariableDefinition() {
       VariableDefinition varDef = new VariableDefinition();

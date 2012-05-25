@@ -1,7 +1,7 @@
 package com.gooble.logic.kb.terms;
 
 
-public class Variable implements Term<String>, Comparable<Variable> {
+public class Variable implements Term<String>, Comparable<Term<?>> {
 
    private final String name;
 
@@ -47,8 +47,11 @@ public class Variable implements Term<String>, Comparable<Variable> {
    }
 
    @Override
-   public int compareTo(Variable other) {
-      return this.name.compareTo(other.name);
+   public int compareTo(Term<?> other) {
+      if (!(other instanceof Variable))
+         return -1;
+      Variable otherVar = (Variable) other;
+      return this.name.compareTo(otherVar.name);
    }
 
 }

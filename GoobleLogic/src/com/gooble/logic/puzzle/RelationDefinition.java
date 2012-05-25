@@ -44,8 +44,8 @@ public class RelationDefinition implements Definition{
       add(nameOfRelation, term1, term2);
       add(nameOfRelation, term2, term1);
    }
-   public void addNonUnique(String nameOfRelation, Term<?> term1, Term<?> term2) {
-      add(nameOfRelation, term1, term2);
+   public void addNonUnique(String nameOfRelation, Term<?> term1, Term<?> term2, Statement... antecedents) {
+      add(nameOfRelation, term1, term2, antecedents);
       addGenericNonUnique(nameOfRelation);
    }
    public void addBidirectionalNonUnique(String nameOfRelation, Term<?> term1, Term<?> term2) {

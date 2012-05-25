@@ -1,10 +1,9 @@
 package com.gooble.logic.puzzle;
 
-import java.util.List;
 
 import com.gooble.logic.kb.KnowledgeBase;
 import com.gooble.logic.kb.KnowledgeBaseFacade;
-import com.gooble.logic.kb.Rule;
+import com.gooble.logic.kb.solutions.SolutionSet;
 
 public class Puzzle{
 
@@ -25,17 +24,12 @@ public class Puzzle{
       new Solver(kb).augment(varDef, hintDef, relDef);
       
       Merger merger = new Merger();
-      new Solver(kb).merge(merger, relDef.getNonUniqueStatements(), makeHintRules());
-      new Solver(kb).merge(merger, relDef.getNonUniqueStatements(), makeSolutionRules());
+      new Solver(kb).merge(merger, relDef.getNonUniqueStatements(), hintDef.getHintRules());
+      new Solver(kb).merge(merger, relDef.getNonUniqueStatements(), varDef.getSolutionRules());
       
-      return new Result(merger.getMergedSolutions().isQueryTrue());
-   }
-
-   private List<Rule> makeSolutionRules(){
-      return varDef.getSolutionRules();
-   }
-   private List<Rule> makeHintRules() {
-      return hintDef.getHintRules();
+      SolutionSet solutions = merger.getMergedSolutions();
+      
+      return new Result(solutions.isQueryTrue());
    }
    
 }

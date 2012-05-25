@@ -33,6 +33,10 @@ public class Rule implements Comparable<Rule>{
       Rule other = (Rule) obj;
       return this.consequence.equals(other.consequence) && Arrays.equals(this.antecedents, other.antecedents); 
    }
+   @Override
+   public int hashCode(){
+      return consequence.hashCode() + antecedents.hashCode();
+   }
    
    @Override
    public String toString(){
@@ -41,6 +45,18 @@ public class Rule implements Comparable<Rule>{
 
    @Override
    public int compareTo(Rule other) {
+      if (consequence.compareTo(other.consequence) == 0){
+         if (antecedents.length > other.antecedents.length)
+            return 1;
+         if (antecedents.length < other.antecedents.length)
+            return -1;
+         for (int i = 0; i < antecedents.length; i++){
+            int comparison = antecedents[i].compareTo(other.antecedents[i]);
+            if (comparison != 0){
+               return comparison;
+            }
+         }
+      }
       return consequence.compareTo(other.consequence);
    }
 

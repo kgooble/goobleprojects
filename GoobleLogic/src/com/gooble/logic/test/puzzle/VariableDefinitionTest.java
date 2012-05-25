@@ -46,9 +46,9 @@ public class VariableDefinitionTest{
                   ),
             setFromList(kb.stmts));
       assertEquals(set(
-            rule("ageOf(alice, V1) ^ heightOf(alice, V2) => solution1(V1, V2)"), 
-            rule("ageOf(bob, V1) ^ heightOf(bob, V2) => solution2(V1, V2)"),
-            rule("ageOf(carl, V1) ^ heightOf(carl, V2) => solution3(V1, V2)")),
+            rule("ageOf(alice, ALICEAGE) ^ heightOf(alice, ALICEHEIGHT) => solution1(ALICEAGE, ALICEHEIGHT)"), 
+            rule("ageOf(bob, BOBAGE) ^ heightOf(bob, BOBHEIGHT) => solution2(BOBAGE, BOBHEIGHT)"),
+            rule("ageOf(carl, CARLAGE) ^ heightOf(carl, CARLHEIGHT) => solution3(CARLAGE, CARLHEIGHT)")),
             setFromList(kb.rules));
    }
 }

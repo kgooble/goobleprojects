@@ -7,6 +7,4 @@ import org.junit.runner.RunWith;
 
 @RunWith(ClasspathSuite.class)
 @ClassnameFilters({"com.gooble.logic.test.*"})
-public class AllTests {
-
-}
+public class AllTests {}

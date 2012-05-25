@@ -35,7 +35,7 @@ public class DomainRules {
       int solutionIndex = 1;
       List<Rule> addedRules = new ArrayList<Rule>();
       for (Object mainVal : variables.mainValues()){
-         Statement consequence = new StatementFrom("solution" + solutionIndex).numberOfVariables(numberOfOtherVariables);
+         Statement consequence = new StatementFrom("solution" + solutionIndex).variables(mainVal, variables.secondaryTypes());
          Statement[] antecedents = createAntecedentsForOtherVariables(mainVal, numberOfOtherVariables);
          Rule rule = new Rule(consequence, antecedents);
          addedRules.add(rule);
@@ -46,13 +46,11 @@ public class DomainRules {
    }
    private Statement[] createAntecedentsForOtherVariables(Object mainVal, int numberOfOtherVariables) {
       List<Statement> antecedents = new ArrayList<Statement>();
-      int variableIndex = 1;
       for (String varName : variables.secondaryTypes()){
          antecedents.add(propertyStatement(varName, 
                new Constant<Object>(mainVal),
-               new Variable("V" + variableIndex)
+               new Variable((mainVal + varName).toUpperCase())
                ));
-         variableIndex++;
       }
       return antecedents.toArray(new Statement[numberOfOtherVariables]);
    }

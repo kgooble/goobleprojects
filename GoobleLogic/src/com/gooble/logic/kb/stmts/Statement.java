@@ -89,6 +89,18 @@ public class Statement implements Comparable<Statement>{
 
    @Override
    public int compareTo(Statement other) {
+      if (this.name.compareTo(other.name) == 0){
+         if (terms.length > other.terms.length)
+            return 1;
+         if (terms.length < other.terms.length)
+            return -1;
+         for (int i = 0; i < terms.length; i++){
+            int comparison = terms[i].compareTo(other.terms[i]);
+            if (comparison != 0){
+               return comparison;
+            }
+         }
+      }
       return this.name.compareTo(other.name);
    }
 

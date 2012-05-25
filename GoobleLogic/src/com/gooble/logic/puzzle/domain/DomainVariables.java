@@ -2,10 +2,10 @@ package com.gooble.logic.puzzle.domain;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 public class DomainVariables {
 
@@ -24,7 +24,7 @@ public class DomainVariables {
       return variables.keySet();
    }
    public Set<String> secondaryTypes(){
-      Set<String> secondaryTypes = new HashSet<String>(variables.keySet());
+      Set<String> secondaryTypes = new TreeSet<String>(variables.keySet());
       secondaryTypes.remove(main);
       return secondaryTypes;
    }
