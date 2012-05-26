@@ -1,6 +1,7 @@
 package com.gooble.logic.puzzle;
 
 
+import com.gooble.logic.Logger;
 import com.gooble.logic.kb.KnowledgeBase;
 import com.gooble.logic.kb.KnowledgeBaseFacade;
 import com.gooble.logic.kb.solutions.SolutionSet;
@@ -28,6 +29,9 @@ public class Puzzle{
       new Solver(kb).merge(merger, relDef.getNonUniqueStatements(), varDef.getSolutionRules());
       
       SolutionSet solutions = merger.getMergedSolutions();
+      
+      Logger.log("Final merged solutions: ");
+      Logger.log(solutions.toString());
       
       return new Result(solutions.isQueryTrue());
    }

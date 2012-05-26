@@ -28,8 +28,8 @@ public class ContradictingSolutionTest {
    @Test
    public void contradictory_solution() throws Exception{
       assertTrue(isContradictory(
-            solution(replacement("X", "bob"), replacement("B", "darm"), replacement("Y", "carey")),
-            rule("p(X, B) ^ p(X, Z) => g(X, B, Y, Z)")));
+            solution(replacement("X", "bob"), replacement("B", "darm"), replacement("Z", "carey")),
+            rule("p(X, B) ^ p(X, Z) => g(X, B, Z)")));
    }
    
    @Test
