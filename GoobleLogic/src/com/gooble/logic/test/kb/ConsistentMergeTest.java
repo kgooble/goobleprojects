@@ -30,6 +30,7 @@ public class ConsistentMergeTest {
             solutions(true, solution(replacement("X", "bob"), replacement("Y", "mark"))));
       
       assertFalse(mergedSolutions.hasSolutions());
+      assertFalse(mergedSolutions.isQueryTrue());
       assertEquals(rule("p(X1, Y1) ^ p(X2, Y2) => gh(X1, Y1, X2, Y2)"), mergedRule);
    }
    

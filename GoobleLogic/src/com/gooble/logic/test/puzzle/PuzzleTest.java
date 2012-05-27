@@ -30,7 +30,8 @@ public class PuzzleTest {
       RelationDefinition relDefStub = new RelationDefinition("age");
       relDefStub.addNonUnique("olderThan", variable("X"), variable("Y"), statement("Y > X"));
       HintDefinition hintDefStub = new HintDefinition(varDefStub);
-      hintDefStub.about("person", "alice").property("shoes", "red").property("shoes", "blue");
+      hintDefStub.about("person", "alice").property("age", "X").about("age", "X").relation("olderThan", "Y").about("age", "Y").property("person", "bob").end();
+      hintDefStub.about("person", "bob").property("age", "X").about("age", "X").relation("olderThan", "Y").about("age", "Y").property("person", "alice").end();
       SolutionDefinition solnDefStub = new SolutionDefinition("person", "shoes", "age");
       
       Puzzle puzzle = new Puzzle(varDefStub, hintDefStub, solnDefStub, relDefStub);

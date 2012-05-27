@@ -37,16 +37,21 @@ public class ContradictingSolution {
    }
    private boolean oneSameValueButRestDifferent(Statement first, Statement second) {
       if (first.getName().equals(second.getName()) && first.getTerms().length == second.getTerms().length){
-         boolean allMatch = false;
-         boolean onlySomeMatch = false;
+         boolean someMatch = false;
          for (int i = 0; i < first.getTerms().length; i++){
             if (first.getTerms()[i].match(second.getTerms()[i])){
-               allMatch = true;
-            } else{
-               if (allMatch)
+               someMatch = true;
+            }
+         }
+         
+         boolean onlySomeMatch = false;
+         for (int i = 0; i < first.getTerms().length; i++){
+            if (!first.getTerms()[i].match(second.getTerms()[i])){
+               if (someMatch)
                   onlySomeMatch = true;
             }
          }
+         
          return onlySomeMatch;
       }
       
