@@ -75,5 +75,9 @@ public class SolutionSet {
          solns.append(soln + "\n");
       return "QUERY " + queryTrue + ", SOLUTIONS: " + solns.toString();
    }
+
+   public List<Solution> getSolutions() {
+      return solutions;
+   }
    
 }
