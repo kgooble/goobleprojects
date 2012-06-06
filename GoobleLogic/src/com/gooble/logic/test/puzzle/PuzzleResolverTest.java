@@ -38,20 +38,22 @@ public class PuzzleResolverTest {
    }
    @Test
    public void if_there_is_solution_defined_but_not_found_then_puzzle_is_inconsistent() throws Exception{
-      SolutionDefinition solnDef = new SolutionDefinition("person", "age", "shoes");
-      solnDef.add("alan", 16, "green");
-      solnDef.add("bob", 18, "red");
-      solnDef.add("carol", 17, "blue");
+      SolutionDefinition expectedSolutions = new SolutionDefinition("person", "age", "shoes");
+      expectedSolutions.add("alan", 16, "green");
+      expectedSolutions.add("bob", 18, "red");
+      expectedSolutions.add("carol", 17, "blue");
       
-      Rule rule = rule("ageOf(alan, AGEALAN) ^ shoesOf(alan, SHOESALAN) " +
+      Rule solutionRule = rule("ageOf(alan, AGEALAN) ^ shoesOf(alan, SHOESALAN) " +
             "^ ageOf(bob, AGEBOB) ^ shoesOf(bob, SHOESBOB) " +
             "^ ageOf(carol, AGECAROL) ^ shoesOf(carol, SHOESCAROL) => " +
             "solution1solution2solution3(AGEALAN, SHOESALAN, AGEBOB, SHOESBOB, AGECAROL, SHOESCAROL)");
-      SolutionSet solnSet = solutions(true, solution(replacement("AGEALAN", 16), replacement("SHOESALAN", "green"),
+      // the age of bob & the age of carol are reversed
+      SolutionSet foundSolutions = solutions(true, solution(
+            replacement("AGEALAN", 16), replacement("SHOESALAN", "green"),
             replacement("AGEBOB", 17), replacement("SHOESBOB", "red"), 
             replacement("AGECAROL", 18), replacement("SHOESCAROL", "blue")));
       
-      ResolveResult result = new PuzzleResolver(solnDef).resolveSolutions(rule, solnSet);
+      ResolveResult result = new PuzzleResolver(expectedSolutions).resolveSolutions(solutionRule, foundSolutions);
 
       assertFalse(result.isPuzzleConsistent());
    }

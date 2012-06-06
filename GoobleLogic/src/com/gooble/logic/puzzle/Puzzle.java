@@ -1,6 +1,5 @@
 package com.gooble.logic.puzzle;
 
-
 import com.gooble.logic.Logger;
 import com.gooble.logic.kb.KnowledgeBase;
 import com.gooble.logic.kb.KnowledgeBaseFacade;
@@ -33,7 +32,7 @@ public class Puzzle{
       Logger.log("Final merged solutions: ");
       Logger.log(solutions.toString());
       
-      return new Result(solutions.isQueryTrue());
+      return new Result(solutions.isQueryTrue() && new PuzzleResolver(solnDef).resolveSolutions(merger.getMergedRule(), solutions).isPuzzleConsistent());
    }
    
 }

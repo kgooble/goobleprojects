@@ -20,13 +20,28 @@ import com.gooble.logic.puzzle.VariableDefinition;
 
 public class PuzzleTest {
    
+	@Test
+	public void inconsistent_puzzle_is_unsolvable() throws Exception{
+      SolutionDefinition solnDefStub = new SolutionDefinition("person", "age", "shoes");
+      solnDefStub.add("alice", 16, "green");
+      solnDefStub.add("bob", 17, "red");
+      solnDefStub.add("carl", 18, "blue");
+      VariableDefinition varDefStub = createBasicVariableStub();
+      RelationDefinition relDefStub = new RelationDefinition("age");
+      relDefStub.addNonUnique("olderThan", variable("X"), variable("Y"), statement("Y > X"));
+      HintDefinition hintDefStub = new HintDefinition(varDefStub);
+      hintDefStub.about("person", "alice").property("age", "X").about("age", "X").relation("olderThan", "Y").about("age", "Y").property("person", "bob").end();
+      hintDefStub.about("shoes", "blue").property("person", "X").about("person", "X").property("age", "Y").about("age", "Y").relation("olderThan", "Z").about("age", "Z").property("person", "bob").end();
+      hintDefStub.about("person", "alice").property("age", "X").about("age", "X").relation("olderThan", "Y").about("age", "Y").property("person", "carl").about("person", "carl").property("shoes", "green").end();
+      
+      Puzzle puzzle = new Puzzle(varDefStub, hintDefStub, solnDefStub, relDefStub);
+      Result result = puzzle.solve();
+      assertFalse(result.isPuzzleSolvable());
+	}
+	
    @Test
-   public void contradictory_puzzle_has_no_solutions() throws Exception {
-      VariableDefinition varDefStub = new VariableDefinition();
-      varDefStub.setMain("person");
-      varDefStub.add("person", "alice", "bob", "carl");
-      varDefStub.add("shoes", "red", "blue", "green");
-      varDefStub.add("age", 17, 18, 19);
+   public void contradictory_puzzle_is_unsolvable() throws Exception {
+      VariableDefinition varDefStub = createBasicVariableStub();
       RelationDefinition relDefStub = new RelationDefinition("age");
       relDefStub.addNonUnique("olderThan", variable("X"), variable("Y"), statement("Y > X"));
       HintDefinition hintDefStub = new HintDefinition(varDefStub);
@@ -38,9 +53,18 @@ public class PuzzleTest {
       Result result = puzzle.solve();
       assertFalse(result.isPuzzleSolvable());
    }
+
+   private VariableDefinition createBasicVariableStub() {
+      VariableDefinition varDefStub = new VariableDefinition();
+      varDefStub.setMain("person");
+      varDefStub.add("person", "alice", "bob", "carl");
+      varDefStub.add("shoes", "red", "blue", "green");
+      varDefStub.add("age", 16, 17, 18);
+      return varDefStub;
+   }
    
    @Test
-   public void augment_then_hints_then_solutions_then_error_check() throws Exception {
+   public void consistent_and_clear_puzzle_is_solvable() throws Exception {
       VariableDefinition varDefStub = createVariableDefinition();
       RelationDefinition relDefStub = createRelationDefinition();
       HintDefinition hintDefStub = createHintDefinition(varDefStub);
@@ -48,8 +72,6 @@ public class PuzzleTest {
       
       Result result = new Puzzle(varDefStub, hintDefStub, solnDefStub, relDefStub).solve();
       assertTrue(result.isPuzzleSolvable());
-      // We need to check whether the solution to the puzzle is the same as that
-      // encoded by the solution definition.
    }
    @After
    public void closeLogger(){
