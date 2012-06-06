@@ -22,17 +22,20 @@ public class Puzzle{
    public Result solve() {
       KnowledgeBaseFacade kb = new KnowledgeBase();
       new Solver(kb).augment(varDef, hintDef, relDef);
-      
-      Merger merger = new Merger();
-      new Solver(kb).merge(merger, relDef.getNonUniqueStatements(), hintDef.getHintRules());
-      new Solver(kb).merge(merger, relDef.getNonUniqueStatements(), varDef.getSolutionRules());
-      
+      Merger merger = getFinalSolutions(kb);
       SolutionSet solutions = merger.getMergedSolutions();
       
       Logger.log("Final merged solutions: ");
       Logger.log(solutions.toString());
       
       return new Result(solutions.isQueryTrue() && new PuzzleResolver(solnDef).resolveSolutions(merger.getMergedRule(), solutions).isPuzzleConsistent());
+   }
+
+   private Merger getFinalSolutions(KnowledgeBaseFacade kb) {
+      Merger merger = new Merger();
+      new Solver(kb).merge(merger, relDef.getNonUniqueStatements(), hintDef.getHintRules());
+      new Solver(kb).merge(merger, relDef.getNonUniqueStatements(), varDef.getSolutionRules());
+      return merger;
    }
    
 }
