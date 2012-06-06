@@ -40,7 +40,5 @@ public class DefinitionCaseTest {
                   .about("house", "H2").property("woman", "adele").relation("directlyEastOf", "H3")
                      .about("house", "H3").property("woman", "laura").end();
       hintDef.augment(kb);
-      
-      System.out.println(kb.findSolutions(statement("hint1(X, Y, Z, W)")));
    }
 }
