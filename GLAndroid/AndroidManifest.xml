@@ -47,6 +47,13 @@
                 <action android:name="android.intent.action.EDIT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".RelationsActivity"
+            android:label="@string/relations" >
+            <intent-filter>
+                <action android:name="android.intent.action.EDIT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

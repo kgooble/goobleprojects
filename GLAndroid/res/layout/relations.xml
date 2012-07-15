@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/variable_layout"
+    android:id="@+id/relations_layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
@@ -10,18 +10,18 @@
         android:layout_height="wrap_content" >
 
         <Button
-            android:id="@+id/add_variable_button"
+            android:id="@+id/add_relation_button"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/add_variable" />
+            android:text="@string/add_relation" />
 
         <Button
-            android:id="@+id/save_variables_button"
+            android:id="@+id/save_relation_button"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/save_variables" />
+            android:text="@string/save_relations" />
     </TableRow>
 
 </TableLayout>

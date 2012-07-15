@@ -13,14 +13,17 @@ public class PuzzleActivity extends Activity {
    public void onCreate(Bundle icicle) {
       super.onCreate(icicle);
       setContentView(R.layout.edit_puzzle);
-      
+      attachActivityLaunchingOnclickToButton(R.id.variables_button, VariablesActivity.class);
+      attachActivityLaunchingOnclickToButton(R.id.relations_button, RelationsActivity.class);
+   }
+
+   private void attachActivityLaunchingOnclickToButton(int buttonId, final Class<? extends Activity> activityClass) {
       final Context context = this;
-      Button variables = (Button) findViewById(R.id.variables_button);
-      
-      variables.setOnClickListener(new OnClickListener() {
+      Button button = (Button) findViewById(buttonId);
+      button.setOnClickListener(new OnClickListener() {
          public void onClick(View v) {
             // TODO: Pass in, as extras, the puzzle ID so it knows what variables to load 
-            startActivity(new Intent(context, VariablesActivity.class));
+            startActivity(new Intent(context, activityClass));
          }
       });
    }
