@@ -19,6 +19,7 @@ public class PuzzleActivity extends Activity {
       
       variables.setOnClickListener(new OnClickListener() {
          public void onClick(View v) {
+            // TODO: Pass in, as extras, the puzzle ID so it knows what variables to load 
             startActivity(new Intent(context, VariablesActivity.class));
          }
       });
