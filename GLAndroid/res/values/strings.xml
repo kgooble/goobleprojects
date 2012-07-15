@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Gooble Logic</string>
+    
+    <!-- Main screen -->
+	<string name="new_puzzle">New Puzzle</string>
+	<string name="view_puzzles">View Puzzles</string>
+	<string name="help">Help</string>
+	<string name="quit">Quit</string>
+	
+	<!-- Edit puzzle screen -->
+	<string name="edit_or_new_puzzle">Puzzle</string>
+	<string name="variables">Variables</string>
+	<string name="relations">Relations</string>
+	<string name="hints">Hints</string>
+	<string name="save">Save</string>
+	
+	<!-- Variables screen -->
+	<string name="add_variable">Add New Variable</string>
+	<string name="variable_name">Name:</string>
+	<string name="add_variable_values">Add Values</string>
+	<string name="save_variables">Save</string>
+	
+	<!-- Variable values screen -->
+	<string name="variable_values">Variable Values</string>
+	<string name="add_variable_value">Add Value</string>
+	
+</resources>
