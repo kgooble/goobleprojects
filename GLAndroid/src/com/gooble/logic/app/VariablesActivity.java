@@ -28,6 +28,8 @@ public class VariablesActivity extends Activity {
       
       /*
        * TODO: Load all existing variable names with Edit and Delete buttons next to them
+       * TODO: need radio set which states which one is the main variable--- 
+       *       or maybe this should go on the variable screen.
        */
       
       final Activity activity = this;
