@@ -32,5 +32,14 @@
     <string name="add_relation">Add New Relation</string>
     <string name="relation_name">Name:</string>
     <string name="save_relations">Save</string>
+    <string name="edit_relation">Edit Relation</string>
+
+    <!-- Edit Relation screen -->
+    <string name="relation_variable">Variable:</string>
+    <string name="add_condition_set">Add Condition Set</string>
+    <string name="save_relation">Save Relation</string>
+    
+    <!-- Condition Set screen -->
+    <string name="condition_set">Condition Set</string>
 
 </resources>

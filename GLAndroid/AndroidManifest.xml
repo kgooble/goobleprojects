@@ -54,6 +54,20 @@
                 <action android:name="android.intent.action.EDIT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".EditRelationActivity"
+            android:label="@string/edit_relation" >
+            <intent-filter>
+                <action android:name="android.intent.action.EDIT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ConditionSetActivity"
+            android:label="@string/condition_set" >
+            <intent-filter>
+                <action android:name="android.intent.action.EDIT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

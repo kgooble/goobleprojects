@@ -52,9 +52,6 @@ public class VariablesActivity extends Activity {
             
             TableRow addValuesRow = new TableRow(activity);
             addValuesRow.setLayoutParams(lparams);
-            /*
-             * TODO: Also add a delete button to the addValuesRow
-             */
             
             /*
              * TODO: Onclick for this button should go to the Add Variable Values activity
