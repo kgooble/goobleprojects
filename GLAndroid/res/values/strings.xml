@@ -41,5 +41,7 @@
     
     <!-- Condition Set screen -->
     <string name="condition_set">Condition Set</string>
+    <string name="add_condition">Add Condition</string>
+    <string name="and_condition">AND</string>
 
 </resources>
