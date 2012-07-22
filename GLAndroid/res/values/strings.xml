@@ -16,6 +16,7 @@
     <string name="relations">Relations</string>
     <string name="hints">Hints</string>
     <string name="save">Save</string>
+    <string name="edit">Edit</string>
 
     <!-- Variables screen -->
     <string name="add_variable">Add New Variable</string>

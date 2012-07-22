@@ -27,11 +27,19 @@ public class ConditionSetActivity extends Activity {
       // TODO: Load all existing conditions for this condition set into
       // conditionRows
       conditionRows = new ArrayList<TableRow>();
-
-      Button addConditionButton = (Button) findViewById(R.id.add_condition_button);
-
       final Activity activity = this;
       final TableLayout layout = (TableLayout) findViewById(R.id.condition_set_layout);
+
+      Button saveConditionsButton = (Button) findViewById(R.id.save_condition_set_button);
+      //TODO Make it save- should then load on the other page
+      saveConditionsButton.setOnClickListener(new OnClickListener() {
+         public void onClick(View v) {
+            activity.finish();
+         }
+      });
+      
+      Button addConditionButton = (Button) findViewById(R.id.add_condition_button);
+
       addConditionButton.setOnClickListener(new OnClickListener() {
          public void onClick(View v) {
             if (!conditionRows.isEmpty()) {

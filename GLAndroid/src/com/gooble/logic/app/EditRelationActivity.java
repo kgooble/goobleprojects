@@ -7,7 +7,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.RelativeLayout.LayoutParams;
 
 public class EditRelationActivity extends Activity {
 
@@ -34,7 +37,43 @@ public class EditRelationActivity extends Activity {
             activity.startActivity(new Intent(activity, ConditionSetActivity.class));
          }
       });
+      
+      RelativeLayout layout = (RelativeLayout) findViewById(R.id.edit_relation_layout);
+      int thingToBeBelow = R.id.save_relation_button;
+      
       // TODO: Load condition sets as Labels with Edit buttons next to them
+      for (int i = 0; i < 3; i++){
+         TextView conditionLabel = new TextView(this);
+         conditionLabel.setId(conditionLabel.hashCode());
+         
+         Button editButton = new Button(this);
+         editButton.setId(editButton.hashCode());
+         
+         conditionLabel.setText("Condition text " + i);
+         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+               RelativeLayout.LayoutParams.WRAP_CONTENT,
+               RelativeLayout.LayoutParams.WRAP_CONTENT
+               );
+         params.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
+         params.addRule(RelativeLayout.BELOW, thingToBeBelow);
+         params.addRule(RelativeLayout.ALIGN_BASELINE, editButton.getId());
+         params.addRule(RelativeLayout.ALIGN_BOTTOM, editButton.getId());
+         conditionLabel.setLayoutParams(params);
+         
+         editButton.setText(R.string.edit);
+         RelativeLayout.LayoutParams buttonParams = new RelativeLayout.LayoutParams(
+               RelativeLayout.LayoutParams.WRAP_CONTENT,
+               RelativeLayout.LayoutParams.WRAP_CONTENT
+               );
+         buttonParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
+         buttonParams.addRule(RelativeLayout.BELOW, thingToBeBelow);
+         editButton.setLayoutParams(buttonParams);
+         
+         layout.addView(conditionLabel);
+         layout.addView(editButton);
+         
+         thingToBeBelow = editButton.getId();
+      }
    }
    
 }
