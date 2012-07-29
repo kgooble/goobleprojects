@@ -15,6 +15,7 @@ public class PuzzleActivity extends Activity {
       setContentView(R.layout.edit_puzzle);
       attachActivityLaunchingOnclickToButton(R.id.variables_button, VariablesActivity.class);
       attachActivityLaunchingOnclickToButton(R.id.relations_button, RelationsActivity.class);
+      attachActivityLaunchingOnclickToButton(R.id.hints_button, HintsActivity.class);
    }
 
    private void attachActivityLaunchingOnclickToButton(int buttonId, final Class<? extends Activity> activityClass) {

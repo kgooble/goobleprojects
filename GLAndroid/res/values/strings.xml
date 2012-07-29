@@ -18,6 +18,10 @@
     <string name="save">Save</string>
     <string name="edit">Edit</string>
 
+    <!-- Hints screen -->
+    <string name="save_hints">Save</string>
+    <string name="add_hint">Add Hint</string>
+    
     <!-- Variables screen -->
     <string name="add_variable">Add New Variable</string>
     <string name="variable_name">Name:</string>
