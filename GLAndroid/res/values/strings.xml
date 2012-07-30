@@ -48,5 +48,12 @@
     <string name="condition_set">Condition Set</string>
     <string name="add_condition">Add Condition</string>
     <string name="and_condition">AND</string>
+    
+    <!-- Edit Hint screen -->
+    <string name="edit_hint">Edit Hint</string>
+    <string name="short_name">Short Name:</string>
+    <string name="description">Description:</string>
+    <string name="hint_variables">Variables:</string>
+    <string name="property_links">Property Links</string>
 
 </resources>

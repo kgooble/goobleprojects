@@ -81,6 +81,14 @@
                 <action android:name="android.intent.action.INSERT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".EditHintActivity"
+            android:label="@string/edit_hint" >
+            <intent-filter>
+                <action android:name="android.intent.action.EDIT" />
+                <action android:name="android.intent.action.INSERT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

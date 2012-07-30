@@ -1,6 +1,7 @@
 package com.gooble.logic.app;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -36,6 +37,8 @@ public class HintsActivity extends Activity {
       });
    }
 
+   //TODO set different onclick listener for edit..... or not. 
+   // maybe call a thing that creates hint if not exist
    private int addHint(RelativeLayout layout, int thingToBeBelow, String hintStr) {
       TextView hintLabel = new TextView(this);
       hintLabel.setId(hintLabel.hashCode());
@@ -63,10 +66,16 @@ public class HintsActivity extends Activity {
       buttonParams.addRule(RelativeLayout.BELOW, thingToBeBelow);
       editButton.setLayoutParams(buttonParams);
       
+      final Activity activity = this;
+      editButton.setOnClickListener(new OnClickListener() {
+         public void onClick(View v) {
+            activity.startActivity(new Intent(activity, EditHintActivity.class));
+         }
+      });
+      
       layout.addView(hintLabel);
       layout.addView(editButton);
       
-      thingToBeBelow = editButton.getId();
-      return thingToBeBelow;
+      return editButton.getId();
    }
 }
