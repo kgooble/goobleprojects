@@ -3,6 +3,8 @@ package com.gooble.logic.app;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.gooble.logic.app.util.SpinnerFactory;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
@@ -76,13 +78,6 @@ public class ConditionSetActivity extends Activity {
    }
    
    private Spinner createSpinnerWithValues(String... values){
-      Spinner operatorSpinner = new Spinner(this);
-      SpinnerAdapter operatorAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, values); 
-      operatorSpinner.setAdapter(operatorAdapter);
-      operatorSpinner.setLayoutParams(new TableRow.LayoutParams(
-            TableRow.LayoutParams.WRAP_CONTENT,
-            TableRow.LayoutParams.WRAP_CONTENT
-         ));
-      return operatorSpinner;
+      return new SpinnerFactory(this).createRowSpinnerWithValues(values);
    }
 }
