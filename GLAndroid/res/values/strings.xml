@@ -55,5 +55,8 @@
     <string name="description">Description:</string>
     <string name="hint_variables">Variables:</string>
     <string name="property_links">Property Links</string>
+    
+    <!-- Property links screen -->
+    <string name="add_property_link">Add Property Link</string>
 
 </resources>
