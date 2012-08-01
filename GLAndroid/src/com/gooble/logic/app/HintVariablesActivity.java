@@ -22,6 +22,7 @@ public class HintVariablesActivity extends Activity {
       Bundle extras = getIntent().getExtras();
       //TODO: get the hint from the extras
       //TODO: load variables currently in play - value-type pairs
+      //TODO: add save button functionality
       final RelativeLayout layout = (RelativeLayout) findViewById(R.id.hint_variables_layout);
       thingToBeBelow = R.id.save_hint_variables_button;
       for (int i = 0; i < 3; i++){
