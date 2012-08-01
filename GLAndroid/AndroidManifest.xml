@@ -89,6 +89,30 @@
                 <action android:name="android.intent.action.INSERT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".HintRelationsActivity"
+            android:label="@string/relations" >
+            <intent-filter>
+                <action android:name="android.intent.action.EDIT" />
+                <action android:name="android.intent.action.INSERT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".HintVariablesActivity"
+            android:label="@string/variables" >
+            <intent-filter>
+                <action android:name="android.intent.action.EDIT" />
+                <action android:name="android.intent.action.INSERT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".PropertyLinksActivity"
+            android:label="@string/property_links" >
+            <intent-filter>
+                <action android:name="android.intent.action.EDIT" />
+                <action android:name="android.intent.action.INSERT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
