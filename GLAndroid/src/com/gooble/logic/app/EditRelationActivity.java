@@ -24,7 +24,7 @@ public class EditRelationActivity extends Activity {
       
       //TODO: Load this list from the puzzle's variables
       ArrayAdapter<String> aa = new ArrayAdapter<String>(this,
-            android.R.layout.simple_list_item_1, new String[] { "name",
+            android.R.layout.simple_spinner_item, new String[] { "name",
                   "shoes", "age" });
       spinner.setAdapter(aa);
       
