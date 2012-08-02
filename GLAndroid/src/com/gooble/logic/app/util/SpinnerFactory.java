@@ -32,7 +32,7 @@ public class SpinnerFactory {
    
    private Spinner createSpinnerWithLayoutAndValues(ViewGroup.LayoutParams params, String... values){
       Spinner operatorSpinner = new Spinner(context);
-      SpinnerAdapter operatorAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, values); 
+      SpinnerAdapter operatorAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, values); 
       operatorSpinner.setAdapter(operatorAdapter);
       operatorSpinner.setLayoutParams(params);
       return operatorSpinner;
