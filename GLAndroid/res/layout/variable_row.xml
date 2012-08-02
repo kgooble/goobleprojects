@@ -1,25 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="horizontal"
     android:padding="10dp" >
+
+    <EditText
+        android:id="@+id/variable_name"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_toLeftOf="@+id/add_values_button"
+        android:ems="10"
+        android:gravity="center_vertical"
+        android:inputType="text" >
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/delete_variable_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/variable_name"
+        android:layout_alignBottom="@id/variable_name"
+        android:layout_alignParentRight="true"
+        android:text="@string/delete" />
 
     <Button
         android:id="@+id/add_values_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/delete_variable_button"
+        android:layout_alignBottom="@id/delete_variable_button"
+        android:layout_toLeftOf="@id/delete_variable_button"
         android:text="@string/add_variable_values" />
-    <Button
-        android:id="@+id/delete_variable_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/delete" />
-    <EditText
-        android:id="@+id/variable_name"
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:gravity="center_vertical"
-        android:inputType="text" />
 
-</LinearLayout>
+</RelativeLayout>
