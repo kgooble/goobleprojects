@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/variable_layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
-    <Button
-        android:id="@+id/save_variables_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/save_variables" />
 
-    <Button
-        android:id="@+id/add_variable_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:text="@string/add_variable" />
-    
-    <ListView
-        android:id="@+id/variable_list"
+    <TableRow
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_below="@+id/save_variables_button" />
+        android:layout_height="wrap_content" >
 
-</RelativeLayout>
+        <Button
+            android:id="@+id/add_variable_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/add_variable" />
+
+        <Button
+            android:id="@+id/save_variables_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/save_variables" />
+    </TableRow>
+
+</TableLayout>
