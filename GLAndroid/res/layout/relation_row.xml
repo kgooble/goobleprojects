@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="10dp" >
+
+    <EditText
+        android:id="@+id/relation_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/edit_relation_button"
+        android:ems="10"
+        android:gravity="center_vertical"
+        android:inputType="text" >
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/delete_relation_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/relation_name"
+        android:layout_alignBottom="@id/relation_name"
+        android:layout_alignParentRight="true"
+        android:text="@string/delete" />
+
+    <Button
+        android:id="@+id/edit_relation_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/delete_relation_button"
+        android:layout_alignBottom="@id/delete_relation_button"
+        android:layout_toLeftOf="@id/delete_relation_button"
+        android:text="@string/edit_relation" />
+
+</RelativeLayout>
