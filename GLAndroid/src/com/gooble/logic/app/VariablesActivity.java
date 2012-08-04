@@ -46,7 +46,7 @@ public class VariablesActivity extends Activity {
       addVariableButton.setOnClickListener(new OnClickListener() {
          public void onClick(View v) {
             LayoutInflater inflater = getLayoutInflater();
-            final View newVariable = inflater.inflate(R.layout.variable_row, layout);
+            final View newVariable = inflater.inflate(R.layout.variable_row, layout, false);
             
             /*
              * TODO: Onclick for this button should go to the Add Variable Values activity
@@ -55,16 +55,26 @@ public class VariablesActivity extends Activity {
              * it will also have to do the same thing as the "save" button
              *  (i.e save to DB all the variables for this puzzle)
              */
-            Button addVariableValuesButton = (Button) newVariable.findViewById(R.id.add_values_button);//new Button(activity);
-            addVariableValuesButton.setText(getString(R.string.add_variable_values));
+            Button addVariableValuesButton = (Button) newVariable.findViewById(R.id.add_values_button);
             addVariableValuesButton.setOnClickListener(new OnClickListener() {
                public void onClick(View v) {
                   variableFacade.save();
-                  activity.startActivity(new Intent(activity, VariableValuesActivity.class)
-                  .putExtra("name", ((EditText)newVariable.findViewById(R.id.variable_name)).getText().toString()));
+                  Intent intent = new Intent(activity, VariableValuesActivity.class);
+                  String name = ((EditText)newVariable.findViewById(R.id.variable_name)).getText().toString();
+                  intent.putExtra("name", name);
+                  activity.startActivity(intent);
                }
             });
+            
+            Button deleteButton = (Button) newVariable.findViewById(R.id.delete_variable_button);
+            deleteButton.setOnClickListener(new OnClickListener() {
+               public void onClick(View v) {
+                  layout.removeView(newVariable);
+               }
+            });
+            layout.addView(newVariable);
          }
       });
    }
 }
+

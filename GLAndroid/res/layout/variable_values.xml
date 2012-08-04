@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/variable_values_layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -11,23 +11,29 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <TableRow
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
+    <Button
+        android:id="@+id/save_values_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/save" />
 
-        <Button
-            android:id="@+id/add_value_button"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/add_variable_value" />
+    <Button
+        android:id="@+id/add_value_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/add_variable_value" />
 
-        <Button
-            android:id="@+id/save_values_button"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/save" />
-    </TableRow>
+    <LinearLayout
+        android:id="@+id/value_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/add_value_button"
+        android:orientation="vertical" >
+    </LinearLayout>
 
-</TableLayout>
+</RelativeLayout>

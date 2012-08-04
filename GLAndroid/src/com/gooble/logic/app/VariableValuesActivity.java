@@ -2,13 +2,13 @@ package com.gooble.logic.app;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.TableLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.gooble.logic.app.util.TableLayoutRow;
 
 public class VariableValuesActivity extends Activity {
 
@@ -24,16 +24,22 @@ public class VariableValuesActivity extends Activity {
        * TODO: Load all existing values into table
        */
       
-      /*
-       * When adding a value, add a row with label "value" and text field to enter value
-       */
       final Activity activity = this;
+      final LinearLayout container = (LinearLayout) findViewById(R.id.value_container);
       Button addValueButton = (Button) findViewById(R.id.add_value_button);
       addValueButton.setOnClickListener(new OnClickListener() {
          public void onClick(View v) {
-            TableLayout layout = (TableLayout) findViewById(R.id.variable_values_layout);
-            new TableLayoutRow(layout, activity).addRowLabeledWithTextField(getString(R.string.variable_value));
-            //TODO: add delete button to row below? or same row?
+            LayoutInflater inflater = getLayoutInflater();
+            final View newValue = inflater.inflate(R.layout.value_row, container, false);
+            
+            Button deleteButton = (Button) newValue.findViewById(R.id.delete_value_button);
+            deleteButton.setOnClickListener(new OnClickListener() {
+               public void onClick(View v) {
+                  container.removeView(newValue);
+               }
+            });
+            
+            container.addView(newValue);
          }
       });
       
