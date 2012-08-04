@@ -1,4 +1,4 @@
-package com.gooble.logic.app;
+package com.gooble.logic.app.hints;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -9,6 +9,9 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
+import com.gooble.logic.app.R;
+import com.gooble.logic.app.R.id;
+import com.gooble.logic.app.R.layout;
 import com.gooble.logic.app.util.SpinnerFactory;
 
 public class HintVariablesActivity extends Activity {

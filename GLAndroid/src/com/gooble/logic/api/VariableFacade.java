@@ -1,4 +1,4 @@
-package com.gooble.logic.app.api;
+package com.gooble.logic.api;
 
 public interface VariableFacade {
 

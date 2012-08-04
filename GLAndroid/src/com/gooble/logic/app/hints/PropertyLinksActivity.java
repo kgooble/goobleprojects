@@ -1,5 +1,8 @@
-package com.gooble.logic.app;
+package com.gooble.logic.app.hints;
 
+import com.gooble.logic.app.R;
+import com.gooble.logic.app.R.id;
+import com.gooble.logic.app.R.layout;
 import com.gooble.logic.app.util.SpinnerFactory;
 
 import android.app.Activity;

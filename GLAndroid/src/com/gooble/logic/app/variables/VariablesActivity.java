@@ -1,4 +1,4 @@
-package com.gooble.logic.app;
+package com.gooble.logic.app.variables;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,8 +10,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import com.gooble.logic.app.api.VariableDomain;
-import com.gooble.logic.app.api.VariableFacade;
+import com.gooble.logic.api.VariableDomain;
+import com.gooble.logic.api.VariableFacade;
+import com.gooble.logic.app.R;
+import com.gooble.logic.app.R.id;
+import com.gooble.logic.app.R.layout;
 
 public class VariablesActivity extends Activity {
    

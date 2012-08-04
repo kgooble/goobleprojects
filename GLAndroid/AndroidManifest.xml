@@ -34,7 +34,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".VariablesActivity"
+            android:name=".variables.VariablesActivity"
             android:label="@string/variables" >
             <intent-filter>
                 <action android:name="android.intent.action.EDIT" />
@@ -42,7 +42,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".VariableValuesActivity"
+            android:name=".variables.VariableValuesActivity"
             android:label="@string/variable_values" >
             <intent-filter>
                 <action android:name="android.intent.action.EDIT" />
@@ -50,7 +50,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RelationsActivity"
+            android:name=".relations.RelationsActivity"
             android:label="@string/relations" >
             <intent-filter>
                 <action android:name="android.intent.action.EDIT" />
@@ -58,7 +58,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".EditRelationActivity"
+            android:name=".relations.EditRelationActivity"
             android:label="@string/edit_relation" >
             <intent-filter>
                 <action android:name="android.intent.action.EDIT" />
@@ -66,7 +66,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ConditionSetActivity"
+      		android:name=".relations.ConditionSetActivity"
             android:label="@string/condition_set" >
             <intent-filter>
                 <action android:name="android.intent.action.EDIT" />
@@ -74,7 +74,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".HintsActivity"
+            android:name=".hints.HintsActivity"
             android:label="@string/hints" >
             <intent-filter>
                 <action android:name="android.intent.action.EDIT" />
@@ -82,7 +82,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".EditHintActivity"
+            android:name=".hints.EditHintActivity"
             android:label="@string/edit_hint" >
             <intent-filter>
                 <action android:name="android.intent.action.EDIT" />
@@ -90,7 +90,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".HintRelationsActivity"
+            android:name=".hints.HintRelationsActivity"
             android:label="@string/relations" >
             <intent-filter>
                 <action android:name="android.intent.action.EDIT" />
@@ -98,15 +98,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".HintVariablesActivity"
+            android:name=".hints.HintVariablesActivity"
             android:label="@string/variables" >
             <intent-filter>
                 <action android:name="android.intent.action.EDIT" />
                 <action android:name="android.intent.action.INSERT" />
             </intent-filter>
-        </activity>
+        </activity>    
         <activity
-            android:name=".PropertyLinksActivity"
+            android:name=".hints.PropertyLinksActivity"
             android:label="@string/property_links" >
             <intent-filter>
                 <action android:name="android.intent.action.EDIT" />

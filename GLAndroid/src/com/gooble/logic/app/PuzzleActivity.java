@@ -1,5 +1,9 @@
 package com.gooble.logic.app;
 
+import com.gooble.logic.app.hints.HintsActivity;
+import com.gooble.logic.app.relations.RelationsActivity;
+import com.gooble.logic.app.variables.VariablesActivity;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
