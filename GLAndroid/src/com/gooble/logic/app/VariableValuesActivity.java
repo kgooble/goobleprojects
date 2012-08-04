@@ -1,13 +1,14 @@
 package com.gooble.logic.app;
 
-import com.gooble.logic.app.util.TableLayoutRow;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TableLayout;
+import android.widget.TextView;
+
+import com.gooble.logic.app.util.TableLayoutRow;
 
 public class VariableValuesActivity extends Activity {
 
@@ -16,6 +17,9 @@ public class VariableValuesActivity extends Activity {
       super.onCreate(bundle);
       setContentView(R.layout.variable_values);
       
+      String name = (String) getIntent().getExtras().get("name");
+      TextView nameLabel = (TextView) findViewById(R.id.variable_name_label);
+      nameLabel.setText(name);
       /*
        * TODO: Load all existing values into table
        */

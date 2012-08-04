@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.gooble.logic.app.api.VariableDomain;
@@ -45,7 +46,7 @@ public class VariablesActivity extends Activity {
       addVariableButton.setOnClickListener(new OnClickListener() {
          public void onClick(View v) {
             LayoutInflater inflater = getLayoutInflater();
-            View newVariable = inflater.inflate(R.layout.variable_row, layout);
+            final View newVariable = inflater.inflate(R.layout.variable_row, layout);
             
             /*
              * TODO: Onclick for this button should go to the Add Variable Values activity
@@ -59,7 +60,8 @@ public class VariablesActivity extends Activity {
             addVariableValuesButton.setOnClickListener(new OnClickListener() {
                public void onClick(View v) {
                   variableFacade.save();
-                  activity.startActivity(new Intent(activity, VariableValuesActivity.class));
+                  activity.startActivity(new Intent(activity, VariableValuesActivity.class)
+                  .putExtra("name", ((EditText)newVariable.findViewById(R.id.variable_name)).getText().toString()));
                }
             });
          }
