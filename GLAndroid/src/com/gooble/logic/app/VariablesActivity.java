@@ -3,15 +3,14 @@ package com.gooble.logic.app;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.TableLayout;
-import android.widget.TableRow;
+import android.widget.LinearLayout;
 
 import com.gooble.logic.app.api.VariableDomain;
 import com.gooble.logic.app.api.VariableFacade;
-import com.gooble.logic.app.util.TableLayoutRow;
 
 public class VariablesActivity extends Activity {
    
@@ -42,16 +41,11 @@ public class VariablesActivity extends Activity {
          }
       });
       
+      final LinearLayout layout = (LinearLayout) findViewById(R.id.variable_container);
       addVariableButton.setOnClickListener(new OnClickListener() {
          public void onClick(View v) {
-            TableLayout layout = (TableLayout) findViewById(R.id.variable_layout);
-            new TableLayoutRow(layout, activity).addRowLabeledWithTextField(getString(R.string.variable_name));
-            TableRow.LayoutParams lparams = new TableRow.LayoutParams(
-                  TableRow.LayoutParams.FILL_PARENT, 
-                  TableRow.LayoutParams.WRAP_CONTENT);
-            
-            TableRow addValuesRow = new TableRow(activity);
-            addValuesRow.setLayoutParams(lparams);
+            LayoutInflater inflater = getLayoutInflater();
+            View newVariable = inflater.inflate(R.layout.variable_row, layout);
             
             /*
              * TODO: Onclick for this button should go to the Add Variable Values activity
@@ -60,7 +54,7 @@ public class VariablesActivity extends Activity {
              * it will also have to do the same thing as the "save" button
              *  (i.e save to DB all the variables for this puzzle)
              */
-            Button addVariableValuesButton = new Button(activity);
+            Button addVariableValuesButton = (Button) newVariable.findViewById(R.id.add_values_button);//new Button(activity);
             addVariableValuesButton.setText(getString(R.string.add_variable_values));
             addVariableValuesButton.setOnClickListener(new OnClickListener() {
                public void onClick(View v) {
@@ -68,12 +62,6 @@ public class VariablesActivity extends Activity {
                   activity.startActivity(new Intent(activity, VariableValuesActivity.class));
                }
             });
-            addValuesRow.addView(addVariableValuesButton, new TableRow.LayoutParams(
-                  TableRow.LayoutParams.WRAP_CONTENT, 
-                  TableRow.LayoutParams.WRAP_CONTENT));
-            layout.addView(addValuesRow, new TableRow.LayoutParams(
-                  TableRow.LayoutParams.FILL_PARENT, 
-                  TableRow.LayoutParams.WRAP_CONTENT));
          }
       });
    }
