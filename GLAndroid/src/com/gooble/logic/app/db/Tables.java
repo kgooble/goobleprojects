@@ -19,7 +19,6 @@ public class Tables {
    }
    public class Term implements BaseColumns{
       public static final String VALUE = "value"; // if it's a variable it will have this eg X Y Z
-      public static final String VARIABLE = "variable"; // whether or not this term is a variable
       public static final String VARIABLEID = "variableid";
       public static final String VARIABLEVALUEID = "variablevalueid"; // if it's not a variable it will have this instead
    }
