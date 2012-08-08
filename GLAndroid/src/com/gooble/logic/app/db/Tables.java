@@ -4,6 +4,8 @@ import android.provider.BaseColumns;
 
 public class Tables {
 
+   public static final String _ID = BaseColumns._ID;
+   
    public class Puzzle implements BaseColumns{
       public static final String NAME = "name";
       public static final String MAINVARIABLEID = "mainvariableid";
