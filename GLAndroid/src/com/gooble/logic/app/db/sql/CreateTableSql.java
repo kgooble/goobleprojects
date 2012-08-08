@@ -14,8 +14,7 @@ public class CreateTableSql {
    private final static MessageFormat CREATE_TABLE_SQL = 
          new MessageFormat("CREATE TABLE {0} ({1});");
    
-   public String generateFor(Entity entity) {
-      Class<? extends Entity> entityClass = entity.getClass();
+   public String generateFor(Class<? extends Entity> entityClass) {
       Field[] fields = entityClass.getDeclaredFields();
       
       List<String> fieldSqls = new ArrayList<String>();
