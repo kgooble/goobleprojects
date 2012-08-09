@@ -6,6 +6,7 @@ public class Testentity extends Entity{
    private String name;
    private Integer number;
    private Double money;
+   private Boolean cool;
    public String getName() {
       return name;
    }
@@ -23,5 +24,11 @@ public class Testentity extends Entity{
    }
    public void setMoney(Double money) {
       this.money = money;
+   }
+   public Boolean getCool() {
+      return cool;
+   }
+   public void setCool(Boolean cool) {
+      this.cool = cool;
    }
 }

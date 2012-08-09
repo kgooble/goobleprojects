@@ -36,7 +36,6 @@ public abstract class DatabaseHelper<E extends Entity> extends SQLiteOpenHelper{
    
    public E get(int id){
       Cursor cursor = getReadableDatabase().rawQuery("SELECT * FROM " + entityFactory.getTableName() + " WHERE " + Tables._ID + " = " + id, null);
-      
       if (cursor.getCount() == 0)
          return null;
       if (cursor.getCount() > 1)
@@ -57,14 +56,17 @@ public abstract class DatabaseHelper<E extends Entity> extends SQLiteOpenHelper{
          Class<?> type = entityFactory.getFieldType(field);
          
          Object value = null;
-         if (type == Integer.TYPE){
+         if (type == Integer.class){
             value = cursor.getInt(index);
          }
-         if (type == Double.TYPE){
+         if (type == Double.class){
             value = cursor.getDouble(index);
          }
          if (type == String.class){
             value = cursor.getString(index);
+         }
+         if (type == Boolean.class){
+            value = cursor.getInt(index) == 1;
          }
          e.setField(field, value);
       }
