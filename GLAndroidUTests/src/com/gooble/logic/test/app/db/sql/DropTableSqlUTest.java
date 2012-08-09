@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import com.gooble.logic.app.db.sql.DropTableSql;
+import com.gooble.logic.test.app.entity.Testentity;
 
 public class DropTableSqlUTest {
 

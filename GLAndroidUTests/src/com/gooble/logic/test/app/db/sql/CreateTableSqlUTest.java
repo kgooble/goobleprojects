@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import com.gooble.logic.app.db.Tables;
 import com.gooble.logic.app.db.sql.CreateTableSql;
+import com.gooble.logic.test.app.entity.Testentity;
 
 public class CreateTableSqlUTest {
 
