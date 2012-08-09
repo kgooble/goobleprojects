@@ -30,11 +30,11 @@ public class CreateTableSql {
       String fieldName = f.getName().toLowerCase();
       String fieldTypeSql = "";
       Class<?> fieldType = f.getType();
-      if (fieldType == Integer.TYPE){
+      if (fieldType == Integer.class){
          fieldTypeSql = "INTEGER";
       }else if (fieldType == String.class){
          fieldTypeSql = "TEXT";
-      }else if (fieldType == Double.TYPE){
+      }else if (fieldType == Double.class){
          fieldTypeSql = "REAL";
       }else{
          return;
