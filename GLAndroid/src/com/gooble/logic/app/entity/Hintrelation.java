@@ -2,18 +2,18 @@ package com.gooble.logic.app.entity;
 
 public class Hintrelation extends Entity{
 
-   private int hintid;
-   private int relationid;
-   public int getHintid() {
+   private Integer hintid;
+   private Integer relationid;
+   public Integer getHintid() {
       return hintid;
    }
-   public void setHintid(int hintid) {
+   public void setHintid(Integer hintid) {
       this.hintid = hintid;
    }
    public int getRelationid() {
       return relationid;
    }
-   public void setRelationid(int relationid) {
+   public void setRelationid(Integer relationid) {
       this.relationid = relationid;
    }
    

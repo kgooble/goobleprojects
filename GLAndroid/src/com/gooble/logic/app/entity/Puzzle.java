@@ -3,7 +3,7 @@ package com.gooble.logic.app.entity;
 public class Puzzle extends Entity{
 
    private String name;
-   private int mainvariableid;
+   private Integer mainvariableid;
    
    public String getName() {
       return name;
@@ -11,10 +11,10 @@ public class Puzzle extends Entity{
    public void setName(String name) {
       this.name = name;
    }
-   public int getMainvariableid() {
+   public Integer getMainvariableid() {
       return mainvariableid;
    }
-   public void setMainvariableid(int mainvariableid) {
+   public void setMainvariableid(Integer mainvariableid) {
       this.mainvariableid = mainvariableid;
    }
    

@@ -3,31 +3,31 @@ package com.gooble.logic.app.entity;
 public class Relation extends Entity{
 
    private String name;
-   private int bidirectional;
-   private int uniquevalue;
-   private int variableid;
+   private Integer bidirectional;
+   private Integer uniquevalue;
+   private Integer variableid;
    public String getName() {
       return name;
    }
    public void setName(String name) {
       this.name = name;
    }
-   public int getBidirectional() {
+   public Integer getBidirectional() {
       return bidirectional;
    }
-   public void setBidirectional(int bidirectional) {
+   public void setBidirectional(Integer bidirectional) {
       this.bidirectional = bidirectional;
    }
-   public int getUniquevalue() {
+   public Integer getUniquevalue() {
       return uniquevalue;
    }
-   public void setUniquevalue(int uniquevalue) {
+   public void setUniquevalue(Integer uniquevalue) {
       this.uniquevalue = uniquevalue;
    }
-   public int getVariableid() {
+   public Integer getVariableid() {
       return variableid;
    }
-   public void setVariableid(int variableid) {
+   public void setVariableid(Integer variableid) {
       this.variableid = variableid;
    }
 }

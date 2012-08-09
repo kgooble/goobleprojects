@@ -20,6 +20,8 @@ public class PuzzleActivity extends Activity {
       attachActivityLaunchingOnclickToButton(R.id.variables_button, VariablesActivity.class);
       attachActivityLaunchingOnclickToButton(R.id.relations_button, RelationsActivity.class);
       attachActivityLaunchingOnclickToButton(R.id.hints_button, HintsActivity.class);
+      
+      // load puzzle data
    }
 
    private void attachActivityLaunchingOnclickToButton(int buttonId, final Class<? extends Activity> activityClass) {

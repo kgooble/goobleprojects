@@ -8,5 +8,8 @@ public class ViewPuzzlesActivity extends Activity {
    public void onCreate(Bundle icicle) {
       super.onCreate(icicle);
       setContentView(R.layout.view_puzzles);
+      // load puzzles into list
+      
+      // after clicking one, set it in the intent and launch the puzzle activity.
    }
 }

@@ -1,18 +1,18 @@
 package com.gooble.logic.app.entity;
 
 public class Propertyterm extends Entity{
-   private int propertyid;
-   private int hintvariableid;
-   public int getPropertyid() {
+   private Integer propertyid;
+   private Integer hintvariableid;
+   public Integer getPropertyid() {
       return propertyid;
    }
-   public void setPropertyid(int propertyid) {
+   public void setPropertyid(Integer propertyid) {
       this.propertyid = propertyid;
    }
-   public int getHintvariableid() {
+   public Integer getHintvariableid() {
       return hintvariableid;
    }
-   public void setHintvariableid(int hintvariableid) {
+   public void setHintvariableid(Integer hintvariableid) {
       this.hintvariableid = hintvariableid;
    }
 }
