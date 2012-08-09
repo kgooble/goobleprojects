@@ -10,7 +10,6 @@ public class EntityUTest {
    @Test
    public void set_field() throws Exception{
       Testentity e = new Testentity();
-      
       assertNull(e.getName());
       assertNull(e.getMoney());
       assertNull(e.getNumber());
