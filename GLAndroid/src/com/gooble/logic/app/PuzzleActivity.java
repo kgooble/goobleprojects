@@ -24,14 +24,24 @@ public class PuzzleActivity extends Activity {
       attachActivityLaunchingOnclickToButton(R.id.relations_button, RelationsActivity.class);
       attachActivityLaunchingOnclickToButton(R.id.hints_button, HintsActivity.class);
       
+      Intent intent = getIntent();
+      Long puzzleId = null;
+      if (Intent.ACTION_EDIT.equals(intent.getAction())){
+         puzzleId = (Long) intent.getExtras().get("puzzleid");
+      }
+      
       // load puzzle data
       final PuzzleHelper helper = new PuzzleHelper(this);
-      final Puzzle puzzle = helper.create();
+      final Puzzle puzzle = helper.getOrCreate((Long) puzzleId);
+      
+      final EditText puzzleName = (EditText)findViewById(R.id.puzzle_name);
+      puzzleName.setText(puzzle.getName());
       
       Button saveButton = (Button) findViewById(R.id.save_button);
       saveButton.setOnClickListener(new OnClickListener() {
          public void onClick(View v) {
-            puzzle.setName(((EditText)findViewById(R.id.puzzle_name)).getText().toString());
+            String name = puzzleName.getText().toString();
+            puzzle.setName(name);
             helper.store(puzzle);
          }
       });

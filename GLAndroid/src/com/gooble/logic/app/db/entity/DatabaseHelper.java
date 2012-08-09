@@ -43,7 +43,7 @@ public class DatabaseHelper<E extends Entity> extends SQLiteOpenHelper{
       return getReadableDatabase().rawQuery("SELECT * FROM " + entityFactory.getTableName(), null);
    }
    
-   public E get(int id){
+   public E get(long id){
       Cursor cursor = getReadableDatabase().rawQuery("SELECT * FROM " + entityFactory.getTableName() + " WHERE " + Tables._ID + " = " + id, null);
       if (cursor.getCount() == 0)
          return null;
@@ -58,7 +58,7 @@ public class DatabaseHelper<E extends Entity> extends SQLiteOpenHelper{
       return e;
    }
 
-   private void setFieldsToEntity(E e, int id, Cursor cursor) {
+   private void setFieldsToEntity(E e, long id, Cursor cursor) {
       e.setId(id);
       for (String field : entityFactory.getFields()){
          int index = cursor.getColumnIndex(field);
@@ -90,6 +90,17 @@ public class DatabaseHelper<E extends Entity> extends SQLiteOpenHelper{
    }
    
    public void insert(E entity) {
+      ContentValues values = createContentValuesFromFields(entity);
+      long id = getWritableDatabase().insert(entityFactory.getTableName(), null, values);
+      entity.setId(id);
+   }
+
+   public void update(E entity) {
+      ContentValues values = createContentValuesFromFields(entity);
+      getWritableDatabase().update(entityFactory.getTableName(), values, Tables._ID + " = " + entity.getId(), null);
+   }
+
+   private ContentValues createContentValuesFromFields(E entity) {
       ContentValues values = new ContentValues();
       Iterable<String> fields = entityFactory.getFields();
       for (String field : fields){
@@ -107,12 +118,6 @@ public class DatabaseHelper<E extends Entity> extends SQLiteOpenHelper{
             values.put(field, (Integer) entity.getField(field));
          }
       }
-      long id = getWritableDatabase().insert(entityFactory.getTableName(), null, values);
-      entity.setId(id);
+      return values;
    }
-
-   public void update(E entity) {
-      
-   }
-
 }

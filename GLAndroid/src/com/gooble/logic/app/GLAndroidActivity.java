@@ -29,6 +29,7 @@ public class GLAndroidActivity extends Activity {
 
       public void onClick(View v) {
          Intent intent = new Intent(activity, PuzzleActivity.class);
+         intent.setAction(Intent.ACTION_INSERT);
          activity.startActivity(intent);
       }
    }

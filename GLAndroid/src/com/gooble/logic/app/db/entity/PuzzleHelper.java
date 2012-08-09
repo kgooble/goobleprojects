@@ -11,4 +11,14 @@ public class PuzzleHelper extends DatabaseHelper<Puzzle> {
       super(context, new PuzzleFactory());
    }
 
+   public Puzzle getOrCreate(Long puzzleId) {
+      if (puzzleId == null)
+         return create();
+      Puzzle puzzle = get(puzzleId);
+      if (puzzle == null){
+         return create();
+      }
+      return puzzle;
+   }
+
 }
