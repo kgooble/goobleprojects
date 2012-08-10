@@ -85,4 +85,8 @@ public final class DatabaseHelper extends SQLiteOpenHelper{
       }
       return values;
    }
+
+   public void deleteRow(String tableName, Long id) {
+      getWritableDatabase().delete(tableName, Tables._ID + " = " + id, null);      
+   }
 }

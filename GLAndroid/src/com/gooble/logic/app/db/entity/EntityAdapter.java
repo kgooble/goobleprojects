@@ -28,6 +28,11 @@ public class EntityAdapter<E extends Entity> {
    public void store(E e) {
       helper.store(e);
    }
+   public void deleteIfExists(Long id) {
+      if (id == null)
+         return;
+      helper.deleteRow(factory.getTableName(), id);
+   }
    public E create() {
       return factory.createNew();
    }
@@ -52,6 +57,9 @@ public class EntityAdapter<E extends Entity> {
          Object value = null;
          if (type == Integer.class){
             value = cursor.getInt(index);
+         }
+         if (type == Long.class){
+            value = cursor.getLong(index);
          }
          if (type == Double.class){
             value = cursor.getDouble(index);

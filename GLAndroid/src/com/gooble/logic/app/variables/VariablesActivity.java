@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -13,6 +14,9 @@ import android.widget.LinearLayout;
 import com.gooble.logic.api.VariableDomain;
 import com.gooble.logic.api.VariableFacade;
 import com.gooble.logic.app.R;
+import com.gooble.logic.app.db.Tables;
+import com.gooble.logic.app.db.entity.EntityListAdapter;
+import com.gooble.logic.app.db.entity.RowDeleteListener;
 import com.gooble.logic.app.db.entity.VariableAdapter;
 import com.gooble.logic.app.entity.EntityList;
 import com.gooble.logic.app.entity.Variable;
@@ -33,12 +37,34 @@ public class VariablesActivity extends Activity {
       final VariableAdapter helper = new VariableAdapter(this);
       
       EntityList<Variable> variables = helper.getVariablesForPuzzle(puzzleId);
-      for (Variable var : variables){
-         addVariable(var.getName()).setId((int) var.getId());
-      }
+      final Activity activity = this;
+      final EntityListAdapter entityListAdapter = new EntityListAdapter(this, variables, R.id.variable_container, R.layout.variable_row, 
+            new int[]{R.id.edit_variable_button, R.id.delete_variable_button}, 
+            new OnClickListener[]{
+               new OnClickListener() {
+                  public void onClick(View v) {
+                     variableFacade.save();
+                     View newVariable = (View) v.getParent();
+                     Intent intent = new Intent(activity, VariableValuesActivity.class);
+                     String name = ((EditText)newVariable.findViewById(R.id.variable_name)).getText().toString();
+                     intent.putExtra("name", name);
+                     activity.startActivity(intent);
+                  }
+               },
+               new RowDeleteListener(){
+                  @Override
+                  public void domainDelete(ViewGroup container, View row) {
+                     int varId = row.getId();
+                     helper.deleteIfExists((long) varId);
+                  }
+               }
+         });
+      entityListAdapter.registerContainer( 
+            new String[]{Tables.Variable.NAME}, 
+            new int[]{R.id.variable_name} 
+      );
       
       /*
-       * TODO: Load all existing variable names with Edit and Delete buttons next to them
        * TODO: need radio set which states which one is the main variable--- 
        *       or maybe this should go on the variable screen.
        */
@@ -68,40 +94,9 @@ public class VariablesActivity extends Activity {
       
       addVariableButton.setOnClickListener(new OnClickListener() {
          public void onClick(View v) {
-            addVariable("");
+            entityListAdapter.addNewEntity();
          }
       });
-   }
-   
-   private View addVariable(String name){
-      final Activity activity = this;
-      final LinearLayout variableContainer = (LinearLayout) findViewById(R.id.variable_container);
-      
-      LayoutInflater inflater = getLayoutInflater();
-      final View newVariable = inflater.inflate(R.layout.variable_row, variableContainer, false);
-      
-      EditText variableName = (EditText) newVariable.findViewById(R.id.variable_name);
-      variableName.setText(name);
-      
-      Button addVariableValuesButton = (Button) newVariable.findViewById(R.id.edit_variable_button);
-      addVariableValuesButton.setOnClickListener(new OnClickListener() {
-         public void onClick(View v) {
-            variableFacade.save();
-            Intent intent = new Intent(activity, VariableValuesActivity.class);
-            String name = ((EditText)newVariable.findViewById(R.id.variable_name)).getText().toString();
-            intent.putExtra("name", name);
-            activity.startActivity(intent);
-         }
-      });
-      
-      Button deleteButton = (Button) newVariable.findViewById(R.id.delete_variable_button);
-      deleteButton.setOnClickListener(new OnClickListener() {
-         public void onClick(View v) {
-            variableContainer.removeView(newVariable);
-         }
-      });
-      variableContainer.addView(newVariable);
-      return newVariable;
    }
 }
 
