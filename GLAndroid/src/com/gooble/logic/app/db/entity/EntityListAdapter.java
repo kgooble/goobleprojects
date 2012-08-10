@@ -36,18 +36,11 @@ public class EntityListAdapter {
          throw new RuntimeException("Cannot assign " + buttonListeners.length + " actions to " + buttonIds.length + " buttons");
       
       ViewGroup container = (ViewGroup) activity.findViewById(layoutId);
-      LayoutInflater inflater = activity.getLayoutInflater();
-      
-      View newRow = inflater.inflate(rowLayoutId, container, false);
+      View newRow = activity.getLayoutInflater().inflate(rowLayoutId, container, false);
       
       for (Entity e : list){
          newRow.setId((int) e.getId());
-         for (int i = 0; i < entityColumns.length; i++){
-            String column = entityColumns[i];
-            int rowField = rowFields[i];
-            TextView view = (TextView) newRow.findViewById(rowField);
-            view.setText(String.valueOf(e.getField(column)));
-         }
+         populateFields(entityColumns, rowFields, newRow, e);
          addButtonHandlers(newRow);
          container.addView(newRow);
       }
@@ -68,6 +61,15 @@ public class EntityListAdapter {
          OnClickListener action = buttonListeners[i];
          Button button = (Button) newRow.findViewById(buttonId);
          button.setOnClickListener(action);
+      }
+   }
+
+   private void populateFields(String[] entityColumns, int[] rowFields, View row, Entity e) {
+      for (int i = 0; i < entityColumns.length; i++){
+         String column = entityColumns[i];
+         int rowField = rowFields[i];
+         TextView view = (TextView) row.findViewById(rowField);
+         view.setText(String.valueOf(e.getField(column)));
       }
    }
    
