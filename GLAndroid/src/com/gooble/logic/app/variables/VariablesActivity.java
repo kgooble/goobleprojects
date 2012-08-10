@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.gooble.logic.api.VariableDomain;
@@ -48,20 +47,14 @@ public class VariablesActivity extends Activity {
                   List<Long> newIds = variableFacade.save(activity, puzzleId, ids, names);
                   new ContainerColumns(activity, R.id.variable_container).updateIds(newIds);
                   
-                  View newVariable = (View) v.getParent();
+                  View variable = (View) v.getParent();
                   Intent intent = new Intent(activity, VariableValuesActivity.class);
-                  Long variableId = (long) newVariable.getId();
+                  Long variableId = (long) variable.getId();
                   intent.putExtra("variableid", variableId);
                   activity.startActivity(intent);
                }
             },
-            new RowDeleteListener(){
-               @Override
-               public void domainDelete(ViewGroup container, View row) {
-                  int varId = row.getId();
-                  helper.delete((long) varId);
-               }
-            }
+            new RowDeleteListener(helper)
       });
       entityListAdapter.registerContainer( 
             new String[]{Tables.Variable.NAME}, 

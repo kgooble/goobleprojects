@@ -21,6 +21,7 @@ public abstract class EntityAdapter<E extends Entity> {
       Cursor cursor = helper.getById(id, factory.getTableName());
       if (cursor.getCount() == 0)
          return null;
+      cursor.moveToNext();
       return loadEntity(id, cursor);
    }
 
