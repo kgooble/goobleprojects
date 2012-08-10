@@ -79,7 +79,8 @@ public final class DatabaseHelper extends SQLiteOpenHelper{
             values.put(field, (String) entity.getField(field));
          }
          if (type == Boolean.class){
-            values.put(field, (Integer) entity.getField(field));
+            Boolean value = (Boolean) entity.getField(field);
+            values.put(field, value? 1 : 0);
          }
       }
       return values;

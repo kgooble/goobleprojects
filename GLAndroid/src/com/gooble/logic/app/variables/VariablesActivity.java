@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 import com.gooble.logic.api.VariableDomain;
 import com.gooble.logic.api.VariableFacade;
 import com.gooble.logic.app.R;
-import com.gooble.logic.app.db.entity.VariableHelper;
+import com.gooble.logic.app.db.entity.VariableAdapter;
 import com.gooble.logic.app.entity.EntityList;
 import com.gooble.logic.app.entity.Variable;
 
@@ -30,7 +30,7 @@ public class VariablesActivity extends Activity {
       super.onCreate(icicle);
       setContentView(R.layout.variables);
       final Long puzzleId = (Long) getIntent().getExtras().get("puzzleid");
-      final VariableHelper helper = new VariableHelper(this);
+      final VariableAdapter helper = new VariableAdapter(this);
       
       EntityList<Variable> variables = helper.getVariablesForPuzzle(puzzleId);
       for (Variable var : variables){

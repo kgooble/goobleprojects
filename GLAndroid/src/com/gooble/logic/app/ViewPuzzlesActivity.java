@@ -11,7 +11,7 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
 import com.gooble.logic.app.db.Tables;
-import com.gooble.logic.app.db.entity.PuzzleHelper;
+import com.gooble.logic.app.db.entity.PuzzleAdapter;
 
 public class ViewPuzzlesActivity extends Activity {
 
@@ -39,6 +39,6 @@ public class ViewPuzzlesActivity extends Activity {
    }
    
    private Cursor getPuzzles() {
-      return new PuzzleHelper(this).getAll();
+      return new PuzzleAdapter(this).getAll();
    }
 }

@@ -8,9 +8,9 @@ import com.gooble.logic.app.entity.EntityList;
 import com.gooble.logic.app.entity.Variable;
 import com.gooble.logic.app.entity.VariableFactory;
 
-public class VariableHelper extends EntityAdapter<Variable>{
+public class VariableAdapter extends EntityAdapter<Variable>{
 
-   public VariableHelper(Context context) {
+   public VariableAdapter(Context context) {
       super(context, new VariableFactory());
    }
 

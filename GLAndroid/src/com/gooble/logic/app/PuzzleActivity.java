@@ -9,14 +9,14 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.gooble.logic.app.db.entity.PuzzleHelper;
+import com.gooble.logic.app.db.entity.PuzzleAdapter;
 import com.gooble.logic.app.entity.Puzzle;
 import com.gooble.logic.app.hints.HintsActivity;
 import com.gooble.logic.app.relations.RelationsActivity;
 import com.gooble.logic.app.variables.VariablesActivity;
 
 public class PuzzleActivity extends Activity {
-   private PuzzleHelper helper;
+   private PuzzleAdapter helper;
    private Puzzle puzzle;
 
    @Override
@@ -33,7 +33,7 @@ public class PuzzleActivity extends Activity {
          puzzleId = (Long) intent.getExtras().get("puzzleid");
       }
       
-      helper = new PuzzleHelper(this);
+      helper = new PuzzleAdapter(this);
       puzzle = helper.getOrCreate((Long) puzzleId);
       
       final EditText puzzleName = (EditText)findViewById(R.id.puzzle_name);

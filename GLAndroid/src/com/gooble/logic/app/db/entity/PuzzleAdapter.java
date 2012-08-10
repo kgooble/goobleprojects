@@ -6,9 +6,9 @@ import android.database.Cursor;
 import com.gooble.logic.app.entity.Puzzle;
 import com.gooble.logic.app.entity.PuzzleFactory;
 
-public class PuzzleHelper extends EntityAdapter<Puzzle> {
+public class PuzzleAdapter extends EntityAdapter<Puzzle> {
 
-   public PuzzleHelper(Context context) {
+   public PuzzleAdapter(Context context) {
       super(context, new PuzzleFactory());
    }
 
