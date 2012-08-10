@@ -42,6 +42,10 @@ public final class DatabaseHelper extends SQLiteOpenHelper{
       return cursor;
    }
 
+   public void deleteRow(String tableName, Long id) {
+      getWritableDatabase().delete(tableName, Tables._ID + " = " + id, null);      
+   }
+   
    public void store(Entity entity){
       if (entity.isNew()){
          insert(entity);
@@ -50,13 +54,13 @@ public final class DatabaseHelper extends SQLiteOpenHelper{
       }
    }
    
-   public void insert(Entity entity) {
+   private void insert(Entity entity) {
       ContentValues values = createContentValuesFromFields(entity);
       long id = getWritableDatabase().insert(entity.getTableName(), null, values);
       entity.setId(id);
    }
 
-   public void update(Entity entity) {
+   private void update(Entity entity) {
       ContentValues values = createContentValuesFromFields(entity);
       getWritableDatabase().update(entity.getTableName(), values, Tables._ID + " = " + entity.getId(), null);
    }
@@ -84,9 +88,5 @@ public final class DatabaseHelper extends SQLiteOpenHelper{
          }
       }
       return values;
-   }
-
-   public void deleteRow(String tableName, Long id) {
-      getWritableDatabase().delete(tableName, Tables._ID + " = " + id, null);      
    }
 }
