@@ -19,9 +19,8 @@ public abstract class EntityAdapter<E extends Entity> {
 
    public E getById(Long id) {
       Cursor cursor = helper.getById(id, factory.getTableName());
-      if (cursor.getCount() == 0)
+      if (!cursor.moveToNext())
          return null;
-      cursor.moveToNext();
       return loadEntity(id, cursor);
    }
 
@@ -61,6 +60,7 @@ public abstract class EntityAdapter<E extends Entity> {
          int index = cursor.getColumnIndex(field);
          Class<?> type = factory.getFieldType(field);
 
+         //TODO : this logic appears in two other places...
          Object value = null;
          if (type == Integer.class) {
             value = cursor.getInt(index);
