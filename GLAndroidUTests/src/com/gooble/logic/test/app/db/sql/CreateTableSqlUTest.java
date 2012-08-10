@@ -16,6 +16,7 @@ public class CreateTableSqlUTest {
             Tables._ID + " INTEGER PRIMARY KEY, " +
       		"name TEXT, " +
       		"number INTEGER, " +
+      		"longnumber INTEGER, " +
       		"money REAL" +
       		");", new CreateTableSql().generateFor(Testentity.class));
    }

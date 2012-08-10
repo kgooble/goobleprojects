@@ -29,7 +29,6 @@ public class ViewPuzzlesActivity extends Activity {
       
       list.setOnItemClickListener(new OnItemClickListener() {
          public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            // send to puzzle activity
             Intent intent = new Intent(activity, PuzzleActivity.class);
             intent.setAction(Intent.ACTION_EDIT);
             intent.putExtra("puzzleid", id);

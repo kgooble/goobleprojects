@@ -17,12 +17,14 @@ public class EntityUTest {
       
       e.setField("name", "Boom");
       e.setField("money", 6.33);
+      e.setField("longnumber", 8);
       e.setField("number", 7);
       e.setField("cool", false);
       
       assertEquals("Boom", e.getName());
       assertEquals(6.33, e.getMoney(), 0.00001);
       assertEquals(Integer.valueOf(7), e.getNumber());
+      assertEquals(Long.valueOf(8), e.getLongnumber());
       assertEquals(Boolean.FALSE, e.getCool());
    }
    

@@ -5,8 +5,10 @@ import com.gooble.logic.app.entity.Entity;
 public class Testentity extends Entity{
    private String name;
    private Integer number;
+   private Long longnumber;
    private Double money;
    private Boolean cool;
+   
    public String getName() {
       return name;
    }
@@ -30,5 +32,11 @@ public class Testentity extends Entity{
    }
    public void setCool(Boolean cool) {
       this.cool = cool;
+   }
+   public Long getLongnumber() {
+      return longnumber;
+   }
+   public void setLongnumber(Long longnumber) {
+      this.longnumber = longnumber;
    }
 }
