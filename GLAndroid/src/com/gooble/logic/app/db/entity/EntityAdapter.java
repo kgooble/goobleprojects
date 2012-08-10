@@ -32,7 +32,7 @@ public abstract class EntityAdapter<E extends Entity> {
       helper.store(e);
    }
 
-   public void deleteIfExists(Long id) {
+   public void delete(Long id) {
       if (id == null)
          return;
       helper.deleteRow(factory.getTableName(), id);

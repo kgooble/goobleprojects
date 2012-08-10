@@ -40,5 +40,14 @@ public class ContainerColumns {
       }
       return values;
    }
+
+   public void updateIds(List<Long> newIds) {
+      ViewGroup container = (ViewGroup) activity.findViewById(containerId);
+      int numVars = container.getChildCount();
+      for (int i = 0; i < numVars; i++){
+         View vari = container.getChildAt(i);
+         vari.setId(newIds.get(i).intValue());
+      }
+   }
    
 }

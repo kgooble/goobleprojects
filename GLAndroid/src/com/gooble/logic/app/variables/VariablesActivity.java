@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 
 import com.gooble.logic.api.VariableDomain;
 import com.gooble.logic.api.VariableFacade;
@@ -46,13 +45,13 @@ public class VariablesActivity extends Activity {
                public void onClick(View v) {
                   List<Long> ids = new ContainerColumns(activity, R.id.variable_container).getIds();
                   List<String> names = new ContainerColumns(activity, R.id.variable_container).getStringsFromField(R.id.variable_name);
-                  
-                  variableFacade.save(activity, puzzleId, ids, names);
+                  List<Long> newIds = variableFacade.save(activity, puzzleId, ids, names);
+                  new ContainerColumns(activity, R.id.variable_container).updateIds(newIds);
                   
                   View newVariable = (View) v.getParent();
                   Intent intent = new Intent(activity, VariableValuesActivity.class);
-                  String name = ((EditText)newVariable.findViewById(R.id.variable_name)).getText().toString();
-                  intent.putExtra("name", name);
+                  Long variableId = (long) newVariable.getId();
+                  intent.putExtra("variableid", variableId);
                   activity.startActivity(intent);
                }
             },
@@ -60,7 +59,7 @@ public class VariablesActivity extends Activity {
                @Override
                public void domainDelete(ViewGroup container, View row) {
                   int varId = row.getId();
-                  helper.deleteIfExists((long) varId);
+                  helper.delete((long) varId);
                }
             }
       });

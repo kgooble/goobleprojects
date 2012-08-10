@@ -6,6 +6,6 @@ import android.content.Context;
 
 public interface VariableFacade {
 
-   void save(Context context, Long puzzleId, List<Long> ids, List<String> names);
+   List<Long> save(Context context, Long puzzleId, List<Long> ids, List<String> names);
 
 }
