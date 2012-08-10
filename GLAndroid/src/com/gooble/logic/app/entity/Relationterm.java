@@ -2,19 +2,19 @@ package com.gooble.logic.app.entity;
 
 public class Relationterm extends Entity{
 
-   private Integer relationid;
-   private Integer termid;
+   private Long relationid;
+   private Long termid;
    private Integer relationorder;
-   public Integer getRelationid() {
+   public Long getRelationid() {
       return relationid;
    }
-   public void setRelationid(Integer relationid) {
+   public void setRelationid(Long relationid) {
       this.relationid = relationid;
    }
-   public Integer getTermid() {
+   public Long getTermid() {
       return termid;
    }
-   public void setTermid(Integer termid) {
+   public void setTermid(Long termid) {
       this.termid = termid;
    }
    public Integer getRelationorder() {

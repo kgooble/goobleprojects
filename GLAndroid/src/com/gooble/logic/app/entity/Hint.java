@@ -2,13 +2,13 @@ package com.gooble.logic.app.entity;
 
 public class Hint extends Entity{
 
-   private Integer puzzleid;
+   private Long puzzleid;
 
-   public Integer getPuzzleid() {
+   public Long getPuzzleid() {
       return puzzleid;
    }
 
-   public void setPuzzleid(Integer puzzleid) {
+   public void setPuzzleid(Long puzzleid) {
       this.puzzleid = puzzleid;
    }
    

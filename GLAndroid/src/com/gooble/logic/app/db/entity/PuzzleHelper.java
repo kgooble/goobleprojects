@@ -1,11 +1,12 @@
 package com.gooble.logic.app.db.entity;
 
 import android.content.Context;
+import android.database.Cursor;
 
 import com.gooble.logic.app.entity.Puzzle;
 import com.gooble.logic.app.entity.PuzzleFactory;
 
-public class PuzzleHelper extends DatabaseHelper<Puzzle> {
+public class PuzzleHelper extends EntityAdapter<Puzzle> {
 
    public PuzzleHelper(Context context) {
       super(context, new PuzzleFactory());
@@ -13,12 +14,12 @@ public class PuzzleHelper extends DatabaseHelper<Puzzle> {
 
    public Puzzle getOrCreate(Long puzzleId) {
       if (puzzleId == null)
-         return create();
-      Puzzle puzzle = get(puzzleId);
-      if (puzzle == null){
-         return create();
-      }
-      return puzzle;
+         return factory.createNew();
+      Cursor cursor = helper.getById(puzzleId, factory.getTableName());
+      if (cursor.getCount() == 0)
+         return factory.createNew();
+      cursor.moveToFirst();
+      return loadEntity(puzzleId, cursor);
    }
 
 }

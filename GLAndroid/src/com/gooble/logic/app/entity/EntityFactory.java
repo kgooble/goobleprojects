@@ -1,10 +1,5 @@
 package com.gooble.logic.app.entity;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-
-
 public class EntityFactory<E extends Entity> {
 
    private final Class<E> entityClass;
@@ -18,32 +13,25 @@ public class EntityFactory<E extends Entity> {
    }
 
    public String getTableName() {
-      return entityClass.getSimpleName();
+      return entityClass.getSimpleName().toLowerCase();
    }
 
-   public E create() {
+   public E createNew() {
       try {
-         return entityClass.getConstructor().newInstance();
+         E entity = entityClass.getConstructor().newInstance();
+         entity.setNew(true);
+         return entity;
       } catch (Exception e) {
          throw new RuntimeException(e);
       }      
    }
 
    public Iterable<String> getFields() {
-      Field[] fields = entityClass.getDeclaredFields();
-      List<String> fieldNames = new ArrayList<String>();
-      for (Field f : fields){
-         fieldNames.add(f.getName().toLowerCase());
-      }
-      return fieldNames;
+      return new EntityFields(entityClass).getFields();
    }
    
    public Class<?> getFieldType(String field){
-      try {
-         return entityClass.getDeclaredField(field).getType();
-      } catch (Exception e){
-         throw new RuntimeException(e);
-      }
+      return new EntityFields(entityClass).getFieldType(field);
    }
 
 }

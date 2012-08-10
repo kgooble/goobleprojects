@@ -5,7 +5,7 @@ public class Relation extends Entity{
    private String name;
    private Boolean bidirectional;
    private Boolean uniquevalue;
-   private Boolean variableid;
+   private Long variableid;
    public String getName() {
       return name;
    }
@@ -24,10 +24,10 @@ public class Relation extends Entity{
    public void setUniquevalue(Boolean uniquevalue) {
       this.uniquevalue = uniquevalue;
    }
-   public Boolean getVariableid() {
+   public Long getVariableid() {
       return variableid;
    }
-   public void setVariableid(Boolean variableid) {
+   public void setVariableid(Long variableid) {
       this.variableid = variableid;
    }
 }

@@ -3,24 +3,24 @@ package com.gooble.logic.app.entity;
 public class Hintvariable extends Entity{
 
    private String name;
-   private Integer hintid;
-   private Integer variableid;
+   private Long hintid;
+   private Long variableid;
    public String getName() {
       return name;
    }
    public void setName(String name) {
       this.name = name;
    }
-   public Integer getHintid() {
+   public Long getHintid() {
       return hintid;
    }
-   public void setHintid(Integer hintid) {
+   public void setHintid(Long hintid) {
       this.hintid = hintid;
    }
-   public Integer getVariableid() {
+   public Long getVariableid() {
       return variableid;
    }
-   public void setVariableid(Integer variableid) {
+   public void setVariableid(Long variableid) {
       this.variableid = variableid;
    }
    

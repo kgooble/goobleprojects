@@ -3,24 +3,24 @@ package com.gooble.logic.app.entity;
 public class Term extends Entity{
 
    private String value;
-   private Integer variableid;
-   private Integer variablevalueid;
+   private Long variableid;
+   private Long variablevalueid;
    public String getValue() {
       return value;
    }
    public void setValue(String value) {
       this.value = value;
    }
-   public Integer getVariableid() {
+   public Long getVariableid() {
       return variableid;
    }
-   public void setVariableid(Integer variableid) {
+   public void setVariableid(Long variableid) {
       this.variableid = variableid;
    }
-   public Integer getVariablevalueid() {
+   public Long getVariablevalueid() {
       return variablevalueid;
    }
-   public void setVariablevalueid(Integer variablevalueid) {
+   public void setVariablevalueid(Long variablevalueid) {
       this.variablevalueid = variablevalueid;
    }
    

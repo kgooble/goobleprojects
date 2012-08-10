@@ -2,25 +2,25 @@ package com.gooble.logic.app.entity;
 
 public class Hintrelationterm extends Entity{
 
-   private Integer hintrelationid;
-   private Integer variablevalueid;
-   private Integer hintvariableid;
-   public Integer getHintrelationid() {
+   private Long hintrelationid;
+   private Long variablevalueid;
+   private Long hintvariableid;
+   public Long getHintrelationid() {
       return hintrelationid;
    }
-   public void setHintrelationid(Integer hintrelationid) {
+   public void setHintrelationid(Long hintrelationid) {
       this.hintrelationid = hintrelationid;
    }
-   public int getVariablevalueid() {
+   public Long getVariablevalueid() {
       return variablevalueid;
    }
-   public void setVariablevalueid(Integer variablevalueid) {
+   public void setVariablevalueid(Long variablevalueid) {
       this.variablevalueid = variablevalueid;
    }
-   public int getHintvariableid() {
+   public Long getHintvariableid() {
       return hintvariableid;
    }
-   public void setHintvariableid(Integer hintvariableid) {
+   public void setHintvariableid(Long hintvariableid) {
       this.hintvariableid = hintvariableid;
    }
 }

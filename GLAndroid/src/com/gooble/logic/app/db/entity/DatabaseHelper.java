@@ -1,10 +1,8 @@
 package com.gooble.logic.app.db.entity;
 
+import com.gooble.logic.app.db.AllTables;
 import com.gooble.logic.app.db.Tables;
-import com.gooble.logic.app.db.sql.CreateTableSql;
-import com.gooble.logic.app.db.sql.DropTableSql;
 import com.gooble.logic.app.entity.Entity;
-import com.gooble.logic.app.entity.EntityFactory;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -12,76 +10,39 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class DatabaseHelper<E extends Entity> extends SQLiteOpenHelper{
+public final class DatabaseHelper extends SQLiteOpenHelper{
 
    private static final int DATABASE_VERSION = 1;
-   private final EntityFactory<E> entityFactory;
+   private static final String TABLE_NAME = "GoobleLogicDatabase";
 
-   public DatabaseHelper(Context context, EntityFactory<E> entityFactory) {
-      super(context, entityFactory.getTableName(), null, DATABASE_VERSION);
-      this.entityFactory = entityFactory;
+   public DatabaseHelper(Context context) {
+      super(context, TABLE_NAME, null, DATABASE_VERSION);
    }
 
    @Override
    public void onCreate(SQLiteDatabase db) {
-      db.execSQL(new CreateTableSql().generateFor(entityFactory.getEntityClass()));
+      new AllTables().create(db);
    }
 
    @Override
    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-      db.execSQL(new DropTableSql().generateFor(entityFactory.getEntityClass()));
+      new AllTables().drop(db);
       onCreate(db);
    }
    
-   public E create(){
-      E e = entityFactory.create();
-      e.setNew(true);
-      return e;
+   public Cursor getAll(String tableName){
+      return getReadableDatabase().rawQuery("SELECT * FROM " + tableName, null);
    }
    
-   public Cursor getAll(){
-      return getReadableDatabase().rawQuery("SELECT * FROM " + entityFactory.getTableName(), null);
-   }
-   
-   public E get(long id){
-      Cursor cursor = getReadableDatabase().rawQuery("SELECT * FROM " + entityFactory.getTableName() + " WHERE " + Tables._ID + " = " + id, null);
-      if (cursor.getCount() == 0)
-         return null;
+   public Cursor getById(long id, String tableName){
+      Cursor cursor = getReadableDatabase().rawQuery("SELECT * FROM " + tableName + " WHERE " + Tables._ID + " = " + id, null);
       if (cursor.getCount() > 1)
-         throw new RuntimeException("More than one " + entityFactory.getTableName() + " found with id " + id);
+         throw new RuntimeException("More than one " + tableName + " found with id " + id);
       
-      cursor.moveToFirst();
-      
-      E e = entityFactory.create();
-      e.setNew(false);
-      setFieldsToEntity(e, id, cursor);
-      return e;
+      return cursor;
    }
 
-   private void setFieldsToEntity(E e, long id, Cursor cursor) {
-      e.setId(id);
-      for (String field : entityFactory.getFields()){
-         int index = cursor.getColumnIndex(field);
-         Class<?> type = entityFactory.getFieldType(field);
-         
-         Object value = null;
-         if (type == Integer.class){
-            value = cursor.getInt(index);
-         }
-         if (type == Double.class){
-            value = cursor.getDouble(index);
-         }
-         if (type == String.class){
-            value = cursor.getString(index);
-         }
-         if (type == Boolean.class){
-            value = cursor.getInt(index) == 1;
-         }
-         e.setField(field, value);
-      }
-   }
-
-   public void store(E entity){
+   public void store(Entity entity){
       if (entity.isNew()){
          insert(entity);
       }else{
@@ -89,24 +50,27 @@ public class DatabaseHelper<E extends Entity> extends SQLiteOpenHelper{
       }
    }
    
-   public void insert(E entity) {
+   public void insert(Entity entity) {
       ContentValues values = createContentValuesFromFields(entity);
-      long id = getWritableDatabase().insert(entityFactory.getTableName(), null, values);
+      long id = getWritableDatabase().insert(entity.getTableName(), null, values);
       entity.setId(id);
    }
 
-   public void update(E entity) {
+   public void update(Entity entity) {
       ContentValues values = createContentValuesFromFields(entity);
-      getWritableDatabase().update(entityFactory.getTableName(), values, Tables._ID + " = " + entity.getId(), null);
+      getWritableDatabase().update(entity.getTableName(), values, Tables._ID + " = " + entity.getId(), null);
    }
 
-   private ContentValues createContentValuesFromFields(E entity) {
+   private ContentValues createContentValuesFromFields(Entity entity) {
       ContentValues values = new ContentValues();
-      Iterable<String> fields = entityFactory.getFields();
+      Iterable<String> fields = entity.getFields();
       for (String field : fields){
-         Class<?> type = entityFactory.getFieldType(field);
+         Class<?> type = entity.getFieldType(field);
          if (type == Integer.class){
             values.put(field, (Integer) entity.getField(field));
+         }
+         if (type == Long.class){
+            values.put(field, (Long) entity.getField(field));
          }
          if (type == Double.class){
             values.put(field, (Double) entity.getField(field));

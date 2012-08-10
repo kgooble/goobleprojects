@@ -2,19 +2,19 @@ package com.gooble.logic.app.entity;
 
 public class Conditionterm extends Entity{
 
-   private Integer conditionid;
-   private Integer termid;
+   private Long conditionid;
+   private Long termid;
    
-   public Integer getConditionid() {
+   public Long getConditionid() {
       return conditionid;
    }
-   public void setConditionid(Integer conditionid) {
+   public void setConditionid(Long conditionid) {
       this.conditionid = conditionid;
    }
-   public Integer getTermid() {
+   public Long getTermid() {
       return termid;
    }
-   public void setTermid(Integer termid) {
+   public void setTermid(Long termid) {
       this.termid = termid;
    }
    

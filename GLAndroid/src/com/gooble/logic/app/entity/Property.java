@@ -2,13 +2,13 @@ package com.gooble.logic.app.entity;
 
 public class Property extends Entity{
 
-   private Integer hintid;
+   private Long hintid;
 
-   public Integer getHintid() {
+   public Long getHintid() {
       return hintid;
    }
 
-   public void setHintid(Integer hintid) {
+   public void setHintid(Long hintid) {
       this.hintid = hintid;
    }
 }

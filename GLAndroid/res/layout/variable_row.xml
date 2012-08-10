@@ -9,7 +9,7 @@
         android:id="@+id/variable_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/add_values_button"
+        android:layout_toLeftOf="@+id/edit_variable_button"
         android:ems="10"
         android:gravity="center_vertical"
         android:inputType="text" >
@@ -27,12 +27,12 @@
         android:text="@string/delete" />
 
     <Button
-        android:id="@+id/add_values_button"
+        android:id="@+id/edit_variable_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@id/delete_variable_button"
         android:layout_alignBottom="@id/delete_variable_button"
         android:layout_toLeftOf="@id/delete_variable_button"
-        android:text="@string/add_variable_values" />
+        android:text="@string/edit" />
 
 </RelativeLayout>

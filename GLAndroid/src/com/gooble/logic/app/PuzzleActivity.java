@@ -16,6 +16,9 @@ import com.gooble.logic.app.relations.RelationsActivity;
 import com.gooble.logic.app.variables.VariablesActivity;
 
 public class PuzzleActivity extends Activity {
+   private PuzzleHelper helper;
+   private Puzzle puzzle;
+
    @Override
    public void onCreate(Bundle icicle) {
       super.onCreate(icicle);
@@ -30,9 +33,8 @@ public class PuzzleActivity extends Activity {
          puzzleId = (Long) intent.getExtras().get("puzzleid");
       }
       
-      // load puzzle data
-      final PuzzleHelper helper = new PuzzleHelper(this);
-      final Puzzle puzzle = helper.getOrCreate((Long) puzzleId);
+      helper = new PuzzleHelper(this);
+      puzzle = helper.getOrCreate((Long) puzzleId);
       
       final EditText puzzleName = (EditText)findViewById(R.id.puzzle_name);
       puzzleName.setText(puzzle.getName());
@@ -52,8 +54,14 @@ public class PuzzleActivity extends Activity {
       Button button = (Button) findViewById(buttonId);
       button.setOnClickListener(new OnClickListener() {
          public void onClick(View v) {
-            // TODO: Pass in, as extras, the puzzle ID so it knows what variables to load 
-            startActivity(new Intent(context, activityClass));
+            EditText puzzleName = (EditText)findViewById(R.id.puzzle_name);
+            puzzle.setName(puzzleName.getText().toString());
+            helper.store(puzzle);
+            
+            Intent intent = new Intent(context, activityClass);
+            intent.setAction(Intent.ACTION_EDIT);
+            intent.putExtra("puzzleid", puzzle.getId());
+            startActivity(intent);
          }
       });
    }
