@@ -1,5 +1,7 @@
 package com.gooble.logic.app.db.entity;
 
+import java.util.List;
+
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.widget.TextView;
 
 import com.gooble.logic.app.entity.Entity;
 import com.gooble.logic.app.entity.EntityList;
+import com.gooble.logic.app.util.ContainerColumns;
 
 public class EntityListAdapter {
 
@@ -36,14 +39,22 @@ public class EntityListAdapter {
          throw new RuntimeException("Cannot assign " + buttonListeners.length + " actions to " + buttonIds.length + " buttons");
       
       ViewGroup container = (ViewGroup) activity.findViewById(layoutId);
-      View newRow = activity.getLayoutInflater().inflate(rowLayoutId, container, false);
       
       for (Entity e : list){
+         View newRow = activity.getLayoutInflater().inflate(rowLayoutId, container, false);
          newRow.setId((int) e.getId());
          populateFields(entityColumns, rowFields, newRow, e);
          addButtonHandlers(newRow);
          container.addView(newRow);
       }
+   }
+   
+   public List<Long> getIds(){
+      return new ContainerColumns(activity, layoutId).getIds();
+   }
+   
+   public List<String> getStringsFromField(int fieldId){
+      return new ContainerColumns(activity, layoutId).getStringsFromField(fieldId);
    }
 
    public void addNewEntity() {

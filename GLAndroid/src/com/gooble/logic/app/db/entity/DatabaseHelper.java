@@ -58,6 +58,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper{
       ContentValues values = createContentValuesFromFields(entity);
       long id = getWritableDatabase().insert(entity.getTableName(), null, values);
       entity.setId(id);
+      entity.setNew(false);
    }
 
    private void update(Entity entity) {
