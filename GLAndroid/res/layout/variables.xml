@@ -20,15 +20,14 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:text="@string/add_variable" />
-
-    <LinearLayout
+    <LinearLayout
         android:id="@+id/variable_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/save_variables_button"
+        android:layout_below="@+id/add_variable_button"
         android:orientation="vertical" >
     </LinearLayout>
 

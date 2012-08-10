@@ -25,14 +25,19 @@
         android:layout_alignParentTop="true"
         android:text="@string/add_variable_value" />
 
-    <LinearLayout
+    <Spinner
+        android:id="@+id/variable_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/add_value_button" />
+    <LinearLayout
         android:id="@+id/value_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/add_value_button"
+        android:layout_below="@+id/variable_type"
         android:orientation="vertical" >
     </LinearLayout>
 

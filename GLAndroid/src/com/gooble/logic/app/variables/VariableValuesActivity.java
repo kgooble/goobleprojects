@@ -1,8 +1,6 @@
 package com.gooble.logic.app.variables;
 
 import com.gooble.logic.app.R;
-import com.gooble.logic.app.R.id;
-import com.gooble.logic.app.R.layout;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -12,7 +10,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 
 public class VariableValuesActivity extends Activity {
 
