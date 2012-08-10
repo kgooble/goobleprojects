@@ -1,8 +1,6 @@
 package com.gooble.logic.app.hints;
 
 import com.gooble.logic.app.R;
-import com.gooble.logic.app.R.id;
-import com.gooble.logic.app.R.layout;
 
 import android.app.Activity;
 import android.content.Intent;

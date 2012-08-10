@@ -10,8 +10,6 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
 import com.gooble.logic.app.R;
-import com.gooble.logic.app.R.id;
-import com.gooble.logic.app.R.layout;
 import com.gooble.logic.app.util.SpinnerFactory;
 
 public class HintVariablesActivity extends Activity {

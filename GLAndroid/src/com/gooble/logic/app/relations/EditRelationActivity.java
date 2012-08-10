@@ -1,9 +1,6 @@
 package com.gooble.logic.app.relations;
 
 import com.gooble.logic.app.R;
-import com.gooble.logic.app.R.id;
-import com.gooble.logic.app.R.layout;
-import com.gooble.logic.app.R.string;
 
 import android.app.Activity;
 import android.content.Intent;

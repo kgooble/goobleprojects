@@ -4,19 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.gooble.logic.app.R;
-import com.gooble.logic.app.R.id;
-import com.gooble.logic.app.R.layout;
-import com.gooble.logic.app.R.string;
 import com.gooble.logic.app.util.SpinnerFactory;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
