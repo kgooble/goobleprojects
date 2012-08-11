@@ -14,11 +14,11 @@ public class FieldMapper {
       this.adapter = adapter;
    }
 
-   public List<Long> save(List<Long> ids, FieldMap values) {
+   public List<Long> save(List<Long> ids, FieldMap valueMap) {
       List<Long> newIds = new ArrayList<Long>();
       for (int i = 0; i < ids.size(); i++) {
          Entity e = getEntity(ids.get(i));
-         setValues(values, i, e);
+         setValues(valueMap, i, e);
          finish(newIds, e);
       }
       return newIds;

@@ -62,6 +62,7 @@ public class Tables {
       public static final String BIDIRECTIONAL = "bidirectional"; // if a relation is bidirectional, it means that if rel(X, Y) is true, rel(Y, X) is true
       public static final String UNIQUEVALUE = "uniquevalue"; // if a relation is unique, it means if rel(X, Y) is true, rel(X, Z) cannot be true for any Z s.t Z != Y 
       public static final String VARIABLEID = "variableid";
+      public static final String PUZZLEID = "puzzleid";
    }
    public class Relationterm implements BaseColumns{
       public static final String RELATIONID = "relationid";

@@ -3,6 +3,7 @@ package com.gooble.logic.app.db.entity;
 import com.gooble.logic.app.db.AllTables;
 import com.gooble.logic.app.db.Tables;
 import com.gooble.logic.app.entity.Entity;
+import com.gooble.logic.app.entity.EntityFactory;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -30,14 +31,16 @@ public final class DatabaseHelper extends SQLiteOpenHelper{
       onCreate(db);
    }
    
-   public Cursor getAll(String tableName){
-      return getReadableDatabase().rawQuery("SELECT * FROM " + tableName, null);
+   public Cursor getAll(EntityFactory<?> factory){
+      //TODO: Change this to use Query & the only place this method is used is in ViewPuzzlesActivity 
+      //      so don't use cursor adapter there anymore
+      return getReadableDatabase().rawQuery("SELECT * FROM " + factory.getTableName(), null);
    }
    
-   public Cursor getById(long id, String tableName){
-      Cursor cursor = getReadableDatabase().rawQuery("SELECT * FROM " + tableName + " WHERE " + Tables._ID + " = " + id, null);
+   public Cursor getById(long id, EntityFactory<?> factory){
+      Cursor cursor = getReadableDatabase().query(factory.getTableName(), factory.getTablePrefixedFields(), Tables._ID + " = " + id, null, null, null, null);
       if (cursor.getCount() > 1)
-         throw new RuntimeException("More than one " + tableName + " found with id " + id);
+         throw new RuntimeException("More than one " + factory.getTableName() + " found with id " + id);
       
       return cursor;
    }
@@ -85,6 +88,8 @@ public final class DatabaseHelper extends SQLiteOpenHelper{
          }
          if (type == Boolean.class){
             Boolean value = (Boolean) entity.getField(field);
+            if (value == null)
+               value = false;
             values.put(field, value? 1 : 0);
          }
       }

@@ -6,6 +6,7 @@ import android.database.Cursor;
 import com.gooble.logic.app.db.Tables;
 import com.gooble.logic.app.entity.Entity;
 import com.gooble.logic.app.entity.EntityFactory;
+import com.gooble.logic.app.entity.EntityList;
 
 public abstract class EntityAdapter<E extends Entity> {
 
@@ -18,14 +19,14 @@ public abstract class EntityAdapter<E extends Entity> {
    }
 
    public E getById(Long id) {
-      Cursor cursor = helper.getById(id, factory.getTableName());
+      Cursor cursor = helper.getById(id, factory);
       if (!cursor.moveToNext())
          return null;
       return loadEntity(id, cursor);
    }
 
    public Cursor getAll() {
-      return helper.getAll(factory.getTableName());
+      return helper.getAll(factory);
    }
 
    public void store(Entity e) {
@@ -52,6 +53,19 @@ public abstract class EntityAdapter<E extends Entity> {
       e.setNew(false);
       setFieldsToEntity(e, id, cursor);
       return e;
+   }
+   
+   protected EntityList<E> getEntitiesMatchingIdField(String idField, Long id){
+      Cursor result = helper.getReadableDatabase().query(factory.getTableName(), factory.getTablePrefixedFields(), idField + " = " + id, null, null, null, null);
+      return loadList(result);
+   }
+
+   protected EntityList<E> loadList(Cursor result) {
+      EntityList<E> list = new EntityList<E>();
+      while (result.moveToNext()){
+         list.add(loadEntity(result));
+      }
+      return list;
    }
 
    private void setFieldsToEntity(E e, long id, Cursor cursor) {

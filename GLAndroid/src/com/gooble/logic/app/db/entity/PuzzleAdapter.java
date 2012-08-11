@@ -15,7 +15,7 @@ public class PuzzleAdapter extends EntityAdapter<Puzzle> {
    public Puzzle getOrCreate(Long puzzleId) {
       if (puzzleId == null)
          return factory.createNew();
-      Cursor cursor = helper.getById(puzzleId, factory.getTableName());
+      Cursor cursor = helper.getById(puzzleId, factory);
       if (cursor.getCount() == 0)
          return factory.createNew();
       cursor.moveToFirst();

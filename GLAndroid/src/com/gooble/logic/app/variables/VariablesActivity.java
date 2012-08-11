@@ -72,7 +72,8 @@ public class VariablesActivity extends Activity {
          public void onClick(View v) {
             List<Long> ids = entityListAdapter.getIds();
             List<String> names = entityListAdapter.getStringsFromField(R.id.variable_name);
-            variableFacade.save(activity, puzzleId, ids, names);
+            List<Long> newIds = variableFacade.save(activity, puzzleId, ids, names);
+            new ContainerColumns(activity, R.id.variable_container).updateIds(newIds);
          }
       });
       

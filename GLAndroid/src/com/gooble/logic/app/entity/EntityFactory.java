@@ -1,5 +1,7 @@
 package com.gooble.logic.app.entity;
 
+import java.util.List;
+
 public class EntityFactory<E extends Entity> {
 
    private final Class<E> entityClass;
@@ -26,12 +28,16 @@ public class EntityFactory<E extends Entity> {
       }      
    }
 
-   public Iterable<String> getFields() {
+   public List<String> getFields() {
       return new EntityFields(entityClass).getFields();
    }
    
    public Class<?> getFieldType(String field){
       return new EntityFields(entityClass).getFieldType(field);
+   }
+
+   public String[] getTablePrefixedFields() {
+      return new EntityFields(entityClass).getTablePrefixedFields(getTableName()).toArray(new String[]{});
    }
 
 }

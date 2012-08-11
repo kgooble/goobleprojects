@@ -21,6 +21,7 @@ public class CreateTableSql {
       CLASS_TO_SQL_KEYWORD = new HashMap<Class<?>, String>();
       CLASS_TO_SQL_KEYWORD.put(Integer.class, "INTEGER");
       CLASS_TO_SQL_KEYWORD.put(Long.class, "INTEGER");
+      CLASS_TO_SQL_KEYWORD.put(Boolean.class, "INTEGER");
       CLASS_TO_SQL_KEYWORD.put(String.class, "TEXT");
       CLASS_TO_SQL_KEYWORD.put(Double.class, "REAL");
    }

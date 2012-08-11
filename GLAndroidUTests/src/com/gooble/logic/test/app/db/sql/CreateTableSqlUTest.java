@@ -17,7 +17,8 @@ public class CreateTableSqlUTest {
       		"name TEXT, " +
       		"number INTEGER, " +
       		"longnumber INTEGER, " +
-      		"money REAL" +
+      		"money REAL, " +
+      		"cool INTEGER" +
       		");", new CreateTableSql().generateFor(Testentity.class));
    }
    
