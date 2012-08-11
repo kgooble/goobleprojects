@@ -14,6 +14,7 @@ public class Tables {
    public class Variable implements BaseColumns{
       public static final String NAME = "name";
       public static final String PUZZLEID = "puzzleid";
+      public static final String TYPE = "type";
    }
    public class Variablevalue implements BaseColumns{
       public static final String VALUE = "value";

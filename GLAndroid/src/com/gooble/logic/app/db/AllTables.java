@@ -22,6 +22,7 @@ import com.gooble.logic.app.entity.Variablevalue;
 
 public class AllTables {
 
+   @SuppressWarnings("unchecked")
    private static final Class<Entity>[] ALL_TABLES = new Class[] {
          Condition.class, Conditionterm.class, Hint.class, Hintrelation.class,
          Hintrelationterm.class, Hintvariable.class, Property.class,

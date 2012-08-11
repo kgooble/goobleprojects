@@ -76,9 +76,7 @@ public class VariableValuesActivity extends Activity {
          public void onClick(View v) {
             List<Long> ids = adapter.getIds();
             List<String> values = adapter.getStringsFromField(R.id.variable_value);
-            
             variablevalueFacade.save(activity, variableId, ids, values);
-            // go back to prev activity
             activity.finish();
          }
       });
