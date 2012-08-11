@@ -6,7 +6,10 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import com.gooble.logic.api.VariablevalueDomain;
@@ -19,6 +22,7 @@ import com.gooble.logic.app.db.entity.VariableAdapter;
 import com.gooble.logic.app.entity.EntityList;
 import com.gooble.logic.app.entity.Variable;
 import com.gooble.logic.app.entity.Variablevalue;
+import com.gooble.logic.app.entity.domain.VariableType;
 
 public class VariableValuesActivity extends Activity {
 
@@ -41,11 +45,15 @@ public class VariableValuesActivity extends Activity {
       TextView nameLabel = (TextView) findViewById(R.id.variable_name_label);
       nameLabel.setText(myVar.getName());
       
-      //TODO populate variable type values (text & number) + set variable type as selected
+      Spinner variableType = (Spinner) findViewById(R.id.variable_type);
+      SpinnerAdapter typeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, 
+            VariableType.ALL_TYPES);
+      variableType.setAdapter(typeAdapter);
+      variableType.setSelection(VariableType.getPosition(myVar.getType()));
 
       EntityListAdapter adapter = loadVariableValues(variableId);
       setAddEntityHandler(adapter);
-      setSaveHandler(variableId, adapter);
+      setSaveHandler(variableId, variableType, adapter);
    }
 
    private EntityListAdapter loadVariableValues(final Long variableId) {
@@ -69,14 +77,15 @@ public class VariableValuesActivity extends Activity {
       });
    }
 
-   private void setSaveHandler(final Long variableId, final EntityListAdapter adapter) {
+   private void setSaveHandler(final Long variableId, final Spinner variableType, final EntityListAdapter adapter) {
       final Activity activity = this;
       Button saveValuesButton = (Button) findViewById(R.id.save_values_button);
       saveValuesButton.setOnClickListener(new OnClickListener() {
          public void onClick(View v) {
             List<Long> ids = adapter.getIds();
             List<String> values = adapter.getStringsFromField(R.id.variable_value);
-            variablevalueFacade.save(activity, variableId, ids, values);
+            String variableTypeValue = VariableType.getValue(variableType.getSelectedItemPosition());
+            variablevalueFacade.save(activity, variableId, variableTypeValue, ids, values);
             activity.finish();
          }
       });

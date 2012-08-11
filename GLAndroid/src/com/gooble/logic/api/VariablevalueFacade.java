@@ -6,6 +6,6 @@ import android.content.Context;
 
 public interface VariablevalueFacade {
 
-   List<Long> save(Context context, Long variableId, List<Long> ids, List<String> values);
+   List<Long> save(Context context, Long variableId, String variableType, List<Long> ids, List<String> values);
 
 }
