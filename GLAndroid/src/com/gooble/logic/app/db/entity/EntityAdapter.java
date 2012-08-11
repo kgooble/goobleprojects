@@ -28,7 +28,7 @@ public abstract class EntityAdapter<E extends Entity> {
       return helper.getAll(factory.getTableName());
    }
 
-   public void store(E e) {
+   public void store(Entity e) {
       helper.store(e);
    }
 

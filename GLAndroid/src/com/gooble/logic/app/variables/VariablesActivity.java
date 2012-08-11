@@ -47,9 +47,9 @@ public class VariablesActivity extends Activity {
                   List<Long> newIds = variableFacade.save(activity, puzzleId, ids, names);
                   new ContainerColumns(activity, R.id.variable_container).updateIds(newIds);
                   
-                  View variable = (View) v.getParent();
+                  View variableRow = (View) v.getParent();
                   Intent intent = new Intent(activity, VariableValuesActivity.class);
-                  Long variableId = (long) variable.getId();
+                  Long variableId = (long) variableRow.getId();
                   intent.putExtra("variableid", variableId);
                   activity.startActivity(intent);
                }
