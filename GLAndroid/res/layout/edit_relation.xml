@@ -46,4 +46,15 @@
         android:layout_alignParentTop="true"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
+    <LinearLayout
+        android:id="@+id/condition_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/add_condition_set_button"
+        android:layout_toRightOf="@+id/relation_name"
+        android:orientation="vertical" >
+    </LinearLayout>
+
 </RelativeLayout>

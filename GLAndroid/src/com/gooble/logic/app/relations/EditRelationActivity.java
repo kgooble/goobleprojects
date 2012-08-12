@@ -54,6 +54,7 @@ public class EditRelationActivity extends Activity {
       RelativeLayout layout = (RelativeLayout) findViewById(R.id.edit_relation_layout);
       int thingToBeBelow = R.id.save_relation_button;
       
+      
       // TODO: Load condition sets as Labels with Edit buttons next to them
       for (int i = 0; i < 3; i++){
          TextView conditionLabel = new TextView(this);

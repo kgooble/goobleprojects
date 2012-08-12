@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="10dp" >
+
+    <Button
+        android:id="@+id/delete_conditionset_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="@string/delete" />
+
+    <Button
+        android:id="@+id/edit_conditionset_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/delete_conditionset_button"
+        android:layout_alignBottom="@+id/delete_conditionset_button"
+        android:layout_toLeftOf="@+id/delete_conditionset_button"
+        android:text="@string/edit" />
+
+    <TextView
+        android:id="@+id/conditionset_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/edit_conditionset_button" />
+
+</RelativeLayout>
