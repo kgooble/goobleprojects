@@ -35,8 +35,9 @@ public class EditRelationActivity extends Activity {
       EntityList<Variable> variables = puzzle.getVariables(this);
       
       //Set the current relation's name in the name field.
+      TextView relationNameLabel = (TextView) findViewById(R.id.relation_name);
+      relationNameLabel.setText(relation.getName());
       
-      //TODO: Load this list from the puzzle's variables
       ArrayAdapter<String> aa = new ArrayAdapter<String>(this,
             android.R.layout.simple_spinner_item, variables.getColumn(Tables.Variable.NAME).toArray(new String[0]));
       spinner.setAdapter(aa);

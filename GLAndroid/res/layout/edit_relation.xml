@@ -9,30 +9,41 @@
         android:id="@+id/relation_variable_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/relation_name"
         android:layout_toRightOf="@+id/relation_variable_label" />
 
     <Button
         android:id="@+id/add_condition_set_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/relation_variable_list"
-        android:text="@string/add_condition_set" />
-
-    <TextView
-        android:id="@+id/relation_variable_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@id/relation_variable_list"
-        android:layout_alignBottom="@id/relation_variable_list"
         android:layout_alignParentLeft="true"
-        android:text="@string/relation_variable" />
+        android:layout_below="@+id/relation_variable_list"
+        android:text="@string/add_condition_set" />
 
     <Button
         android:id="@+id/save_relation_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_below="@id/relation_variable_list"
+        android:layout_below="@+id/relation_variable_list"
         android:text="@string/save_relation" />
+
+    <TextView
+        android:id="@+id/relation_variable_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/relation_variable_list"
+        android:layout_alignBottom="@+id/relation_variable_list"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/relation_name"
+        android:text="@string/relation_variable" />
+
+    <TextView
+        android:id="@+id/relation_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>
