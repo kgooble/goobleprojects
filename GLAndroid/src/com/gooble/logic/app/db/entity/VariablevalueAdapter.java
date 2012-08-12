@@ -1,10 +1,9 @@
-package com.gooble.logic.app.variables;
+package com.gooble.logic.app.db.entity;
 
 import android.content.Context;
 import android.database.Cursor;
 
 import com.gooble.logic.app.db.Tables;
-import com.gooble.logic.app.db.entity.EntityAdapter;
 import com.gooble.logic.app.entity.EntityList;
 import com.gooble.logic.app.entity.Variablevalue;
 import com.gooble.logic.app.entity.VariablevalueFactory;

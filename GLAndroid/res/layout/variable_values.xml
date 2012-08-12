@@ -31,7 +31,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/variable_type"
+        android:layout_below="@+id/mainvariable_cbx"
         android:orientation="vertical" >
     </LinearLayout>
 
@@ -42,5 +42,13 @@
         android:layout_above="@+id/variable_type"
         android:layout_alignParentRight="true"
         android:text="@string/add_variable_value" />
+
+    <CheckBox
+        android:id="@+id/mainvariable_cbx"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/variable_type"
+        android:text="@string/main_variable" />
 
 </RelativeLayout>

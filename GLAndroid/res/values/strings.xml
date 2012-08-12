@@ -32,6 +32,7 @@
     <string name="variable_values">Variable Values</string>
     <string name="variable_value">Value:</string>
     <string name="add_variable_value">Add Value</string>
+    <string name="main_variable">Is main variable</string>
 
     <!-- Relations screen -->
     <string name="add_relation">Add New Relation</string>

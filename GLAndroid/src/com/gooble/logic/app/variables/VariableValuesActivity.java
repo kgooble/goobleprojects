@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ import com.gooble.logic.app.db.Tables;
 import com.gooble.logic.app.db.entity.EntityListAdapter;
 import com.gooble.logic.app.db.entity.RowDeleteListener;
 import com.gooble.logic.app.db.entity.VariableAdapter;
+import com.gooble.logic.app.db.entity.VariablevalueAdapter;
 import com.gooble.logic.app.entity.EntityList;
 import com.gooble.logic.app.entity.Variable;
 import com.gooble.logic.app.entity.Variablevalue;
@@ -41,6 +43,9 @@ public class VariableValuesActivity extends Activity {
       
       VariableAdapter vars = new VariableAdapter(this);
       Variable myVar = vars.getById(variableId);
+      
+      CheckBox isMainVar = (CheckBox) findViewById(R.id.mainvariable_cbx);
+      isMainVar.setChecked(myVar.isMainVariable(this));
       
       TextView nameLabel = (TextView) findViewById(R.id.variable_name_label);
       nameLabel.setText(myVar.getName());
@@ -84,8 +89,9 @@ public class VariableValuesActivity extends Activity {
          public void onClick(View v) {
             List<Long> ids = adapter.getIds();
             List<String> values = adapter.getStringsFromField(R.id.variable_value);
+            boolean isMainVar = ((CheckBox) activity.findViewById(R.id.mainvariable_cbx)).isChecked();
             String variableTypeValue = VariableType.getValue(variableType.getSelectedItemPosition());
-            variablevalueFacade.save(activity, variableId, variableTypeValue, ids, values);
+            variablevalueFacade.save(activity, variableId, variableTypeValue, isMainVar, ids, values);
             activity.finish();
          }
       });
