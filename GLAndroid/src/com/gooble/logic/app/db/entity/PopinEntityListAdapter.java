@@ -14,7 +14,7 @@ import com.gooble.logic.app.entity.Entity;
 import com.gooble.logic.app.entity.EntityList;
 import com.gooble.logic.app.util.ContainerColumns;
 
-public class EntityListAdapter {
+public class PopinEntityListAdapter {
 
    private final Activity activity;
    private final EntityList<?> list;
@@ -23,7 +23,7 @@ public class EntityListAdapter {
    private final OnClickListener[] buttonListeners;
    private final int[] buttonIds;
 
-   public EntityListAdapter(Activity activity, EntityList<?> list, int layoutId, int rowLayoutId, int[] buttonIds, OnClickListener[] buttonListeners) {
+   public PopinEntityListAdapter(Activity activity, EntityList<?> list, int layoutId, int rowLayoutId, int[] buttonIds, OnClickListener[] buttonListeners) {
       this.activity = activity;
       this.list = list;
       this.layoutId = layoutId;

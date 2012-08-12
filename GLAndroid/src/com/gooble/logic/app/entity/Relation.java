@@ -1,5 +1,9 @@
 package com.gooble.logic.app.entity;
 
+import android.content.Context;
+
+import com.gooble.logic.app.db.entity.PuzzleAdapter;
+
 public class Relation extends Entity {
 
    private String name;
@@ -46,5 +50,9 @@ public class Relation extends Entity {
 
    public void setPuzzleid(Long puzzleid) {
       this.puzzleid = puzzleid;
+   }
+
+   public Puzzle getPuzzle(Context context) {
+      return new PuzzleAdapter(context).getById(getPuzzleid());
    }
 }

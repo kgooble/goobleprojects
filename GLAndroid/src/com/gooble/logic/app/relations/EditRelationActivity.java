@@ -1,7 +1,5 @@
 package com.gooble.logic.app.relations;
 
-import com.gooble.logic.app.R;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +11,14 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.gooble.logic.app.R;
+import com.gooble.logic.app.db.Tables;
+import com.gooble.logic.app.db.entity.RelationAdapter;
+import com.gooble.logic.app.entity.EntityList;
+import com.gooble.logic.app.entity.Puzzle;
+import com.gooble.logic.app.entity.Relation;
+import com.gooble.logic.app.entity.Variable;
+
 public class EditRelationActivity extends Activity {
 
    @Override
@@ -22,12 +28,17 @@ public class EditRelationActivity extends Activity {
       
       Spinner spinner = (Spinner) findViewById(R.id.relation_variable_list);
       
+      Long relationId = getIntent().getLongExtra("relationid", -1);
+      
+      Relation relation = new RelationAdapter(this).getById(relationId);
+      Puzzle puzzle = relation.getPuzzle(this);
+      EntityList<Variable> variables = puzzle.getVariables(this);
+      
       //Set the current relation's name in the name field.
       
       //TODO: Load this list from the puzzle's variables
       ArrayAdapter<String> aa = new ArrayAdapter<String>(this,
-            android.R.layout.simple_spinner_item, new String[] { "name",
-                  "shoes", "age" });
+            android.R.layout.simple_spinner_item, variables.getColumn(Tables.Variable.NAME).toArray(new String[0]));
       spinner.setAdapter(aa);
       
       final Activity activity = this;

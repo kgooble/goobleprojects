@@ -13,7 +13,7 @@ import com.gooble.logic.api.VariableDomain;
 import com.gooble.logic.api.VariableFacade;
 import com.gooble.logic.app.R;
 import com.gooble.logic.app.db.Tables;
-import com.gooble.logic.app.db.entity.EntityListAdapter;
+import com.gooble.logic.app.db.entity.PopinEntityListAdapter;
 import com.gooble.logic.app.db.entity.RowDeleteListener;
 import com.gooble.logic.app.db.entity.VariableAdapter;
 import com.gooble.logic.app.entity.EntityList;
@@ -37,7 +37,7 @@ public class VariablesActivity extends Activity {
       
       EntityList<Variable> variables = helper.getVariablesForPuzzle(puzzleId);
       final Activity activity = this;
-      final EntityListAdapter entityListAdapter = new EntityListAdapter(this, variables, R.id.variable_container, R.layout.variable_row, 
+      final PopinEntityListAdapter entityListAdapter = new PopinEntityListAdapter(this, variables, R.id.variable_container, R.layout.variable_row, 
          new int[]{R.id.edit_variable_button, R.id.delete_variable_button}, 
          new OnClickListener[]{
             new OnClickListener() {
@@ -61,11 +61,7 @@ public class VariablesActivity extends Activity {
             new int[]{R.id.variable_name} 
       );
       
-      /*
-       * TODO: need radio set which states which one is the main variable--- 
-       *       or maybe this should go on the variable screen.
-       */
-      
+      //TODO: add variable button + save button should be menu options rather than buttons on the screen (same for every other activity)
       Button addVariableButton = (Button) findViewById(R.id.add_variable_button);
       Button saveVariablesButton = (Button) findViewById(R.id.save_variables_button);
       saveVariablesButton.setOnClickListener(new OnClickListener() {

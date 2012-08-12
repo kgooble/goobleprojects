@@ -13,7 +13,7 @@ import com.gooble.logic.api.RelationDomain;
 import com.gooble.logic.api.RelationFacade;
 import com.gooble.logic.app.R;
 import com.gooble.logic.app.db.Tables;
-import com.gooble.logic.app.db.entity.EntityListAdapter;
+import com.gooble.logic.app.db.entity.PopinEntityListAdapter;
 import com.gooble.logic.app.db.entity.RelationAdapter;
 import com.gooble.logic.app.db.entity.RowDeleteListener;
 import com.gooble.logic.app.entity.EntityList;
@@ -34,7 +34,7 @@ public class RelationsActivity extends Activity {
       setContentView(R.layout.relations);
       
       final Long puzzleId = (Long) getIntent().getExtras().get("puzzleid");
-      final EntityListAdapter adapter = loadRelations(puzzleId);
+      final PopinEntityListAdapter adapter = loadRelations(puzzleId);
       
       // TODO: Maybe pass the add button id in to the entity list adapter because it always does the same thing.
       Button addRelationButton = (Button) findViewById(R.id.add_relation_button);
@@ -52,12 +52,12 @@ public class RelationsActivity extends Activity {
       });
    }
 
-   private EntityListAdapter loadRelations(final Long puzzleId) {
+   private PopinEntityListAdapter loadRelations(final Long puzzleId) {
       final Activity activity = this;
       RelationAdapter relHelper = new RelationAdapter(activity);
       EntityList<Relation> relations = relHelper.getRelationsForPuzzle(puzzleId);
       
-      EntityListAdapter adapter = new EntityListAdapter(this, relations, R.id.relation_container, R.layout.relation_row, 
+      PopinEntityListAdapter adapter = new PopinEntityListAdapter(this, relations, R.id.relation_container, R.layout.relation_row, 
             new int[]{R.id.edit_relation_button, R.id.delete_relation_button}, 
             new OnClickListener[]{
             //TODO: extract pattern. save, get id, then launch new activity with id set as extra

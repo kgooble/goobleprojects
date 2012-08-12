@@ -17,7 +17,7 @@ import com.gooble.logic.api.VariablevalueDomain;
 import com.gooble.logic.api.VariablevalueFacade;
 import com.gooble.logic.app.R;
 import com.gooble.logic.app.db.Tables;
-import com.gooble.logic.app.db.entity.EntityListAdapter;
+import com.gooble.logic.app.db.entity.PopinEntityListAdapter;
 import com.gooble.logic.app.db.entity.RowDeleteListener;
 import com.gooble.logic.app.db.entity.VariableAdapter;
 import com.gooble.logic.app.db.entity.VariablevalueAdapter;
@@ -56,15 +56,15 @@ public class VariableValuesActivity extends Activity {
       variableType.setAdapter(typeAdapter);
       variableType.setSelection(VariableType.getPosition(myVar.getType()));
 
-      EntityListAdapter adapter = loadVariableValues(variableId);
+      PopinEntityListAdapter adapter = loadVariableValues(variableId);
       setAddEntityHandler(adapter);
       setSaveHandler(variableId, variableType, adapter);
    }
 
-   private EntityListAdapter loadVariableValues(final Long variableId) {
+   private PopinEntityListAdapter loadVariableValues(final Long variableId) {
       final VariablevalueAdapter valueAdapter = new VariablevalueAdapter(this);
       EntityList<Variablevalue> values = valueAdapter.getForVariable(variableId);
-      final EntityListAdapter adapter = new EntityListAdapter(this, values, R.id.value_container, R.layout.value_row, 
+      final PopinEntityListAdapter adapter = new PopinEntityListAdapter(this, values, R.id.value_container, R.layout.value_row, 
             new int[]{R.id.delete_value_button}, 
             new OnClickListener[]{new RowDeleteListener(valueAdapter)});
       adapter.registerContainer(
@@ -73,7 +73,7 @@ public class VariableValuesActivity extends Activity {
       return adapter;
    }
 
-   private void setAddEntityHandler(final EntityListAdapter adapter) {
+   private void setAddEntityHandler(final PopinEntityListAdapter adapter) {
       Button addValueButton = (Button) findViewById(R.id.add_value_button);
       addValueButton.setOnClickListener(new OnClickListener() {
          public void onClick(View v) {
@@ -82,7 +82,7 @@ public class VariableValuesActivity extends Activity {
       });
    }
 
-   private void setSaveHandler(final Long variableId, final Spinner variableType, final EntityListAdapter adapter) {
+   private void setSaveHandler(final Long variableId, final Spinner variableType, final PopinEntityListAdapter adapter) {
       final Activity activity = this;
       Button saveValuesButton = (Button) findViewById(R.id.save_values_button);
       saveValuesButton.setOnClickListener(new OnClickListener() {

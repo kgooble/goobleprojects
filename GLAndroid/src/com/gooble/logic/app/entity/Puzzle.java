@@ -1,5 +1,9 @@
 package com.gooble.logic.app.entity;
 
+import com.gooble.logic.app.db.entity.VariableAdapter;
+
+import android.content.Context;
+
 public class Puzzle extends Entity{
 
    private String name;
@@ -16,6 +20,9 @@ public class Puzzle extends Entity{
    }
    public void setMainvariableid(Long mainvariableid) {
       this.mainvariableid = mainvariableid;
+   }
+   public EntityList<Variable> getVariables(Context context) {
+      return new VariableAdapter(context).getVariablesForPuzzle(getId());
    }
    
 }
