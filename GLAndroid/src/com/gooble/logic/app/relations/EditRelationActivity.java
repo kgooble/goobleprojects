@@ -1,5 +1,9 @@
 package com.gooble.logic.app.relations;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,15 +11,18 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.gooble.logic.app.R;
 import com.gooble.logic.app.db.Tables;
+import com.gooble.logic.app.db.entity.ConditionsetAdapter;
+import com.gooble.logic.app.db.entity.PopinEntityListAdapter;
 import com.gooble.logic.app.db.entity.RelationAdapter;
+import com.gooble.logic.app.db.entity.RowDeleteListener;
+import com.gooble.logic.app.db.entity.VariableAdapter;
+import com.gooble.logic.app.entity.Conditionset;
 import com.gooble.logic.app.entity.EntityList;
-import com.gooble.logic.app.entity.Puzzle;
 import com.gooble.logic.app.entity.Relation;
 import com.gooble.logic.app.entity.Variable;
 
@@ -25,69 +32,87 @@ public class EditRelationActivity extends Activity {
    public void onCreate(Bundle bundle){
       super.onCreate(bundle);
       setContentView(R.layout.edit_relation);
-      
-      Spinner spinner = (Spinner) findViewById(R.id.relation_variable_list);
-      
-      Long relationId = getIntent().getLongExtra("relationid", -1);
-      
-      Relation relation = new RelationAdapter(this).getById(relationId);
-      Puzzle puzzle = relation.getPuzzle(this);
-      EntityList<Variable> variables = puzzle.getVariables(this);
-      
+
+      final Long relationId = getIntent().getLongExtra("relationid", -1);
+      final RelationAdapter relationAdapter = new RelationAdapter(this);
+      final Relation relation = relationAdapter.getById(relationId);
+      EntityList<Variable> variables = new VariableAdapter(this).getVariablesForPuzzle(relation.getPuzzleid());
+
       //Set the current relation's name in the name field.
       TextView relationNameLabel = (TextView) findViewById(R.id.relation_name);
       relationNameLabel.setText(relation.getName());
+
       
-      ArrayAdapter<String> aa = new ArrayAdapter<String>(this,
-            android.R.layout.simple_spinner_item, variables.getColumn(Tables.Variable.NAME).toArray(new String[0]));
-      spinner.setAdapter(aa);
-      
-      final Activity activity = this;
-      Button addConditionSetButton = (Button) findViewById(R.id.add_condition_set_button);
-      
-      addConditionSetButton.setOnClickListener(new OnClickListener() {
+      final Spinner variableSpinner = (Spinner) findViewById(R.id.relation_variable_list);
+      List<?> variableNames = variables.getColumn(Tables.Variable.NAME);
+      ArrayAdapter<String> varArrayAdapter = new ArrayAdapter<String>(this,
+            android.R.layout.simple_spinner_item, variableNames.toArray(new String[variableNames.size()]));
+      variableSpinner.setAdapter(varArrayAdapter);
+      int position = 0;
+      int varIndex = 0;
+      for (Variable var: variables){
+         if (var.getId() == relation.getVariableid()){
+            position = varIndex;
+            break;
+         }
+         varIndex++;
+      }
+      variableSpinner.setSelection(position);
+
+      listenForAddConditionset(relationId);
+      loadConditionsets(relation, variableSpinner);
+
+      final Map<String, Long> nameToVarId = new HashMap<String, Long>();
+      for (int i = 0; i < variables.size(); i++){
+         String name = (String) variableNames.get(i);
+         nameToVarId.put(name, variables.get(i).getId());
+      }
+      Button saveButton = (Button) findViewById(R.id.save_relation_button);
+      saveButton.setOnClickListener(new OnClickListener() {
          public void onClick(View v) {
-            activity.startActivity(new Intent(activity, ConditionSetActivity.class));
+            relation.setVariableid(nameToVarId.get(((TextView)variableSpinner.getSelectedView()).getText().toString()));
+            relationAdapter.store(relation);
          }
       });
-      
-      RelativeLayout layout = (RelativeLayout) findViewById(R.id.edit_relation_layout);
-      int thingToBeBelow = R.id.save_relation_button;
-      
-      
-      // TODO: Load condition sets as Labels with Edit buttons next to them
-      for (int i = 0; i < 3; i++){
-         TextView conditionLabel = new TextView(this);
-         conditionLabel.setId(conditionLabel.hashCode());
-         
-         Button editButton = new Button(this);
-         editButton.setId(editButton.hashCode());
-         
-         conditionLabel.setText("Condition text " + i);
-         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-               RelativeLayout.LayoutParams.WRAP_CONTENT,
-               RelativeLayout.LayoutParams.WRAP_CONTENT
-               );
-         params.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
-         params.addRule(RelativeLayout.BELOW, thingToBeBelow);
-         params.addRule(RelativeLayout.ALIGN_BASELINE, editButton.getId());
-         params.addRule(RelativeLayout.ALIGN_BOTTOM, editButton.getId());
-         conditionLabel.setLayoutParams(params);
-         
-         editButton.setText(R.string.edit);
-         RelativeLayout.LayoutParams buttonParams = new RelativeLayout.LayoutParams(
-               RelativeLayout.LayoutParams.WRAP_CONTENT,
-               RelativeLayout.LayoutParams.WRAP_CONTENT
-               );
-         buttonParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
-         buttonParams.addRule(RelativeLayout.BELOW, thingToBeBelow);
-         editButton.setLayoutParams(buttonParams);
-         
-         layout.addView(conditionLabel);
-         layout.addView(editButton);
-         
-         thingToBeBelow = editButton.getId();
-      }
    }
-   
+
+   private void loadConditionsets(final Relation relation, final Spinner variableSpinner) {
+      final Activity activity = this;
+      ConditionsetAdapter conditionsetAdapter = new ConditionsetAdapter(this);
+      EntityList<Conditionset> conditionSets = conditionsetAdapter.getConditionsetsForRelation(relation.getId());
+      final PopinEntityListAdapter entityListAdapter = new PopinEntityListAdapter(this, conditionSets, R.id.conditionset_container, R.layout.conditionset_row, 
+            new int[]{R.id.edit_conditionset_button, R.id.delete_conditionset_button}, 
+            new OnClickListener[]{new OnClickListener() {
+               public void onClick(View v) {
+                  relation.setVariableid(variableSpinner.getSelectedItemId());
+                  new RelationAdapter(activity).store(relation);
+                  
+                  //TODO: This same logic is repeated in at least VariablesActivity. extract
+                  View conditionsetRow = (View) v.getParent();
+                  Intent intent = new Intent(activity, ConditionSetActivity.class);
+                  Long conditionsetId = (long) conditionsetRow.getId();
+                  intent.putExtra("conditionsetid", conditionsetId);
+                  activity.startActivity(intent);
+               }
+            },
+            new RowDeleteListener(conditionsetAdapter)
+      });
+
+      entityListAdapter.registerContainer(
+            new String[]{Tables.Conditionset.NAME}, 
+            new int[]{R.id.conditionset_label});
+   }
+
+   private void listenForAddConditionset(final Long relationId) {
+      final Activity activity = this;
+      Button addConditionSetButton = (Button) findViewById(R.id.add_condition_set_button);
+      addConditionSetButton.setOnClickListener(new OnClickListener() {
+         public void onClick(View v) {
+            Intent intent = new Intent(activity, ConditionSetActivity.class);
+            intent.putExtra("relationid", relationId);
+            activity.startActivity(intent);
+         }
+      });
+   }
+
 }

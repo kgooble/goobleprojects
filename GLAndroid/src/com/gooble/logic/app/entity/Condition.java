@@ -2,13 +2,13 @@ package com.gooble.logic.app.entity;
 
 public class Condition extends Entity{
 
-   private Long relationid;
+   private Long conditionsetid;
    private String operator;
-   public Long getRelationid() {
-      return relationid;
+   public Long getConditionsetid() {
+      return conditionsetid;
    }
-   public void setRelationid(Long relationid) {
-      this.relationid = relationid;
+   public void setConditionsetid(Long conditionosetid) {
+      this.conditionsetid = conditionosetid;
    }
    public String getOperator() {
       return operator;

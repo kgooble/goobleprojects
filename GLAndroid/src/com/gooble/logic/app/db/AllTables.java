@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.gooble.logic.app.db.sql.CreateTableSql;
 import com.gooble.logic.app.db.sql.DropTableSql;
 import com.gooble.logic.app.entity.Condition;
+import com.gooble.logic.app.entity.Conditionset;
 import com.gooble.logic.app.entity.Conditionterm;
 import com.gooble.logic.app.entity.Entity;
 import com.gooble.logic.app.entity.Hint;
@@ -24,7 +25,7 @@ public class AllTables {
 
    @SuppressWarnings("unchecked")
    private static final Class<Entity>[] ALL_TABLES = new Class[] {
-         Condition.class, Conditionterm.class, Hint.class, Hintrelation.class,
+         Conditionset.class, Condition.class, Conditionterm.class, Hint.class, Hintrelation.class,
          Hintrelationterm.class, Hintvariable.class, Property.class,
          Propertyterm.class, Puzzle.class, Relation.class, Relationterm.class,
          Term.class, Variable.class, Variablevalue.class };

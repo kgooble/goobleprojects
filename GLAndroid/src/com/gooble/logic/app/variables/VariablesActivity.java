@@ -35,6 +35,29 @@ public class VariablesActivity extends Activity {
       final Long puzzleId = (Long) getIntent().getExtras().get("puzzleid");
       final VariableAdapter helper = new VariableAdapter(this);
       
+      final Activity activity = this;
+      final PopinEntityListAdapter entityListAdapter = loadVariables(puzzleId, helper);
+      
+      //TODO: add variable button + save button should be menu options rather than buttons on the screen (same for every other activity)
+      Button saveVariablesButton = (Button) findViewById(R.id.save_variables_button);
+      saveVariablesButton.setOnClickListener(new OnClickListener() {
+         public void onClick(View v) {
+            List<Long> ids = entityListAdapter.getIds();
+            List<String> names = entityListAdapter.getStringsFromField(R.id.variable_name);
+            List<Long> newIds = variableFacade.save(activity, puzzleId, ids, names);
+            new ContainerColumns(activity, R.id.variable_container).updateIds(newIds);
+         }
+      });
+      
+      Button addVariableButton = (Button) findViewById(R.id.add_variable_button);
+      addVariableButton.setOnClickListener(new OnClickListener() {
+         public void onClick(View v) {
+            entityListAdapter.addNewEntity();
+         }
+      });
+   }
+
+   private PopinEntityListAdapter loadVariables(final Long puzzleId, final VariableAdapter helper) {
       EntityList<Variable> variables = helper.getVariablesForPuzzle(puzzleId);
       final Activity activity = this;
       final PopinEntityListAdapter entityListAdapter = new PopinEntityListAdapter(this, variables, R.id.variable_container, R.layout.variable_row, 
@@ -60,24 +83,7 @@ public class VariablesActivity extends Activity {
             new String[]{Tables.Variable.NAME}, 
             new int[]{R.id.variable_name} 
       );
-      
-      //TODO: add variable button + save button should be menu options rather than buttons on the screen (same for every other activity)
-      Button addVariableButton = (Button) findViewById(R.id.add_variable_button);
-      Button saveVariablesButton = (Button) findViewById(R.id.save_variables_button);
-      saveVariablesButton.setOnClickListener(new OnClickListener() {
-         public void onClick(View v) {
-            List<Long> ids = entityListAdapter.getIds();
-            List<String> names = entityListAdapter.getStringsFromField(R.id.variable_name);
-            List<Long> newIds = variableFacade.save(activity, puzzleId, ids, names);
-            new ContainerColumns(activity, R.id.variable_container).updateIds(newIds);
-         }
-      });
-      
-      addVariableButton.setOnClickListener(new OnClickListener() {
-         public void onClick(View v) {
-            entityListAdapter.addNewEntity();
-         }
-      });
+      return entityListAdapter;
    }
 }
 

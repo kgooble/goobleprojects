@@ -22,7 +22,9 @@ public abstract class EntityAdapter<E extends Entity> {
       Cursor cursor = helper.getById(id, factory);
       if (!cursor.moveToNext())
          return null;
-      return loadEntity(id, cursor);
+      E entity = loadEntity(id, cursor);
+      cursor.close();
+      return entity;
    }
 
    public Cursor getAll() {
@@ -60,11 +62,12 @@ public abstract class EntityAdapter<E extends Entity> {
       return loadList(result);
    }
 
-   protected EntityList<E> loadList(Cursor result) {
+   protected EntityList<E> loadList(Cursor cursor) {
       EntityList<E> list = new EntityList<E>();
-      while (result.moveToNext()){
-         list.add(loadEntity(result));
+      while (cursor.moveToNext()){
+         list.add(loadEntity(cursor));
       }
+      cursor.close();
       return list;
    }
 

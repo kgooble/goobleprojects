@@ -41,7 +41,6 @@ public final class DatabaseHelper extends SQLiteOpenHelper{
       Cursor cursor = getReadableDatabase().query(factory.getTableName(), factory.getTablePrefixedFields(), Tables._ID + " = " + id, null, null, null, null);
       if (cursor.getCount() > 1)
          throw new RuntimeException("More than one " + factory.getTableName() + " found with id " + id);
-      
       return cursor;
    }
 

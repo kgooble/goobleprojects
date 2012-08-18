@@ -69,8 +69,12 @@ public class Tables {
       public static final String TERMID = "termid";
       public static final String RELATIONORDER = "relationorder"; // the order that this variable comes in in the relation. eg for rel(X, Y) , RELATIONORDER(X) must be less than RELATIONORDER(Y)
    }
-   public class Condition implements BaseColumns{
+   public class Conditionset implements BaseColumns{
       public static final String RELATIONID = "relationid";
+      public static final String NAME = "name";
+   }
+   public class Condition implements BaseColumns{
+      public static final String CONDITIONSETID = "conditionsetid";
       public static final String OPERATOR = "operator";
    }
    public class Conditionterm implements BaseColumns{
