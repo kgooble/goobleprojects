@@ -14,4 +14,17 @@ public class EntityList<E extends Entity> extends ArrayList<E> {
       }
       return column;
    }
+   
+   public int findPosition(String field, Object value){
+      if (value == null)
+         return 0;
+      int position = 0;
+      for (int i = 0; i < size(); i++){
+         if (value.equals(get(i).getField(field))){
+            position = i;
+            break;
+         }
+      }
+      return position;
+   }
 }

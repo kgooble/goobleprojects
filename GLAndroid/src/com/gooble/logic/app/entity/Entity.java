@@ -2,6 +2,8 @@ package com.gooble.logic.app.entity;
 
 import java.lang.reflect.Method;
 
+import com.gooble.logic.app.db.Tables;
+
 public class Entity {
    private long id;
    private boolean isNew;
@@ -53,6 +55,8 @@ public class Entity {
    }
    public final Object getField(String fieldName){
       String capitalizedFieldName = fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+      if (fieldName == Tables._ID)
+         capitalizedFieldName = "Id";
       Method getter;
       try {
          getter = getClass().getDeclaredMethod("get" + capitalizedFieldName);

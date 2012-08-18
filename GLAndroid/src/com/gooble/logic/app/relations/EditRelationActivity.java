@@ -48,16 +48,7 @@ public class EditRelationActivity extends Activity {
       ArrayAdapter<String> varArrayAdapter = new ArrayAdapter<String>(this,
             android.R.layout.simple_spinner_item, variableNames.toArray(new String[variableNames.size()]));
       variableSpinner.setAdapter(varArrayAdapter);
-      int position = 0;
-      int varIndex = 0;
-      for (Variable var: variables){
-         if (var.getId() == relation.getVariableid()){
-            position = varIndex;
-            break;
-         }
-         varIndex++;
-      }
-      variableSpinner.setSelection(position);
+      variableSpinner.setSelection(variables.findPosition(Tables._ID, relation.getVariableid()));
 
       listenForAddConditionset(relationId);
       loadConditionsets(relation, variableSpinner);
