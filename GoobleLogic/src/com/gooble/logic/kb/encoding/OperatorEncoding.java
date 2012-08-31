@@ -23,9 +23,10 @@ public class OperatorEncoding {
    }
    
    public static Operator operator(String stmtEncoding) {
+      stmtEncoding = stmtEncoding.replaceAll("\\s", "");
       for (Map.Entry<String, Class<? extends Operator>> entry : OPERATORS.entrySet()){
          if (stmtEncoding.indexOf(entry.getKey()) > 0){
-            String[] stmtParts = stmtEncoding.split(" "+entry.getKey()+" ");
+            String[] stmtParts = stmtEncoding.split(entry.getKey());
             Term<?> limit = term(value(stmtParts[1]));
             Term<?> variable = term(value(stmtParts[0]));
             try {

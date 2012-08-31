@@ -15,6 +15,7 @@ public class OperatorEncodingTest {
    @Test
    public void create_greater_than_operator() throws Exception {
       assertEquals(new GreaterThan(constant(17), variable("X")), operator("X > 17"));
+      assertEquals(new GreaterThan(constant(17), variable("X")), operator("X>17"));
    }
    @Test
    public void create_less_than_operator() throws Exception {

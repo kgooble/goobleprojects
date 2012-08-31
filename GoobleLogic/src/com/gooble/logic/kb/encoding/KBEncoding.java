@@ -35,8 +35,9 @@ public class KBEncoding {
    }
    
    public static Rule rule(String encodedRule){
-      String[] ruleParts = encodedRule.split(" => ");
-      String[] antecedentParts = ruleParts[0].split(" \\^ ");
+      encodedRule = encodedRule.replaceAll("\\s", "");
+      String[] ruleParts = encodedRule.split("=>");
+      String[] antecedentParts = ruleParts[0].split("\\^");
       String consequent = ruleParts[1];
       
       Statement[] antecedents = new Statement[antecedentParts.length];
@@ -51,6 +52,7 @@ public class KBEncoding {
    }
 
    private static Statement parseFunction(String stmtEncoding) {
+      stmtEncoding = stmtEncoding.replaceAll("\\s", "");
       int indexOfOpenBracket = stmtEncoding.indexOf('(');
       int indexOfClosingBracket = stmtEncoding.indexOf(')');
       
@@ -61,7 +63,7 @@ public class KBEncoding {
       }
       
       String functionName = stmtEncoding.substring(0, indexOfOpenBracket);
-      String[] parameterParts = stmtEncoding.substring(indexOfOpenBracket+1, indexOfClosingBracket).split(", ");
+      String[] parameterParts = stmtEncoding.substring(indexOfOpenBracket+1, indexOfClosingBracket).split(",");
       
       Object[] realParams = new Object[parameterParts.length];
       
