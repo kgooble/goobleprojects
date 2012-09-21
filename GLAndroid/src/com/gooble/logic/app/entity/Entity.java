@@ -59,7 +59,7 @@ public class Entity {
          capitalizedFieldName = "Id";
       Method getter;
       try {
-         getter = getClass().getDeclaredMethod("get" + capitalizedFieldName);
+         getter = getClass().getMethod("get" + capitalizedFieldName);
       } catch (Exception e) {
          throw new RuntimeException(e);
       }

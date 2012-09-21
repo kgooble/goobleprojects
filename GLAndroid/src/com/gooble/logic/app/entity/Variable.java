@@ -1,8 +1,12 @@
 package com.gooble.logic.app.entity;
 
+import java.util.Arrays;
+import java.util.List;
+
 import android.content.Context;
 
 import com.gooble.logic.app.db.entity.PuzzleAdapter;
+import com.gooble.logic.app.entity.domain.VariableType;
 
 public class Variable extends Entity {
 
@@ -38,6 +42,13 @@ public class Variable extends Entity {
       PuzzleAdapter helper = new PuzzleAdapter(context);
       Puzzle myPuzzle = helper.getById(getPuzzleid());
       return getId() == myPuzzle.getMainvariableid();
+   }
+
+   public List<String> getOperators() {
+      if (VariableType.NUMBER.equals(getType())){
+         return Arrays.asList("<", ">", "=");
+      }
+      return Arrays.asList("=");
    }
 
 }

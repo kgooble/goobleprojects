@@ -4,6 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.gooble.logic.app.R;
+import com.gooble.logic.app.db.entity.ConditionAdapter;
+import com.gooble.logic.app.db.entity.ConditionsetAdapter;
+import com.gooble.logic.app.db.entity.PopinEntityListAdapter;
+import com.gooble.logic.app.db.entity.RelationAdapter;
+import com.gooble.logic.app.db.entity.VariableAdapter;
+import com.gooble.logic.app.entity.Condition;
+import com.gooble.logic.app.entity.Conditionset;
+import com.gooble.logic.app.entity.EntityList;
+import com.gooble.logic.app.entity.Relation;
 import com.gooble.logic.app.util.SpinnerFactory;
 
 import android.app.Activity;
@@ -30,6 +39,30 @@ public class ConditionSetActivity extends Activity {
       conditionRows = new ArrayList<TableRow>();
       final Activity activity = this;
       final TableLayout layout = (TableLayout) findViewById(R.id.condition_set_layout);
+      
+      final Long conditionsetId = getIntent().getLongExtra("conditionsetid", -1);
+      
+      Conditionset conditionset = null;
+      Long relationId = null;
+      if (conditionsetId == -1){
+         relationId = getIntent().getLongExtra("relationid", -1);
+         conditionset = new Conditionset();
+         conditionset.setRelationid(relationId);
+      }else{
+         conditionset = new ConditionsetAdapter(this).getById(conditionsetId);
+         relationId = conditionset.getRelationid();
+      }
+      
+      final Relation relation = new RelationAdapter(this).getById(relationId);
+      
+      final List<String> operators = new VariableAdapter(this).getById(relation.getVariableid()).getOperators();
+      
+      final EntityList<Condition> conditions = new ConditionAdapter(this).getAllForConditionSet(conditionset.getId());
+      
+      PopinEntityListAdapter adapter = new PopinEntityListAdapter(this, conditions, R.id.condition_set_layout, R.layout.condition_row, 
+            new int[]{}, new OnClickListener[]{});
+      adapter.registerContainer(new String[]{}, new int[]{R.id.operand_1, R.id.operator, R.id.operand_2});
+      
 
       Button saveConditionsButton = (Button) findViewById(R.id.save_condition_set_button);
       //TODO Make it save- should then load on the other page
@@ -64,7 +97,7 @@ public class ConditionSetActivity extends Activity {
             
             //TODO: populate with actual valid operators
             // for strings, < and > don't work
-            conditionRow.addView(createSpinnerWithValues(">", "<", "="));
+            conditionRow.addView(createSpinnerWithValues(operators.toArray(new String[0])));
             
             //TODO: populate with values for current variable 
             conditionRow.addView(createSpinnerWithValues("bob"));
@@ -75,6 +108,11 @@ public class ConditionSetActivity extends Activity {
          }
       });
    }
+   
+   private void loadConditions(){
+      // for a particular conditionset...
+   }
+   
    
    private Spinner createSpinnerWithValues(String... values){
       return new SpinnerFactory(this).createRowSpinnerWithValues(values);

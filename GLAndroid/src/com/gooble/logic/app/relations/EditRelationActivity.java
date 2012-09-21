@@ -28,6 +28,8 @@ import com.gooble.logic.app.entity.Variable;
 
 public class EditRelationActivity extends Activity {
 
+   private Map<String, Long> nameToVarId;
+
    @Override
    public void onCreate(Bundle bundle){
       super.onCreate(bundle);
@@ -41,7 +43,6 @@ public class EditRelationActivity extends Activity {
       //Set the current relation's name in the name field.
       TextView relationNameLabel = (TextView) findViewById(R.id.relation_name);
       relationNameLabel.setText(relation.getName());
-
       
       final Spinner variableSpinner = (Spinner) findViewById(R.id.relation_variable_list);
       List<?> variableNames = variables.getColumn(Tables.Variable.NAME);
@@ -49,11 +50,12 @@ public class EditRelationActivity extends Activity {
             android.R.layout.simple_spinner_item, variableNames.toArray(new String[variableNames.size()]));
       variableSpinner.setAdapter(varArrayAdapter);
       variableSpinner.setSelection(variables.findPosition(Tables._ID, relation.getVariableid()));
-
-      listenForAddConditionset(relationId);
+      
+      listenForAddConditionset(relation, variableSpinner);
       loadConditionsets(relation, variableSpinner);
 
-      final Map<String, Long> nameToVarId = new HashMap<String, Long>();
+      
+      nameToVarId = new HashMap<String, Long>();
       for (int i = 0; i < variables.size(); i++){
          String name = (String) variableNames.get(i);
          nameToVarId.put(name, variables.get(i).getId());
@@ -61,7 +63,7 @@ public class EditRelationActivity extends Activity {
       Button saveButton = (Button) findViewById(R.id.save_relation_button);
       saveButton.setOnClickListener(new OnClickListener() {
          public void onClick(View v) {
-            relation.setVariableid(nameToVarId.get(((TextView)variableSpinner.getSelectedView()).getText().toString()));
+            relation.setVariableid(getVariableIdFromSpinner(variableSpinner));
             relationAdapter.store(relation);
          }
       });
@@ -75,7 +77,7 @@ public class EditRelationActivity extends Activity {
             new int[]{R.id.edit_conditionset_button, R.id.delete_conditionset_button}, 
             new OnClickListener[]{new OnClickListener() {
                public void onClick(View v) {
-                  relation.setVariableid(variableSpinner.getSelectedItemId());
+                  relation.setVariableid(getVariableIdFromSpinner(variableSpinner));
                   new RelationAdapter(activity).store(relation);
                   
                   //TODO: This same logic is repeated in at least VariablesActivity. extract
@@ -94,16 +96,23 @@ public class EditRelationActivity extends Activity {
             new int[]{R.id.conditionset_label});
    }
 
-   private void listenForAddConditionset(final Long relationId) {
+   private void listenForAddConditionset(final Relation relation, final Spinner variableSpinner) {
       final Activity activity = this;
       Button addConditionSetButton = (Button) findViewById(R.id.add_condition_set_button);
       addConditionSetButton.setOnClickListener(new OnClickListener() {
          public void onClick(View v) {
+            relation.setVariableid(getVariableIdFromSpinner(variableSpinner));
+            new RelationAdapter(activity).store(relation);
+            
             Intent intent = new Intent(activity, ConditionSetActivity.class);
-            intent.putExtra("relationid", relationId);
+            intent.putExtra("relationid", relation.getId());
             activity.startActivity(intent);
          }
       });
+   }
+
+   private Long getVariableIdFromSpinner(Spinner variableSpinner) {
+      return nameToVarId.get(((TextView)variableSpinner.getSelectedView()).getText().toString());
    }
 
 }

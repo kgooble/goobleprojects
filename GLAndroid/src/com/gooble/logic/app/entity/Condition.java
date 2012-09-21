@@ -7,8 +7,8 @@ public class Condition extends Entity{
    public Long getConditionsetid() {
       return conditionsetid;
    }
-   public void setConditionsetid(Long conditionosetid) {
-      this.conditionsetid = conditionosetid;
+   public void setConditionsetid(Long conditionsetid) {
+      this.conditionsetid = conditionsetid;
    }
    public String getOperator() {
       return operator;
