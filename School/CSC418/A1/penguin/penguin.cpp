@@ -318,6 +318,7 @@ void display(void)
         
         // Draw the 'body'
         glPushMatrix();
+        {
             // Scale square to size of body
             glScalef(BODY_WIDTH, BODY_LENGTH, 1.0);
 
@@ -326,25 +327,46 @@ void display(void)
 
             // Draw the square for the body
             drawSquare(1.0);
+
+            // draw arm
+            glPushMatrix();
+            {
+                glTranslatef(1.0, 0.0, 0.0);
+                glColor3f(0.0, 0.0, 1.0);
+                drawSquare(0.5);
+            }
+            glPopMatrix();
+
+            // Draw the 'leg'
+            glPushMatrix();
+            {
+                // Move the leg to the joint hinge
+                glTranslatef(1./3, -0.5, 0.0);
+                // Rotate along the hinge
+                glRotatef(joint_rot, 0.0, 0.0, 1.0);
+                // Scale the size of the leg
+                glScalef(0.2, 0.5, 1.0);
+                // Move to center location of leg, under previous rotation
+                glTranslatef(0.0, -0.5, 0.0);
+                // Draw the square for the leg
+                glColor3f(1.0, 0.0, 0.0);
+                drawSquare(1.0);
+
+                // Draw the foot
+                glPushMatrix();
+                {
+                    glTranslatef(0.0, -1.0, 0.0);
+                    glScalef(4.0, 0.25, 1.0);
+                    glColor3f(1.0, 1.0, 0.0);
+                    drawSquare(1.0);
+                }
+                glPopMatrix();
+
+            }glPopMatrix();
+
+        }
         glPopMatrix();
-        
-        // Draw the 'arm'
 
-        // Move the arm to the joint hinge
-        glTranslatef(0.0, -BODY_LENGTH/2 + ARM_WIDTH, 0.0);
-
-        // Rotate along the hinge
-        glRotatef(joint_rot, 0.0, 0.0, 1.0);
-
-        // Scale the size of the arm
-        glScalef(ARM_WIDTH, ARM_LENGTH, 1.0);
-
-        // Move to center location of arm, under previous rotation
-        glTranslatef(0.0, -0.5, 0.0);
-
-        // Draw the square for the arm
-        glColor3f(1.0, 0.0, 0.0);
-        drawSquare(1.0);
 
     // Retrieve the previous state of the transformation stack
     glPopMatrix();
