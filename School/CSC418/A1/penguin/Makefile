@@ -50,6 +50,12 @@ CSRCS         =
 # Define all C++ source files here
 CPPSRCS       = penguin.cpp
 
+# Define the source directory
+VPATH = .
+
+# Define the build directory
+BUILDDIR = build
+
 ##############################################################################
 # Define additional rules that make should know about in order to compile our
 # files.                                        
@@ -63,7 +69,7 @@ all : $(PROGRAM)
 	$(CCC) $(CCCFLAGS) $(CPPFLAGS) $*.cpp
 	
 # Define rule for compiling all C files
-%.o : %.c
+$(BUILDDIR)/%.o : %.c
 	$(CC) $(CFLAGS) $(CPPFLAGS) $*.c
 	
 # Define rule for creating executable

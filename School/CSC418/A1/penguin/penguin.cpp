@@ -105,8 +105,9 @@ void GLUI_Control(int id);
 
 // Functions to help draw the object
 void drawSquare(float size);
+void drawCircle(float radius);
 void drawPolygon(int n, Point points[]);
-
+void drawLeg(float leftOrRight);
 
 // Return the current system clock (in seconds)
 double getTime();
@@ -126,9 +127,9 @@ int main(int argc, char** argv)
     // Process program arguments
     if(argc != 3) {
         printf("Usage: demo [width] [height]\n");
-        printf("Using 300x200 window by default...\n");
-        Win[0] = 300;
-        Win[1] = 200;
+        printf("Using 400x300 window by default...\n");
+        Win[0] = 400;
+        Win[1] = 300;
     } else {
         Win[0] = atoi(argv[1]);
         Win[1] = atoi(argv[2]);
@@ -308,10 +309,8 @@ void display(void)
     ///////////////////////////////////////////////////////////
 
     // Draw our hinged object
-    const float BODY_WIDTH = 30.0f;
-    const float BODY_LENGTH = 50.0f;
-    const float ARM_LENGTH = 50.0f;
-    const float ARM_WIDTH = 10.0f;
+    const float BODY_WIDTH = 70.0f;
+    const float BODY_LENGTH = 100.0f;
 
     // Push the current transformation matrix on the stack
     glPushMatrix();
@@ -331,39 +330,15 @@ void display(void)
             // draw arm
             glPushMatrix();
             {
-                glTranslatef(1.0, 0.0, 0.0);
+                glTranslatef(0.1, 0.0, 0.0);
+                glScalef(1.0/3.0, 0.5, 1.0);
                 glColor3f(0.0, 0.0, 1.0);
-                drawSquare(0.5);
+                drawSquare(1.0);
             }
             glPopMatrix();
 
-            // Draw the 'leg'
-            glPushMatrix();
-            {
-                // Move the leg to the joint hinge
-                glTranslatef(1./3, -0.5, 0.0);
-                // Rotate along the hinge
-                glRotatef(joint_rot, 0.0, 0.0, 1.0);
-                // Scale the size of the leg
-                glScalef(0.2, 0.5, 1.0);
-                // Move to center location of leg, under previous rotation
-                glTranslatef(0.0, -0.5, 0.0);
-                // Draw the square for the leg
-                glColor3f(1.0, 0.0, 0.0);
-                drawSquare(1.0);
-
-                // Draw the foot
-                glPushMatrix();
-                {
-                    glTranslatef(0.0, -1.0, 0.0);
-                    glScalef(4.0, 0.25, 1.0);
-                    glColor3f(1.0, 1.0, 0.0);
-                    drawSquare(1.0);
-                }
-                glPopMatrix();
-
-            }glPopMatrix();
-
+            drawLeg(1.0);
+            drawLeg(-1.0);
         }
         glPopMatrix();
 
@@ -398,4 +373,54 @@ void drawPolygon(int n, Point points[]){
 	}
 	glEnd();
 
+}
+
+void drawLeg(float leftOrRight){
+    // Draw a leg
+    glPushMatrix();
+    {
+        // Move the leg to the joint hinge
+        glTranslatef(leftOrRight * 1.0/3.0, -0.5, 0.0);
+        // Rotate along the hinge
+        glRotatef(joint_rot, 0.0, 0.0, 1.0);
+        // Scale the size of the leg
+        glScalef(0.2, 0.5, 1.0);
+        // Move to center location of leg, under previous rotation
+        glTranslatef(0.0, -0.5, 0.0);
+        // Draw the square for the leg
+        glColor3f(1.0, 0.5, 0.5);
+        drawSquare(1.0);
+
+        // Draw the foot
+        glPushMatrix();
+        {
+            glTranslatef(-1.0, -0.5, 0.0);
+            glScalef(3.0, 1.0/3.0, 1.0);
+            glColor3f(1.0, 1.0, 0.0);
+            drawSquare(1.0);
+        }
+        glPopMatrix();
+
+        // draw the ankle joint
+        glPushMatrix();
+        {
+            glScalef(1.0/3.0, 0.1, 1.0);
+            glTranslatef(0.0, -1.0, 0.0);
+            glColor3f(0.0, 0.0, 0.0);
+            drawCircle(1.0);
+        }
+        glPopMatrix();
+
+    }glPopMatrix();
+}
+
+const float DEG2RAD = 3.14159 / 180;
+
+void drawCircle(float radius){
+    glBegin(GL_LINE_LOOP);
+    for (int i = 0; i < 360; i++){
+        float degInRad = i * DEG2RAD;
+        glVertex2f(cos(degInRad) * radius, sin(degInRad) * radius);
+    }
+    glEnd();
 }
