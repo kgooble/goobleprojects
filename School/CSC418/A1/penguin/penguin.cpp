@@ -71,7 +71,7 @@ int animation_frame = 0;      // Specify current frame of animation
 // Joint parameters
 const float JOINT_MIN = -45.0f;
 const float JOINT_MAX =  45.0f;
-float joint_rot = 0.0f;
+float joint_rot[] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}; // six values for each joint
 
 //////////////////////////////////////////////////////
 // TODO: Add additional joint parameters here
@@ -107,7 +107,7 @@ void GLUI_Control(int id);
 void drawSquare(float size);
 void drawCircle(float radius);
 void drawPolygon(int n, Point points[]);
-void drawLeg(float leftOrRight);
+void drawLeg(float leftOrRight, int rotationIndex);
 
 // Return the current system clock (in seconds)
 double getTime();
@@ -188,6 +188,15 @@ void animateButton(int)
   }
 }
 
+/**
+ * There are 6 points of rotation
+ * 7 degrees of freedom total, including the beak which moves up and down.
+ *
+ * --> each joint will have its own INDEX Into the joint rotation array.
+ * --> each joint may have its own set of MAX & MIN values.
+ *
+ */
+
 // Initialize GLUI and the user interface
 void initGlui()
 {
@@ -198,9 +207,14 @@ void initGlui()
 
     // Create a control to specify the rotation of the joint
     GLUI_Spinner *joint_spinner
-        = glui->add_spinner("Joint", GLUI_SPINNER_FLOAT, &joint_rot);
+        = glui->add_spinner("Joint", GLUI_SPINNER_FLOAT, &joint_rot[0]);
     joint_spinner->set_speed(0.1);
     joint_spinner->set_float_limits(JOINT_MIN, JOINT_MAX, GLUI_LIMIT_CLAMP);
+
+    GLUI_Spinner *leg2Spinner
+		= glui->add_spinner("Leg 2", GLUI_SPINNER_FLOAT, &joint_rot[1]);
+    leg2Spinner->set_speed(0.1);
+    leg2Spinner->set_float_limits(JOINT_MIN, JOINT_MAX, GLUI_LIMIT_CLAMP);
 
     ///////////////////////////////////////////////////////////
     // TODO: 
@@ -225,7 +239,7 @@ void initGl(void)
 {
     // glClearColor (red, green, blue, alpha)
     // Ignore the meaning of the 'alpha' value for now
-    glClearColor(0.7f,0.7f,0.9f,1.0f);
+    glClearColor(0.7f,0.7f,0.9f,0.5f);
 }
 
 
@@ -235,9 +249,12 @@ void initGl(void)
 void animate()
 {
     // Update geometry
+	// We want to start at the original position of the legs...
+	// then we need to store Time, not joint rotation... that or figure out the radians from the initial angle
     const double joint_rot_speed = 0.1;
-    double joint_rot_t = (sin(animation_frame*joint_rot_speed) + 1.0) / 2.0;
-    joint_rot = joint_rot_t * JOINT_MIN + (1 - joint_rot_t) * JOINT_MAX;
+    double joint_rot_t1 = (sin(animation_frame*joint_rot_speed) + 1.0) / 2.0;
+    joint_rot[0] = joint_rot_t1 * JOINT_MIN + (1 - joint_rot_t1) * JOINT_MAX;
+    joint_rot[1] = joint_rot_t1 * JOINT_MIN + (1 - joint_rot_t1) * JOINT_MAX;
     
     ///////////////////////////////////////////////////////////
     // TODO:
@@ -337,8 +354,8 @@ void display(void)
             }
             glPopMatrix();
 
-            drawLeg(1.0);
-            drawLeg(-1.0);
+            drawLeg(1.0, 0);
+            drawLeg(-1.0, 1);
         }
         glPopMatrix();
 
@@ -375,14 +392,14 @@ void drawPolygon(int n, Point points[]){
 
 }
 
-void drawLeg(float leftOrRight){
+void drawLeg(float leftOrRight, int rotationIndex){
     // Draw a leg
     glPushMatrix();
     {
         // Move the leg to the joint hinge
         glTranslatef(leftOrRight * 1.0/3.0, -0.5, 0.0);
         // Rotate along the hinge
-        glRotatef(joint_rot, 0.0, 0.0, 1.0);
+        glRotatef(joint_rot[rotationIndex], 0.0, 0.0, 1.0);
         // Scale the size of the leg
         glScalef(0.2, 0.5, 1.0);
         // Move to center location of leg, under previous rotation
