@@ -243,7 +243,7 @@ void initGl(void)
 }
 
 
-
+float old_rad = 0.0f;
 
 // Callback idle function for animating the scene
 void animate()
@@ -252,7 +252,15 @@ void animate()
 	// We want to start at the original position of the legs...
 	// then we need to store Time, not joint rotation... that or figure out the radians from the initial angle
     const double joint_rot_speed = 0.1;
-    double joint_rot_t1 = (sin(animation_frame*joint_rot_speed) + 1.0) / 2.0;
+
+    float rad = animation_frame*joint_rot_speed;
+    if (animation_frame == 0){
+    	printf("OLD %.2f\n", old_rad);
+    	rad += old_rad;
+    	printf("NEW %.2f\n", rad);
+    }
+    old_rad = rad;
+    double joint_rot_t1 = (sin(rad) + 1.0) / 2.0;
     joint_rot[0] = joint_rot_t1 * JOINT_MIN + (1 - joint_rot_t1) * JOINT_MAX;
     joint_rot[1] = joint_rot_t1 * JOINT_MIN + (1 - joint_rot_t1) * JOINT_MAX;
     
