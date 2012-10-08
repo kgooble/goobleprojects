@@ -109,6 +109,8 @@ void drawCircle(float radius);
 void drawPolygon(int n, Point points[]);
 void drawLeg(float leftOrRight, int rotationIndex);
 
+float getDegrees(float rad, float min, float max);
+
 // Return the current system clock (in seconds)
 double getTime();
 
@@ -207,7 +209,7 @@ void initGlui()
 
     // Create a control to specify the rotation of the joint
     GLUI_Spinner *joint_spinner
-        = glui->add_spinner("Joint", GLUI_SPINNER_FLOAT, &joint_rot[0]);
+        = glui->add_spinner("Leg 1", GLUI_SPINNER_FLOAT, &joint_rot[0]);
     joint_spinner->set_speed(0.1);
     joint_spinner->set_float_limits(JOINT_MIN, JOINT_MAX, GLUI_LIMIT_CLAMP);
 
@@ -242,9 +244,6 @@ void initGl(void)
     glClearColor(0.7f,0.7f,0.9f,0.5f);
 }
 
-
-float old_rad = 0.0f;
-
 // Callback idle function for animating the scene
 void animate()
 {
@@ -253,16 +252,9 @@ void animate()
 	// then we need to store Time, not joint rotation... that or figure out the radians from the initial angle
     const double joint_rot_speed = 0.1;
 
-    float rad = animation_frame*joint_rot_speed;
-    if (animation_frame == 0){
-    	printf("OLD %.2f\n", old_rad);
-    	rad += old_rad;
-    	printf("NEW %.2f\n", rad);
-    }
-    old_rad = rad;
-    double joint_rot_t1 = (sin(rad) + 1.0) / 2.0;
-    joint_rot[0] = joint_rot_t1 * JOINT_MIN + (1 - joint_rot_t1) * JOINT_MAX;
-    joint_rot[1] = joint_rot_t1 * JOINT_MIN + (1 - joint_rot_t1) * JOINT_MAX;
+    float rad = animation_frame * joint_rot_speed;
+    joint_rot[0] = getDegrees(rad, JOINT_MIN, JOINT_MAX);
+    joint_rot[1] = getDegrees(rad, JOINT_MIN, JOINT_MAX);
     
     ///////////////////////////////////////////////////////////
     // TODO:
@@ -349,8 +341,13 @@ void display(void)
             // Set the colour to green
             glColor3f(0.0, 1.0, 0.0);
 
-            // Draw the square for the body
-            drawSquare(1.0);
+            // Draw the body
+            Point bodyPoints[] = {{-0.3f, 0.5f}, {0.3f, 0.5f},
+
+                              {0.5f, -0.5f}, {0.2f, -0.7f},
+
+                              {-0.2f, -0.7f}, {-0.5f, -0.5f}};
+            drawPolygon(6, bodyPoints);
 
             // draw arm
             glPushMatrix();
@@ -358,7 +355,9 @@ void display(void)
                 glTranslatef(0.1, 0.0, 0.0);
                 glScalef(1.0/3.0, 0.5, 1.0);
                 glColor3f(0.0, 0.0, 1.0);
-                drawSquare(1.0);
+                Point armPoints[] = {{-0.4f, 0.5f}, {0.4f, 0.5f}, {0.3f, -0.5f}, {-0.3f, -0.5f}};
+                drawPolygon(4, armPoints);
+                //drawSquare(1.0);
             }
             glPopMatrix();
 
@@ -448,4 +447,9 @@ void drawCircle(float radius){
         glVertex2f(cos(degInRad) * radius, sin(degInRad) * radius);
     }
     glEnd();
+}
+
+float getDegrees(float rad, float min, float max){
+    double joint_rot_t = (sin(rad) + 1.0) / 2.0;
+    return joint_rot_t * min + (1 - joint_rot_t) * max;
 }
