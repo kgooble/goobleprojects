@@ -48,13 +48,17 @@ PROGRAM	          = penguin
 CSRCS         =
 
 # Define all C++ source files here
-CPPSRCS       = penguin.cpp
+CPPSRCS       = penguin.cpp draw.cpp
 
 # Define the source directory
 VPATH = .
 
 # Define the build directory
 BUILDDIR = build
+
+# Define the source directory
+
+SRCDIR = src
 
 ##############################################################################
 # Define additional rules that make should know about in order to compile our
@@ -65,8 +69,8 @@ BUILDDIR = build
 all : $(PROGRAM)
 
 # Define rule for compiling all C++ files
-%.o : %.cpp
-	$(CCC) $(CCCFLAGS) $(CPPFLAGS) $*.cpp
+%.o : $(SRCDIR)/%.cpp
+	$(CCC) $(CCCFLAGS) $(CPPFLAGS) $(SRCDIR)/$*.cpp
 	
 # Define rule for compiling all C files
 $(BUILDDIR)/%.o : %.c

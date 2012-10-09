@@ -29,15 +29,7 @@
 #include <windows.h>
 #endif
 
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <GL/glut.h>
-#include <GL/glui.h>
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
+#include "draw.h"
 
 #ifndef _WIN32
 #include <unistd.h>
@@ -68,37 +60,9 @@ int Win[2];                 // window (x,y) size
 int animate_mode = 0;       // 0 = no anim, 1 = animate
 int animation_frame = 0;      // Specify current frame of animation
 
-// Joint parameters
-const float JOINT_MIN = -45.0f;
-const float JOINT_MAX =  45.0f;
-const int BEAK_MIN = 0;
-const int BEAK_MAX = 6;
-float joint_rot[] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}; // six values for each joint
-int beakDistance = 0;
-
-int animateLeg1 = 0;
-int animateLeg2 = 0;
-int animateFoot1 = 0;
-int animateFoot2 = 0;
-int animateBeak = 0;
-int animateHead = 0;
-int animateArm = 0;
-
-const double LEG_ROTATION_SPEED = 0.1;
-const int BEAK_SEPARATION_SPEED = 1;
-
-
 //////////////////////////////////////////////////////
 // TODO: Add additional joint parameters here
 //////////////////////////////////////////////////////
-
-
-// ------------ REQUIRED DATA STRUCTURES --------------------
-typedef struct{
-	float x;
-	float y;
-} Point;
-
 
 // ***********  FUNCTION HEADER DECLARATIONS ****************
 
@@ -120,12 +84,12 @@ void GLUI_Control(int id);
 
 // Functions to help draw the object
 void drawSquare(float size);
-void drawCircle(float radius);
-void drawPolygon(int n, Point points[]);
-void drawArm();
+//void drawCircle(float radius);
+//void drawPolygon(int n, Point points[]);
+//void drawArm();
 void drawLeg(float leftOrRight, int rotationIndex);
-void drawBeak();
-void drawHead();
+//void drawBeak();
+//void drawHead();
 
 float getDegrees(float rad, float min, float max);
 
@@ -135,6 +99,13 @@ double getTime();
 
 // ******************** FUNCTIONS ************************
 
+int animateLeg1 = 0;
+int animateLeg2 = 0;
+int animateFoot1 = 0;
+int animateFoot2 = 0;
+int animateBeak = 0;
+int animateHead = 0;
+int animateArm = 0;
 
 
 // main() function
@@ -424,15 +395,6 @@ void drawSquare(float width)
 	drawPolygon(4, points);
 }
 
-void drawPolygon(int n, Point points[]){
-	glBegin(GL_POLYGON);
-	for (int i = 0; i < n; i++){
-		glVertex2f(points[i].x, points[i].y);
-	}
-	glEnd();
-
-}
-
 float LEG_OFFSET_X = 1.0f/5.0f;
 float LEG_OFFSET_Y = -0.5;
 
@@ -485,69 +447,8 @@ void drawLeg(float leftOrRight, int rotationIndex){
     }glPopMatrix();
 }
 
-const float DEG2RAD = 3.14159 / 180;
-
-void drawCircle(float radius){
-    glBegin(GL_LINE_LOOP);
-    for (int i = 0; i < 360; i++){
-        float degInRad = i * DEG2RAD;
-        glVertex2f(cos(degInRad) * radius, sin(degInRad) * radius);
-    }
-    glEnd();
-}
 
 float getDegrees(float rad, float min, float max){
     double joint_rot_t = (sin(rad) + 1.0) / 2.0;
     return joint_rot_t * min + (1 - joint_rot_t) * max;
-}
-
-void drawBeak(){
-	// draw top beak
-	glPushMatrix();{
-		glScalef(0.8, 0.4, 1.0);
-		glTranslatef(-1.0, beakDistance / 20.0f, 0.0);
-		glColor3f(0.5, 0.5, 1.0);
-
-		Point topBeakPoints[] = {{-0.5, 0.1}, {-0.5, -0.1},
-				{0.5, -0.1}, {0.5, 0.3}};
-		drawPolygon(4, topBeakPoints);
-	}
-	glPopMatrix();
-
-	// draw bottom beak
-	glPushMatrix();{
-		glScalef(0.8, 0.2, 1.0);
-		glTranslatef(-1.0, -beakDistance / 20.0f, 0.0);
-		glColor3f(0.5, 0.1, 1.0);
-
-		Point bottomBeakPoints[] = {{-0.5, 0.1}, {-0.5, -0.1},
-				{0.5, -0.1}, {0.5, 0.1}};
-		drawPolygon(4, bottomBeakPoints);
-	}
-	glPopMatrix();
-}
-
-void drawArm(){
-	glPushMatrix();
-	{
-		glTranslatef(0.1, 0.0, 0.0);
-		glScalef(1.0/3.0, 0.5, 1.0);
-		glColor3f(0.0, 0.0, 1.0);
-		Point armPoints[] = {{-0.4f, 0.5f}, {0.4f, 0.5f}, {0.3f, -0.5f}, {-0.3f, -0.5f}};
-		drawPolygon(4, armPoints);
-	}
-	glPopMatrix();
-}
-
-void drawHead(){
-	glPushMatrix();{
-		glTranslatef(0.0, 0.6, 0.0);
-		glScalef(0.6, 0.25, 1.0);
-		glColor3f(0.75, 0.75, 0.75);
-		Point headPoints[] = {{-0.1, 0.7}, {0.4, 0.4},
-				{0.5, -0.5}, {-0.5, -0.5}, {-0.4, 0.4}};
-		drawPolygon(5, headPoints);
-		drawBeak();
-	}
-	glPopMatrix();
 }
