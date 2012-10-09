@@ -407,6 +407,19 @@ float FOOT_OFFSET_Y = -0.5f;
 float FOOT_WIDTH_REL_TO_LEG = 2.0f;
 float FOOT_LENGTH_REL_TO_LEG = 1.0f/3.0f;
 
+/**
+ * data structure idea:
+ *
+ * PenguinComponent
+ * int animateFlag
+ * float rotationAngle
+ * int separation
+ * float speed
+ *
+ * float min
+ * float max
+ */
+
 void drawLeg(float leftOrRight, int rotationIndex){
     // Draw a leg
     glPushMatrix();
