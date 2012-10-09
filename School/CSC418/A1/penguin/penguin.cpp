@@ -71,7 +71,10 @@ int animation_frame = 0;      // Specify current frame of animation
 // Joint parameters
 const float JOINT_MIN = -45.0f;
 const float JOINT_MAX =  45.0f;
+const int BEAK_MIN = 0;
+const int BEAK_MAX = 6;
 float joint_rot[] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}; // six values for each joint
+int beakDistance = 0;
 
 //////////////////////////////////////////////////////
 // TODO: Add additional joint parameters here
@@ -107,7 +110,10 @@ void GLUI_Control(int id);
 void drawSquare(float size);
 void drawCircle(float radius);
 void drawPolygon(int n, Point points[]);
+void drawArm();
 void drawLeg(float leftOrRight, int rotationIndex);
+void drawBeak();
+void drawHead();
 
 float getDegrees(float rad, float min, float max);
 
@@ -218,6 +224,11 @@ void initGlui()
     leg2Spinner->set_speed(0.1);
     leg2Spinner->set_float_limits(JOINT_MIN, JOINT_MAX, GLUI_LIMIT_CLAMP);
 
+    GLUI_Spinner *beakSpinner
+		= glui->add_spinner("Beak", GLUI_SPINNER_INT, &beakDistance);
+    beakSpinner->set_speed(1);
+    beakSpinner->set_int_limits(BEAK_MIN, BEAK_MAX, GLUI_LIMIT_CLAMP);
+
     ///////////////////////////////////////////////////////////
     // TODO: 
     //   Add controls for additional joints here
@@ -225,7 +236,7 @@ void initGlui()
 
     // Add button to specify animation mode 
     glui->add_separator();
-    glui->add_checkbox("Animate Leg 1", &animate_mode, 0, animateButton);
+    glui->add_checkbox("Animate", &animate_mode, 0, animateButton);
 
     // Add "Quit" button
     glui->add_separator();
@@ -251,11 +262,14 @@ void animate()
 	// We want to start at the original position of the legs...
 	// then we need to store Time, not joint rotation... that or figure out the radians from the initial angle
     const double joint_rot_speed = 0.1;
+    const int beakSeparationSpeed = 1;
 
     float rad = animation_frame * joint_rot_speed;
     joint_rot[0] = getDegrees(rad, JOINT_MIN, JOINT_MAX);
     joint_rot[1] = getDegrees(rad, JOINT_MIN, JOINT_MAX);
     
+    beakDistance = getDegrees(beakSeparationSpeed * animation_frame, BEAK_MIN, BEAK_MAX);
+
     ///////////////////////////////////////////////////////////
     // TODO:
     //   Modify this function animate the character's joints
@@ -328,7 +342,7 @@ void display(void)
     /**
      * what needs to be done still?
      * - draw the eye
-     * - move beak up and down
+     * - move beak up and down during animate
      * - draw circles representing joints
      * - rotate joints
      * - make spinners for each joint
@@ -358,52 +372,10 @@ void display(void)
                               {-0.2f, -0.7f}, {-0.5f, -0.5f}};
             drawPolygon(6, bodyPoints);
 
-            // draw arm
-            glPushMatrix();
-            {
-                glTranslatef(0.1, 0.0, 0.0);
-                glScalef(1.0/3.0, 0.5, 1.0);
-                glColor3f(0.0, 0.0, 1.0);
-                Point armPoints[] = {{-0.4f, 0.5f}, {0.4f, 0.5f}, {0.3f, -0.5f}, {-0.3f, -0.5f}};
-                drawPolygon(4, armPoints);
-            }
-            glPopMatrix();
-
+            drawArm();
             drawLeg(1.0, 0);
             drawLeg(-1.0, 1);
-
-            // draw head
-            glPushMatrix();{
-                glTranslatef(0.0, 0.6, 0.0);
-                glScalef(0.6, 0.25, 1.0);
-                glColor3f(0.75, 0.75, 0.75);
-
-                Point headPoints[] = {{-0.1, 0.7}, {0.4, 0.4}, {0.5, -0.5}, {-0.5, -0.5}, {-0.4, 0.4}};
-                drawPolygon(5, headPoints);
-
-                // draw top beak
-                glPushMatrix();{
-                    glScalef(0.8, 0.4, 1.0);
-                    glTranslatef(-1.0, 0.0, 0.0);
-                    glColor3f(0.5, 0.5, 1.0);
-
-                    Point topBeakPoints[] = {{-0.5, 0.1}, {-0.5, -0.1}, {0.5, -0.1}, {0.5, 0.3}};
-                    drawPolygon(4, topBeakPoints);
-                }
-                glPopMatrix();
-
-                // draw bottom beak
-                glPushMatrix();{
-                    glScalef(0.8, 0.2, 1.0);
-                    glTranslatef(-1.0, -0.5, 0.0);
-                    glColor3f(0.5, 0.1, 1.0);
-
-                    Point bottomBeakPoints[] = {{-0.5, 0.1}, {-0.5, -0.1}, {0.5, -0.1}, {0.5, 0.1}};
-                    drawPolygon(4, bottomBeakPoints);
-                }
-                glPopMatrix();
-            }
-            glPopMatrix();
+            drawHead();
         }
         glPopMatrix();
 
@@ -505,4 +477,58 @@ void drawCircle(float radius){
 float getDegrees(float rad, float min, float max){
     double joint_rot_t = (sin(rad) + 1.0) / 2.0;
     return joint_rot_t * min + (1 - joint_rot_t) * max;
+}
+
+void drawBeak(){
+	// draw top beak
+	glPushMatrix();{
+		glScalef(0.8, 0.4, 1.0);
+		glTranslatef(-1.0, beakDistance / 20.0f, 0.0);
+		glColor3f(0.5, 0.5, 1.0);
+
+		Point topBeakPoints[] = {{-0.5, 0.1}, {-0.5, -0.1},
+				{0.5, -0.1}, {0.5, 0.3}};
+		drawPolygon(4, topBeakPoints);
+	}
+	glPopMatrix();
+
+	// draw bottom beak
+	glPushMatrix();{
+		glScalef(0.8, 0.2, 1.0);
+		glTranslatef(-1.0, -beakDistance / 20.0f, 0.0);
+		glColor3f(0.5, 0.1, 1.0);
+
+		Point bottomBeakPoints[] = {{-0.5, 0.1}, {-0.5, -0.1},
+				{0.5, -0.1}, {0.5, 0.1}};
+		drawPolygon(4, bottomBeakPoints);
+	}
+	glPopMatrix();
+}
+
+void drawArm(){
+	// draw arm
+	glPushMatrix();
+	{
+		glTranslatef(0.1, 0.0, 0.0);
+		glScalef(1.0/3.0, 0.5, 1.0);
+		glColor3f(0.0, 0.0, 1.0);
+		Point armPoints[] = {{-0.4f, 0.5f}, {0.4f, 0.5f}, {0.3f, -0.5f}, {-0.3f, -0.5f}};
+		drawPolygon(4, armPoints);
+	}
+	glPopMatrix();
+}
+
+void drawHead(){
+	// draw head
+	glPushMatrix();{
+		glTranslatef(0.0, 0.6, 0.0);
+		glScalef(0.6, 0.25, 1.0);
+		glColor3f(0.75, 0.75, 0.75);
+
+		Point headPoints[] = {{-0.1, 0.7}, {0.4, 0.4},
+				{0.5, -0.5}, {-0.5, -0.5}, {-0.4, 0.4}};
+		drawPolygon(5, headPoints);
+		drawBeak();
+	}
+	glPopMatrix();
 }
