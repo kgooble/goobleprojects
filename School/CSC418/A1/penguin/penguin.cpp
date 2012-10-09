@@ -204,7 +204,13 @@ void animateButton(int)
  * --> each joint may have its own set of MAX & MIN values.
  *
  */
-
+int animateLeg1 = 0;
+int animateLeg2 = 0;
+int animateFoot1 = 0;
+int animateFoot2 = 0;
+int animateBeak = 0;
+int animateHead = 0;
+int animateArm = 0;
 // Initialize GLUI and the user interface
 void initGlui()
 {
@@ -218,16 +224,31 @@ void initGlui()
         = glui->add_spinner("Leg 1", GLUI_SPINNER_FLOAT, &joint_rot[0]);
     joint_spinner->set_speed(0.1);
     joint_spinner->set_float_limits(JOINT_MIN, JOINT_MAX, GLUI_LIMIT_CLAMP);
+    glui->add_checkbox("Animate Leg 1", &animateLeg1, 0, NULL);
 
     GLUI_Spinner *leg2Spinner
 		= glui->add_spinner("Leg 2", GLUI_SPINNER_FLOAT, &joint_rot[1]);
     leg2Spinner->set_speed(0.1);
     leg2Spinner->set_float_limits(JOINT_MIN, JOINT_MAX, GLUI_LIMIT_CLAMP);
+    glui->add_checkbox("Animate Leg 2", &animateLeg2, 0, NULL);
+
+    GLUI_Spinner *foot1Spinner
+		= glui->add_spinner("Foot 1", GLUI_SPINNER_FLOAT, &joint_rot[2]);
+    foot1Spinner->set_speed(0.1);
+    foot1Spinner->set_float_limits(JOINT_MIN, JOINT_MAX, GLUI_LIMIT_CLAMP);
+    glui->add_checkbox("Animate Foot 1", &animateFoot1, 0, NULL);
+
+    GLUI_Spinner *foot2Spinner
+		= glui->add_spinner("Foot 2", GLUI_SPINNER_FLOAT, &joint_rot[2]);
+	foot2Spinner->set_speed(0.1);
+	foot2Spinner->set_float_limits(JOINT_MIN, JOINT_MAX, GLUI_LIMIT_CLAMP);
+	glui->add_checkbox("Animate Foot 2", &animateFoot2, 0, NULL);
 
     GLUI_Spinner *beakSpinner
 		= glui->add_spinner("Beak", GLUI_SPINNER_INT, &beakDistance);
     beakSpinner->set_speed(1);
     beakSpinner->set_int_limits(BEAK_MIN, BEAK_MAX, GLUI_LIMIT_CLAMP);
+    glui->add_checkbox("Animate Beak", &animateBeak, 0, NULL);
 
     ///////////////////////////////////////////////////////////
     // TODO: 
@@ -255,20 +276,25 @@ void initGl(void)
     glClearColor(0.7f,0.7f,0.9f,0.5f);
 }
 
+const double LEG_ROTATION_SPEED = 0.1;
+const int BEAK_SEPARATION_SPEED = 1;
+
 // Callback idle function for animating the scene
 void animate()
 {
     // Update geometry
-	// We want to start at the original position of the legs...
-	// then we need to store Time, not joint rotation... that or figure out the radians from the initial angle
-    const double joint_rot_speed = 0.1;
-    const int beakSeparationSpeed = 1;
+    float rad = animation_frame * LEG_ROTATION_SPEED;
+    if (animateLeg1 == 1)
+    	joint_rot[0] = getDegrees(rad, JOINT_MIN, JOINT_MAX);
 
-    float rad = animation_frame * joint_rot_speed;
-    joint_rot[0] = getDegrees(rad, JOINT_MIN, JOINT_MAX);
-    joint_rot[1] = getDegrees(rad, JOINT_MIN, JOINT_MAX);
+    if (animateLeg2 == 1)
+    	joint_rot[1] = getDegrees(rad, JOINT_MIN, JOINT_MAX);
+
+    if (animateFoot1 == 1)
+    	joint_rot[2] = getDegrees(rad, JOINT_MIN, JOINT_MAX);
     
-    beakDistance = getDegrees(beakSeparationSpeed * animation_frame, BEAK_MIN, BEAK_MAX);
+    if (animateBeak == 1)
+    	beakDistance = getDegrees(BEAK_SEPARATION_SPEED * animation_frame, BEAK_MIN, BEAK_MAX);
 
     ///////////////////////////////////////////////////////////
     // TODO:
@@ -309,7 +335,8 @@ void myReshape(int w, int h)
     Win[1] = h;
 }
 
-
+const float BODY_WIDTH = 140.0f;
+const float BODY_LENGTH = 200.0f;
 
 // display callback
 //
@@ -341,34 +368,25 @@ void display(void)
 
     /**
      * what needs to be done still?
-     * - draw the eye
-     * - move beak up and down during animate
+     * - draw the eye (on head)
      * - draw circles representing joints
      * - rotate joints
      * - make spinners for each joint
      */
 
     // Draw our hinged object
-    const float BODY_WIDTH = 140.0f;
-    const float BODY_LENGTH = 200.0f;
-
     // Push the current transformation matrix on the stack
     glPushMatrix();
-        
-        // Draw the body
         glPushMatrix();
         {
             // Scale to size of body
             glScalef(BODY_WIDTH, BODY_LENGTH, 1.0);
-
             // Set the colour to green
             glColor3f(0.0, 1.0, 0.0);
 
-            // Draw the body
+			// Draw the body
             Point bodyPoints[] = {{-0.3f, 0.5f}, {0.3f, 0.5f},
-
                               {0.5f, -0.5f}, {0.2f, -0.7f},
-
                               {-0.2f, -0.7f}, {-0.5f, -0.5f}};
             drawPolygon(6, bodyPoints);
 
@@ -444,6 +462,7 @@ void drawLeg(float leftOrRight, int rotationIndex){
         glPushMatrix();
         {
             glTranslatef(FOOT_OFFSET_X, FOOT_OFFSET_Y, 0.0);
+            glRotatef(joint_rot[2], 0.0, 0.0, 1.0);
             glScalef(FOOT_WIDTH_REL_TO_LEG, FOOT_LENGTH_REL_TO_LEG, 1.0);
             glColor3f(1.0, 1.0, 0.0);
             drawSquare(1.0);
@@ -453,8 +472,8 @@ void drawLeg(float leftOrRight, int rotationIndex){
         // draw the ankle joint
         glPushMatrix();
         {
-            glScalef(1.0/3.0, 0.1, 1.0);
-            glTranslatef(0.0, -1.0, 0.0);
+            glTranslatef(0.0, -0.5, 0.0);
+            glScalef(1.0/5.0, 0.1, 1.0);
             glColor3f(0.0, 0.0, 0.0);
             drawCircle(1.0);
         }
@@ -506,7 +525,6 @@ void drawBeak(){
 }
 
 void drawArm(){
-	// draw arm
 	glPushMatrix();
 	{
 		glTranslatef(0.1, 0.0, 0.0);
@@ -519,12 +537,10 @@ void drawArm(){
 }
 
 void drawHead(){
-	// draw head
 	glPushMatrix();{
 		glTranslatef(0.0, 0.6, 0.0);
 		glScalef(0.6, 0.25, 1.0);
 		glColor3f(0.75, 0.75, 0.75);
-
 		Point headPoints[] = {{-0.1, 0.7}, {0.4, 0.4},
 				{0.5, -0.5}, {-0.5, -0.5}, {-0.4, 0.4}};
 		drawPolygon(5, headPoints);
