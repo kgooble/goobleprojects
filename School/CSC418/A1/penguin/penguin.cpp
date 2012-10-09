@@ -76,6 +76,18 @@ const int BEAK_MAX = 6;
 float joint_rot[] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}; // six values for each joint
 int beakDistance = 0;
 
+int animateLeg1 = 0;
+int animateLeg2 = 0;
+int animateFoot1 = 0;
+int animateFoot2 = 0;
+int animateBeak = 0;
+int animateHead = 0;
+int animateArm = 0;
+
+const double LEG_ROTATION_SPEED = 0.1;
+const int BEAK_SEPARATION_SPEED = 1;
+
+
 //////////////////////////////////////////////////////
 // TODO: Add additional joint parameters here
 //////////////////////////////////////////////////////
@@ -204,13 +216,7 @@ void animateButton(int)
  * --> each joint may have its own set of MAX & MIN values.
  *
  */
-int animateLeg1 = 0;
-int animateLeg2 = 0;
-int animateFoot1 = 0;
-int animateFoot2 = 0;
-int animateBeak = 0;
-int animateHead = 0;
-int animateArm = 0;
+
 // Initialize GLUI and the user interface
 void initGlui()
 {
@@ -275,9 +281,6 @@ void initGl(void)
     // Ignore the meaning of the 'alpha' value for now
     glClearColor(0.7f,0.7f,0.9f,0.5f);
 }
-
-const double LEG_ROTATION_SPEED = 0.1;
-const int BEAK_SEPARATION_SPEED = 1;
 
 // Callback idle function for animating the scene
 void animate()
