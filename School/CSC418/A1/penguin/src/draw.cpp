@@ -18,9 +18,11 @@ void drawArm(){
 	glPushMatrix();
 	{
 		glTranslatef(0.1, 0.0, 0.0);
+		glRotatef(jointRotation[3], 0.0, 0.0, 1.0);
 		glScalef(1.0/3.0, 0.5, 1.0);
 		glColor3f(0.0, 0.0, 1.0);
-		Point armPoints[] = {{-0.4f, 0.5f}, {0.4f, 0.5f}, {0.3f, -0.5f}, {-0.3f, -0.5f}};
+		Point armPoints[] = {{-0.4f, 0.5f}, {0.4f, 0.5f},
+		        {0.3f, -0.5f}, {-0.3f, -0.5f}};
 		drawPolygon(4, armPoints);
 	}
 	glPopMatrix();

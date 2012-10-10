@@ -224,6 +224,12 @@ void initGlui()
 	foot2Spinner->set_float_limits(JOINT_MIN, JOINT_MAX, GLUI_LIMIT_CLAMP);
 	glui->add_checkbox("Animate Foot 2", &animateFoot2, 0, doNothing);
 
+	GLUI_Spinner *armSpinner
+        = glui->add_spinner("Arm", GLUI_SPINNER_FLOAT, &jointRotation[3]);
+	armSpinner->set_speed(0.1);
+	armSpinner->set_float_limits(JOINT_MIN, JOINT_MAX, GLUI_LIMIT_CLAMP);
+    glui->add_checkbox("Animate Arm", &animateArm, 0, doNothing);
+
     GLUI_Spinner *beakSpinner
 		= glui->add_spinner("Beak", GLUI_SPINNER_INT, &beakDistance);
     beakSpinner->set_speed(1);
@@ -265,6 +271,9 @@ void animate()
     if (animateFoot1 == 1)
     	jointRotation[2] = getDegrees(rad, JOINT_MIN, JOINT_MAX);
     
+    if (animateArm == 1)
+        jointRotation[3] = getDegrees(rad, JOINT_MIN, JOINT_MAX);
+
     if (animateBeak == 1)
     	beakDistance = getDegrees(BEAK_SEPARATION_SPEED * animation_frame, BEAK_MIN, BEAK_MAX);
 
@@ -343,7 +352,7 @@ void display(void)
      * - draw the eye (on head)
      * - draw circles representing joints
      * - rotate joints
-     * - make spinners for each joint
+     * - create animation
      */
 
     // Draw our hinged object
