@@ -37,7 +37,7 @@ B. PLACE AN (X) IN FRONT OF PORTIONS OF THE ASSIGNMENT THAT YOU COMPLETED IN FUL
    WE WILL BE ABLE TO MAKE AN ACCURATE ASSESSMENT
 
    
-___   ( 5 points) Part 2a     Parts description & drawing
+_X_   ( 5 points) Part 2a     Parts description & drawing
                   
 ___   (10 points) Part 2b	  Parts transformation description & implementation
 

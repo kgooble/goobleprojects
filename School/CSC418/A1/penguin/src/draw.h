@@ -30,17 +30,17 @@ const float JOINT_MIN = -45.0f;
 const float JOINT_MAX =  45.0f;
 const int BEAK_MIN = 0;
 const int BEAK_MAX = 6;
-extern float joint_rot[]; // six values for each joint
+extern float jointRotation[]; // the amount (in degrees) each joint is rotated
 extern int beakDistance;
 
 const float LEG_OFFSET_X = 1.0f/5.0f;
 const float LEG_OFFSET_Y = -0.5;
 
-const float LEG_WIDTH_REL_TO_BODY = 0.2f;
+const float LEG_WIDTH_REL_TO_BODY = 0.1f;
 const float LEG_LENGTH_REL_TO_BODY = 0.3f;
 
-const float FOOT_OFFSET_X = -0.5f;
-const float FOOT_OFFSET_Y = -0.5f;
+const float FOOT_OFFSET_X = -0.2f;
+const float FOOT_OFFSET_Y = -0.4f;
 
 const float FOOT_WIDTH_REL_TO_LEG = 2.0f;
 const float FOOT_LENGTH_REL_TO_LEG = 1.0f/3.0f;

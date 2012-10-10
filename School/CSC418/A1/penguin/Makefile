@@ -57,7 +57,6 @@ VPATH = .
 BUILDDIR = build
 
 # Define the source directory
-
 SRCDIR = src
 
 ##############################################################################
@@ -86,9 +85,5 @@ $(PROGRAM) :	$(OBJ)
 # files along with the executable
 clean :
 	@rm -f $(OBJ) *~ core $(PROGRAM)
-
-
-
-
 
 

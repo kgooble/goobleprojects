@@ -201,25 +201,25 @@ void initGlui()
 
     // Create a control to specify the rotation of the joint
     GLUI_Spinner *joint_spinner
-        = glui->add_spinner("Leg 1", GLUI_SPINNER_FLOAT, &joint_rot[0]);
+        = glui->add_spinner("Leg 1", GLUI_SPINNER_FLOAT, &jointRotation[0]);
     joint_spinner->set_speed(0.1);
     joint_spinner->set_float_limits(JOINT_MIN, JOINT_MAX, GLUI_LIMIT_CLAMP);
     glui->add_checkbox("Animate Leg 1", &animateLeg1, 0, doNothing);
 
     GLUI_Spinner *leg2Spinner
-		= glui->add_spinner("Leg 2", GLUI_SPINNER_FLOAT, &joint_rot[1]);
+		= glui->add_spinner("Leg 2", GLUI_SPINNER_FLOAT, &jointRotation[1]);
     leg2Spinner->set_speed(0.1);
     leg2Spinner->set_float_limits(JOINT_MIN, JOINT_MAX, GLUI_LIMIT_CLAMP);
     glui->add_checkbox("Animate Leg 2", &animateLeg2, 0, doNothing);
 
     GLUI_Spinner *foot1Spinner
-		= glui->add_spinner("Foot 1", GLUI_SPINNER_FLOAT, &joint_rot[2]);
+		= glui->add_spinner("Foot 1", GLUI_SPINNER_FLOAT, &jointRotation[2]);
     foot1Spinner->set_speed(0.1);
     foot1Spinner->set_float_limits(JOINT_MIN, JOINT_MAX, GLUI_LIMIT_CLAMP);
     glui->add_checkbox("Animate Foot 1", &animateFoot1, 0, doNothing);
 
     GLUI_Spinner *foot2Spinner
-		= glui->add_spinner("Foot 2", GLUI_SPINNER_FLOAT, &joint_rot[2]);
+		= glui->add_spinner("Foot 2", GLUI_SPINNER_FLOAT, &jointRotation[2]);
 	foot2Spinner->set_speed(0.1);
 	foot2Spinner->set_float_limits(JOINT_MIN, JOINT_MAX, GLUI_LIMIT_CLAMP);
 	glui->add_checkbox("Animate Foot 2", &animateFoot2, 0, doNothing);
@@ -229,11 +229,6 @@ void initGlui()
     beakSpinner->set_speed(1);
     beakSpinner->set_int_limits(BEAK_MIN, BEAK_MAX, GLUI_LIMIT_CLAMP);
     glui->add_checkbox("Animate Beak", &animateBeak, 0, doNothing);
-
-    ///////////////////////////////////////////////////////////
-    // TODO: 
-    //   Add controls for additional joints here
-    ///////////////////////////////////////////////////////////
 
     // Add button to specify animation mode 
     glui->add_separator();
@@ -262,13 +257,13 @@ void animate()
     // Update geometry
     float rad = animation_frame * LEG_ROTATION_SPEED;
     if (animateLeg1 == 1)
-    	joint_rot[0] = getDegrees(rad, JOINT_MIN, JOINT_MAX);
+    	jointRotation[0] = getDegrees(rad, JOINT_MIN, JOINT_MAX);
 
     if (animateLeg2 == 1)
-    	joint_rot[1] = getDegrees(rad, JOINT_MIN, JOINT_MAX);
+    	jointRotation[1] = getDegrees(rad, JOINT_MIN, JOINT_MAX);
 
     if (animateFoot1 == 1)
-    	joint_rot[2] = getDegrees(rad, JOINT_MIN, JOINT_MAX);
+    	jointRotation[2] = getDegrees(rad, JOINT_MIN, JOINT_MAX);
     
     if (animateBeak == 1)
     	beakDistance = getDegrees(BEAK_SEPARATION_SPEED * animation_frame, BEAK_MIN, BEAK_MAX);

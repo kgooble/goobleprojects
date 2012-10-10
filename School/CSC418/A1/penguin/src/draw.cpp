@@ -3,11 +3,15 @@
  *
  *  Created on: Oct 9, 2012
  *      Author: g9sk
+ *
+ *
+ *  This file contains all drawing functions & relevant transformations
+ *  (rotation, translation, and scaling) for each part.
  */
 
 #include "draw.h"
 
-float joint_rot[] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
+float jointRotation[] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
 int beakDistance = 0;
 
 void drawArm(){
@@ -99,7 +103,7 @@ void drawLeg(float leftOrRight, int rotationIndex){
         // Move the leg to the joint hinge
         glTranslatef(leftOrRight * LEG_OFFSET_X, LEG_OFFSET_Y, 0.0);
         // Rotate along the hinge
-        glRotatef(joint_rot[rotationIndex], 0.0, 0.0, 1.0);
+        glRotatef(jointRotation[rotationIndex], 0.0, 0.0, 1.0);
         // Scale the size of the leg
         glScalef(LEG_WIDTH_REL_TO_BODY, LEG_LENGTH_REL_TO_BODY, 1.0);
         // Move to center location of leg, under previous rotation
@@ -112,7 +116,7 @@ void drawLeg(float leftOrRight, int rotationIndex){
         glPushMatrix();
         {
             glTranslatef(FOOT_OFFSET_X, FOOT_OFFSET_Y, 0.0);
-            glRotatef(joint_rot[2], 0.0, 0.0, 1.0);
+            glRotatef(jointRotation[2], 0.0, 0.0, 1.0);
             glScalef(FOOT_WIDTH_REL_TO_LEG, FOOT_LENGTH_REL_TO_LEG, 1.0);
             glColor3f(1.0, 1.0, 0.0);
             drawSquare(1.0);
@@ -122,13 +126,24 @@ void drawLeg(float leftOrRight, int rotationIndex){
         // draw the ankle joint
         glPushMatrix();
         {
-            glTranslatef(0.0, -0.5, 0.0);
+            glTranslatef(0.0, FOOT_OFFSET_Y, 0.0);
             glScalef(1.0/5.0, 0.1, 1.0);
             glColor3f(0.0, 0.0, 0.0);
             drawCircle(1.0);
         }
         glPopMatrix();
 
-    }glPopMatrix();
+    }
+    glPopMatrix();
+
+    //draw the hip joints
+    glPushMatrix();
+    {
+        glTranslatef(leftOrRight * LEG_OFFSET_X, LEG_OFFSET_Y, 0.0);
+        glScalef(LEG_WIDTH_REL_TO_BODY / 5.0, LEG_LENGTH_REL_TO_BODY / 10.0, 1.0);
+        glColor3f(0.0, 0.0, 0.0);
+        drawCircle(1.0);
+    }
+    glPopMatrix();
 }
 
