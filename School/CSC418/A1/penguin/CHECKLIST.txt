@@ -13,12 +13,12 @@ A. PLEASE ANSWER THE FOLLOWING QUESTIONS (your assignment will not be graded oth
    Student Academic Integrity policy stated at
    http://www.artsci.utoronto.ca/osai/students/academic-integrity-basics
 
-   ___Yes   ___No
+   _X_Yes   ___No
 
 
 2. I collaborated on this assignment with another student 
 
-   ___Yes   ___No
+   ___Yes   _X_No
 
    If you checked yes, please supply the following
 

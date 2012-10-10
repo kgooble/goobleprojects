@@ -33,13 +33,27 @@ const int BEAK_MAX = 6;
 extern float joint_rot[]; // six values for each joint
 extern int beakDistance;
 
+const float LEG_OFFSET_X = 1.0f/5.0f;
+const float LEG_OFFSET_Y = -0.5;
+
+const float LEG_WIDTH_REL_TO_BODY = 0.2f;
+const float LEG_LENGTH_REL_TO_BODY = 0.3f;
+
+const float FOOT_OFFSET_X = -0.5f;
+const float FOOT_OFFSET_Y = -0.5f;
+
+const float FOOT_WIDTH_REL_TO_LEG = 2.0f;
+const float FOOT_LENGTH_REL_TO_LEG = 1.0f/3.0f;
+
 const double LEG_ROTATION_SPEED = 0.1;
 const int BEAK_SEPARATION_SPEED = 1;
 
 void drawPolygon(int n, Point points[]);
+void drawSquare(float width);
 void drawCircle(float radius);
 void drawHead();
 void drawBeak();
 void drawArm();
+void drawLeg(float leftOrRight, int rotationIndex);
 
 #endif /* DRAW_H_ */

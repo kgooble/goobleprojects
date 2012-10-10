@@ -179,6 +179,9 @@ void animateButton(int)
   }
 }
 
+void doNothing(int){
+    // do nothing; to be passed to checkboxes whose callbacks aren't meant to do anything
+}
 /**
  * There are 6 points of rotation
  * 7 degrees of freedom total, including the beak which moves up and down.
@@ -201,31 +204,31 @@ void initGlui()
         = glui->add_spinner("Leg 1", GLUI_SPINNER_FLOAT, &joint_rot[0]);
     joint_spinner->set_speed(0.1);
     joint_spinner->set_float_limits(JOINT_MIN, JOINT_MAX, GLUI_LIMIT_CLAMP);
-    glui->add_checkbox("Animate Leg 1", &animateLeg1, 0, NULL);
+    glui->add_checkbox("Animate Leg 1", &animateLeg1, 0, doNothing);
 
     GLUI_Spinner *leg2Spinner
 		= glui->add_spinner("Leg 2", GLUI_SPINNER_FLOAT, &joint_rot[1]);
     leg2Spinner->set_speed(0.1);
     leg2Spinner->set_float_limits(JOINT_MIN, JOINT_MAX, GLUI_LIMIT_CLAMP);
-    glui->add_checkbox("Animate Leg 2", &animateLeg2, 0, NULL);
+    glui->add_checkbox("Animate Leg 2", &animateLeg2, 0, doNothing);
 
     GLUI_Spinner *foot1Spinner
 		= glui->add_spinner("Foot 1", GLUI_SPINNER_FLOAT, &joint_rot[2]);
     foot1Spinner->set_speed(0.1);
     foot1Spinner->set_float_limits(JOINT_MIN, JOINT_MAX, GLUI_LIMIT_CLAMP);
-    glui->add_checkbox("Animate Foot 1", &animateFoot1, 0, NULL);
+    glui->add_checkbox("Animate Foot 1", &animateFoot1, 0, doNothing);
 
     GLUI_Spinner *foot2Spinner
 		= glui->add_spinner("Foot 2", GLUI_SPINNER_FLOAT, &joint_rot[2]);
 	foot2Spinner->set_speed(0.1);
 	foot2Spinner->set_float_limits(JOINT_MIN, JOINT_MAX, GLUI_LIMIT_CLAMP);
-	glui->add_checkbox("Animate Foot 2", &animateFoot2, 0, NULL);
+	glui->add_checkbox("Animate Foot 2", &animateFoot2, 0, doNothing);
 
     GLUI_Spinner *beakSpinner
 		= glui->add_spinner("Beak", GLUI_SPINNER_INT, &beakDistance);
     beakSpinner->set_speed(1);
     beakSpinner->set_int_limits(BEAK_MIN, BEAK_MAX, GLUI_LIMIT_CLAMP);
-    glui->add_checkbox("Animate Beak", &animateBeak, 0, NULL);
+    glui->add_checkbox("Animate Beak", &animateBeak, 0, doNothing);
 
     ///////////////////////////////////////////////////////////
     // TODO: 
@@ -385,28 +388,6 @@ void display(void)
 }
 
 
-// Draw a square of the specified size, centered at the current location
-void drawSquare(float width)
-{
-	Point points[] = {{-width/2, -width/2},
-					  {width/2, -width/2},
-					  {width/2, width/2},
-					  {-width/2, width/2}};
-	drawPolygon(4, points);
-}
-
-float LEG_OFFSET_X = 1.0f/5.0f;
-float LEG_OFFSET_Y = -0.5;
-
-float LEG_WIDTH_REL_TO_BODY = 0.2f;
-float LEG_LENGTH_REL_TO_BODY = 0.3f;
-
-float FOOT_OFFSET_X = -0.5f;
-float FOOT_OFFSET_Y = -0.5f;
-
-float FOOT_WIDTH_REL_TO_LEG = 2.0f;
-float FOOT_LENGTH_REL_TO_LEG = 1.0f/3.0f;
-
 /**
  * data structure idea:
  *
@@ -419,47 +400,6 @@ float FOOT_LENGTH_REL_TO_LEG = 1.0f/3.0f;
  * float min
  * float max
  */
-
-void drawLeg(float leftOrRight, int rotationIndex){
-    // Draw a leg
-    glPushMatrix();
-    {
-        // Move the leg to the joint hinge
-        glTranslatef(leftOrRight * LEG_OFFSET_X, LEG_OFFSET_Y, 0.0);
-        // Rotate along the hinge
-        glRotatef(joint_rot[rotationIndex], 0.0, 0.0, 1.0);
-        // Scale the size of the leg
-        glScalef(LEG_WIDTH_REL_TO_BODY, LEG_LENGTH_REL_TO_BODY, 1.0);
-        // Move to center location of leg, under previous rotation
-        glTranslatef(0.0, -0.5, 0.0);
-        // Draw the square for the leg
-        glColor3f(1.0, 0.5, 0.5);
-        drawSquare(1.0);
-
-        // Draw the foot
-        glPushMatrix();
-        {
-            glTranslatef(FOOT_OFFSET_X, FOOT_OFFSET_Y, 0.0);
-            glRotatef(joint_rot[2], 0.0, 0.0, 1.0);
-            glScalef(FOOT_WIDTH_REL_TO_LEG, FOOT_LENGTH_REL_TO_LEG, 1.0);
-            glColor3f(1.0, 1.0, 0.0);
-            drawSquare(1.0);
-        }
-        glPopMatrix();
-
-        // draw the ankle joint
-        glPushMatrix();
-        {
-            glTranslatef(0.0, -0.5, 0.0);
-            glScalef(1.0/5.0, 0.1, 1.0);
-            glColor3f(0.0, 0.0, 0.0);
-            drawCircle(1.0);
-        }
-        glPopMatrix();
-
-    }glPopMatrix();
-}
-
 
 float getDegrees(float rad, float min, float max){
     double joint_rot_t = (sin(rad) + 1.0) / 2.0;

@@ -22,6 +22,16 @@ void drawArm(){
 	glPopMatrix();
 }
 
+// Draw a square of the specified size, centered at the current location
+void drawSquare(float width)
+{
+    Point points[] = {{-width/2, -width/2},
+                      {width/2, -width/2},
+                      {width/2, width/2},
+                      {-width/2, width/2}};
+    drawPolygon(4, points);
+}
+
 void drawPolygon(int n, Point points[]){
 	glBegin(GL_POLYGON);
 	for (int i = 0; i < n; i++){
@@ -80,3 +90,45 @@ void drawHead(){
 	}
 	glPopMatrix();
 }
+
+
+void drawLeg(float leftOrRight, int rotationIndex){
+    // Draw a leg
+    glPushMatrix();
+    {
+        // Move the leg to the joint hinge
+        glTranslatef(leftOrRight * LEG_OFFSET_X, LEG_OFFSET_Y, 0.0);
+        // Rotate along the hinge
+        glRotatef(joint_rot[rotationIndex], 0.0, 0.0, 1.0);
+        // Scale the size of the leg
+        glScalef(LEG_WIDTH_REL_TO_BODY, LEG_LENGTH_REL_TO_BODY, 1.0);
+        // Move to center location of leg, under previous rotation
+        glTranslatef(0.0, -0.5, 0.0);
+        // Draw the square for the leg
+        glColor3f(1.0, 0.5, 0.5);
+        drawSquare(1.0);
+
+        // Draw the foot
+        glPushMatrix();
+        {
+            glTranslatef(FOOT_OFFSET_X, FOOT_OFFSET_Y, 0.0);
+            glRotatef(joint_rot[2], 0.0, 0.0, 1.0);
+            glScalef(FOOT_WIDTH_REL_TO_LEG, FOOT_LENGTH_REL_TO_LEG, 1.0);
+            glColor3f(1.0, 1.0, 0.0);
+            drawSquare(1.0);
+        }
+        glPopMatrix();
+
+        // draw the ankle joint
+        glPushMatrix();
+        {
+            glTranslatef(0.0, -0.5, 0.0);
+            glScalef(1.0/5.0, 0.1, 1.0);
+            glColor3f(0.0, 0.0, 0.0);
+            drawCircle(1.0);
+        }
+        glPopMatrix();
+
+    }glPopMatrix();
+}
+
