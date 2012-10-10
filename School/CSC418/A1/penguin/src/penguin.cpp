@@ -302,26 +302,57 @@ void animate()
     refresh();
 }
 
-const float MOVEMENT_SPEED = 4.0f;
+const float MOVEMENT_SPEED = 3.0f;
 
 // Plays the animation
 void animation(){
 
-	if (animation_frame < 80){
+	float rad = animation_frame * ROTATION_SPEED * 2;
+	if (animation_frame < 70){
 		// penguin walking along
 		bodyPositionX -= MOVEMENT_SPEED;
-		float rad = animation_frame * ROTATION_SPEED * 2;
 		leg1Rotation = getSinDegrees(rad, LIMB_MIN, LIMB_MAX);
 		leg2Rotation = getCosDegrees(rad, LIMB_MIN, LIMB_MAX);
 		foot1Rotation = getSinDegrees(rad, FOOT_MIN, FOOT_MAX);
 		foot2Rotation = getCosDegrees(rad, FOOT_MIN, FOOT_MAX);
 		armRotation = getSinDegrees(rad, LIMB_MIN, LIMB_MAX);
 		beakDistance = getDegrees(BEAK_SEPARATION_SPEED * animation_frame, BEAK_MIN, BEAK_MAX);
-	} else if (90 <= animation_frame && animation_frame < 100){
-		// penguin stops, looks up
-		float rad = animation_frame * ROTATION_SPEED;
-		headRotation = getCosDegrees(rad, HEAD_MIN, HEAD_MAX);
+	} else if (70 <= animation_frame && animation_frame < 100){
+		bool stillMoving = false;
+		// things slowly stop moving
+		if (beakDistance > 0){
+			beakDistance = getDegrees(BEAK_SEPARATION_SPEED * animation_frame, BEAK_MIN, BEAK_MAX);
+		}
+		if (abs(leg1Rotation) > 2){
+			leg1Rotation = getSinDegrees(rad, LIMB_MIN, LIMB_MAX);
+			stillMoving = true;
+		}
+		if (abs(leg2Rotation) > 2){
+			leg2Rotation = getCosDegrees(rad, LIMB_MIN, LIMB_MAX);
+			stillMoving = true;
+		}
+		if (abs(foot1Rotation) > 2){
+			foot1Rotation = getSinDegrees(rad, FOOT_MIN, FOOT_MAX);
+			stillMoving = true;
+		}
+		if (abs(foot2Rotation) > 2){
+			foot2Rotation = getCosDegrees(rad, FOOT_MIN, FOOT_MAX);
+			stillMoving = true;
+		}
+		if (abs(armRotation > 2)){
+			armRotation = getSinDegrees(rad, LIMB_MIN, LIMB_MAX);
+		}
+		if (stillMoving){
+			bodyPositionX -= MOVEMENT_SPEED;
+		}
 	} else if (100 <= animation_frame && animation_frame < 110){
+		// penguin stops, looks up
+		rad = animation_frame * ROTATION_SPEED;
+		headRotation = getCosDegrees(rad, HEAD_MIN, HEAD_MAX);
+		if (beakDistance > 0){
+			beakDistance = getDegrees(BEAK_SEPARATION_SPEED * animation_frame, BEAK_MIN, BEAK_MAX);
+		}
+	} else if (110 <= animation_frame && animation_frame < 116){
 		// penguin appears shocked
 		beakDistance += BEAK_SEPARATION_SPEED;
 	}
