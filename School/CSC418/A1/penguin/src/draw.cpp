@@ -127,32 +127,48 @@ void drawLeg(float leftOrRight, float legRotation, float footRotation){
         // Rotate along the hinge
         glRotatef(legRotation, 0.0, 0.0, 1.0);
         // Scale the size of the leg
-        glScalef(0.3, 0.3, 1.0);
+        glScalef(LEG_SCALE, LEG_SCALE, 1.0);
         // Move to center location of leg, under previous rotation
-        glTranslatef(leftOrRight * LEG_OFFSET_X, LEG_OFFSET_Y, 0.0);
+        glTranslatef(0.0, LEG_OFFSET_Y, 0.0);
         // Draw the square for the leg
         glColor3f(1.0, 0.5, 0.5);
 
+        float legWidth = 0.4f;
+        float legLength = 1.0f;
+
         Point legPoints[] = {
                 // top left point
-                {-0.2, 0.5},
+                {-legWidth/2, legLength/2},
                 // top right point
-                {0.2, 0.5},
+                {legWidth/2, legLength/2},
                 // bottom right point
-                {0.2, -0.5},
+                {legWidth/2, -legLength/2},
                 // bottom left point
-                {-0.2, -0.5}};
+                {-legWidth/2, -legLength/2}};
         drawPolygon(4, legPoints);
 
         // Draw the foot
         glPushMatrix();
         {
+            // move the foot to the joint
             glTranslatef(0.0, FOOT_OFFSET_Y, 0.0);
             glRotatef(footRotation, 0.0, 0.0, 1.0);
-            glScalef(FOOT_WIDTH_REL_TO_LEG, FOOT_LENGTH_REL_TO_LEG, 1.0);
-            glTranslatef(FOOT_OFFSET_X, 0.0, 0.0);
+            // move the foot to its correct position
+            glTranslatef(FOOT_OFFSET_X + legWidth/2, 0.0, 0.0);
             glColor3f(1.0, 1.0, 0.0);
-            drawSquare(1.0);
+
+            float footLength = 1.0f;
+            float footThickness = 0.4f;
+            Point footPoints[] = {
+                    // top left point
+                    {-footLength/2, footThickness/2},
+                    // top right point
+                    {footLength/2, footThickness/2},
+                    // bottom right point
+                    {footLength/2, -footThickness/2},
+                    // bottom left point
+                    {-footLength/2, -footThickness/2}};
+            drawPolygon(4, footPoints);
         }
         glPopMatrix();
 
@@ -160,7 +176,7 @@ void drawLeg(float leftOrRight, float legRotation, float footRotation){
         glPushMatrix();
         {
             glTranslatef(0.0, FOOT_OFFSET_Y, 0.0);
-            glScalef(1.0/5.0, 0.1, 1.0);
+            glScalef(0.1, 0.1, 1.0);
             glColor3f(0.0, 0.0, 0.0);
             drawCircle(1.0);
         }
@@ -173,7 +189,7 @@ void drawLeg(float leftOrRight, float legRotation, float footRotation){
     glPushMatrix();
     {
         glTranslatef(leftOrRight * LEG_OFFSET_X, LEG_OFFSET_Y, 0.0);
-        glScalef(LEG_WIDTH_REL_TO_BODY / 5.0, LEG_LENGTH_REL_TO_BODY / 10.0, 1.0);
+        glScalef(LEG_SCALE * 0.1, LEG_SCALE * 0.1, 1.0);
         glColor3f(0.0, 0.0, 0.0);
         drawCircle(1.0);
     }

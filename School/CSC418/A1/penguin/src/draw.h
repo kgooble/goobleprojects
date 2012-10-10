@@ -41,8 +41,7 @@ extern int beakDistance;
 const float LEG_OFFSET_X = 0.2f;
 const float LEG_OFFSET_Y = -0.5;
 
-const float LEG_WIDTH_REL_TO_BODY = 0.1f;
-const float LEG_LENGTH_REL_TO_BODY = 0.3f;
+const float LEG_SCALE = 0.3f;
 
 const float FOOT_OFFSET_X = -0.5f;
 const float FOOT_OFFSET_Y = -0.4f;
