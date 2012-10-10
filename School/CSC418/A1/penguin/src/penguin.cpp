@@ -58,6 +58,7 @@ int Win[2];                 // window (x,y) size
 
 // Animation settings
 int animate_mode = 0;       // 0 = no anim, 1 = animate
+int animation_mode = 0;     // 0 = not playing animation; 1 = playing animation
 int animation_frame = 0;      // Specify current frame of animation
 
 //////////////////////////////////////////////////////
@@ -78,6 +79,7 @@ void initGl();
 // Callbacks for handling events in glut
 void myReshape(int w, int h);
 void animate();
+void animation();
 void display(void);
 
 // Callback for handling events in glui
@@ -172,6 +174,16 @@ void animateButton(int)
   }
 }
 
+void animationButton(int){
+    glui->sync_live();
+    animation_frame = 0;
+    if (animation_mode == 1){
+        GLUI_Master.set_glutIdleFunc(animation);
+    } else{
+        GLUI_Master.set_glutIdleFunc(NULL);
+    }
+}
+
 void doNothing(int){
     // do nothing; to be passed to checkboxes whose callbacks aren't meant to do anything
 }
@@ -237,7 +249,9 @@ void initGlui()
 
     // Add button to specify animation mode 
     glui->add_separator();
-    glui->add_checkbox("Animate", &animate_mode, 0, animateButton);
+    glui->add_checkbox("Animate Parts", &animate_mode, 0, animateButton);
+
+    glui->add_checkbox("Play Animation", &animation_mode, 0, animationButton);
 
     // Add "Quit" button
     glui->add_separator();
@@ -256,7 +270,7 @@ void initGl(void)
     glClearColor(0.7f,0.7f,0.9f,0.5f);
 }
 
-// Callback idle function for animating the scene
+// Callback idle function for animating joint movements
 void animate()
 {
     // Update geometry
@@ -302,6 +316,13 @@ void animate()
     animation_frame++;
 
     // Wait 50 ms between frames (20 frames per second)
+    usleep(50000);
+}
+
+// Plays the animation
+void animation(){
+
+    animation_frame++;
     usleep(50000);
 }
 
