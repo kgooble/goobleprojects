@@ -22,9 +22,13 @@ int beakDistance = 0;
 void drawArm(){
 	glPushMatrix();
 	{
+		// Move the arm into the hinge position
 		glTranslatef(0.1, ARM_SCALE/2, 0.0);
+		// Rotate the arm along the hinge
 		glRotatef(armRotation, 0.0, 0.0, 1.0);
+		// Scale the arm down from the size of the body
 		glScalef(ARM_SCALE, ARM_SCALE, 1.0);
+		// Translate the arm to its true position
 		glTranslatef(0.0, -ARM_SCALE + 0.1, 0.0);
 		glColor3f(0.0, 0.0, 1.0);
 		Point armPoints[] = {
@@ -40,7 +44,7 @@ void drawArm(){
 	}
 	glPopMatrix();
 
-	//draw the shoulder joint
+	// Draw the shoulder joint
     glPushMatrix();
     {
         glTranslatef(0.1, ARM_SCALE/2, 0.0);
@@ -52,7 +56,7 @@ void drawArm(){
 
 }
 
-// draw an arbitrary n-point polygon
+// Draw an arbitrary n-point polygon
 void drawPolygon(int n, Point points[]){
 	glBegin(GL_POLYGON);
 	for (int i = 0; i < n; i++){
@@ -62,7 +66,8 @@ void drawPolygon(int n, Point points[]){
 
 }
 
-// this is used for drawing the joints
+// Draw a circle with the given radius.
+// This is used for drawing the joints.
 void drawCircle(float radius){
     glBegin(GL_LINE_LOOP);
     for (int i = 0; i < 360; i++){
@@ -74,29 +79,44 @@ void drawCircle(float radius){
 
 
 void drawBeak(){
-	// draw top beak
+	// Draw the top beak
 	glPushMatrix();{
+		// Scale the beak down from the size of the head
 		glScalef(0.5, 0.5, 1.0);
+		// Move the beak away from the head, off to the left
 		glTranslatef(-1.0, beakDistance / 20.0f, 0.0);
 		glColor3f(0.5, 0.5, 1.0);
 
 		Point topBeakPoints[] = {
+				// top left point
 		        {BEAK_DISTANCE_FROM_HEAD, 0.1},
+		        // bottom left point
 		        {BEAK_DISTANCE_FROM_HEAD, -0.1},
-				{0.10, -0.1}, {0.15, 0.3}};
+		        // bottom right point
+				{0.10, -0.1},
+				// top right point
+				{0.15, 0.3}};
 		drawPolygon(4, topBeakPoints);
 	}
 	glPopMatrix();
 
-	// draw bottom beak
+	// Draw the bottom beak
 	glPushMatrix();{
+		// Scale the beak down from the size of the head
 		glScalef(0.5, 0.5, 1.0);
+		// Move the beak to the left of the head
 		glTranslatef(-1.0, -beakDistance / 20.0f, 0.0);
 		glColor3f(0.5, 0.1, 1.0);
 
-		Point bottomBeakPoints[] = {{BEAK_DISTANCE_FROM_HEAD, 0.1},
+		Point bottomBeakPoints[] = {
+				// top left point
+				{BEAK_DISTANCE_FROM_HEAD, 0.1},
+				// bottom left point
 		        {BEAK_DISTANCE_FROM_HEAD, -0.1},
-				{0.1, -0.1}, {0.1, 0.1}};
+		        // bottom right point
+				{0.1, -0.1},
+				// bottom left point
+				{0.1, 0.1}};
 		drawPolygon(4, bottomBeakPoints);
 	}
 	glPopMatrix();
@@ -105,9 +125,13 @@ void drawBeak(){
 
 void drawHead(){
 	glPushMatrix();{
+		// Move the head up to the hinge
 		glTranslatef(0.0, HEAD_SCALE, 0.0);
+		// Rotate the head along the hinge
 		glRotatef(headRotation, 0.0, 0.0, 1.0);
+		// Scale the head down from the size of the body
 		glScalef(HEAD_SCALE, HEAD_SCALE, 1.0);
+		// Move the head into its correct position
 		glTranslatef(0.0, HEAD_SCALE/4, 0.0);
 		glColor3f(1.0, 0.0, 0.0);
 		Point headPoints[] = {
@@ -122,19 +146,26 @@ void drawHead(){
 				// top left point
 				{-0.4, 0.3}};
 		drawPolygon(5, headPoints);
+
 		drawBeak();
 
-		// draw eye
+		// Draw eye
 		glPushMatrix();
 		{
+			// Move the eye to the top left part of the head
 		    glTranslatef(-0.2, 0.2, 0.0);
+		    // Scale the eye down
 		    glScalef(0.05, 0.05, 1.0);
 		    glColor3f(1.0, 1.0, 1.0);
-		    drawCircle(1.0);
+
+			drawCircle(1.0);
 
 		    glPushMatrix();
 		    {
-		        glTranslatef(0.1, 0.0, 0.0);
+		    	// Move the pupil a bit to the left so it looks like
+		    	// the penguin is looking forward
+		        glTranslatef(-0.1, 0.0, 0.0);
+		        // Scale the pupil down
 		        glScalef(0.5, 0.5, 1.0);
                 glColor3f(0.0, 0.0, 0.0);
                 drawCircle(1.0);
@@ -145,7 +176,7 @@ void drawHead(){
 	}
 	glPopMatrix();
 
-	// draw neck joint
+	// Draw neck joint
 	glPushMatrix();
 	{
         glTranslatef(0.0, HEAD_SCALE, 0.0);
@@ -159,6 +190,7 @@ void drawHead(){
 
 void drawLeg(float leftOrRight, float legRotation, float footRotation){
     // Draw a leg
+	// This function is called twice; once for each leg
     glPushMatrix();
     {
         // Move the leg to the joint hinge
@@ -188,6 +220,7 @@ void drawLeg(float leftOrRight, float legRotation, float footRotation){
         {
             // move the foot to the joint
             glTranslatef(0.0, FOOT_OFFSET_Y, 0.0);
+            // rotate the foot along the joint
             glRotatef(footRotation, 0.0, 0.0, 1.0);
             // move the foot to its correct position
             glTranslatef(FOOT_OFFSET_X + LEG_WIDTH/2, 0.0, 0.0);

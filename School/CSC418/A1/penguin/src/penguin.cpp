@@ -85,7 +85,6 @@ void GLUI_Control(int id);
 // Functions to help draw the object
 float getSinDegrees(float rad, float min, float max);
 float getCosDegrees(float rad, float min, float max);
-float getDegrees(float rad, float min, float max);
 
 // Return the current system clock (in seconds)
 double getTime();
@@ -93,7 +92,8 @@ double getTime();
 
 // ******************** FUNCTIONS ************************
 
-// flags to determine whether or not we should animate each part
+// Flags to determine whether or not we should animate each part which are
+// used by the GLUI checkboxes.
 int animateLeg1 = 0;
 int animateLeg2 = 0;
 int animateFoot1 = 0;
@@ -177,12 +177,13 @@ void animateButton(int)
   }
 }
 
-// animation button handler; initializes the body position as off to the right
-// so that it can walk to the left during animation
+// Animation button handler. called when "Play animation" checkbox is checked
 void animationButton(int){
     glui->sync_live();
     animation_frame = 0;
     if (animation_mode == 1){
+    	// Initializes the body position as off to the right
+    	// so that the penguin can walk to the left during animation.
     	bodyPositionX = 50.0f;
         GLUI_Master.set_glutIdleFunc(animation);
     } else{
@@ -194,6 +195,9 @@ void doNothing(int){
     // do nothing; to be passed to checkboxes whose callbacks aren't meant to do anything
 }
 
+// Add a float spinner with the given name, pointer to the float (angle),
+// the speed at which the spinner should move, and the minimum and maximum
+// values for the angle.
 void addFloatSpinner(char* name, float* angle, float speed, float minAngle, float maxAngle){
     GLUI_Spinner *joint_spinner
         = glui->add_spinner(name, GLUI_SPINNER_FLOAT, angle);
@@ -209,7 +213,13 @@ void initGlui()
     // Create GLUI window
     glui = GLUI_Master.create_glui("Glui Window", 0, Win[0]+10, 0);
 
-    // Create a control to specify the rotation of the joint
+    /*
+     * Add spinners and checkboxes for each degree of freedom.
+     * The checkboxes determine whether or not that part should rotate
+     * when the "animate" checkbox is on.
+     *
+     */
+
     addFloatSpinner("Leg 1", &leg1Rotation, 0.1, LIMB_MIN, LIMB_MAX);
     glui->add_checkbox("Animate Leg 1", &animateLeg1, 0, doNothing);
 
@@ -228,6 +238,12 @@ void initGlui()
     addFloatSpinner("Head", &headRotation, 0.1, HEAD_MIN, HEAD_MAX);
     glui->add_checkbox("Animate Head", &animateHead, 0, doNothing);
 
+    /*
+     * The beak spinner is an int value of the distance
+     * between the top and bottom beaks
+     *
+     * The beak is also controlled by a checkbox
+     */
     GLUI_Spinner *beakSpinner
 		= glui->add_spinner("Beak", GLUI_SPINNER_INT, &beakDistance);
     beakSpinner->set_speed(1);
@@ -266,25 +282,25 @@ void animate()
     // update the rotation angle/separation distance of each part whose
     // checkbox is on
     if (animateLeg1 == 1)
-    	leg1Rotation = getDegrees(rad, LIMB_MIN, LIMB_MAX);
+    	leg1Rotation = getSinDegrees(rad, LIMB_MIN, LIMB_MAX);
 
     if (animateLeg2 == 1)
-        leg2Rotation  = getDegrees(rad, LIMB_MIN, LIMB_MAX);
+        leg2Rotation  = getSinDegrees(rad, LIMB_MIN, LIMB_MAX);
 
     if (animateFoot1 == 1)
-    	foot1Rotation = getDegrees(rad, FOOT_MIN, FOOT_MAX);
+    	foot1Rotation = getSinDegrees(rad, FOOT_MIN, FOOT_MAX);
     
     if (animateFoot2 == 1)
-        foot2Rotation = getDegrees(rad, FOOT_MIN, FOOT_MAX);
+        foot2Rotation = getSinDegrees(rad, FOOT_MIN, FOOT_MAX);
 
     if (animateArm == 1)
-        armRotation = getDegrees(rad, LIMB_MIN, LIMB_MAX);
+        armRotation = getSinDegrees(rad, LIMB_MIN, LIMB_MAX);
 
     if (animateHead == 1)
-        headRotation = getDegrees(rad, HEAD_MIN, HEAD_MAX);
+        headRotation = getSinDegrees(rad, HEAD_MIN, HEAD_MAX);
 
     if (animateBeak == 1)
-    	beakDistance = getDegrees(BEAK_SEPARATION_SPEED * animation_frame, BEAK_MIN, BEAK_MAX);
+    	beakDistance = getSinDegrees(BEAK_SEPARATION_SPEED * animation_frame, BEAK_MIN, BEAK_MAX);
 
     refresh();
 }
@@ -301,12 +317,12 @@ void animation(){
 		foot1Rotation = getSinDegrees(rad, FOOT_MIN, FOOT_MAX);
 		foot2Rotation = getCosDegrees(rad, FOOT_MIN, FOOT_MAX);
 		armRotation = getSinDegrees(rad, LIMB_MIN, LIMB_MAX);
-		beakDistance = getDegrees(BEAK_SEPARATION_SPEED * animation_frame, BEAK_MIN, BEAK_MAX);
+		beakDistance = getSinDegrees(BEAK_SEPARATION_SPEED * animation_frame, BEAK_MIN, BEAK_MAX);
 	} else if (70 <= animation_frame && animation_frame < 100){
 		bool stillMoving = false;
 		// things slowly stop moving
 		if (beakDistance > 0){
-			beakDistance = getDegrees(BEAK_SEPARATION_SPEED * animation_frame, BEAK_MIN, BEAK_MAX);
+			beakDistance = getSinDegrees(BEAK_SEPARATION_SPEED * animation_frame, BEAK_MIN, BEAK_MAX);
 		}
 		if (abs(leg1Rotation) > CLOSE_TO_ZERO){
 			leg1Rotation = getSinDegrees(rad, LIMB_MIN, LIMB_MAX);
@@ -335,7 +351,7 @@ void animation(){
 		rad = animation_frame * ROTATION_SPEED;
 		headRotation = getCosDegrees(rad, HEAD_MIN, HEAD_MAX);
 		if (beakDistance > 0){
-			beakDistance = getDegrees(BEAK_SEPARATION_SPEED * animation_frame, BEAK_MIN, BEAK_MAX);
+			beakDistance = getSinDegrees(BEAK_SEPARATION_SPEED * animation_frame, BEAK_MIN, BEAK_MAX);
 		}
 	} else if (110 <= animation_frame && animation_frame < 116){
 		// penguin appears shocked
@@ -405,16 +421,15 @@ void display(void)
     glutSwapBuffers();
 }
 
+// get the rotation degrees in between the given minimum
+// and maximum values, using sin
 float getSinDegrees(float rad, float min, float max){
 	double joint_rot_t = (sin(rad) + 1.0) / 2.0;
 	return joint_rot_t * min + (1 - joint_rot_t) * max;
 }
 
+// same as above except uses cos
 float getCosDegrees(float rad, float min, float max){
 	double joint_rot_t = (cos(rad) + 1.0) / 2.0;
 	return joint_rot_t * min + (1 - joint_rot_t) * max;
-}
-
-float getDegrees(float rad, float min, float max){
-    return getSinDegrees(rad, min, max);
 }
