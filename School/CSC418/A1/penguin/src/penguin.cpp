@@ -262,6 +262,9 @@ void animate()
 {
     // Update geometry
     float rad = animation_frame * ROTATION_SPEED;
+
+    // update the rotation angle/separation distance of each part whose
+    // checkbox is on
     if (animateLeg1 == 1)
     	leg1Rotation = getDegrees(rad, LIMB_MIN, LIMB_MAX);
 
