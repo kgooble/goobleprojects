@@ -107,7 +107,7 @@ void drawLeg(float leftOrRight, int rotationIndex){
         // Scale the size of the leg
         glScalef(LEG_WIDTH_REL_TO_BODY, LEG_LENGTH_REL_TO_BODY, 1.0);
         // Move to center location of leg, under previous rotation
-        glTranslatef(0.0, -0.5, 0.0);
+        glTranslatef(leftOrRight * LEG_OFFSET_X, LEG_OFFSET_Y, 0.0);
         // Draw the square for the leg
         glColor3f(1.0, 0.5, 0.5);
         drawSquare(1.0);
@@ -115,7 +115,8 @@ void drawLeg(float leftOrRight, int rotationIndex){
         // Draw the foot
         glPushMatrix();
         {
-            glTranslatef(FOOT_OFFSET_X, FOOT_OFFSET_Y, 0.0);
+            //glTranslatef(FOOT_OFFSET_X, FOOT_OFFSET_Y, 0.0);
+            glTranslatef(-0.5, -0.5, 0.0);
             glRotatef(jointRotation[2], 0.0, 0.0, 1.0);
             glScalef(FOOT_WIDTH_REL_TO_LEG, FOOT_LENGTH_REL_TO_LEG, 1.0);
             glColor3f(1.0, 1.0, 0.0);
