@@ -61,10 +61,6 @@ int animate_mode = 0;       // 0 = no anim, 1 = animate
 int animation_mode = 0;     // 0 = not playing animation; 1 = playing animation
 int animation_frame = 0;      // Specify current frame of animation
 
-//////////////////////////////////////////////////////
-// TODO: Add additional joint parameters here
-//////////////////////////////////////////////////////
-
 // All joint parameters are in draw.h
 
 // ***********  FUNCTION HEADER DECLARATIONS ****************
@@ -97,6 +93,7 @@ double getTime();
 
 // ******************** FUNCTIONS ************************
 
+// flags to determine whether or not we should animate each part
 int animateLeg1 = 0;
 int animateLeg2 = 0;
 int animateFoot1 = 0;
@@ -105,6 +102,10 @@ int animateBeak = 0;
 int animateHead = 0;
 int animateArm = 0;
 float bodyPositionX = 0.0f;
+
+// constants for the animation
+const float MOVEMENT_SPEED = 3.0f;
+const int CLOSE_TO_ZERO = 3;
 
 // main() function
 // Initializes the user interface (and any user variables)
@@ -176,6 +177,8 @@ void animateButton(int)
   }
 }
 
+// animation button handler; initializes the body position as off to the right
+// so that it can walk to the left during animation
 void animationButton(int){
     glui->sync_live();
     animation_frame = 0;
@@ -190,14 +193,13 @@ void animationButton(int){
 void doNothing(int){
     // do nothing; to be passed to checkboxes whose callbacks aren't meant to do anything
 }
-/**
- * There are 6 points of rotation
- * 7 degrees of freedom total, including the beak which moves up and down.
- *
- * --> each joint will have its own INDEX Into the joint rotation array.
- * --> each joint may have its own set of MAX & MIN values.
- *
- */
+
+void addFloatSpinner(char* name, float* angle, float speed, float minAngle, float maxAngle){
+    GLUI_Spinner *joint_spinner
+        = glui->add_spinner(name, GLUI_SPINNER_FLOAT, angle);
+    joint_spinner->set_speed(speed);
+    joint_spinner->set_float_limits(minAngle, maxAngle, GLUI_LIMIT_CLAMP);
+}
 
 // Initialize GLUI and the user interface
 void initGlui()
@@ -208,40 +210,22 @@ void initGlui()
     glui = GLUI_Master.create_glui("Glui Window", 0, Win[0]+10, 0);
 
     // Create a control to specify the rotation of the joint
-    GLUI_Spinner *joint_spinner
-        = glui->add_spinner("Leg 1", GLUI_SPINNER_FLOAT, &leg1Rotation);
-    joint_spinner->set_speed(0.1);
-    joint_spinner->set_float_limits(LIMB_MIN, LIMB_MAX, GLUI_LIMIT_CLAMP);
+    addFloatSpinner("Leg 1", &leg1Rotation, 0.1, LIMB_MIN, LIMB_MAX);
     glui->add_checkbox("Animate Leg 1", &animateLeg1, 0, doNothing);
 
-    GLUI_Spinner *leg2Spinner
-		= glui->add_spinner("Leg 2", GLUI_SPINNER_FLOAT, &leg2Rotation);
-    leg2Spinner->set_speed(0.1);
-    leg2Spinner->set_float_limits(LIMB_MIN, LIMB_MAX, GLUI_LIMIT_CLAMP);
+    addFloatSpinner("Leg 2", &leg2Rotation, 0.1, LIMB_MIN, LIMB_MAX);
     glui->add_checkbox("Animate Leg 2", &animateLeg2, 0, doNothing);
 
-    GLUI_Spinner *foot1Spinner
-		= glui->add_spinner("Foot 1", GLUI_SPINNER_FLOAT, &foot1Rotation);
-    foot1Spinner->set_speed(0.1);
-    foot1Spinner->set_float_limits(FOOT_MIN, FOOT_MAX, GLUI_LIMIT_CLAMP);
+    addFloatSpinner("Foot 1", &foot1Rotation, 0.1, FOOT_MIN, FOOT_MAX);
     glui->add_checkbox("Animate Foot 1", &animateFoot1, 0, doNothing);
 
-    GLUI_Spinner *foot2Spinner
-		= glui->add_spinner("Foot 2", GLUI_SPINNER_FLOAT, &foot2Rotation);
-	foot2Spinner->set_speed(0.1);
-	foot2Spinner->set_float_limits(FOOT_MIN, FOOT_MAX, GLUI_LIMIT_CLAMP);
+    addFloatSpinner("Foot 2", &foot2Rotation, 0.1, FOOT_MIN, FOOT_MAX);
 	glui->add_checkbox("Animate Foot 2", &animateFoot2, 0, doNothing);
 
-	GLUI_Spinner *armSpinner
-        = glui->add_spinner("Arm", GLUI_SPINNER_FLOAT, &armRotation);
-	armSpinner->set_speed(0.1);
-	armSpinner->set_float_limits(LIMB_MIN, LIMB_MAX, GLUI_LIMIT_CLAMP);
+	addFloatSpinner("Arm", &armRotation, 0.1, LIMB_MIN, LIMB_MAX);
     glui->add_checkbox("Animate Arm", &animateArm, 0, doNothing);
 
-    GLUI_Spinner *headSpinner
-        = glui->add_spinner("Head", GLUI_SPINNER_FLOAT, &headRotation);
-    headSpinner->set_speed(0.1);
-    headSpinner->set_float_limits(HEAD_MIN, HEAD_MAX, GLUI_LIMIT_CLAMP);
+    addFloatSpinner("Head", &headRotation, 0.1, HEAD_MIN, HEAD_MAX);
     glui->add_checkbox("Animate Head", &animateHead, 0, doNothing);
 
     GLUI_Spinner *beakSpinner
@@ -302,15 +286,12 @@ void animate()
     refresh();
 }
 
-const float MOVEMENT_SPEED = 3.0f;
-const int CLOSE_TO_ZERO = 3;
-
 // Plays the animation
 void animation(){
 
 	float rad = animation_frame * ROTATION_SPEED * 2;
 	if (animation_frame < 70){
-		// penguin walking along
+		// penguin walking along flapping his beak
 		bodyPositionX -= MOVEMENT_SPEED;
 		leg1Rotation = getSinDegrees(rad, LIMB_MIN, LIMB_MAX);
 		leg2Rotation = getCosDegrees(rad, LIMB_MIN, LIMB_MAX);
@@ -410,20 +391,6 @@ void display(void)
     // Setup the model-view transformation matrix
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-
-    ///////////////////////////////////////////////////////////
-    // TODO:
-    //   Modify this function draw the scene
-    //   This should include function calls to pieces that
-    //   apply the appropriate transformation matrice and
-    //   render the individual body parts.
-    ///////////////////////////////////////////////////////////
-
-    /**
-     * what needs to be done still?
-     * - draw the eye (on head)
-     * - create animation
-     */
 
     drawEntireBody();
 
