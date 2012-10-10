@@ -201,34 +201,40 @@ void initGlui()
 
     // Create a control to specify the rotation of the joint
     GLUI_Spinner *joint_spinner
-        = glui->add_spinner("Leg 1", GLUI_SPINNER_FLOAT, &jointRotation[0]);
+        = glui->add_spinner("Leg 1", GLUI_SPINNER_FLOAT, &leg1Rotation);
     joint_spinner->set_speed(0.1);
     joint_spinner->set_float_limits(JOINT_MIN, JOINT_MAX, GLUI_LIMIT_CLAMP);
     glui->add_checkbox("Animate Leg 1", &animateLeg1, 0, doNothing);
 
     GLUI_Spinner *leg2Spinner
-		= glui->add_spinner("Leg 2", GLUI_SPINNER_FLOAT, &jointRotation[1]);
+		= glui->add_spinner("Leg 2", GLUI_SPINNER_FLOAT, &leg2Rotation);
     leg2Spinner->set_speed(0.1);
     leg2Spinner->set_float_limits(JOINT_MIN, JOINT_MAX, GLUI_LIMIT_CLAMP);
     glui->add_checkbox("Animate Leg 2", &animateLeg2, 0, doNothing);
 
     GLUI_Spinner *foot1Spinner
-		= glui->add_spinner("Foot 1", GLUI_SPINNER_FLOAT, &jointRotation[2]);
+		= glui->add_spinner("Foot 1", GLUI_SPINNER_FLOAT, &foot1Rotation);
     foot1Spinner->set_speed(0.1);
     foot1Spinner->set_float_limits(JOINT_MIN, JOINT_MAX, GLUI_LIMIT_CLAMP);
     glui->add_checkbox("Animate Foot 1", &animateFoot1, 0, doNothing);
 
     GLUI_Spinner *foot2Spinner
-		= glui->add_spinner("Foot 2", GLUI_SPINNER_FLOAT, &jointRotation[2]);
+		= glui->add_spinner("Foot 2", GLUI_SPINNER_FLOAT, &foot2Rotation);
 	foot2Spinner->set_speed(0.1);
 	foot2Spinner->set_float_limits(JOINT_MIN, JOINT_MAX, GLUI_LIMIT_CLAMP);
 	glui->add_checkbox("Animate Foot 2", &animateFoot2, 0, doNothing);
 
 	GLUI_Spinner *armSpinner
-        = glui->add_spinner("Arm", GLUI_SPINNER_FLOAT, &jointRotation[3]);
+        = glui->add_spinner("Arm", GLUI_SPINNER_FLOAT, &armRotation);
 	armSpinner->set_speed(0.1);
 	armSpinner->set_float_limits(JOINT_MIN, JOINT_MAX, GLUI_LIMIT_CLAMP);
     glui->add_checkbox("Animate Arm", &animateArm, 0, doNothing);
+
+    GLUI_Spinner *headSpinner
+        = glui->add_spinner("Head", GLUI_SPINNER_FLOAT, &headRotation);
+    headSpinner->set_speed(0.1);
+    headSpinner->set_float_limits(JOINT_MIN, JOINT_MAX, GLUI_LIMIT_CLAMP);
+    glui->add_checkbox("Animate Head", &animateHead, 0, doNothing);
 
     GLUI_Spinner *beakSpinner
 		= glui->add_spinner("Beak", GLUI_SPINNER_INT, &beakDistance);
@@ -263,16 +269,22 @@ void animate()
     // Update geometry
     float rad = animation_frame * LEG_ROTATION_SPEED;
     if (animateLeg1 == 1)
-    	jointRotation[0] = getDegrees(rad, JOINT_MIN, JOINT_MAX);
+    	leg1Rotation = getDegrees(rad, JOINT_MIN, JOINT_MAX);
 
     if (animateLeg2 == 1)
-    	jointRotation[1] = getDegrees(rad, JOINT_MIN, JOINT_MAX);
+        leg2Rotation  = getDegrees(rad, JOINT_MIN, JOINT_MAX);
 
     if (animateFoot1 == 1)
-    	jointRotation[2] = getDegrees(rad, JOINT_MIN, JOINT_MAX);
+    	foot1Rotation = getDegrees(rad, JOINT_MIN, JOINT_MAX);
     
+    if (animateFoot2 == 1)
+        foot2Rotation = getDegrees(rad, JOINT_MIN, JOINT_MAX);
+
     if (animateArm == 1)
-        jointRotation[3] = getDegrees(rad, JOINT_MIN, JOINT_MAX);
+        armRotation = getDegrees(rad, JOINT_MIN, JOINT_MAX);
+
+    if (animateHead == 1)
+        headRotation = getDegrees(rad, JOINT_MIN, JOINT_MAX);
 
     if (animateBeak == 1)
     	beakDistance = getDegrees(BEAK_SEPARATION_SPEED * animation_frame, BEAK_MIN, BEAK_MAX);
@@ -316,7 +328,7 @@ void myReshape(int w, int h)
     Win[1] = h;
 }
 
-const float BODY_WIDTH = 140.0f;
+const float BODY_WIDTH = 200.0f;
 const float BODY_LENGTH = 200.0f;
 
 // display callback
@@ -365,15 +377,27 @@ void display(void)
             // Set the colour to green
             glColor3f(0.0, 1.0, 0.0);
 
+            float bellyWidth = 0.8f;
+            float neckWidth = 0.4f;
+            float bottomWidth = 0.2f;
+
 			// Draw the body
-            Point bodyPoints[] = {{-0.3f, 0.5f}, {0.3f, 0.5f},
-                              {0.5f, -0.5f}, {0.2f, -0.7f},
-                              {-0.2f, -0.7f}, {-0.5f, -0.5f}};
+            Point bodyPoints[] = {
+                    // top left, right points
+                    {-neckWidth/2, 0.5f}, {neckWidth/2, 0.5f},
+                    // middle right point
+                    {bellyWidth/2, -0.4f},
+                    // bottom right point
+                    {bottomWidth/2, -0.7f},
+                    // bottom left point
+                    {-bottomWidth/2, -0.7f},
+                    // middle left point
+                    {-bellyWidth/2, -0.4f}};
             drawPolygon(6, bodyPoints);
 
             drawArm();
-            drawLeg(1.0, 0);
-            drawLeg(-1.0, 1);
+            drawLeg(1.0, leg1Rotation, foot1Rotation);
+            drawLeg(-1.0, leg2Rotation, foot2Rotation);
             drawHead();
         }
         glPopMatrix();
@@ -391,19 +415,6 @@ void display(void)
     glutSwapBuffers();
 }
 
-
-/**
- * data structure idea:
- *
- * PenguinComponent
- * int animateFlag
- * float rotationAngle
- * int separation
- * float speed
- *
- * float min
- * float max
- */
 
 float getDegrees(float rad, float min, float max){
     double joint_rot_t = (sin(rad) + 1.0) / 2.0;

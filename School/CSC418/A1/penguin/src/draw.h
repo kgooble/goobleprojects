@@ -30,7 +30,12 @@ const float JOINT_MIN = -45.0f;
 const float JOINT_MAX =  45.0f;
 const int BEAK_MIN = 0;
 const int BEAK_MAX = 6;
-extern float jointRotation[]; // the amount (in degrees) each joint is rotated
+extern float leg1Rotation;
+extern float leg2Rotation;
+extern float armRotation;
+extern float foot1Rotation;
+extern float foot2Rotation;
+extern float headRotation;
 extern int beakDistance;
 
 const float LEG_OFFSET_X = 0.2f;
@@ -43,7 +48,7 @@ const float FOOT_OFFSET_X = -0.5f;
 const float FOOT_OFFSET_Y = -0.4f;
 
 const float FOOT_WIDTH_REL_TO_LEG = 2.0f;
-const float FOOT_LENGTH_REL_TO_LEG = 1.0f/3.0f;
+const float FOOT_LENGTH_REL_TO_LEG = 0.33f;
 
 const double LEG_ROTATION_SPEED = 0.1;
 const int BEAK_SEPARATION_SPEED = 1;
@@ -54,6 +59,6 @@ void drawCircle(float radius);
 void drawHead();
 void drawBeak();
 void drawArm();
-void drawLeg(float leftOrRight, int rotationIndex);
+void drawLeg(float leftOrRight, float legRotation, float footRotation);
 
 #endif /* DRAW_H_ */
