@@ -2,8 +2,8 @@
 Assignment 1 Checklist/Grading sheet
 -------------------------------------
 
-Name: 
-Student ID:
+Name: Shahrin Khan
+Student ID: 996668271
 
 -----------------------------------------------------------------------------------------
 A. PLEASE ANSWER THE FOLLOWING QUESTIONS (your assignment will not be graded otherwise!)
@@ -37,7 +37,7 @@ B. PLACE AN (X) IN FRONT OF PORTIONS OF THE ASSIGNMENT THAT YOU COMPLETED IN FUL
    WE WILL BE ABLE TO MAKE AN ACCURATE ASSESSMENT
 
    
-_X_   ( 5 points) Part 2a     Parts description & drawing
+___   ( 5 points) Part 2a     Parts description & drawing
                   
 ___   (10 points) Part 2b	  Parts transformation description & implementation
 
@@ -45,7 +45,7 @@ ___   ( 8 points) Part 2c     Animation control functions description & implemen
 
 ___   (15 points) Part 2d     Hierarchical object rendering 
                   
-___   ( 2 points) Part 2e     Joint drawing
+_X_   ( 2 points) Part 2e     Joint drawing
 
 ___   (10 points) Part 2f     Written report
 

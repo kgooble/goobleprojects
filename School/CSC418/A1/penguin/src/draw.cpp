@@ -123,6 +123,25 @@ void drawHead(){
 				{-0.4, 0.3}};
 		drawPolygon(5, headPoints);
 		drawBeak();
+
+		// draw eye
+		glPushMatrix();
+		{
+		    glTranslatef(-0.2, 0.2, 0.0);
+		    glScalef(0.05, 0.05, 1.0);
+		    glColor3f(1.0, 1.0, 1.0);
+		    drawCircle(1.0);
+
+		    glPushMatrix();
+		    {
+		        glTranslatef(0.1, 0.0, 0.0);
+		        glScalef(0.5, 0.5, 1.0);
+                glColor3f(0.0, 0.0, 0.0);
+                drawCircle(1.0);
+		    }
+		    glPopMatrix();
+		}
+		glPopMatrix();
 	}
 	glPopMatrix();
 
