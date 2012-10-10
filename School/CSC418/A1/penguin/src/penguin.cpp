@@ -391,9 +391,6 @@ void myReshape(int w, int h)
     Win[1] = h;
 }
 
-const float BODY_WIDTH = 200.0f;
-const float BODY_LENGTH = 200.0f;
-
 // display callback
 //
 // This gets called by the event handler to draw
@@ -428,42 +425,7 @@ void display(void)
      * - create animation
      */
 
-    // Draw our hinged object
-    // Push the current transformation matrix on the stack
-    glPushMatrix();
-        glPushMatrix();
-        {
-        	glTranslatef(bodyPositionX, 0.0, 0.0);
-            // Scale to size of body
-            glScalef(BODY_WIDTH, BODY_LENGTH, 1.0);
-            // Set the colour to green
-            glColor3f(0.0, 1.0, 0.0);
-
-			// Draw the body
-            Point bodyPoints[] = {
-                    // top left, right points
-                    {-NECK_WIDTH/2, 0.5f}, {NECK_WIDTH/2, 0.5f},
-                    // middle right point
-                    {BELLY_WIDTH/2, -0.4f},
-                    // bottom right point
-                    {BOTTOM_WIDTH/2, -0.7f},
-                    // bottom left point
-                    {-BOTTOM_WIDTH/2, -0.7f},
-                    // middle left point
-                    {-BELLY_WIDTH/2, -0.4f}};
-            drawPolygon(6, bodyPoints);
-
-            drawArm();
-            drawLeg(1.0, leg1Rotation, foot1Rotation);
-            drawLeg(-1.0, leg2Rotation, foot2Rotation);
-            drawHead();
-        }
-        glPopMatrix();
-
-
-    // Retrieve the previous state of the transformation stack
-    glPopMatrix();
-
+    drawEntireBody();
 
     // Execute any GL functions that are in the queue just to be safe
     glFlush();

@@ -42,11 +42,15 @@ extern float foot2Rotation;
 extern float headRotation;
 extern int beakDistance;
 
+extern float bodyPositionX;
+
 // head shape constants
 const float HEAD_SCALE = 0.5f;
 const float BEAK_DISTANCE_FROM_HEAD = -1.3f;
 
 // body shape constants
+const float BODY_WIDTH = 200.0f;
+const float BODY_LENGTH = 200.0f;
 const float BELLY_WIDTH = 0.8f;
 const float NECK_WIDTH = 0.4f;
 const float BOTTOM_WIDTH = 0.2f;
@@ -78,6 +82,7 @@ const int BEAK_SEPARATION_SPEED = 1;
 // drawing function definitions
 void drawPolygon(int n, Point points[]);
 void drawCircle(float radius);
+void drawEntireBody();
 void drawHead();
 void drawBeak();
 void drawArm();

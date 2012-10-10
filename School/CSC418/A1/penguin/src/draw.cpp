@@ -230,3 +230,40 @@ void drawLeg(float leftOrRight, float legRotation, float footRotation){
     glPopMatrix();
 }
 
+void drawEntireBody(){
+	// Draw our hinged object
+	// Push the current transformation matrix on the stack
+	glPushMatrix();
+		glPushMatrix();
+		{
+			glTranslatef(bodyPositionX, 0.0, 0.0);
+			// Scale to size of body
+			glScalef(BODY_WIDTH, BODY_LENGTH, 1.0);
+			// Set the colour to green
+			glColor3f(0.0, 1.0, 0.0);
+
+			// Draw the body
+			Point bodyPoints[] = {
+					// top left, right points
+					{-NECK_WIDTH/2, 0.5f}, {NECK_WIDTH/2, 0.5f},
+					// middle right point
+					{BELLY_WIDTH/2, -0.4f},
+					// bottom right point
+					{BOTTOM_WIDTH/2, -0.7f},
+					// bottom left point
+					{-BOTTOM_WIDTH/2, -0.7f},
+					// middle left point
+					{-BELLY_WIDTH/2, -0.4f}};
+			drawPolygon(6, bodyPoints);
+
+			drawArm();
+			drawLeg(1.0, leg1Rotation, foot1Rotation);
+			drawLeg(-1.0, leg2Rotation, foot2Rotation);
+			drawHead();
+		}
+		glPopMatrix();
+
+
+	// Retrieve the previous state of the transformation stack
+	glPopMatrix();
+}
