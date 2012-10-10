@@ -52,6 +52,7 @@ void drawArm(){
 
 }
 
+// draw an arbitrary n-point polygon
 void drawPolygon(int n, Point points[]){
 	glBegin(GL_POLYGON);
 	for (int i = 0; i < n; i++){

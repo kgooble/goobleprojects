@@ -64,6 +64,8 @@ int animation_frame = 0;      // Specify current frame of animation
 // TODO: Add additional joint parameters here
 //////////////////////////////////////////////////////
 
+// All joint parameters are in draw.h
+
 // ***********  FUNCTION HEADER DECLARATIONS ****************
 
 
@@ -81,16 +83,7 @@ void display(void);
 // Callback for handling events in glui
 void GLUI_Control(int id);
 
-
 // Functions to help draw the object
-void drawSquare(float size);
-//void drawCircle(float radius);
-//void drawPolygon(int n, Point points[]);
-//void drawArm();
-void drawLeg(float leftOrRight, int rotationIndex);
-//void drawBeak();
-//void drawHead();
-
 float getDegrees(float rad, float min, float max);
 
 // Return the current system clock (in seconds)
@@ -203,37 +196,37 @@ void initGlui()
     GLUI_Spinner *joint_spinner
         = glui->add_spinner("Leg 1", GLUI_SPINNER_FLOAT, &leg1Rotation);
     joint_spinner->set_speed(0.1);
-    joint_spinner->set_float_limits(JOINT_MIN, JOINT_MAX, GLUI_LIMIT_CLAMP);
+    joint_spinner->set_float_limits(LIMB_MIN, LIMB_MAX, GLUI_LIMIT_CLAMP);
     glui->add_checkbox("Animate Leg 1", &animateLeg1, 0, doNothing);
 
     GLUI_Spinner *leg2Spinner
 		= glui->add_spinner("Leg 2", GLUI_SPINNER_FLOAT, &leg2Rotation);
     leg2Spinner->set_speed(0.1);
-    leg2Spinner->set_float_limits(JOINT_MIN, JOINT_MAX, GLUI_LIMIT_CLAMP);
+    leg2Spinner->set_float_limits(LIMB_MIN, LIMB_MAX, GLUI_LIMIT_CLAMP);
     glui->add_checkbox("Animate Leg 2", &animateLeg2, 0, doNothing);
 
     GLUI_Spinner *foot1Spinner
 		= glui->add_spinner("Foot 1", GLUI_SPINNER_FLOAT, &foot1Rotation);
     foot1Spinner->set_speed(0.1);
-    foot1Spinner->set_float_limits(JOINT_MIN, JOINT_MAX, GLUI_LIMIT_CLAMP);
+    foot1Spinner->set_float_limits(FOOT_MIN, FOOT_MAX, GLUI_LIMIT_CLAMP);
     glui->add_checkbox("Animate Foot 1", &animateFoot1, 0, doNothing);
 
     GLUI_Spinner *foot2Spinner
 		= glui->add_spinner("Foot 2", GLUI_SPINNER_FLOAT, &foot2Rotation);
 	foot2Spinner->set_speed(0.1);
-	foot2Spinner->set_float_limits(JOINT_MIN, JOINT_MAX, GLUI_LIMIT_CLAMP);
+	foot2Spinner->set_float_limits(FOOT_MIN, FOOT_MAX, GLUI_LIMIT_CLAMP);
 	glui->add_checkbox("Animate Foot 2", &animateFoot2, 0, doNothing);
 
 	GLUI_Spinner *armSpinner
         = glui->add_spinner("Arm", GLUI_SPINNER_FLOAT, &armRotation);
 	armSpinner->set_speed(0.1);
-	armSpinner->set_float_limits(JOINT_MIN, JOINT_MAX, GLUI_LIMIT_CLAMP);
+	armSpinner->set_float_limits(LIMB_MIN, LIMB_MAX, GLUI_LIMIT_CLAMP);
     glui->add_checkbox("Animate Arm", &animateArm, 0, doNothing);
 
     GLUI_Spinner *headSpinner
         = glui->add_spinner("Head", GLUI_SPINNER_FLOAT, &headRotation);
     headSpinner->set_speed(0.1);
-    headSpinner->set_float_limits(JOINT_MIN, JOINT_MAX, GLUI_LIMIT_CLAMP);
+    headSpinner->set_float_limits(HEAD_MIN, HEAD_MAX, GLUI_LIMIT_CLAMP);
     glui->add_checkbox("Animate Head", &animateHead, 0, doNothing);
 
     GLUI_Spinner *beakSpinner
@@ -267,24 +260,24 @@ void initGl(void)
 void animate()
 {
     // Update geometry
-    float rad = animation_frame * LEG_ROTATION_SPEED;
+    float rad = animation_frame * ROTATION_SPEED;
     if (animateLeg1 == 1)
-    	leg1Rotation = getDegrees(rad, JOINT_MIN, JOINT_MAX);
+    	leg1Rotation = getDegrees(rad, LIMB_MIN, LIMB_MAX);
 
     if (animateLeg2 == 1)
-        leg2Rotation  = getDegrees(rad, JOINT_MIN, JOINT_MAX);
+        leg2Rotation  = getDegrees(rad, LIMB_MIN, LIMB_MAX);
 
     if (animateFoot1 == 1)
-    	foot1Rotation = getDegrees(rad, JOINT_MIN, JOINT_MAX);
+    	foot1Rotation = getDegrees(rad, FOOT_MIN, FOOT_MAX);
     
     if (animateFoot2 == 1)
-        foot2Rotation = getDegrees(rad, JOINT_MIN, JOINT_MAX);
+        foot2Rotation = getDegrees(rad, FOOT_MIN, FOOT_MAX);
 
     if (animateArm == 1)
-        armRotation = getDegrees(rad, JOINT_MIN, JOINT_MAX);
+        armRotation = getDegrees(rad, LIMB_MIN, LIMB_MAX);
 
     if (animateHead == 1)
-        headRotation = getDegrees(rad, JOINT_MIN, JOINT_MAX);
+        headRotation = getDegrees(rad, HEAD_MIN, HEAD_MAX);
 
     if (animateBeak == 1)
     	beakDistance = getDegrees(BEAK_SEPARATION_SPEED * animation_frame, BEAK_MIN, BEAK_MAX);
@@ -362,8 +355,6 @@ void display(void)
     /**
      * what needs to be done still?
      * - draw the eye (on head)
-     * - draw circles representing joints
-     * - rotate joints
      * - create animation
      */
 
@@ -377,22 +368,18 @@ void display(void)
             // Set the colour to green
             glColor3f(0.0, 1.0, 0.0);
 
-            float bellyWidth = 0.8f;
-            float neckWidth = 0.4f;
-            float bottomWidth = 0.2f;
-
 			// Draw the body
             Point bodyPoints[] = {
                     // top left, right points
-                    {-neckWidth/2, 0.5f}, {neckWidth/2, 0.5f},
+                    {-NECK_WIDTH/2, 0.5f}, {NECK_WIDTH/2, 0.5f},
                     // middle right point
-                    {bellyWidth/2, -0.4f},
+                    {BELLY_WIDTH/2, -0.4f},
                     // bottom right point
-                    {bottomWidth/2, -0.7f},
+                    {BOTTOM_WIDTH/2, -0.7f},
                     // bottom left point
-                    {-bottomWidth/2, -0.7f},
+                    {-BOTTOM_WIDTH/2, -0.7f},
                     // middle left point
-                    {-bellyWidth/2, -0.4f}};
+                    {-BELLY_WIDTH/2, -0.4f}};
             drawPolygon(6, bodyPoints);
 
             drawArm();
