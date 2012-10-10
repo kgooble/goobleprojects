@@ -22,25 +22,34 @@ int beakDistance = 0;
 void drawArm(){
 	glPushMatrix();
 	{
-		glTranslatef(0.1, 0.0, 0.0);
+		glTranslatef(0.1, ARM_SCALE/2, 0.0);
 		glRotatef(armRotation, 0.0, 0.0, 1.0);
-		glScalef(1.0/3.0, 0.5, 1.0);
+		glScalef(ARM_SCALE, ARM_SCALE, 1.0);
+		glTranslatef(0.0, -ARM_SCALE + 0.1, 0.0);
 		glColor3f(0.0, 0.0, 1.0);
-		Point armPoints[] = {{-0.4f, 0.5f}, {0.4f, 0.5f},
-		        {0.3f, -0.5f}, {-0.3f, -0.5f}};
+		Point armPoints[] = {
+		        // top left point
+		        {-ARM_WIDTH_TOP/2, ARM_LENGTH/2},
+		        // top right point
+		        {ARM_WIDTH_TOP/2, ARM_LENGTH/2},
+		        // bottom right point
+		        {ARM_WIDTH_BOTTOM/2, -ARM_LENGTH/2},
+		        // bottom left point
+		        {-ARM_WIDTH_BOTTOM/2, -ARM_LENGTH/2}};
 		drawPolygon(4, armPoints);
 	}
 	glPopMatrix();
-}
 
-// Draw a square of the specified size, centered at the current location
-void drawSquare(float width)
-{
-    Point points[] = {{-width/2, -width/2},
-                      {width/2, -width/2},
-                      {width/2, width/2},
-                      {-width/2, width/2}};
-    drawPolygon(4, points);
+	//draw the shoulder joint
+    glPushMatrix();
+    {
+        glTranslatef(0.1, ARM_SCALE/2, 0.0);
+        glScalef(LEG_SCALE * 0.1, LEG_SCALE * 0.1, 1.0);
+        glColor3f(1.0, 1.0, 1.0);
+        drawCircle(1.0);
+    }
+    glPopMatrix();
+
 }
 
 void drawPolygon(int n, Point points[]){
@@ -52,6 +61,7 @@ void drawPolygon(int n, Point points[]){
 
 }
 
+// this is used for drawing the joints
 void drawCircle(float radius){
     glBegin(GL_LINE_LOOP);
     for (int i = 0; i < 360; i++){
@@ -61,8 +71,6 @@ void drawCircle(float radius){
     glEnd();
 }
 
-
-const float BEAK_DISTANCE_FROM_HEAD = -1.3f;
 
 void drawBeak(){
 	// draw top beak
@@ -96,9 +104,10 @@ void drawBeak(){
 
 void drawHead(){
 	glPushMatrix();{
-		glTranslatef(0.0, 0.6, 0.0);
+		glTranslatef(0.0, HEAD_SCALE, 0.0);
 		glRotatef(headRotation, 0.0, 0.0, 1.0);
-		glScalef(0.5, 0.5, 1.0);
+		glScalef(HEAD_SCALE, HEAD_SCALE, 1.0);
+		glTranslatef(0.0, HEAD_SCALE/4, 0.0);
 		glColor3f(0.75, 0.75, 0.75);
 		Point headPoints[] = {
 		        // top point
@@ -115,6 +124,16 @@ void drawHead(){
 		drawBeak();
 	}
 	glPopMatrix();
+
+	// draw neck joint
+	glPushMatrix();
+	{
+        glTranslatef(0.0, HEAD_SCALE, 0.0);
+        glScalef(LEG_SCALE * 0.1, LEG_SCALE * 0.1, 1.0);
+        glColor3f(1.0, 1.0, 1.0);
+        drawCircle(1.0);
+	}
+	glPopMatrix();
 }
 
 
@@ -129,22 +148,19 @@ void drawLeg(float leftOrRight, float legRotation, float footRotation){
         // Scale the size of the leg
         glScalef(LEG_SCALE, LEG_SCALE, 1.0);
         // Move to center location of leg, under previous rotation
-        glTranslatef(0.0, LEG_OFFSET_Y, 0.0);
+        glTranslatef(0.0, LEG_OFFSET_Y + 0.15, 0.0);
         // Draw the square for the leg
         glColor3f(1.0, 0.5, 0.5);
 
-        float legWidth = 0.4f;
-        float legLength = 1.0f;
-
         Point legPoints[] = {
                 // top left point
-                {-legWidth/2, legLength/2},
+                {-LEG_WIDTH/2, LEG_LENGTH/2},
                 // top right point
-                {legWidth/2, legLength/2},
+                {LEG_WIDTH/2, LEG_LENGTH/2},
                 // bottom right point
-                {legWidth/2, -legLength/2},
+                {LEG_WIDTH/2, -LEG_LENGTH/2},
                 // bottom left point
-                {-legWidth/2, -legLength/2}};
+                {-LEG_WIDTH/2, -LEG_LENGTH/2}};
         drawPolygon(4, legPoints);
 
         // Draw the foot
@@ -154,20 +170,18 @@ void drawLeg(float leftOrRight, float legRotation, float footRotation){
             glTranslatef(0.0, FOOT_OFFSET_Y, 0.0);
             glRotatef(footRotation, 0.0, 0.0, 1.0);
             // move the foot to its correct position
-            glTranslatef(FOOT_OFFSET_X + legWidth/2, 0.0, 0.0);
+            glTranslatef(FOOT_OFFSET_X + LEG_WIDTH/2, 0.0, 0.0);
             glColor3f(1.0, 1.0, 0.0);
 
-            float footLength = 1.0f;
-            float footThickness = 0.4f;
             Point footPoints[] = {
                     // top left point
-                    {-footLength/2, footThickness/2},
+                    {-FOOT_LENGTH/2, FOOT_THICKNESS/2},
                     // top right point
-                    {footLength/2, footThickness/2},
+                    {FOOT_LENGTH/2, FOOT_THICKNESS/2},
                     // bottom right point
-                    {footLength/2, -footThickness/2},
+                    {FOOT_LENGTH/2, -FOOT_THICKNESS/2},
                     // bottom left point
-                    {-footLength/2, -footThickness/2}};
+                    {-FOOT_LENGTH/2, -FOOT_THICKNESS/2}};
             drawPolygon(4, footPoints);
         }
         glPopMatrix();

@@ -38,16 +38,26 @@ extern float foot2Rotation;
 extern float headRotation;
 extern int beakDistance;
 
+const float HEAD_SCALE = 0.5f;
+
+const float ARM_SCALE = 0.5f;
+const float ARM_WIDTH_TOP = 0.5f;
+const float ARM_WIDTH_BOTTOM = 0.3f;
+const float ARM_LENGTH = 1.0f;
+
 const float LEG_OFFSET_X = 0.2f;
 const float LEG_OFFSET_Y = -0.5;
 
 const float LEG_SCALE = 0.3f;
+const float LEG_WIDTH = 0.4f;
+const float LEG_LENGTH = 1.0f;
 
 const float FOOT_OFFSET_X = -0.5f;
 const float FOOT_OFFSET_Y = -0.4f;
+const float FOOT_LENGTH = 1.0f;
+const float FOOT_THICKNESS = 0.4f;
 
-const float FOOT_WIDTH_REL_TO_LEG = 2.0f;
-const float FOOT_LENGTH_REL_TO_LEG = 0.33f;
+const float BEAK_DISTANCE_FROM_HEAD = -1.3f;
 
 const double LEG_ROTATION_SPEED = 0.1;
 const int BEAK_SEPARATION_SPEED = 1;
