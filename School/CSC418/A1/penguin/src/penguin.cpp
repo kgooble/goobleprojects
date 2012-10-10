@@ -303,6 +303,7 @@ void animate()
 }
 
 const float MOVEMENT_SPEED = 3.0f;
+const int CLOSE_TO_ZERO = 3;
 
 // Plays the animation
 void animation(){
@@ -323,23 +324,23 @@ void animation(){
 		if (beakDistance > 0){
 			beakDistance = getDegrees(BEAK_SEPARATION_SPEED * animation_frame, BEAK_MIN, BEAK_MAX);
 		}
-		if (abs(leg1Rotation) > 2){
+		if (abs(leg1Rotation) > CLOSE_TO_ZERO){
 			leg1Rotation = getSinDegrees(rad, LIMB_MIN, LIMB_MAX);
 			stillMoving = true;
 		}
-		if (abs(leg2Rotation) > 2){
+		if (abs(leg2Rotation) > CLOSE_TO_ZERO){
 			leg2Rotation = getCosDegrees(rad, LIMB_MIN, LIMB_MAX);
 			stillMoving = true;
 		}
-		if (abs(foot1Rotation) > 2){
+		if (abs(foot1Rotation) > CLOSE_TO_ZERO){
 			foot1Rotation = getSinDegrees(rad, FOOT_MIN, FOOT_MAX);
 			stillMoving = true;
 		}
-		if (abs(foot2Rotation) > 2){
+		if (abs(foot2Rotation) > CLOSE_TO_ZERO){
 			foot2Rotation = getCosDegrees(rad, FOOT_MIN, FOOT_MAX);
 			stillMoving = true;
 		}
-		if (abs(armRotation > 2)){
+		if (abs(armRotation > CLOSE_TO_ZERO)){
 			armRotation = getSinDegrees(rad, LIMB_MIN, LIMB_MAX);
 		}
 		if (stillMoving){
