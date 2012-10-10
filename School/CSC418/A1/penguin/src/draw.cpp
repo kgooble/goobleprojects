@@ -109,7 +109,7 @@ void drawHead(){
 		glRotatef(headRotation, 0.0, 0.0, 1.0);
 		glScalef(HEAD_SCALE, HEAD_SCALE, 1.0);
 		glTranslatef(0.0, HEAD_SCALE/4, 0.0);
-		glColor3f(0.75, 0.75, 0.75);
+		glColor3f(1.0, 0.0, 0.0);
 		Point headPoints[] = {
 		        // top point
 		        {-0.2, 0.5},

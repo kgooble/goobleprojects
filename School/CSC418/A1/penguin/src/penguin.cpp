@@ -80,12 +80,15 @@ void initGl();
 void myReshape(int w, int h);
 void animate();
 void animation();
+void refresh(); // refresh the screen after updating values in animation functions
 void display(void);
 
 // Callback for handling events in glui
 void GLUI_Control(int id);
 
 // Functions to help draw the object
+float getSinDegrees(float rad, float min, float max);
+float getCosDegrees(float rad, float min, float max);
 float getDegrees(float rad, float min, float max);
 
 // Return the current system clock (in seconds)
@@ -101,7 +104,7 @@ int animateFoot2 = 0;
 int animateBeak = 0;
 int animateHead = 0;
 int animateArm = 0;
-
+float bodyPositionX = 0.0f;
 
 // main() function
 // Initializes the user interface (and any user variables)
@@ -109,7 +112,6 @@ int animateArm = 0;
 // display() whenever the GL window needs to be redrawn.
 int main(int argc, char** argv)
 {
-
     // Process program arguments
     if(argc != 3) {
         printf("Usage: demo [width] [height]\n");
@@ -178,6 +180,7 @@ void animationButton(int){
     glui->sync_live();
     animation_frame = 0;
     if (animation_mode == 1){
+    	bodyPositionX = 50.0f;
         GLUI_Master.set_glutIdleFunc(animation);
     } else{
         GLUI_Master.set_glutIdleFunc(NULL);
@@ -296,13 +299,38 @@ void animate()
     if (animateBeak == 1)
     	beakDistance = getDegrees(BEAK_SEPARATION_SPEED * animation_frame, BEAK_MIN, BEAK_MAX);
 
-    ///////////////////////////////////////////////////////////
-    // TODO:
-    //   Modify this function animate the character's joints
-    //   Note: Nothing should be drawn in this function!  OpenGL drawing
-    //   should only happen in the display() callback.
-    ///////////////////////////////////////////////////////////
+    refresh();
+}
 
+const float MOVEMENT_SPEED = 4.0f;
+
+// Plays the animation
+void animation(){
+
+	if (animation_frame < 80){
+		// penguin walking along
+		bodyPositionX -= MOVEMENT_SPEED;
+		float rad = animation_frame * ROTATION_SPEED * 2;
+		leg1Rotation = getSinDegrees(rad, LIMB_MIN, LIMB_MAX);
+		leg2Rotation = getCosDegrees(rad, LIMB_MIN, LIMB_MAX);
+		foot1Rotation = getSinDegrees(rad, FOOT_MIN, FOOT_MAX);
+		foot2Rotation = getCosDegrees(rad, FOOT_MIN, FOOT_MAX);
+		armRotation = getSinDegrees(rad, LIMB_MIN, LIMB_MAX);
+		beakDistance = getDegrees(BEAK_SEPARATION_SPEED * animation_frame, BEAK_MIN, BEAK_MAX);
+	} else if (90 <= animation_frame && animation_frame < 100){
+		// penguin stops, looks up
+		float rad = animation_frame * ROTATION_SPEED;
+		headRotation = getCosDegrees(rad, HEAD_MIN, HEAD_MAX);
+	} else if (100 <= animation_frame && animation_frame < 110){
+		// penguin appears shocked
+		beakDistance += BEAK_SEPARATION_SPEED;
+	}
+
+
+    refresh();
+}
+
+void refresh(){
     // Update user interface
     glui->sync_live();
 
@@ -312,20 +340,9 @@ void animate()
     glutSetWindow(windowID);
     glutPostRedisplay();
 
-    // increment the frame number.
-    animation_frame++;
-
-    // Wait 50 ms between frames (20 frames per second)
-    usleep(50000);
-}
-
-// Plays the animation
-void animation(){
-
     animation_frame++;
     usleep(50000);
 }
-
 
 // Handles the window being resized by updating the viewport
 // and projection matrices
@@ -384,6 +401,7 @@ void display(void)
     glPushMatrix();
         glPushMatrix();
         {
+        	glTranslatef(bodyPositionX, 0.0, 0.0);
             // Scale to size of body
             glScalef(BODY_WIDTH, BODY_LENGTH, 1.0);
             // Set the colour to green
@@ -423,8 +441,16 @@ void display(void)
     glutSwapBuffers();
 }
 
+float getSinDegrees(float rad, float min, float max){
+	double joint_rot_t = (sin(rad) + 1.0) / 2.0;
+	return joint_rot_t * min + (1 - joint_rot_t) * max;
+}
+
+float getCosDegrees(float rad, float min, float max){
+	double joint_rot_t = (cos(rad) + 1.0) / 2.0;
+	return joint_rot_t * min + (1 - joint_rot_t) * max;
+}
 
 float getDegrees(float rad, float min, float max){
-    double joint_rot_t = (sin(rad) + 1.0) / 2.0;
-    return joint_rot_t * min + (1 - joint_rot_t) * max;
+    return getSinDegrees(rad, min, max);
 }
