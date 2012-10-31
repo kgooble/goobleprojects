@@ -863,6 +863,18 @@ void display(void)
 		glRotatef(30.0, 1.0, 0.0, 0.0);
 
 		// determine render style and set glPolygonMode appropriately
+		switch (renderStyle){
+		case WIREFRAME:
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+			break;
+		case SOLID:
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			break;
+		case OUTLINED:
+			// TODO make outline
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			break;
+		}
 
 		// draw body part
 		glColor3f(1.0, 1.0, 1.0);
