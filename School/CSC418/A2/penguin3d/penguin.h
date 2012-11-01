@@ -36,6 +36,11 @@ float BODY_WIDTH_BOTTOM = 3.0f;
 float BODY_HEIGHT = 3.0f;
 float BODY_THICKNESS = 2.0f;
 
+float BEAK_OUTSIDE_WIDTH = 1.0f;
+float BEAK_INSIDE_WIDTH = 1.2f;
+float BEAK_THICKNESS = 0.2f;
+float BEAK_LENGTH = 0.8f;
+
 float RED[] = {1.0, 0.0, 0.0};
 float GOLD[] = {1.0, 0.8, 0.0};
 float ORANGE[] = {1.0, 0.5, 0.0};

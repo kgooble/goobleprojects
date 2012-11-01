@@ -203,15 +203,8 @@ void drawHand();
 void drawLeg();
 void drawFoot();
 void drawHead();
-void drawBeak();
-/*
- * TODO:
- * - draw arms
- * - draw hands
- * - draw legs
- * - draw feet
- * - draw beak
- */
+void drawTopBeak();
+void drawBottomBeak();
 
 
 // Image functions
@@ -846,6 +839,15 @@ void drawAll(){
 		glPushMatrix();
 			glTranslatef(0.0, BODY_HEIGHT/2 + HEAD_HEIGHT/2, 0.0);
 			drawHead();
+
+			glPushMatrix();
+				glTranslatef(-HEAD_WIDTH_BOTTOM/2 - BEAK_LENGTH/2, 0.0, 0.0);
+				drawTopBeak();
+
+				glTranslatef(0.0, -BEAK_THICKNESS, 0.0);
+				drawBottomBeak();
+			glPopMatrix();
+
 		glPopMatrix();
 
 		// right arm
@@ -1029,6 +1031,7 @@ void setColour(float colour[]){
 		glColor3f(colour[0], colour[1], colour[2]);
 }
 
+// draw a rainbow trapezoidal prism consisting of the given 8 points
 void drawTrapezoidalPrism(float frontTopLeft[], float frontBottomLeft[],
 		float frontTopRight[], float frontBottomRight[],
 		float backTopLeft[], float backBottomLeft[],
@@ -1140,6 +1143,43 @@ void drawHead()
 			backTopRight, backBottomRight
 	);
 }
+void drawTopBeak(){
+	float frontTopLeft[] = {-BEAK_OUTSIDE_WIDTH/2,  BEAK_THICKNESS/2, BEAK_LENGTH/2};
+	float frontBottomLeft[] = {-BEAK_INSIDE_WIDTH/2, -BEAK_THICKNESS/2, BEAK_LENGTH/2};
+	float frontTopRight[] = { BEAK_OUTSIDE_WIDTH/2, BEAK_THICKNESS/2, BEAK_LENGTH/2};
+	float frontBottomRight[] = { BEAK_INSIDE_WIDTH/2,  -BEAK_THICKNESS/2, BEAK_LENGTH/2};
+
+	float backTopLeft[] = {-BEAK_OUTSIDE_WIDTH/2,  BEAK_THICKNESS/2, -BEAK_LENGTH/2};
+	float backBottomLeft[] = {-BEAK_INSIDE_WIDTH/2, -BEAK_THICKNESS/2, -BEAK_LENGTH/2};
+	float backTopRight[] = {BEAK_OUTSIDE_WIDTH/2, BEAK_THICKNESS/2, -BEAK_LENGTH/2};
+	float backBottomRight[] = { BEAK_INSIDE_WIDTH/2,  -BEAK_THICKNESS/2, -BEAK_LENGTH/2};
+
+	drawTrapezoidalPrism(
+			frontTopLeft, frontBottomLeft,
+			frontTopRight, frontBottomRight,
+			backTopLeft, backBottomLeft,
+			backTopRight, backBottomRight
+	);
+}
+void drawBottomBeak(){
+	float frontTopLeft[] = {-BEAK_INSIDE_WIDTH/2,  BEAK_THICKNESS/2, BEAK_LENGTH/2};
+	float frontBottomLeft[] = {-BEAK_OUTSIDE_WIDTH/2, -BEAK_THICKNESS/2, BEAK_LENGTH/2};
+	float frontTopRight[] = { BEAK_INSIDE_WIDTH/2, BEAK_THICKNESS/2, BEAK_LENGTH/2};
+	float frontBottomRight[] = { BEAK_OUTSIDE_WIDTH/2,  -BEAK_THICKNESS/2, BEAK_LENGTH/2};
+
+	float backTopLeft[] = {-BEAK_INSIDE_WIDTH/2,  BEAK_THICKNESS/2, -BEAK_LENGTH/2};
+	float backBottomLeft[] = {-BEAK_OUTSIDE_WIDTH/2, -BEAK_THICKNESS/2, -BEAK_LENGTH/2};
+	float backTopRight[] = {BEAK_INSIDE_WIDTH/2, BEAK_THICKNESS/2, -BEAK_LENGTH/2};
+	float backBottomRight[] = { BEAK_OUTSIDE_WIDTH/2,  -BEAK_THICKNESS/2, -BEAK_LENGTH/2};
+
+	drawTrapezoidalPrism(
+			frontTopLeft, frontBottomLeft,
+			frontTopRight, frontBottomRight,
+			backTopLeft, backBottomLeft,
+			backTopRight, backBottomRight
+	);
+}
+
 void drawArm(){
 	float frontTopLeft[] = {-ARM_WIDTH_TOP/2,  ARM_HEIGHT/2, ARM_THICKNESS/2};
 	float frontBottomLeft[] = {-ARM_WIDTH_BOTTOM/2, -ARM_HEIGHT/2, ARM_THICKNESS/2};
