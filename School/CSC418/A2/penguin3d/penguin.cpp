@@ -48,6 +48,7 @@
 #include "keyframe.h"
 #include "timer.h"
 #include "vector.h"
+#include "penguin.h"
 
 
 // *************** GLOBAL VARIABLES *************************
@@ -90,6 +91,7 @@ const GLdouble FAR_CLIP    = 1000.0;
 // Render settings
 enum { WIREFRAME, SOLID, OUTLINED };	// README: the different render styles
 int renderStyle = WIREFRAME;			// README: the selected render style
+bool outlining = false;
 
 // Animation settings
 int animate_mode = 0;			// 0 = no anim, 1 = animate
@@ -194,21 +196,20 @@ void motion(int x, int y);
 
 // Functions to help draw the object
 Vector getInterpolatedJointDOFS(float time);
+void setColour(float colour[]);
 void drawBody();
-void drawArms();
-void drawHands();
-void drawLegs();
-void drawFeet();
+void drawArm();
+void drawHand();
+void drawLeg();
+void drawFoot();
 void drawHead();
 void drawBeak();
 /*
  * TODO:
- * - draw body
  * - draw arms
  * - draw hands
  * - draw legs
  * - draw feet
- * - draw head
  * - draw beak
  */
 
@@ -700,6 +701,8 @@ void initGl(void)
     // glClearColor (red, green, blue, alpha)
     // Ignore the meaning of the 'alpha' value for now
     glClearColor(0.7f,0.7f,0.9f,1.0f);
+    glEnable(GL_CULL_FACE);
+	glEnable(GL_DEPTH_TEST);
 }
 
 
@@ -800,6 +803,79 @@ void reshape(int w, int h)
 }
 
 
+void drawAll(){
+	glPushMatrix();
+		// setup transformation for body part
+		glTranslatef(joint_ui_data->getDOF(Keyframe::ROOT_TRANSLATE_X),
+					 joint_ui_data->getDOF(Keyframe::ROOT_TRANSLATE_Y),
+					 joint_ui_data->getDOF(Keyframe::ROOT_TRANSLATE_Z));
+		float xAngle = joint_ui_data->getDOF(Keyframe::ROOT_ROTATE_X);
+		float yAngle = joint_ui_data->getDOF(Keyframe::ROOT_ROTATE_Y);
+		float zAngle = joint_ui_data->getDOF(Keyframe::ROOT_ROTATE_Z);
+		glRotatef(xAngle, 1.0, 0.0, 0.0);
+		glRotatef(yAngle, 0.0, 1.0, 0.0);
+		glRotatef(zAngle, 0.0, 0.0, 1.0);
+
+		// draw body
+		drawBody();
+
+		// right leg
+		glPushMatrix();
+			glTranslatef(0.0, -(BODY_HEIGHT/2 + LEG_HEIGHT/2), -2 * LEG_THICKNESS);
+			drawLeg();
+
+			glPushMatrix();
+				glTranslatef(-FOOT_WIDTH/3, -(LEG_HEIGHT/2 + FOOT_THICKNESS/2), 0.0);
+				glRotatef(joint_ui_data->getDOF(Keyframe::R_KNEE), 0.0, 0.0, 1.0);
+				drawFoot();
+			glPopMatrix();
+		glPopMatrix();
+
+		// left leg
+		glPushMatrix();
+			glTranslatef(0.0, -(BODY_HEIGHT/2 + LEG_HEIGHT/2), 2 * LEG_THICKNESS);
+			drawLeg();
+
+			glPushMatrix();
+				glTranslatef(-FOOT_WIDTH/3, -(LEG_HEIGHT/2 + FOOT_THICKNESS/2), 0.0);
+				glRotatef(joint_ui_data->getDOF(Keyframe::R_KNEE), 0.0, 0.0, 1.0);
+				drawFoot();
+			glPopMatrix();
+		glPopMatrix();
+
+		glPushMatrix();
+			glTranslatef(0.0, BODY_HEIGHT/2 + HEAD_HEIGHT/2, 0.0);
+			drawHead();
+		glPopMatrix();
+
+		// right arm
+		glPushMatrix();
+			glTranslatef(0.0, 0.0, -(BODY_THICKNESS/2 + ARM_THICKNESS/2));
+			drawArm();
+
+			glPushMatrix();
+				glTranslatef(0.0, -(ARM_HEIGHT/2 + HAND_HEIGHT/2), 0.0);
+				glRotatef(joint_ui_data->getDOF(Keyframe::R_ELBOW), 0.0, 0.0, 1.0);
+				drawHand();
+			glPopMatrix();
+		glPopMatrix();
+
+		// left arm
+		glPushMatrix();
+
+			glTranslatef(0.0, 0.0, BODY_THICKNESS/2 + ARM_THICKNESS/2);
+			drawArm();
+
+			glPushMatrix();
+				glTranslatef(0.0, -(ARM_HEIGHT/2 + HAND_HEIGHT/2), 0.0);
+				glRotatef(joint_ui_data->getDOF(Keyframe::L_ELBOW), 0.0, 0.0, 1.0);
+				drawHand();
+			glPopMatrix();
+
+		glPopMatrix();
+
+	glPopMatrix();
+}
 
 // display callback
 //
@@ -869,41 +945,30 @@ void display(void)
 
 	// SAMPLE CODE **********
 	//
-	glPushMatrix();
+	// determine render style and set glPolygonMode appropriately
+	switch (renderStyle){
+	case WIREFRAME:
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		break;
+	case SOLID:
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		break;
+	case OUTLINED:
+		// TODO make outline mode: have to draw fills, then draw outlines.
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		break;
+	}
+	glColor3f(1.0, 1.0, 1.0);
+	outlining = false;
+	drawAll();
+	if (renderStyle == OUTLINED){
+		outlining = true;
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		glPolygonOffset(1.0f, 1.0f);
+		glColor3f(0.0, 0.0, 0.0);
+		drawAll();
+	}
 
-		// setup transformation for body part
-		glTranslatef(joint_ui_data->getDOF(Keyframe::ROOT_TRANSLATE_X),
-					 joint_ui_data->getDOF(Keyframe::ROOT_TRANSLATE_Y),
-					 joint_ui_data->getDOF(Keyframe::ROOT_TRANSLATE_Z));
-		glRotatef(joint_ui_data->getDOF(Keyframe::ROOT_ROTATE_X),
-				joint_ui_data->getDOF(Keyframe::ROOT_ROTATE_Y),
-				joint_ui_data->getDOF(Keyframe::ROOT_ROTATE_Z), 0.0f
-				);
-
-		// determine render style and set glPolygonMode appropriately
-		switch (renderStyle){
-		case WIREFRAME:
-			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-			break;
-		case SOLID:
-			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-			break;
-		case OUTLINED:
-			// TODO make outline mode: have to draw fills, then draw outlines.
-			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-			break;
-		}
-
-		// draw body part
-		glColor3f(1.0, 1.0, 1.0);
-		drawBody();
-
-		glPushMatrix();
-			glTranslatef(0.0, 2.0, 0.0);
-			drawHead();
-		glPopMatrix();
-
-	glPopMatrix();
 	//
 	// SAMPLE CODE **********
 
@@ -959,6 +1024,11 @@ void motion(int x, int y)
 	}
 }
 
+void setColour(float colour[]){
+	if (!outlining)
+		glColor3f(colour[0], colour[1], colour[2]);
+}
+
 void drawTrapezoidalPrism(float frontTopLeft[], float frontBottomLeft[],
 		float frontTopRight[], float frontBottomRight[],
 		float backTopLeft[], float backBottomLeft[],
@@ -966,39 +1036,63 @@ void drawTrapezoidalPrism(float frontTopLeft[], float frontBottomLeft[],
 
 	glBegin(GL_QUADS);
 		// front
+		setColour(RED);
 		glVertex3f(frontTopLeft[0], frontTopLeft[1], frontTopLeft[2]);
+		setColour(ORANGE);
 		glVertex3f(frontBottomLeft[0], frontBottomLeft[1], frontBottomLeft[2]);
+		setColour(BLUE);
 		glVertex3f(frontBottomRight[0], frontBottomRight[1], frontBottomRight[2]);
+		setColour(PURPLE);
 		glVertex3f(frontTopRight[0], frontTopRight[1], frontTopRight[2]);
 
 		// back
+		setColour(GREEN);
 		glVertex3f(backTopLeft[0], backTopLeft[1], backTopLeft[2]);
-		glVertex3f(backBottomLeft[0], backBottomLeft[1], backBottomLeft[2]);
-		glVertex3f(backBottomRight[0], backBottomRight[1], backBottomRight[2]);
+		setColour(YELLOW);
 		glVertex3f(backTopRight[0], backTopRight[1], backTopRight[2]);
+		setColour(CYAN);
+		glVertex3f(backBottomRight[0], backBottomRight[1], backBottomRight[2]);
+		setColour(MAGENTA);
+		glVertex3f(backBottomLeft[0], backBottomLeft[1], backBottomLeft[2]);
 
 		// left
+		setColour(GREEN);
 		glVertex3f(backTopLeft[0], backTopLeft[1], backTopLeft[2]);
+		setColour(MAGENTA);
 		glVertex3f(backBottomLeft[0], backBottomLeft[1], backBottomLeft[2]);
+		setColour(ORANGE);
 		glVertex3f(frontBottomLeft[0], frontBottomLeft[1], frontBottomLeft[2]);
+		setColour(RED);
 		glVertex3f(frontTopLeft[0], frontTopLeft[1], frontTopLeft[2]);
 
 		// right
-		glVertex3f(backTopRight[0], backTopRight[1], backTopRight[2]);
-		glVertex3f(backBottomRight[0], backBottomRight[1], backBottomRight[2]);
+		setColour(BLUE);
 		glVertex3f(frontBottomRight[0], frontBottomRight[1], frontBottomRight[2]);
+		setColour(CYAN);
+		glVertex3f(backBottomRight[0], backBottomRight[1], backBottomRight[2]);
+		setColour(YELLOW);
+		glVertex3f(backTopRight[0], backTopRight[1], backTopRight[2]);
+		setColour(PURPLE);
 		glVertex3f(frontTopRight[0], frontTopRight[1], frontTopRight[2]);
 
 		// top
-		glVertex3f(backTopRight[0], backTopRight[1], backTopRight[2]);
-		glVertex3f(backTopLeft[0], backTopLeft[1], backTopLeft[2]);
+		setColour(RED);
 		glVertex3f(frontTopLeft[0], frontTopLeft[1], frontTopLeft[2]);
+		setColour(PURPLE);
 		glVertex3f(frontTopRight[0], frontTopRight[1], frontTopRight[2]);
+		setColour(YELLOW);
+		glVertex3f(backTopRight[0], backTopRight[1], backTopRight[2]);
+		setColour(GREEN);
+		glVertex3f(backTopLeft[0], backTopLeft[1], backTopLeft[2]);
 
 		// bottom
-		glVertex3f(backBottomRight[0], backBottomRight[1], backBottomRight[2]);
-		glVertex3f(backBottomLeft[0], backBottomLeft[1], backBottomLeft[2]);
+		setColour(ORANGE);
 		glVertex3f(frontBottomLeft[0], frontBottomLeft[1], frontBottomLeft[2]);
+		setColour(MAGENTA);
+		glVertex3f(backBottomLeft[0], backBottomLeft[1], backBottomLeft[2]);
+		setColour(CYAN);
+		glVertex3f(backBottomRight[0], backBottomRight[1], backBottomRight[2]);
+		setColour(BLUE);
 		glVertex3f(frontBottomRight[0], frontBottomRight[1], frontBottomRight[2]);
 
 	glEnd();
@@ -1010,51 +1104,139 @@ void drawTrapezoidalPrism(float frontTopLeft[], float frontBottomLeft[],
 // README: Helper code for drawing a cube
 void drawBody()
 {
-	float frontTopLeft[] = {-1.0f,  1.0f, 1.0f};
-	float frontBottomLeft[] = {-1.5f, -2.0f, 1.0f};
-	float frontTopRight[] = { 1.0f, 1.0f, 1.0f};
-	float frontBottomRight[] = { 1.5f,  -2.0f, 1.0f};
+	float frontTopLeft[] = {-BODY_WIDTH_TOP/2,  BODY_HEIGHT/2, BODY_THICKNESS/2};
+	float frontBottomLeft[] = {-BODY_WIDTH_BOTTOM/2, -BODY_HEIGHT/2, BODY_THICKNESS/2};
+	float frontTopRight[] = { BODY_WIDTH_TOP/2, BODY_HEIGHT/2, BODY_THICKNESS/2};
+	float frontBottomRight[] = { BODY_WIDTH_BOTTOM/2,  -BODY_HEIGHT/2, BODY_THICKNESS/2};
 
-	float backTopLeft[] = {-1.0f,  1.0f, -1.0f};
-	float backBottomLeft[] = {-1.5f, -2.0f, -1.0f};
-	float backTopRight[] = {1.0f, 1.0f, -1.0f};
-	float backBottomRight[] = { 1.5f,  -2.0f, -1.0f};
+	float backTopLeft[] = {-BODY_WIDTH_TOP/2,  BODY_HEIGHT/2, -BODY_THICKNESS/2};
+	float backBottomLeft[] = {-BODY_WIDTH_BOTTOM/2, -BODY_HEIGHT/2, -BODY_THICKNESS/2};
+	float backTopRight[] = {BODY_WIDTH_TOP/2, BODY_HEIGHT/2, -BODY_THICKNESS/2};
+	float backBottomRight[] = { BODY_WIDTH_BOTTOM/2,  -BODY_HEIGHT/2, -BODY_THICKNESS/2};
 
-	glBegin(GL_QUADS);
-		drawTrapezoidalPrism(
-				frontTopLeft, frontBottomLeft,
-				frontTopRight, frontBottomRight,
-				backTopLeft, backBottomLeft,
-				backTopRight, backBottomRight
-		);
-
-	glEnd();
+	drawTrapezoidalPrism(
+			frontTopLeft, frontBottomLeft,
+			frontTopRight, frontBottomRight,
+			backTopLeft, backBottomLeft,
+			backTopRight, backBottomRight
+	);
 }
 void drawHead()
 {
-	float headWidthBottom = 2.2f;
-	float headWidthTop = 1.8f;
-	float headHeight = 2.0f;
-	float headShortener = 0.5f;
-	float frontTopLeft[] = {-headWidthTop/2,  headHeight/2 - headShortener, 1.0f};
-	float frontBottomLeft[] = {-headWidthBottom/2, -headHeight/2, 1.0f};
-	float frontTopRight[] = { headWidthTop/2, headHeight/2 - headShortener, 1.0f};
-	float frontBottomRight[] = { headWidthBottom/2,  -headHeight/2, 1.0f};
+	float frontTopLeft[] = {-HEAD_WIDTH_TOP/2,  HEAD_HEIGHT/2 - HEAD_SHORTENER, 1.0f};
+	float frontBottomLeft[] = {-HEAD_WIDTH_BOTTOM/2, -HEAD_HEIGHT/2, 1.0f};
+	float frontTopRight[] = { HEAD_WIDTH_TOP/2, HEAD_HEIGHT/2 - HEAD_SHORTENER, 1.0f};
+	float frontBottomRight[] = { HEAD_WIDTH_BOTTOM/2,  -HEAD_HEIGHT/2, 1.0f};
 
-	float backTopLeft[] = {-headWidthTop/2,  headHeight/2 - headShortener, -1.0f};
-	float backBottomLeft[] = {-headWidthBottom/2, -headHeight/2, -1.0f};
-	float backTopRight[] = {headWidthTop/2, headHeight/2 - headShortener, -1.0f};
-	float backBottomRight[] = { headWidthBottom/2,  -headHeight/2, -1.0f};
+	float backTopLeft[] = {-HEAD_WIDTH_TOP/2,  HEAD_HEIGHT/2 - HEAD_SHORTENER, -1.0f};
+	float backBottomLeft[] = {-HEAD_WIDTH_BOTTOM/2, -HEAD_HEIGHT/2, -1.0f};
+	float backTopRight[] = {HEAD_WIDTH_TOP/2, HEAD_HEIGHT/2 - HEAD_SHORTENER, -1.0f};
+	float backBottomRight[] = { HEAD_WIDTH_BOTTOM/2,  -HEAD_HEIGHT/2, -1.0f};
+
+	drawTrapezoidalPrism(
+			frontTopLeft, frontBottomLeft,
+			frontTopRight, frontBottomRight,
+			backTopLeft, backBottomLeft,
+			backTopRight, backBottomRight
+	);
+}
+void drawArm(){
+	float frontTopLeft[] = {-ARM_WIDTH_TOP/2,  ARM_HEIGHT/2, ARM_THICKNESS/2};
+	float frontBottomLeft[] = {-ARM_WIDTH_BOTTOM/2, -ARM_HEIGHT/2, ARM_THICKNESS/2};
+	float frontTopRight[] = { ARM_WIDTH_TOP/2, ARM_HEIGHT/2, ARM_THICKNESS/2};
+	float frontBottomRight[] = { ARM_WIDTH_BOTTOM/2,  -ARM_HEIGHT/2, ARM_THICKNESS/2};
+
+	float backTopLeft[] = {-ARM_WIDTH_TOP/2,  ARM_HEIGHT/2, -ARM_THICKNESS/2};
+	float backBottomLeft[] = {-ARM_WIDTH_BOTTOM/2, -ARM_HEIGHT/2, -ARM_THICKNESS/2};
+	float backTopRight[] = {ARM_WIDTH_TOP/2, ARM_HEIGHT/2, -ARM_THICKNESS/2};
+	float backBottomRight[] = { ARM_WIDTH_BOTTOM/2,  -ARM_HEIGHT/2, -ARM_THICKNESS/2};
+
+	drawTrapezoidalPrism(
+			frontTopLeft, frontBottomLeft,
+			frontTopRight, frontBottomRight,
+			backTopLeft, backBottomLeft,
+			backTopRight, backBottomRight
+	);
+}
+void drawHand(){
+	float frontTopLeft[] = {-HAND_WIDTH_TOP/2,  HAND_HEIGHT/2, ARM_THICKNESS/2};
+	float frontBottomLeft[] = {-HAND_WIDTH_BOTTOM/2, -HAND_HEIGHT/2, ARM_THICKNESS/2};
+	float frontTopRight[] = { HAND_WIDTH_TOP/2, HAND_HEIGHT/2, ARM_THICKNESS/2};
+	float frontBottomRight[] = { HAND_WIDTH_BOTTOM/2,  -HAND_HEIGHT/2, ARM_THICKNESS/2};
+
+	float backTopLeft[] = {-HAND_WIDTH_TOP/2,  HAND_HEIGHT/2, -ARM_THICKNESS/2};
+	float backBottomLeft[] = {-HAND_WIDTH_BOTTOM/2, -HAND_HEIGHT/2, -ARM_THICKNESS/2};
+	float backTopRight[] = {HAND_WIDTH_TOP/2, HAND_HEIGHT/2, -ARM_THICKNESS/2};
+	float backBottomRight[] = { HAND_WIDTH_BOTTOM/2,  -HAND_HEIGHT/2, -ARM_THICKNESS/2};
+
+	drawTrapezoidalPrism(
+			frontTopLeft, frontBottomLeft,
+			frontTopRight, frontBottomRight,
+			backTopLeft, backBottomLeft,
+			backTopRight, backBottomRight
+	);
+}
+void drawLeg(){
+	float frontTopLeft[] = {-LEG_WIDTH/2,  LEG_HEIGHT/2, LEG_THICKNESS/2};
+	float frontBottomLeft[] = {-LEG_WIDTH/2, -LEG_HEIGHT/2, LEG_THICKNESS/2};
+	float frontTopRight[] = { LEG_WIDTH/2, LEG_HEIGHT/2, LEG_THICKNESS/2};
+	float frontBottomRight[] = { LEG_WIDTH/2,  -LEG_HEIGHT/2, LEG_THICKNESS/2};
+
+	float backTopLeft[] = {-LEG_WIDTH/2,  LEG_HEIGHT/2, -LEG_THICKNESS/2};
+	float backBottomLeft[] = {-LEG_WIDTH/2, -LEG_HEIGHT/2, -LEG_THICKNESS/2};
+	float backTopRight[] = {LEG_WIDTH/2, LEG_HEIGHT/2, -LEG_THICKNESS/2};
+	float backBottomRight[] = { LEG_WIDTH/2,  -LEG_HEIGHT/2, -LEG_THICKNESS/2};
+
+	drawTrapezoidalPrism(
+			frontTopLeft, frontBottomLeft,
+			frontTopRight, frontBottomRight,
+			backTopLeft, backBottomLeft,
+			backTopRight, backBottomRight
+	);
+}
+void drawFoot(){
+
+	glBegin(GL_TRIANGLES);
+		// top of foot
+		setColour(GOLD);
+		glVertex3f(-FOOT_LENGTH/2, FOOT_THICKNESS/2, -FOOT_WIDTH/2);
+		glVertex3f(-FOOT_LENGTH/2, FOOT_THICKNESS/2, FOOT_WIDTH/2);
+		setColour(SILVER);
+		glVertex3f(FOOT_LENGTH/2, FOOT_THICKNESS/2, 0.0);
+
+		// bottom of foot
+		setColour(GOLD);
+		glVertex3f(-FOOT_LENGTH/2, -FOOT_THICKNESS/2, FOOT_WIDTH/2);
+		glVertex3f(-FOOT_LENGTH/2, -FOOT_THICKNESS/2, -FOOT_WIDTH/2);
+		setColour(SILVER);
+		glVertex3f(FOOT_LENGTH/2, -FOOT_THICKNESS/2, 0.0);
+	glEnd();
 
 	glBegin(GL_QUADS);
-		drawTrapezoidalPrism(
-				frontTopLeft, frontBottomLeft,
-				frontTopRight, frontBottomRight,
-				backTopLeft, backBottomLeft,
-				backTopRight, backBottomRight
-		);
+		// front side of foot
+		setColour(GOLD);
+		glVertex3f(-FOOT_LENGTH/2, FOOT_THICKNESS/2, FOOT_WIDTH/2);
+		glVertex3f(-FOOT_LENGTH/2, -FOOT_THICKNESS/2, FOOT_WIDTH/2);
+		setColour(SILVER);
+		glVertex3f(FOOT_LENGTH/2, -FOOT_THICKNESS/2, 0.0);
+		glVertex3f(FOOT_LENGTH/2, FOOT_THICKNESS/2, 0.0);
 
+		// toe side of foot
+		setColour(GOLD);
+		glVertex3f(-FOOT_LENGTH/2, FOOT_THICKNESS/2, -FOOT_WIDTH/2);
+		glVertex3f(-FOOT_LENGTH/2, -FOOT_THICKNESS/2, -FOOT_WIDTH/2);
+		glVertex3f(-FOOT_LENGTH/2, -FOOT_THICKNESS/2, FOOT_WIDTH/2);
+		glVertex3f(-FOOT_LENGTH/2, FOOT_THICKNESS/2, FOOT_WIDTH/2);
+
+		// back side of foot
+		glVertex3f(-FOOT_LENGTH/2, FOOT_THICKNESS/2, -FOOT_WIDTH/2);
+		setColour(SILVER);
+		glVertex3f(FOOT_LENGTH/2, FOOT_THICKNESS/2, 0.0);
+		glVertex3f(FOOT_LENGTH/2, -FOOT_THICKNESS/2, 0.0);
+		setColour(GOLD);
+		glVertex3f(-FOOT_LENGTH/2, -FOOT_THICKNESS/2, -FOOT_WIDTH/2);
 	glEnd();
+
 }
 
 ///////////////////////////////////////////////////////////
