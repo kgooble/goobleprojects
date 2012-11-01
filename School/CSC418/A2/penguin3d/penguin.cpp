@@ -194,7 +194,7 @@ void motion(int x, int y);
 
 // Functions to help draw the object
 Vector getInterpolatedJointDOFS(float time);
-void drawCube();
+void drawBody();
 
 
 // Image functions
@@ -859,8 +859,10 @@ void display(void)
 		glTranslatef(joint_ui_data->getDOF(Keyframe::ROOT_TRANSLATE_X),
 					 joint_ui_data->getDOF(Keyframe::ROOT_TRANSLATE_Y),
 					 joint_ui_data->getDOF(Keyframe::ROOT_TRANSLATE_Z));
-		glRotatef(30.0, 0.0, 1.0, 0.0);
-		glRotatef(30.0, 1.0, 0.0, 0.0);
+		glRotatef(joint_ui_data->getDOF(Keyframe::ROOT_ROTATE_X),
+				joint_ui_data->getDOF(Keyframe::ROOT_ROTATE_Y),
+				joint_ui_data->getDOF(Keyframe::ROOT_ROTATE_Z), 0.0f
+				);
 
 		// determine render style and set glPolygonMode appropriately
 		switch (renderStyle){
@@ -871,14 +873,14 @@ void display(void)
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 			break;
 		case OUTLINED:
-			// TODO make outline
+			// TODO make outline mode: have to draw fills, then draw outlines.
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 			break;
 		}
 
 		// draw body part
 		glColor3f(1.0, 1.0, 1.0);
-		drawCube();
+		drawBody();
 
 	glPopMatrix();
 	//
@@ -936,47 +938,85 @@ void motion(int x, int y)
 	}
 }
 
+void drawTrapezoidalPrism(float frontTopLeft[], float frontBottomLeft[],
+		float frontTopRight[], float frontBottomRight[],
+		float backTopLeft[], float backBottomLeft[],
+		float backTopRight[], float backBottomRight[]){
+
+	glBegin(GL_QUADS);
+		// front
+		glVertex3f(frontTopLeft[0], frontTopLeft[1], frontTopLeft[2]);
+		glVertex3f(frontBottomLeft[0], frontBottomLeft[1], frontBottomLeft[2]);
+		glVertex3f(frontBottomRight[0], frontBottomRight[1], frontBottomRight[2]);
+		glVertex3f(frontTopRight[0], frontTopRight[1], frontTopRight[2]);
+
+		// back
+		glVertex3f(backTopLeft[0], backTopLeft[1], backTopLeft[2]);
+		glVertex3f(backBottomLeft[0], backBottomLeft[1], backBottomLeft[2]);
+		glVertex3f(backBottomRight[0], backBottomRight[1], backBottomRight[2]);
+		glVertex3f(backTopRight[0], backTopRight[1], backTopRight[2]);
+
+		// left
+		glVertex3f(backTopLeft[0], backTopLeft[1], backTopLeft[2]);
+		glVertex3f(backBottomLeft[0], backBottomLeft[1], backBottomLeft[2]);
+		glVertex3f(frontBottomLeft[0], frontBottomLeft[1], frontBottomLeft[2]);
+		glVertex3f(frontTopLeft[0], frontTopLeft[1], frontTopLeft[2]);
+
+		// right
+		glVertex3f(backTopRight[0], backTopRight[1], backTopRight[2]);
+		glVertex3f(backBottomRight[0], backBottomRight[1], backBottomRight[2]);
+		glVertex3f(frontBottomRight[0], frontBottomRight[1], frontBottomRight[2]);
+		glVertex3f(frontTopRight[0], frontTopRight[1], frontTopRight[2]);
+
+		// top
+		glVertex3f(backTopRight[0], backTopRight[1], backTopRight[2]);
+		glVertex3f(backTopLeft[0], backTopLeft[1], backTopLeft[2]);
+		glVertex3f(frontTopLeft[0], frontTopLeft[1], frontTopLeft[2]);
+		glVertex3f(frontTopRight[0], frontTopRight[1], frontTopRight[2]);
+
+		// bottom
+		glVertex3f(backBottomRight[0], backBottomRight[1], backBottomRight[2]);
+		glVertex3f(backBottomLeft[0], backBottomLeft[1], backBottomLeft[2]);
+		glVertex3f(frontBottomLeft[0], frontBottomLeft[1], frontBottomLeft[2]);
+		glVertex3f(frontBottomRight[0], frontBottomRight[1], frontBottomRight[2]);
+
+	glEnd();
+
+}
+
 
 // Draw a unit cube, centered at the current location
 // README: Helper code for drawing a cube
-void drawCube()
+void drawBody()
 {
+	/*
+	 * TODO:
+	 * - draw body
+	 * - draw arms
+	 * - draw hands
+	 * - draw legs
+	 * - draw feet
+	 * - draw head
+	 * - draw beak
+	 */
+	float frontTopLeft[] = {-1.0f,  1.0f, 1.0f};
+	float frontBottomLeft[] = {-2.0f, -2.0f, 1.0f};
+	float frontTopRight[] = { 1.0f, 1.0f, 1.0f};
+	float frontBottomRight[] = { 1.0f,  -1.0f, 1.0f};
+
+	float backTopLeft[] = {-1.0f,  1.0f, -1.0f};
+	float backBottomLeft[] = {-2.0f, -2.0f, -1.0f};
+	float backTopRight[] = {1.0f, 1.0f, -1.0f};
+	float backBottomRight[] = { 1.0f,  -1.0f, -1.0f};
+
 	glBegin(GL_QUADS);
-		// draw front face
-		glVertex3f(-1.0, -1.0, 1.0);
-		glVertex3f( 1.0, -1.0, 1.0);
-		glVertex3f( 1.0,  1.0, 1.0);
-		glVertex3f(-1.0,  1.0, 1.0);
+		drawTrapezoidalPrism(
+				frontTopLeft, frontBottomLeft,
+				frontTopRight, frontBottomRight,
+				backTopLeft, backBottomLeft,
+				backTopRight, backBottomRight
+		);
 
-		// draw back face
-		glVertex3f( 1.0, -1.0, -1.0);
-		glVertex3f(-1.0, -1.0, -1.0);
-		glVertex3f(-1.0,  1.0, -1.0);
-		glVertex3f( 1.0,  1.0, -1.0);
-
-		// draw left face
-		glVertex3f(-1.0, -1.0, -1.0);
-		glVertex3f(-1.0, -1.0,  1.0);
-		glVertex3f(-1.0,  1.0,  1.0);
-		glVertex3f(-1.0,  1.0, -1.0);
-
-		// draw right face
-		glVertex3f( 1.0, -1.0,  1.0);
-		glVertex3f( 1.0, -1.0, -1.0);
-		glVertex3f( 1.0,  1.0, -1.0);
-		glVertex3f( 1.0,  1.0,  1.0);
-
-		// draw top
-		glVertex3f(-1.0,  1.0,  1.0);
-		glVertex3f( 1.0,  1.0,  1.0);
-		glVertex3f( 1.0,  1.0, -1.0);
-		glVertex3f(-1.0,  1.0, -1.0);
-
-		// draw bottom
-		glVertex3f(-1.0, -1.0, -1.0);
-		glVertex3f( 1.0, -1.0, -1.0);
-		glVertex3f( 1.0, -1.0,  1.0);
-		glVertex3f(-1.0, -1.0,  1.0);
 	glEnd();
 }
 
