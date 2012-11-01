@@ -195,6 +195,22 @@ void motion(int x, int y);
 // Functions to help draw the object
 Vector getInterpolatedJointDOFS(float time);
 void drawBody();
+void drawArms();
+void drawHands();
+void drawLegs();
+void drawFeet();
+void drawHead();
+void drawBeak();
+/*
+ * TODO:
+ * - draw body
+ * - draw arms
+ * - draw hands
+ * - draw legs
+ * - draw feet
+ * - draw head
+ * - draw beak
+ */
 
 
 // Image functions
@@ -882,6 +898,11 @@ void display(void)
 		glColor3f(1.0, 1.0, 1.0);
 		drawBody();
 
+		glPushMatrix();
+			glTranslatef(0.0, 2.0, 0.0);
+			drawHead();
+		glPopMatrix();
+
 	glPopMatrix();
 	//
 	// SAMPLE CODE **********
@@ -989,25 +1010,41 @@ void drawTrapezoidalPrism(float frontTopLeft[], float frontBottomLeft[],
 // README: Helper code for drawing a cube
 void drawBody()
 {
-	/*
-	 * TODO:
-	 * - draw body
-	 * - draw arms
-	 * - draw hands
-	 * - draw legs
-	 * - draw feet
-	 * - draw head
-	 * - draw beak
-	 */
 	float frontTopLeft[] = {-1.0f,  1.0f, 1.0f};
-	float frontBottomLeft[] = {-2.0f, -2.0f, 1.0f};
+	float frontBottomLeft[] = {-1.5f, -2.0f, 1.0f};
 	float frontTopRight[] = { 1.0f, 1.0f, 1.0f};
-	float frontBottomRight[] = { 1.0f,  -1.0f, 1.0f};
+	float frontBottomRight[] = { 1.5f,  -2.0f, 1.0f};
 
 	float backTopLeft[] = {-1.0f,  1.0f, -1.0f};
-	float backBottomLeft[] = {-2.0f, -2.0f, -1.0f};
+	float backBottomLeft[] = {-1.5f, -2.0f, -1.0f};
 	float backTopRight[] = {1.0f, 1.0f, -1.0f};
-	float backBottomRight[] = { 1.0f,  -1.0f, -1.0f};
+	float backBottomRight[] = { 1.5f,  -2.0f, -1.0f};
+
+	glBegin(GL_QUADS);
+		drawTrapezoidalPrism(
+				frontTopLeft, frontBottomLeft,
+				frontTopRight, frontBottomRight,
+				backTopLeft, backBottomLeft,
+				backTopRight, backBottomRight
+		);
+
+	glEnd();
+}
+void drawHead()
+{
+	float headWidthBottom = 2.2f;
+	float headWidthTop = 1.8f;
+	float headHeight = 2.0f;
+	float headShortener = 0.5f;
+	float frontTopLeft[] = {-headWidthTop/2,  headHeight/2 - headShortener, 1.0f};
+	float frontBottomLeft[] = {-headWidthBottom/2, -headHeight/2, 1.0f};
+	float frontTopRight[] = { headWidthTop/2, headHeight/2 - headShortener, 1.0f};
+	float frontBottomRight[] = { headWidthBottom/2,  -headHeight/2, 1.0f};
+
+	float backTopLeft[] = {-headWidthTop/2,  headHeight/2 - headShortener, -1.0f};
+	float backBottomLeft[] = {-headWidthBottom/2, -headHeight/2, -1.0f};
+	float backTopRight[] = {headWidthTop/2, headHeight/2 - headShortener, -1.0f};
+	float backBottomRight[] = { headWidthBottom/2,  -headHeight/2, -1.0f};
 
 	glBegin(GL_QUADS);
 		drawTrapezoidalPrism(
