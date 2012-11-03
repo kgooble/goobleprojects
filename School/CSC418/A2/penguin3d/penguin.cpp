@@ -90,7 +90,9 @@ const GLdouble FAR_CLIP    = 1000.0;
 
 // Render settings
 enum { WIREFRAME, SOLID, OUTLINED };	// README: the different render styles
+enum { METALLIC, MATTE };
 int renderStyle = WIREFRAME;			// README: the selected render style
+int materialProperty = METALLIC;
 bool outlining = false;
 
 // Animation settings
@@ -174,7 +176,12 @@ const float ELBOW_MIN            =  0.0;
 const float ELBOW_MAX            = 75.0;
 const float KNEE_MIN             =  0.0;
 const float KNEE_MAX             = 75.0;
+const float LIGHT_MIN			 =  0.0;
+const float LIGHT_MAX			 =  1.0;
+const float LIGHT_RADIUS 		 =  5.0;
 
+GLfloat MAT_SPECULAR[] = {1.0, 1.0, 1.0, 1.0};
+GLfloat MAT_DIFFUSE[] = {1.0, 1.0, 1.0, 1.0};
 
 // ***********  FUNCTION HEADER DECLARATIONS ****************
 
@@ -570,6 +577,11 @@ void initGlui()
 	glui_spinner->set_float_limits(ELBOW_MIN, ELBOW_MAX, GLUI_LIMIT_CLAMP);
 	glui_spinner->set_speed(SPINNER_SPEED);
 
+	glui_panel = glui_joints->add_panel("Material properties");
+
+	glui_radio_group = glui_render->add_radiogroup_to_panel(glui_panel, &materialProperty);
+	glui_render->add_radiobutton_to_group(glui_radio_group, "Metallic");
+	glui_render->add_radiobutton_to_group(glui_radio_group, "Matte");
 
 	glui_joints->add_column(false);
 
@@ -612,6 +624,10 @@ void initGlui()
 	glui_spinner->set_float_limits(KNEE_MIN, KNEE_MAX, GLUI_LIMIT_CLAMP);
 	glui_spinner->set_speed(SPINNER_SPEED);
 
+	glui_panel = glui_joints->add_panel("Light position");
+	glui_spinner = glui_joints->add_spinner_to_panel(glui_panel, "light position:", GLUI_SPINNER_FLOAT, joint_ui_data->getDOFPtr(Keyframe::LIGHT_POSITION));
+	glui_spinner->set_float_limits(LIGHT_MIN, LIGHT_MAX, GLUI_LIMIT_CLAMP);
+	glui_spinner->set_speed(SPINNER_SPEED);
 
 	///////////////////////////////////////////////////////////
 	// TODO (for controlling light source position & additional
@@ -699,6 +715,11 @@ void initGl(void)
     glEnable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_NORMALIZE);
+
+	glShadeModel(GL_SMOOTH);
+
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
 }
 
 
@@ -978,6 +999,23 @@ void display(void)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		break;
 	}
+
+	// set material property
+	switch(materialProperty){
+	case METALLIC:
+		glMaterialfv(GL_FRONT, GL_SPECULAR, MAT_SPECULAR);
+		break;
+	case MATTE:
+		glMaterialfv(GL_FRONT, GL_DIFFUSE, MAT_DIFFUSE);
+		break;
+	}
+
+	// position light
+	float t = joint_ui_data->getDOF(Keyframe::LIGHT_POSITION);
+	GLfloat lightPosition[] = {LIGHT_RADIUS * cos (2 * PI * t), LIGHT_RADIUS * sin (2 * PI * t), 0.0};
+	glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
+
+
 	glColor3f(1.0, 1.0, 1.0);
 	outlining = false;
 	drawAll();
@@ -1044,7 +1082,7 @@ void motion(int x, int y)
 	}
 }
 
-void setColour(float colour[]){
+void setColour(const float colour[]){
 	if (!outlining)
 		glColor3f(colour[0], colour[1], colour[2]);
 }
