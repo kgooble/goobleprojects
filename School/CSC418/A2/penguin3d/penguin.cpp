@@ -180,8 +180,9 @@ const float LIGHT_MIN			 =  0.0;
 const float LIGHT_MAX			 =  1.0;
 const float LIGHT_RADIUS 		 =  5.0;
 
-GLfloat MAT_SPECULAR[] = {1.0, 1.0, 1.0, 1.0};
-GLfloat MAT_DIFFUSE[] = {1.0, 1.0, 1.0, 1.0};
+GLfloat MAT_SPECULAR[] = {0.5, 0.5, 0.5, 1.0};
+GLfloat MAT_DIFFUSE[] = {0.5, 0.5, 0.5, 1.0};
+GLfloat NO_MATERIAL[] = {0.0, 0.0, 0.0, 0.0};
 
 // ***********  FUNCTION HEADER DECLARATIONS ****************
 
@@ -203,7 +204,7 @@ void motion(int x, int y);
 
 // Functions to help draw the object
 Vector getInterpolatedJointDOFS(float time);
-void setColour(float colour[]);
+void setColour(const float colour[]);
 void drawBody();
 void drawArm();
 void drawHand();
@@ -716,9 +717,16 @@ void initGl(void)
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_NORMALIZE);
 
+//	GLfloat light_position[] = { 5.0, 5.0, 5.0, 0.0 };
+
 	glShadeModel(GL_SMOOTH);
 
+//	glMaterialfv(GL_FRONT, GL_SPECULAR, MAT_SPECULAR);
+//	glMaterialfv(GL_FRONT, GL_DIFFUSE, MAT_DIFFUSE);
+//	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+
 	glEnable(GL_LIGHTING);
+	glEnable(GL_COLOR_MATERIAL);
 	glEnable(GL_LIGHT0);
 }
 
@@ -1004,17 +1012,18 @@ void display(void)
 	switch(materialProperty){
 	case METALLIC:
 		glMaterialfv(GL_FRONT, GL_SPECULAR, MAT_SPECULAR);
+		glMaterialfv(GL_FRONT, GL_DIFFUSE, NO_MATERIAL);
 		break;
 	case MATTE:
+		glMaterialfv(GL_FRONT, GL_SPECULAR, NO_MATERIAL);
 		glMaterialfv(GL_FRONT, GL_DIFFUSE, MAT_DIFFUSE);
 		break;
 	}
 
 	// position light
 	float t = joint_ui_data->getDOF(Keyframe::LIGHT_POSITION);
-	GLfloat lightPosition[] = {LIGHT_RADIUS * cos (2 * PI * t), LIGHT_RADIUS * sin (2 * PI * t), 0.0};
+	GLfloat lightPosition[] = {LIGHT_RADIUS * cos (2 * PI * t), LIGHT_RADIUS * sin (2 * PI * t), LIGHT_RADIUS, 0.0};
 	glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
-
 
 	glColor3f(1.0, 1.0, 1.0);
 	outlining = false;
