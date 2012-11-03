@@ -36,6 +36,7 @@ float BODY_WIDTH_BOTTOM = 3.0f;
 float BODY_HEIGHT = 3.0f;
 float BODY_THICKNESS = 2.0f;
 
+float BEAK_OFFSET_Y = 0.3f;
 float BEAK_OUTSIDE_WIDTH = 1.0f;
 float BEAK_INSIDE_WIDTH = 1.2f;
 float BEAK_THICKNESS = 0.2f;

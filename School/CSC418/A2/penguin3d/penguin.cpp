@@ -815,6 +815,9 @@ void drawAll(){
 		// right leg
 		glPushMatrix();
 			glTranslatef(0.0, -(BODY_HEIGHT/2 + LEG_HEIGHT/2), -2 * LEG_THICKNESS);
+			glRotatef(joint_ui_data->getDOF(Keyframe::R_HIP_PITCH), 1.0, 0.0, 0.0);
+			glRotatef(joint_ui_data->getDOF(Keyframe::R_HIP_YAW), 0.0, 1.0, 0.0);
+			glRotatef(joint_ui_data->getDOF(Keyframe::R_HIP_ROLL), 0.0, 0.0, 1.0);
 			drawLeg();
 
 			glPushMatrix();
@@ -827,24 +830,29 @@ void drawAll(){
 		// left leg
 		glPushMatrix();
 			glTranslatef(0.0, -(BODY_HEIGHT/2 + LEG_HEIGHT/2), 2 * LEG_THICKNESS);
+			glRotatef(joint_ui_data->getDOF(Keyframe::L_HIP_PITCH), 1.0, 0.0, 0.0);
+			glRotatef(joint_ui_data->getDOF(Keyframe::L_HIP_YAW), 0.0, 1.0, 0.0);
+			glRotatef(joint_ui_data->getDOF(Keyframe::L_HIP_ROLL), 0.0, 0.0, 1.0);
 			drawLeg();
 
 			glPushMatrix();
 				glTranslatef(-FOOT_WIDTH/3, -(LEG_HEIGHT/2 + FOOT_THICKNESS/2), 0.0);
-				glRotatef(joint_ui_data->getDOF(Keyframe::R_KNEE), 0.0, 0.0, 1.0);
+				glRotatef(joint_ui_data->getDOF(Keyframe::L_KNEE), 0.0, 0.0, 1.0);
 				drawFoot();
 			glPopMatrix();
 		glPopMatrix();
 
 		glPushMatrix();
 			glTranslatef(0.0, BODY_HEIGHT/2 + HEAD_HEIGHT/2, 0.0);
+			glRotatef(joint_ui_data->getDOF(Keyframe::HEAD), 0.0, 1.0, 0.0);
 			drawHead();
 
 			glPushMatrix();
-				glTranslatef(-HEAD_WIDTH_BOTTOM/2 - BEAK_LENGTH/2, 0.0, 0.0);
+				float beakSplit = joint_ui_data->getDOF(Keyframe::BEAK);
+				glTranslatef(-HEAD_WIDTH_BOTTOM/2 - BEAK_LENGTH/2, beakSplit/2, 0.0);
 				drawTopBeak();
 
-				glTranslatef(0.0, -BEAK_THICKNESS, 0.0);
+				glTranslatef(0.0, -BEAK_THICKNESS - beakSplit, 0.0);
 				drawBottomBeak();
 			glPopMatrix();
 
@@ -852,7 +860,11 @@ void drawAll(){
 
 		// right arm
 		glPushMatrix();
-			glTranslatef(0.0, 0.0, -(BODY_THICKNESS/2 + ARM_THICKNESS/2));
+			glTranslatef(0.0, ARM_HEIGHT/2, -(BODY_THICKNESS/2 + ARM_THICKNESS/2));
+			glRotatef(joint_ui_data->getDOF(Keyframe::R_SHOULDER_PITCH), 1.0, 0.0, 0.0);
+			glRotatef(joint_ui_data->getDOF(Keyframe::R_SHOULDER_YAW), 0.0, 1.0, 0.0);
+			glRotatef(joint_ui_data->getDOF(Keyframe::R_SHOULDER_ROLL), 0.0, 0.0, 1.0);
+			glTranslatef(0.0, -ARM_HEIGHT/2, 0.0);
 			drawArm();
 
 			glPushMatrix();
@@ -864,8 +876,11 @@ void drawAll(){
 
 		// left arm
 		glPushMatrix();
-
-			glTranslatef(0.0, 0.0, BODY_THICKNESS/2 + ARM_THICKNESS/2);
+			glTranslatef(0.0, ARM_HEIGHT/2, BODY_THICKNESS/2 + ARM_THICKNESS/2);
+			glRotatef(joint_ui_data->getDOF(Keyframe::L_SHOULDER_PITCH), 1.0, 0.0, 0.0);
+			glRotatef(joint_ui_data->getDOF(Keyframe::L_SHOULDER_YAW), 0.0, 1.0, 0.0);
+			glRotatef(joint_ui_data->getDOF(Keyframe::L_SHOULDER_ROLL), 0.0, 0.0, 1.0);
+			glTranslatef(0.0, -ARM_HEIGHT/2, 0.0);
 			drawArm();
 
 			glPushMatrix();
