@@ -172,13 +172,13 @@ const float HIP_ROLL_MIN         = -45.0;
 const float HIP_ROLL_MAX         =  45.0;
 const float BEAK_MIN             =  0.0;
 const float BEAK_MAX             =  1.0;
-const float ELBOW_MIN            =  0.0;
-const float ELBOW_MAX            = 75.0;
-const float KNEE_MIN             =  0.0;
-const float KNEE_MAX             = 75.0;
+const float ELBOW_MIN            =-37.5;
+const float ELBOW_MAX            = 37.5;
+const float KNEE_MIN             =-37.5;
+const float KNEE_MAX             = 37.5;
 const float LIGHT_MIN			 =  0.0;
 const float LIGHT_MAX			 =  1.0;
-const float LIGHT_RADIUS 		 =  5.0;
+const float LIGHT_RADIUS 		 =  7.0;
 
 GLfloat MAT_SPECULAR[] = {0.5, 0.5, 0.5, 1.0};
 GLfloat MAT_DIFFUSE[] = {0.5, 0.5, 0.5, 1.0};
@@ -205,6 +205,7 @@ void motion(int x, int y);
 // Functions to help draw the object
 Vector getInterpolatedJointDOFS(float time);
 void setColour(const float colour[]);
+void setVertex(float vertex[]);
 void drawBody();
 void drawArm();
 void drawHand();
@@ -900,8 +901,9 @@ void drawAll(){
 			drawArm();
 
 			glPushMatrix();
-				glTranslatef(0.0, -(ARM_HEIGHT/2 + HAND_HEIGHT/2), 0.0);
-				glRotatef(joint_ui_data->getDOF(Keyframe::R_ELBOW), 0.0, 0.0, 1.0);
+				glTranslatef(0.0, -ARM_HEIGHT/2, 0.0);
+				glRotatef(-joint_ui_data->getDOF(Keyframe::R_ELBOW), 0.0, 0.0, 1.0);
+				glTranslatef(0.0, -HAND_HEIGHT/4, 0.0);
 				drawHand();
 			glPopMatrix();
 		glPopMatrix();
@@ -916,8 +918,9 @@ void drawAll(){
 			drawArm();
 
 			glPushMatrix();
-				glTranslatef(0.0, -(ARM_HEIGHT/2 + HAND_HEIGHT/2), 0.0);
-				glRotatef(joint_ui_data->getDOF(Keyframe::L_ELBOW), 0.0, 0.0, 1.0);
+				glTranslatef(0.0, -ARM_HEIGHT/2, 0.0);
+				glRotatef(-joint_ui_data->getDOF(Keyframe::L_ELBOW), 0.0, 0.0, 1.0);
+				glTranslatef(0.0, -HAND_HEIGHT/4, 0.0);
 				drawHand();
 			glPopMatrix();
 
