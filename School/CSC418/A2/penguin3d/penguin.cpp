@@ -1072,105 +1072,105 @@ void drawTrapezoidalPrism(float frontTopLeft[], float frontBottomLeft[],
 	glBegin(GL_QUADS);
 		// front
 		setColour(RED);
-		setVertex(frontTopLeft);
 		setNormal(frontTopLeft, frontBottomLeft, frontTopRight);
+		setVertex(frontTopLeft);
 
 		setColour(ORANGE);
-		setVertex(frontBottomLeft);
 		setNormal(frontBottomLeft, frontBottomRight, frontTopLeft);
+		setVertex(frontBottomLeft);
 
 		setColour(BLUE);
-		setVertex(frontBottomRight);
 		setNormal(frontBottomRight, frontTopRight, frontBottomLeft);
+		setVertex(frontBottomRight);
 
 		setColour(PURPLE);
-		setVertex(frontTopRight);
 		setNormal(frontTopRight, frontTopLeft, frontBottomRight);
+		setVertex(frontTopRight);
 
 		// back
 		setColour(GREEN);
-		setVertex(backTopLeft);
 		setNormal(backTopLeft, backTopRight, backBottomLeft);
+		setVertex(backTopLeft);
 
 		setColour(YELLOW);
-		setVertex(backTopRight);
 		setNormal(backTopRight, backBottomRight, backTopLeft);
+		setVertex(backTopRight);
 
 		setColour(CYAN);
-		setVertex(backBottomRight);
 		setNormal(backBottomRight, backBottomLeft, backTopRight);
+		setVertex(backBottomRight);
 
 		setColour(MAGENTA);
-		setVertex(backBottomLeft);
 		setNormal(backBottomLeft, backTopLeft, backBottomRight);
+		setVertex(backBottomLeft);
 
 		// left
 		setColour(GREEN);
-		setVertex(backTopLeft);
 		setNormal(backTopLeft, backBottomLeft, frontTopLeft);
+		setVertex(backTopLeft);
 
 		setColour(MAGENTA);
-		setVertex(backBottomLeft);
 		setNormal(backBottomLeft, frontBottomLeft, backTopLeft);
+		setVertex(backBottomLeft);
 
 		setColour(ORANGE);
-		setVertex(frontBottomLeft);
 		setNormal(frontBottomLeft, frontTopLeft, backBottomLeft);
+		setVertex(frontBottomLeft);
 
 		setColour(RED);
-		setVertex(frontTopLeft);
 		setNormal(frontTopLeft, backTopLeft, frontBottomLeft);
+		setVertex(frontTopLeft);
 
 		// right
 		setColour(BLUE);
-		setVertex(frontBottomRight);
 		setNormal(frontBottomRight, backBottomRight, frontTopRight);
+		setVertex(frontBottomRight);
 
 		setColour(CYAN);
-		setVertex(backBottomRight);
 		setNormal(backBottomRight, backTopRight, frontBottomRight);
+		setVertex(backBottomRight);
 
 		setColour(YELLOW);
-		setVertex(backTopRight);
 		setNormal(backTopRight, frontTopRight, backBottomRight);
+		setVertex(backTopRight);
 
 		setColour(PURPLE);
-		setVertex(frontTopRight);
 		setNormal(frontTopRight, frontBottomRight, backTopRight);
+		setVertex(frontTopRight);
 
 		// top
 		setColour(RED);
-		setVertex(frontTopLeft);
 		setNormal(frontTopLeft, frontTopRight, backTopLeft);
+		setVertex(frontTopLeft);
 
 		setColour(PURPLE);
-		setVertex(frontTopRight);
 		setNormal(frontTopRight, backTopRight, frontTopLeft);
+		setVertex(frontTopRight);
 
 		setColour(YELLOW);
-		setVertex(backTopRight);
 		setNormal(backTopRight, backTopLeft, frontTopRight);
+		setVertex(backTopRight);
 
 		setColour(GREEN);
-		setVertex(backTopLeft);
 		setNormal(backTopLeft, frontTopLeft, backTopRight);
+		setVertex(backTopLeft);
 
 		// bottom
 		setColour(ORANGE);
-		setVertex(frontBottomLeft);
 		setNormal(frontBottomLeft, backBottomLeft, frontBottomRight);
+		setVertex(frontBottomLeft);
 
 		setColour(MAGENTA);
-		setVertex(backBottomLeft);
 		setNormal(backBottomLeft, backBottomRight, frontBottomLeft);
+		setVertex(backBottomLeft);
 
 		setColour(CYAN);
-		setVertex(backBottomRight);
 		setNormal(backBottomRight, frontBottomRight, backBottomLeft);
+		setVertex(backBottomRight);
 
 		setColour(BLUE);
-		setVertex(frontBottomRight);
 		setNormal(frontBottomRight, frontBottomLeft, backBottomRight);
+		setVertex(frontBottomRight);
 
 	glEnd();
 
@@ -1310,46 +1310,91 @@ void drawLeg(){
 }
 void drawFoot(){
 
-	glBegin(GL_TRIANGLES);
+	glBegin(GL_TRIANGLES);{
+		float backTopLeft[] = {-FOOT_LENGTH/2, FOOT_THICKNESS/2, -FOOT_WIDTH/2};
+		float frontTopLeft[] = {-FOOT_LENGTH/2, FOOT_THICKNESS/2, FOOT_WIDTH/2};
+		float topRight[] = {FOOT_LENGTH/2, FOOT_THICKNESS/2, 0.0};
+
 		// top of foot
 		setColour(GOLD);
-		glVertex3f(-FOOT_LENGTH/2, FOOT_THICKNESS/2, -FOOT_WIDTH/2);
-		glVertex3f(-FOOT_LENGTH/2, FOOT_THICKNESS/2, FOOT_WIDTH/2);
-		setColour(SILVER);
-		glVertex3f(FOOT_LENGTH/2, FOOT_THICKNESS/2, 0.0);
+		setNormal(backTopLeft, frontTopLeft, topRight);
+		setVertex(backTopLeft);
 
+		setNormal(frontTopLeft, topRight, backTopLeft);
+		setVertex(frontTopLeft);
+
+		setColour(SILVER);
+		setNormal(topRight, backTopLeft, frontTopLeft);
+		setVertex(topRight);
+
+		float frontBottomLeft[] = {-FOOT_LENGTH/2, -FOOT_THICKNESS/2, FOOT_WIDTH/2};
+		float backBottomLeft[] = {-FOOT_LENGTH/2, -FOOT_THICKNESS/2, -FOOT_WIDTH/2};
+		float bottomRight[] = {FOOT_LENGTH/2, -FOOT_THICKNESS/2, 0.0};
 		// bottom of foot
 		setColour(GOLD);
-		glVertex3f(-FOOT_LENGTH/2, -FOOT_THICKNESS/2, FOOT_WIDTH/2);
-		glVertex3f(-FOOT_LENGTH/2, -FOOT_THICKNESS/2, -FOOT_WIDTH/2);
-		setColour(SILVER);
-		glVertex3f(FOOT_LENGTH/2, -FOOT_THICKNESS/2, 0.0);
-	glEnd();
+		setNormal(frontBottomLeft, backBottomLeft, bottomRight);
+		setVertex(frontBottomLeft);
 
-	glBegin(GL_QUADS);
-		// front side of foot
-		setColour(GOLD);
-		glVertex3f(-FOOT_LENGTH/2, FOOT_THICKNESS/2, FOOT_WIDTH/2);
-		glVertex3f(-FOOT_LENGTH/2, -FOOT_THICKNESS/2, FOOT_WIDTH/2);
+		setNormal(backBottomLeft, bottomRight, frontBottomLeft);
+		setVertex(backBottomLeft);
+
 		setColour(SILVER);
-		glVertex3f(FOOT_LENGTH/2, -FOOT_THICKNESS/2, 0.0);
-		glVertex3f(FOOT_LENGTH/2, FOOT_THICKNESS/2, 0.0);
+		setNormal(bottomRight, frontBottomLeft, backBottomLeft);
+		setVertex(bottomRight);
+	}glEnd();
+
+	glBegin(GL_QUADS);{
+		float frontTopLeft[] = {-FOOT_LENGTH/2, FOOT_THICKNESS/2, FOOT_WIDTH/2};
+		float frontBottomLeft[] = {-FOOT_LENGTH/2, -FOOT_THICKNESS/2, FOOT_WIDTH/2};
+		float backTopLeft[] = {-FOOT_LENGTH/2, FOOT_THICKNESS/2, -FOOT_WIDTH/2};
+		float backBottomLeft[] = {-FOOT_LENGTH/2, -FOOT_THICKNESS/2, -FOOT_WIDTH/2};
+		float bottomRight[] = {FOOT_LENGTH/2, -FOOT_THICKNESS/2, 0.0};
+		float topRight[] = {FOOT_LENGTH/2, FOOT_THICKNESS/2, 0.0};
+
+		// camera-facing side of foot
+		setColour(GOLD);
+		setNormal(frontTopLeft, frontBottomLeft, topRight);
+		setVertex(frontTopLeft);
+
+		setNormal(frontBottomLeft, bottomRight, frontTopLeft);
+		setVertex(frontBottomLeft);
+
+		setColour(SILVER);
+		setNormal(bottomRight, topRight, frontBottomLeft);
+		setVertex(bottomRight);
+
+		setNormal(topRight, backTopLeft, bottomRight);
+		setVertex(topRight);
 
 		// toe side of foot
 		setColour(GOLD);
-		glVertex3f(-FOOT_LENGTH/2, FOOT_THICKNESS/2, -FOOT_WIDTH/2);
-		glVertex3f(-FOOT_LENGTH/2, -FOOT_THICKNESS/2, -FOOT_WIDTH/2);
-		glVertex3f(-FOOT_LENGTH/2, -FOOT_THICKNESS/2, FOOT_WIDTH/2);
-		glVertex3f(-FOOT_LENGTH/2, FOOT_THICKNESS/2, FOOT_WIDTH/2);
+		setNormal(backTopLeft, backBottomLeft, topRight);
+		setVertex(backTopLeft);
+
+		setNormal(backBottomLeft, frontBottomLeft, backTopLeft);
+		setVertex(backBottomLeft);
+
+		setNormal(frontBottomLeft, frontTopLeft, backBottomLeft);
+		setVertex(frontBottomLeft);
+
+		setNormal(frontTopLeft, backTopLeft, frontBottomLeft);
+		setVertex(frontTopLeft);
 
 		// back side of foot
-		glVertex3f(-FOOT_LENGTH/2, FOOT_THICKNESS/2, -FOOT_WIDTH/2);
+		setNormal(backTopLeft, topRight, backBottomLeft);
+		setVertex(backTopLeft);
+
 		setColour(SILVER);
-		glVertex3f(FOOT_LENGTH/2, FOOT_THICKNESS/2, 0.0);
-		glVertex3f(FOOT_LENGTH/2, -FOOT_THICKNESS/2, 0.0);
+		setNormal(topRight, bottomRight, backTopLeft);
+		setVertex(topRight);
+
+		setNormal(bottomRight, backBottomLeft, topRight);
+		setVertex(bottomRight);
+
 		setColour(GOLD);
-		glVertex3f(-FOOT_LENGTH/2, -FOOT_THICKNESS/2, -FOOT_WIDTH/2);
-	glEnd();
+		setNormal(backBottomLeft, backTopLeft, bottomRight);
+		setVertex(backBottomLeft);
+	}glEnd();
 
 }
 
