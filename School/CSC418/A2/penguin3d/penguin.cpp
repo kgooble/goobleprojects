@@ -313,13 +313,15 @@ void updateKeyframeButton(int)
 	///////////////////////////////////////////////////////////
 
 	// Get the keyframe ID from the UI
-	int keyframeID = 0;
+	int keyframeID = joint_ui_data->getID();
 
 	// Update the 'maxValidKeyframe' index variable
 	// (it will be needed when doing the interpolation)
+	maxValidKeyframe = keyframeID;
 
 	// Update the appropriate entry in the 'keyframes' array
 	// with the 'joint_ui_data' data
+	keyframes[keyframeID] = *joint_ui_data;
 
 	// Let the user know the values have been updated
 	sprintf(msg, "Status: Keyframe %d updated successfully", keyframeID);
@@ -696,6 +698,7 @@ void initGl(void)
     glClearColor(0.7f,0.7f,0.9f,1.0f);
     glEnable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_NORMALIZE);
 }
 
 
@@ -1045,6 +1048,20 @@ void setColour(float colour[]){
 	if (!outlining)
 		glColor3f(colour[0], colour[1], colour[2]);
 }
+void setVertex(float vertex[]){
+	glVertex3f(vertex[0], vertex[1], vertex[2]);
+}
+
+void setNormal(float origin[], float point1[], float point2[]){
+	float line1[] = {point1[0] - origin[0], point1[1] - origin[1], point1[2] - origin[2]};
+	float line2[] = {point2[0] - origin[0], point2[1] - origin[1], point2[2] - origin[2]};
+
+	float normalX = line1[1] * line2[2] - line1[2] * line2[1];
+	float normalY = line1[0] * line2[2] - line1[2] * line2[0];
+	float normalZ = line1[0] * line2[1] - line1[1] * line2[0];
+
+	glNormal3f(normalX, normalY, normalZ);
+}
 
 // draw a rainbow trapezoidal prism consisting of the given 8 points
 void drawTrapezoidalPrism(float frontTopLeft[], float frontBottomLeft[],
@@ -1055,63 +1072,105 @@ void drawTrapezoidalPrism(float frontTopLeft[], float frontBottomLeft[],
 	glBegin(GL_QUADS);
 		// front
 		setColour(RED);
-		glVertex3f(frontTopLeft[0], frontTopLeft[1], frontTopLeft[2]);
+		setVertex(frontTopLeft);
+		setNormal(frontTopLeft, frontBottomLeft, frontTopRight);
+
 		setColour(ORANGE);
-		glVertex3f(frontBottomLeft[0], frontBottomLeft[1], frontBottomLeft[2]);
+		setVertex(frontBottomLeft);
+		setNormal(frontBottomLeft, frontBottomRight, frontTopLeft);
+
 		setColour(BLUE);
-		glVertex3f(frontBottomRight[0], frontBottomRight[1], frontBottomRight[2]);
+		setVertex(frontBottomRight);
+		setNormal(frontBottomRight, frontTopRight, frontBottomLeft);
+
 		setColour(PURPLE);
-		glVertex3f(frontTopRight[0], frontTopRight[1], frontTopRight[2]);
+		setVertex(frontTopRight);
+		setNormal(frontTopRight, frontTopLeft, frontBottomRight);
 
 		// back
 		setColour(GREEN);
-		glVertex3f(backTopLeft[0], backTopLeft[1], backTopLeft[2]);
+		setVertex(backTopLeft);
+		setNormal(backTopLeft, backTopRight, backBottomLeft);
+
 		setColour(YELLOW);
-		glVertex3f(backTopRight[0], backTopRight[1], backTopRight[2]);
+		setVertex(backTopRight);
+		setNormal(backTopRight, backBottomRight, backTopLeft);
+
 		setColour(CYAN);
-		glVertex3f(backBottomRight[0], backBottomRight[1], backBottomRight[2]);
+		setVertex(backBottomRight);
+		setNormal(backBottomRight, backBottomLeft, backTopRight);
+
 		setColour(MAGENTA);
-		glVertex3f(backBottomLeft[0], backBottomLeft[1], backBottomLeft[2]);
+		setVertex(backBottomLeft);
+		setNormal(backBottomLeft, backTopLeft, backBottomRight);
 
 		// left
 		setColour(GREEN);
-		glVertex3f(backTopLeft[0], backTopLeft[1], backTopLeft[2]);
+		setVertex(backTopLeft);
+		setNormal(backTopLeft, backBottomLeft, frontTopLeft);
+
 		setColour(MAGENTA);
-		glVertex3f(backBottomLeft[0], backBottomLeft[1], backBottomLeft[2]);
+		setVertex(backBottomLeft);
+		setNormal(backBottomLeft, frontBottomLeft, backTopLeft);
+
 		setColour(ORANGE);
-		glVertex3f(frontBottomLeft[0], frontBottomLeft[1], frontBottomLeft[2]);
+		setVertex(frontBottomLeft);
+		setNormal(frontBottomLeft, frontTopLeft, backBottomLeft);
+
 		setColour(RED);
-		glVertex3f(frontTopLeft[0], frontTopLeft[1], frontTopLeft[2]);
+		setVertex(frontTopLeft);
+		setNormal(frontTopLeft, backTopLeft, frontBottomLeft);
 
 		// right
 		setColour(BLUE);
-		glVertex3f(frontBottomRight[0], frontBottomRight[1], frontBottomRight[2]);
+		setVertex(frontBottomRight);
+		setNormal(frontBottomRight, backBottomRight, frontTopRight);
+
 		setColour(CYAN);
-		glVertex3f(backBottomRight[0], backBottomRight[1], backBottomRight[2]);
+		setVertex(backBottomRight);
+		setNormal(backBottomRight, backTopRight, frontBottomRight);
+
 		setColour(YELLOW);
-		glVertex3f(backTopRight[0], backTopRight[1], backTopRight[2]);
+		setVertex(backTopRight);
+		setNormal(backTopRight, frontTopRight, backBottomRight);
+
 		setColour(PURPLE);
-		glVertex3f(frontTopRight[0], frontTopRight[1], frontTopRight[2]);
+		setVertex(frontTopRight);
+		setNormal(frontTopRight, frontBottomRight, backTopRight);
 
 		// top
 		setColour(RED);
-		glVertex3f(frontTopLeft[0], frontTopLeft[1], frontTopLeft[2]);
+		setVertex(frontTopLeft);
+		setNormal(frontTopLeft, frontTopRight, backTopLeft);
+
 		setColour(PURPLE);
-		glVertex3f(frontTopRight[0], frontTopRight[1], frontTopRight[2]);
+		setVertex(frontTopRight);
+		setNormal(frontTopRight, backTopRight, frontTopLeft);
+
 		setColour(YELLOW);
-		glVertex3f(backTopRight[0], backTopRight[1], backTopRight[2]);
+		setVertex(backTopRight);
+		setNormal(backTopRight, backTopLeft, frontTopRight);
+
 		setColour(GREEN);
-		glVertex3f(backTopLeft[0], backTopLeft[1], backTopLeft[2]);
+		setVertex(backTopLeft);
+		setNormal(backTopLeft, frontTopLeft, backTopRight);
 
 		// bottom
 		setColour(ORANGE);
-		glVertex3f(frontBottomLeft[0], frontBottomLeft[1], frontBottomLeft[2]);
+		setVertex(frontBottomLeft);
+		setNormal(frontBottomLeft, backBottomLeft, frontBottomRight);
+
 		setColour(MAGENTA);
-		glVertex3f(backBottomLeft[0], backBottomLeft[1], backBottomLeft[2]);
+		setVertex(backBottomLeft);
+		setNormal(backBottomLeft, backBottomRight, frontBottomLeft);
+
 		setColour(CYAN);
-		glVertex3f(backBottomRight[0], backBottomRight[1], backBottomRight[2]);
+		setVertex(backBottomRight);
+		setNormal(backBottomRight, frontBottomRight, backBottomLeft);
+
 		setColour(BLUE);
-		glVertex3f(frontBottomRight[0], frontBottomRight[1], frontBottomRight[2]);
+		setVertex(frontBottomRight);
+		setNormal(frontBottomRight, frontBottomLeft, backBottomRight);
 
 	glEnd();
 
