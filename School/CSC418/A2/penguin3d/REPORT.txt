@@ -1,0 +1,14 @@
+	The penguin is drawn using several functions named after each body part
+(i.e. drawBody, drawHead etc.). These functions are all called from the drawAll
+function, which takes care of all transformations keeping body parts in the 
+correct position relative to each other. The drawing functions for specific body
+parts are only responsible for specifying the points that make up that part.
+No scales are used since it makes it easier to specify the relative positions
+of the body parts. 
+	The display callback handles setting the polygon mode (wireframe, solid,
+or outlined) as well as the material property (matte/metallic). Outlined is
+rendered almost the same as solid, except on a second pass we keep the colour
+as black and redraw over the penguin.
+	The light position is also handled in the display callback. It is 
+defined to be on a circle parallel to the XY-plane.
+	The animation is of the penguin walking and briefly looking around.

@@ -326,7 +326,9 @@ void updateKeyframeButton(int)
 
 	// Update the 'maxValidKeyframe' index variable
 	// (it will be needed when doing the interpolation)
-	maxValidKeyframe = keyframeID;
+	if (keyframeID > maxValidKeyframe){
+		maxValidKeyframe = keyframeID;
+	}
 
 	// Update the appropriate entry in the 'keyframes' array
 	// with the 'joint_ui_data' data
@@ -620,6 +622,7 @@ void initGlui()
 	glui_spinner->set_float_limits(KNEE_MIN, KNEE_MAX, GLUI_LIMIT_CLAMP);
 	glui_spinner->set_speed(SPINNER_SPEED);
 
+	// control to set the light position (circle parallel to xy plane)
 	glui_panel = glui_joints->add_panel("Light position");
 	glui_spinner = glui_joints->add_spinner_to_panel(glui_panel, "light position:", GLUI_SPINNER_FLOAT, joint_ui_data->getDOFPtr(Keyframe::LIGHT_POSITION));
 	glui_spinner->set_float_limits(LIGHT_MIN, LIGHT_MAX, GLUI_LIMIT_CLAMP);
@@ -692,6 +695,7 @@ void initGlui()
 	glui_render->add_radiobutton_to_group(glui_radio_group, "Solid");
 	glui_render->add_radiobutton_to_group(glui_radio_group, "Solid w/ outlines");
 
+	// Create control to specify the material properties
 	glui_panel = glui_render->add_panel("Material Properties");
 
 	glui_radio_group = glui_render->add_radiogroup_to_panel(glui_panel, &materialProperty);
@@ -842,10 +846,11 @@ void drawAll(){
 
 		// right leg
 		glPushMatrix();
-			glTranslatef(0.0, -(BODY_HEIGHT/2 + LEG_HEIGHT/2), -2 * LEG_THICKNESS);
+			glTranslatef(0.0, -BODY_HEIGHT/2, -2 * LEG_THICKNESS);
 			glRotatef(joint_ui_data->getDOF(Keyframe::R_HIP_PITCH), 1.0, 0.0, 0.0);
 			glRotatef(joint_ui_data->getDOF(Keyframe::R_HIP_YAW), 0.0, 1.0, 0.0);
 			glRotatef(joint_ui_data->getDOF(Keyframe::R_HIP_ROLL), 0.0, 0.0, 1.0);
+			glTranslatef(0.0, -LEG_HEIGHT/2, 0.0);
 			drawLeg();
 
 			glPushMatrix();
@@ -857,10 +862,11 @@ void drawAll(){
 
 		// left leg
 		glPushMatrix();
-			glTranslatef(0.0, -(BODY_HEIGHT/2 + LEG_HEIGHT/2), 2 * LEG_THICKNESS);
+			glTranslatef(0.0, -BODY_HEIGHT/2, 2 * LEG_THICKNESS);
 			glRotatef(joint_ui_data->getDOF(Keyframe::L_HIP_PITCH), 1.0, 0.0, 0.0);
 			glRotatef(joint_ui_data->getDOF(Keyframe::L_HIP_YAW), 0.0, 1.0, 0.0);
 			glRotatef(joint_ui_data->getDOF(Keyframe::L_HIP_ROLL), 0.0, 0.0, 1.0);
+			glTranslatef(0.0, -LEG_HEIGHT/2, 0.0);
 			drawLeg();
 
 			glPushMatrix();
@@ -1001,7 +1007,6 @@ void display(void)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		break;
 	case OUTLINED:
-		// TODO make outline mode: have to draw fills, then draw outlines.
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		break;
 	}
@@ -1026,6 +1031,8 @@ void display(void)
 	glColor3f(1.0, 1.0, 1.0);
 	outlining = false;
 	drawAll();
+
+	// if outlining, redraw everything with a black line
 	if (renderStyle == OUTLINED){
 		outlining = true;
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -1088,7 +1095,8 @@ void motion(int x, int y)
 		glutPostRedisplay();
 	}
 }
-
+// set the colour for vertices unless we are
+// currently outlining the penguin
 void setColour(const float colour[]){
 	if (!outlining)
 		glColor3f(colour[0], colour[1], colour[2]);
@@ -1097,6 +1105,8 @@ void setVertex(float vertex[]){
 	glVertex3f(vertex[0], vertex[1], vertex[2]);
 }
 
+// sets the normal for the origin point, i.e. n = a x b
+// where a = (point1 - origin) and b = (point2 - origin)
 void setNormal(float origin[], float point1[], float point2[]){
 	float line1[] = {point1[0] - origin[0], point1[1] - origin[1], point1[2] - origin[2]};
 	float line2[] = {point2[0] - origin[0], point2[1] - origin[1], point2[2] - origin[2]};
@@ -1108,7 +1118,7 @@ void setNormal(float origin[], float point1[], float point2[]){
 	glNormal3f(normalX, normalY, normalZ);
 }
 
-// draw a rainbow trapezoidal prism consisting of the given 8 points
+// draw a colourful trapezoidal prism consisting of the given 8 points
 void drawTrapezoidalPrism(float frontTopLeft[], float frontBottomLeft[],
 		float frontTopRight[], float frontBottomRight[],
 		float backTopLeft[], float backBottomLeft[],
@@ -1222,8 +1232,7 @@ void drawTrapezoidalPrism(float frontTopLeft[], float frontBottomLeft[],
 }
 
 
-// Draw a unit cube, centered at the current location
-// README: Helper code for drawing a cube
+// Draw the body of the penguin, a trapezoidal prism
 void drawBody()
 {
 	float frontTopLeft[] = {-BODY_WIDTH_TOP/2,  BODY_HEIGHT/2, BODY_THICKNESS/2};

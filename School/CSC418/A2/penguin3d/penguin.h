@@ -8,6 +8,8 @@
 #ifndef PENGUIN_H_
 #define PENGUIN_H_
 
+
+// penguin shape constants
 const float ARM_WIDTH_TOP = 1.2f;
 const float ARM_WIDTH_BOTTOM = 1.0f;
 const float ARM_HEIGHT = 2.0f;
@@ -42,6 +44,7 @@ const float BEAK_INSIDE_WIDTH = 1.2f;
 const float BEAK_THICKNESS = 0.2f;
 const float BEAK_LENGTH = 0.8f;
 
+// constants for colours
 const float RED[] = {1.0, 0.0, 0.0};
 const float GOLD[] = {1.0, 0.8, 0.0};
 const float ORANGE[] = {1.0, 0.5, 0.0};
