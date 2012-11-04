@@ -579,12 +579,6 @@ void initGlui()
 	glui_spinner->set_float_limits(ELBOW_MIN, ELBOW_MAX, GLUI_LIMIT_CLAMP);
 	glui_spinner->set_speed(SPINNER_SPEED);
 
-	glui_panel = glui_joints->add_panel("Material properties");
-
-	glui_radio_group = glui_render->add_radiogroup_to_panel(glui_panel, &materialProperty);
-	glui_render->add_radiobutton_to_group(glui_radio_group, "Metallic");
-	glui_render->add_radiobutton_to_group(glui_radio_group, "Matte");
-
 	glui_joints->add_column(false);
 
 
@@ -697,6 +691,13 @@ void initGlui()
 	glui_render->add_radiobutton_to_group(glui_radio_group, "Wireframe");
 	glui_render->add_radiobutton_to_group(glui_radio_group, "Solid");
 	glui_render->add_radiobutton_to_group(glui_radio_group, "Solid w/ outlines");
+
+	glui_panel = glui_render->add_panel("Material Properties");
+
+	glui_radio_group = glui_render->add_radiogroup_to_panel(glui_panel, &materialProperty);
+	glui_render->add_radiobutton_to_group(glui_radio_group, "Metallic");
+	glui_render->add_radiobutton_to_group(glui_radio_group, "Matte");
+
 	//
 	// ***************************************************
 
@@ -718,13 +719,7 @@ void initGl(void)
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_NORMALIZE);
 
-//	GLfloat light_position[] = { 5.0, 5.0, 5.0, 0.0 };
-
 	glShadeModel(GL_SMOOTH);
-
-//	glMaterialfv(GL_FRONT, GL_SPECULAR, MAT_SPECULAR);
-//	glMaterialfv(GL_FRONT, GL_DIFFUSE, MAT_DIFFUSE);
-//	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 
 	glEnable(GL_LIGHTING);
 	glEnable(GL_COLOR_MATERIAL);
