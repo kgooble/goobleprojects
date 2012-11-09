@@ -25,7 +25,11 @@ bool UnitSquare::intersect( Ray3D& ray, const Matrix4x4& worldToModel,
 	//
 	// HINT: Remember to first transform the ray into object space  
 	// to simplify the intersection test.
-	Ray3D objRay = worldToModel * ray;
+	Vector3D objRayDir = worldToModel * ray.dir;
+	Point3D objRayOrigin = worldToModel * ray.origin;
+	Vector3D surfaceNormal(0.0, 0.0, 1.0);
+
+	double dotProd = objRayDir.dot(surfaceNormal);
 
 	return false;
 }
@@ -41,7 +45,8 @@ bool UnitSphere::intersect( Ray3D& ray, const Matrix4x4& worldToModel,
 	//
 	// HINT: Remember to first transform the ray into object space  
 	// to simplify the intersection test.
-	Ray3D objRay = worldToModel * ray;
+	Vector3D objRayDir = worldToModel * ray.dir;
+	Point3D objRayOrigin = worldToModel * ray.origin;
 	
 	return false;
 }
