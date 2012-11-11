@@ -25,13 +25,45 @@ bool UnitSquare::intersect( Ray3D& ray, const Matrix4x4& worldToModel,
 	//
 	// HINT: Remember to first transform the ray into object space  
 	// to simplify the intersection test.
-	Vector3D objRayDir = worldToModel * ray.dir;
-	Point3D objRayOrigin = worldToModel * ray.origin;
+	Vector3D rayDirection = worldToModel * ray.dir;
+	Point3D rayOrigin = worldToModel * ray.origin;
 	Vector3D surfaceNormal(0.0, 0.0, 1.0);
 
-	double dotProd = objRayDir.dot(surfaceNormal);
+	Point3D topRight(0.5, 0.5, 0.0);
+	Point3D topLeft(-0.5, 0.5, 0.0);
+	Point3D bottomLeft(-0.5, -0.5, 0.0);
+	Point3D bottomRight(0.5, -0.5, 0.0);
+	Point3D points[] = {topRight, topLeft, bottomLeft, bottomRight};
+	int numPoints = 4;
 
-	return false;
+	double dotProd = rayDirection.dot(surfaceNormal);
+
+	if (dotProd == 0){
+		// ray is parallel to plane
+		//TODO: check if ray lies along plane
+		// in that case, what is the intersection? many points...
+
+		ray.intersection.none = true;
+		return false;
+	}else{
+		double t = (surfaceNormal.dot(topRight - rayOrigin)) / (surfaceNormal.dot(rayDirection));
+		Point3D intersection = rayOrigin + t * rayDirection;
+		// check if intersection is actually within the plane
+		ray.intersection.none = false;
+		ray.intersection.point = intersection;
+		ray.intersection.normal = surfaceNormal;
+		ray.intersection.t_value = t;
+
+//		int prevPoint = numPoints - 1;
+//		for (int i = 0; i < numPoints; i++){
+//			int nextPoint = i == numPoints - 1? 0 : i + 1;
+//			Vector3D line = points[nextPoint] - points[i];
+//
+//		}
+
+	}
+
+	return !ray.intersection.none;
 }
 
 bool UnitSphere::intersect( Ray3D& ray, const Matrix4x4& worldToModel,
@@ -45,9 +77,46 @@ bool UnitSphere::intersect( Ray3D& ray, const Matrix4x4& worldToModel,
 	//
 	// HINT: Remember to first transform the ray into object space  
 	// to simplify the intersection test.
-	Vector3D objRayDir = worldToModel * ray.dir;
-	Point3D objRayOrigin = worldToModel * ray.origin;
+	Vector3D rayDirection = worldToModel * ray.dir;
+	Point3D rayOrigin = worldToModel * ray.origin;
+	Point3D sphereOrigin(0, 0, 0);
+	Vector3D sphereOriginToRayOrigin = rayOrigin - sphereOrigin;
+	double radius = 1.0;
 	
-	return false;
+	double A = rayDirection.dot(rayDirection);
+	double B = 2 * (rayDirection.dot(sphereOriginToRayOrigin));
+	double C = sphereOriginToRayOrigin.dot(sphereOriginToRayOrigin);
+	double discriminant = B * B - 4 * A * C;
+
+	if (discriminant < 0){
+		ray.intersection.none = true;
+	} else if (discriminant == 0){
+		ray.intersection.none = false;
+		double t = -B / (2 * A);
+		Point3D intersection = rayOrigin + t * rayDirection;
+		Vector3D normal = (1 / radius) * (intersection - sphereOrigin);
+
+		ray.intersection.normal = modelToWorld * normal;
+		ray.intersection.point = modelToWorld * intersection;
+		ray.intersection.t_value = t;
+	} else{
+		ray.intersection.none = false;
+		double twoA = 2 * A;
+		double t1 = (-B + discriminant) / twoA;
+		double t2 = (-B - discriminant) / twoA;
+
+		// take smaller t, this occurs "earlier" on the ray
+		// so it's on the front of the surface
+		double t = t1 > t2? t2 : t1;
+
+		Point3D intersection = rayOrigin + t * rayDirection;
+		Vector3D normal = (1 / radius) * (intersection - sphereOrigin);
+
+		ray.intersection.normal = modelToWorld * normal;
+		ray.intersection.point = modelToWorld * intersection;
+		ray.intersection.t_value = t;
+	}
+
+	return !ray.intersection.none;
 }
 
