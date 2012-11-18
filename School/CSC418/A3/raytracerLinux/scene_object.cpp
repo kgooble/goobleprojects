@@ -46,6 +46,7 @@ bool UnitSquare::intersect( Ray3D& ray, const Matrix4x4& worldToModel,
 		ray.intersection.none = true;
 		return false;
 	}else{
+		// this isn't general at all
 		double t = (surfaceNormal.dot(topRight - rayOrigin)) / (surfaceNormal.dot(rayDirection));
 		Point3D intersection = rayOrigin + t * rayDirection;
 
@@ -101,19 +102,20 @@ bool UnitSphere::intersect( Ray3D& ray, const Matrix4x4& worldToModel,
 	Point3D sphereOrigin(0, 0, 0);
 	Vector3D sphereOriginToRayOrigin = rayOrigin - sphereOrigin;
 	double radius = 1.0;
-	
-	double A = rayDirection.dot(rayDirection);
-	double B = 2 * (rayDirection.dot(sphereOriginToRayOrigin));
-	double C = sphereOriginToRayOrigin.dot(sphereOriginToRayOrigin) - radius * radius;
-	double discriminant = B * B - 4 * A * C;
 
-	if (discriminant < 0){
+	double A = rayDirection.dot(rayDirection);
+	double B = sphereOriginToRayOrigin.dot(rayDirection);
+	double C = sphereOriginToRayOrigin.dot(sphereOriginToRayOrigin) - radius * radius;
+	double discriminant = B * B - A * C;
+	double epsilon = 0.0001;
+	if (discriminant < -epsilon){
 		ray.intersection.none = true;
-	} else if (discriminant == 0){
-		double t = -B / (2 * A);
+	} else if (discriminant < epsilon && discriminant > -epsilon){
+		double t = -B / A;
 		if (t < 0){
 			ray.intersection.none = true;
 		}else{
+			std::cout<< "Intersection occurred!\n";
 			ray.intersection.none = false;
 			Point3D intersection = rayOrigin + t * rayDirection;
 			Vector3D normal = (1 / radius) * (intersection - sphereOrigin);
@@ -124,9 +126,8 @@ bool UnitSphere::intersect( Ray3D& ray, const Matrix4x4& worldToModel,
 		}
 	} else{
 		ray.intersection.none = false;
-		double twoA = 2 * A;
-		double t1 = (-B + discriminant) / twoA;
-		double t2 = (-B - discriminant) / twoA;
+		double t1 = (-B + discriminant) / A;
+		double t2 = (-B - discriminant) / A;
 
 		// take smaller t, this occurs "earlier" on the ray
 		// so it's on the front of the surface
@@ -139,6 +140,7 @@ bool UnitSphere::intersect( Ray3D& ray, const Matrix4x4& worldToModel,
 			ray.intersection.none = true;
 			return false;
 		}
+		std::cout<< "Intersection occurred!\n";
 
 		Point3D intersection = rayOrigin + t * rayDirection;
 		Vector3D normal = (1 / radius) * (intersection - sphereOrigin);
