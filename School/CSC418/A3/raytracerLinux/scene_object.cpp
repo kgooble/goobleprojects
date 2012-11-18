@@ -48,18 +48,37 @@ bool UnitSquare::intersect( Ray3D& ray, const Matrix4x4& worldToModel,
 	}else{
 		double t = (surfaceNormal.dot(topRight - rayOrigin)) / (surfaceNormal.dot(rayDirection));
 		Point3D intersection = rayOrigin + t * rayDirection;
-		// check if intersection is actually within the plane
-		ray.intersection.none = false;
-		ray.intersection.point = modelToWorld * intersection;
-		ray.intersection.normal = modelToWorld * surfaceNormal;
-		ray.intersection.t_value = t;
 
+		double x = intersection[0];
+		double y = intersection[1];
+		double z = intersection[2];
+
+		if (0.0001 > z && z > -0.0001 &&
+			0.5 > x && x > -0.5 &&
+			0.5 > y && y > -0.5){
+			ray.intersection.none = false;
+			ray.intersection.t_value = t;
+			ray.intersection.point = modelToWorld * intersection;
+			ray.intersection.normal = modelToWorld * surfaceNormal;
+		}else{
+			ray.intersection.none = true;
+		}
+
+//		// check if intersection is actually within the plane
+//		// by creating a ray on the plane starting at the intersection point
+//		// extending in any direction; count the number of intersections
+//		// with the sides of the polygon
 //		int prevPoint = numPoints - 1;
 //		for (int i = 0; i < numPoints; i++){
 //			int nextPoint = i == numPoints - 1? 0 : i + 1;
 //			Vector3D line = points[nextPoint] - points[i];
 //
 //		}
+//
+//		ray.intersection.none = false;
+//		ray.intersection.point = modelToWorld * intersection;
+//		ray.intersection.normal = modelToWorld * surfaceNormal;
+//		ray.intersection.t_value = t;
 
 	}
 
@@ -85,7 +104,7 @@ bool UnitSphere::intersect( Ray3D& ray, const Matrix4x4& worldToModel,
 	
 	double A = rayDirection.dot(rayDirection);
 	double B = 2 * (rayDirection.dot(sphereOriginToRayOrigin));
-	double C = sphereOriginToRayOrigin.dot(sphereOriginToRayOrigin);
+	double C = sphereOriginToRayOrigin.dot(sphereOriginToRayOrigin) - radius * radius;
 	double discriminant = B * B - 4 * A * C;
 
 	if (discriminant < 0){
