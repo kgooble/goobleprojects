@@ -9,30 +9,22 @@
 ***********************************************************/
 
 #include <cmath>
+#include <algorithm>
 #include "light_source.h"
 
 Colour PointLight::calculateDiffuse(Vector3D& normal, Vector3D& dirLight,
 		Material*& mat) {
-	double magnitude = normal.dot(dirLight);
-	if (magnitude < 0)
-		magnitude = 0.0;
-
-	return magnitude * (_col_diffuse * mat->diffuse);
+	return std::max(normal.dot(dirLight), 0.0) * (_col_diffuse * mat->diffuse);
 }
 Colour PointLight::calculateAmbient(Material*& mat) {
 	return  _col_ambient * mat->ambient;
 }
 
-Colour PointLight::calculateSpecular(Vector3D normal, Vector3D dirLight,
-		Vector3D normalizedRay, Material* mat) {
-	Vector3D h = normalizedRay + dirLight;
+Colour PointLight::calculateSpecular(Vector3D normal, Vector3D lightDir,
+		Vector3D rayDir, Material* mat) {
+	Vector3D h = rayDir + lightDir;
 	h.normalize();
-	double delta = normal.dot(h);
-	if (delta < 0)
-		delta = 0.0;
-	delta = pow(delta, mat->specular_exp);
-
-	return delta * (_col_specular * mat->specular);
+	return pow(std::max(0.0, normal.dot(h)), mat->specular_exp) * (_col_specular * mat->specular);
 }
 void PointLight::shade( Ray3D& ray ) {
 	// TODO: implement this function to fill in values for ray.col 
@@ -43,37 +35,25 @@ void PointLight::shade( Ray3D& ray ) {
 	// is available.  So be sure that traverseScene() is called on the ray 
 	// before this function.  
 
-	/*
-	 * SK:
-	 * how do we calculate the normal to the surface?
-	 * we have access to:
-	 *   -the different shading colours;
-	 *   -the "position" of the point light;
-	 *   -the ray itself
-	 *     -we know the ray intersection... which has a normal.
-	 *
-	 * ...is this right?
-	 */
-
 	Vector3D normal = ray.intersection.normal;
 	normal.normalize();
 
-	Vector3D dirLight = _pos - ray.intersection.point;
-	dirLight.normalize();
+	Vector3D lightDir = _pos - ray.intersection.point;
+	lightDir.normalize();
 
-	Vector3D normalizedRay = ray.dir;
-	normalizedRay.normalize();
+	Vector3D rayDir = ray.dir;
+	rayDir.normalize();
 
 	Material* mat = ray.intersection.mat;
 
 	// DIFFUSE CALCULATIONS
-	Colour diffuse = calculateDiffuse(normal, dirLight, mat);
+	Colour diffuse = calculateDiffuse(normal, lightDir, mat);
 
 	// AMBIENT CALCULATIONS
 	Colour ambient = calculateAmbient(mat);
 
 	// SPECULAR CALCULATIONS
-	Colour specular = calculateSpecular(normal, dirLight, normalizedRay, mat);
+	Colour specular = calculateSpecular(normal, lightDir, rayDir, mat);
 
 	ray.col = diffuse + ambient + specular;
 	ray.col.clamp();

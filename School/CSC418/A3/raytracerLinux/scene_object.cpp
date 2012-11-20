@@ -30,39 +30,43 @@ bool UnitSquare::intersect( Ray3D& ray, const Matrix4x4& worldToModel,
 	Vector3D surfaceNormal(0.0, 0.0, 1.0);
 
 	Point3D topRight(0.5, 0.5, 0.0);
-	Point3D topLeft(-0.5, 0.5, 0.0);
-	Point3D bottomLeft(-0.5, -0.5, 0.0);
-	Point3D bottomRight(0.5, -0.5, 0.0);
-	Point3D points[] = {topRight, topLeft, bottomLeft, bottomRight};
-	int numPoints = 4;
 
 	double dotProd = rayDirection.dot(surfaceNormal);
 
-	if (dotProd == 0){
+	if (dotProd > -0.0001 && 0.0001 > dotProd){ // ray lies on the plane
 		ray.intersection.none = true;
-		return false;
 	}else{
-		double t = (surfaceNormal.dot(topRight - rayOrigin)) / (surfaceNormal.dot(rayDirection));
+		double t = (surfaceNormal.dot(topRight - rayOrigin)) / dotProd;
 		Point3D intersection = rayOrigin + t * rayDirection;
 
 		double x = intersection[0];
 		double y = intersection[1];
 		double z = intersection[2];
 
-		if (0.0001 > z && z > -0.0001 &&
-			0.5 > x && x > -0.5 &&
-			0.5 > y && y > -0.5){
-			ray.intersection.none = false;
+		ray.intersection.none = !(0.0001 > z && z > -0.0001 &&
+				0.5 > x && x > -0.5 &&
+				0.5 > y && y > -0.5);
+
+		if (!ray.intersection.none){
 			ray.intersection.t_value = t;
 			ray.intersection.point = modelToWorld * intersection;
 			ray.intersection.normal = worldToModel.transpose() * surfaceNormal;
-		}else{
-			ray.intersection.none = true;
 		}
-
 	}
 
 	return !ray.intersection.none;
+}
+
+void UnitSphere::printPoint(Ray3D& ray) {
+	std::cout << "intersection: " << ray.intersection.point[0] << ", "
+			<< ray.intersection.point[1] << ", " << ray.intersection.point[2]
+			<< std::endl;
+}
+
+void printVector(Vector3D& vector){
+	std::cout << "vector: " << vector[0] << ", "
+				<< vector[1] << ", " << vector[2]
+				<< std::endl;
 }
 
 bool UnitSphere::intersect( Ray3D& ray, const Matrix4x4& worldToModel,
@@ -80,28 +84,29 @@ bool UnitSphere::intersect( Ray3D& ray, const Matrix4x4& worldToModel,
 	Point3D rayOrigin = worldToModel * ray.origin;
 	Point3D sphereOrigin(0, 0, 0);
 	Vector3D sphereOriginToRayOrigin = rayOrigin - sphereOrigin;
-	double radius = 1.0;
+
+	rayDirection.normalize();
+	sphereOriginToRayOrigin.normalize();
 
 	double A = rayDirection.dot(rayDirection);
 	double B = sphereOriginToRayOrigin.dot(rayDirection);
-	double C = sphereOriginToRayOrigin.dot(sphereOriginToRayOrigin) - radius * radius;
+	double C = sphereOriginToRayOrigin.dot(sphereOriginToRayOrigin) - 1;
 	double discriminant = B * B - A * C;
 	double epsilon = 0.0001;
-	if (discriminant < -epsilon){
+	if (discriminant < -epsilon){ // no intersections
 		ray.intersection.none = true;
-	} else if (discriminant < epsilon && discriminant > -epsilon){
+	} else if (discriminant < epsilon && discriminant > -epsilon){ // exactly one intersection point
 		double t = -B / A;
-		if (t < 0){
-			ray.intersection.none = true;
-		}else{
+		ray.intersection.none = t < 0;
+		if (!ray.intersection.none){
 			Point3D intersection = rayOrigin + t * rayDirection;
-			Vector3D normal = (1 / radius) * (intersection - sphereOrigin);
+			Vector3D normal = intersection - sphereOrigin;
 			ray.intersection.none = false;
 			ray.intersection.normal = worldToModel.transpose() * normal;
 			ray.intersection.point = modelToWorld * intersection;
 			ray.intersection.t_value = t;
 		}
-	} else{
+	} else{ // two intersections
 		double t1 = (-B + discriminant) / A;
 		double t2 = (-B - discriminant) / A;
 
@@ -118,7 +123,7 @@ bool UnitSphere::intersect( Ray3D& ray, const Matrix4x4& worldToModel,
 		}
 
 		Point3D intersection = rayOrigin + t * rayDirection;
-		Vector3D normal = (1 / radius) * (intersection - sphereOrigin);
+		Vector3D normal = intersection - sphereOrigin;
 
 		ray.intersection.none = false;
 		ray.intersection.normal = worldToModel.transpose() * normal;
