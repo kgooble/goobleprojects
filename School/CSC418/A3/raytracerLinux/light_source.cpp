@@ -15,7 +15,7 @@ Colour PointLight::calculateDiffuse(Vector3D& normal, Vector3D& dirLight,
 		Material*& mat) {
 	double magnitude = normal.dot(dirLight);
 	if (magnitude < 0)
-		magnitude = 0;
+		magnitude = 0.0;
 
 	return magnitude * (_col_diffuse * mat->diffuse);
 }
@@ -25,11 +25,12 @@ Colour PointLight::calculateAmbient(Material*& mat) {
 
 Colour PointLight::calculateSpecular(Vector3D normal, Vector3D dirLight,
 		Vector3D normalizedRay, Material* mat) {
-	Vector3D reflectionDir = 2.0 * (normal.dot(dirLight)) * normal - dirLight;
-	reflectionDir.normalize();
-	double delta = reflectionDir.dot(normalizedRay) - 1;
-	if (delta == 0)
-		delta = 1.0;
+	Vector3D h = normalizedRay + dirLight;
+	h.normalize();
+	double delta = normal.dot(h);
+	if (delta < 0)
+		delta = 0.0;
+	delta = pow(delta, mat->specular_exp);
 
 	return delta * (_col_specular * mat->specular);
 }
