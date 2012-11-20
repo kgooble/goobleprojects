@@ -93,9 +93,9 @@ bool UnitSphere::intersect( Ray3D& ray, const Matrix4x4& worldToModel,
 	double C = sphereOriginToRayOrigin.dot(sphereOriginToRayOrigin) - 1;
 	double discriminant = B * B - A * C;
 	double epsilon = 0.0001;
-	if (discriminant < -epsilon){ // no intersections
+	if (discriminant < 0){ // no intersections
 		ray.intersection.none = true;
-	} else if (discriminant < epsilon && discriminant > -epsilon){ // exactly one intersection point
+	} else if (discriminant < epsilon){ // exactly one intersection point
 		double t = -B / A;
 		ray.intersection.none = t < 0;
 		if (!ray.intersection.none){

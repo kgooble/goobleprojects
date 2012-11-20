@@ -22,9 +22,9 @@ Colour PointLight::calculateAmbient(Material*& mat) {
 
 Colour PointLight::calculateSpecular(Vector3D normal, Vector3D lightDir,
 		Vector3D rayDir, Material* mat) {
-	Vector3D h = rayDir + lightDir;
-	h.normalize();
-	return pow(std::max(0.0, normal.dot(h)), mat->specular_exp) * (_col_specular * mat->specular);
+	Vector3D r = 2 * (normal.dot(lightDir)) * normal - lightDir;
+	r.normalize();
+	return pow(std::max(0.0, rayDir.dot(r)), mat->specular_exp) * (_col_specular * mat->specular);
 }
 void PointLight::shade( Ray3D& ray ) {
 	// TODO: implement this function to fill in values for ray.col 
@@ -46,13 +46,8 @@ void PointLight::shade( Ray3D& ray ) {
 
 	Material* mat = ray.intersection.mat;
 
-	// DIFFUSE CALCULATIONS
 	Colour diffuse = calculateDiffuse(normal, lightDir, mat);
-
-	// AMBIENT CALCULATIONS
 	Colour ambient = calculateAmbient(mat);
-
-	// SPECULAR CALCULATIONS
 	Colour specular = calculateSpecular(normal, lightDir, rayDir, mat);
 
 	ray.col = diffuse + ambient + specular;
