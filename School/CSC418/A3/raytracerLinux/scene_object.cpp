@@ -107,8 +107,8 @@ bool UnitSphere::intersect( Ray3D& ray, const Matrix4x4& worldToModel,
 			ray.intersection.t_value = t;
 		}
 	} else{ // two intersections
-		double t1 = (-B + discriminant) / A;
-		double t2 = (-B - discriminant) / A;
+		double t1 = (-B + sqrt(discriminant)) / A;
+		double t2 = (-B - sqrt(discriminant)) / A;
 
 		// take smaller t, this occurs "earlier" on the ray
 		// so it's on the front of the surface
