@@ -100,14 +100,14 @@ bool UnitSphere::intersect( Ray3D& ray, const Matrix4x4& worldToModel,
 	double discriminant = B * B - A * C;
 	double epsilon = 0.0001;
 	if (discriminant < 0){ // no intersections
-//		std::cout << "d<0|";
+		std::cout << "d<0|";
 		ray.intersection.none = true;
 	} else if (discriminant < epsilon){ // exactly one intersection point
 		std::cout << "d=0|";
 		double t = -B / A;
 		ray.intersection.none = t < 0;
 		if (!ray.intersection.none){
-//			std::cout << "1i|";
+			std::cout << "1i|";
 			Point3D intersection = rayOrigin + t * rayDirection;
 			Vector3D normal = intersection - sphereOrigin;
 			ray.intersection.none = false;
@@ -116,22 +116,29 @@ bool UnitSphere::intersect( Ray3D& ray, const Matrix4x4& worldToModel,
 			ray.intersection.t_value = t;
 		}
 	} else{ // two intersections
-//		std::cout << "d>0|";
+		std::cout << "d>0|";
 		double t1 = (-B + sqrt(discriminant)) / A;
 		double t2 = (-B - sqrt(discriminant)) / A;
 
 		// take smaller t, this occurs "earlier" on the ray
 		// so it's on the front of the surface
 		double t;
-		if (t1 > t2 && t2 > 0){
-			t = t2;
-		}else if (t2 > t1 && t1 > 0){
-			t = t1;
+		if (t1 > t2){
+			if (t2 > 0)
+				t = t2;
+			else if (t1 > 0)
+				t = t1;
+		}else if (t2 > t1){
+			if (t1 > 0)
+				t = t1;
+			else if (t2 > 0)
+				t = t2;
 		}else{
+			std::cout << "N. t1: " << t1 << ", t2: " << t2 << std::endl;
 			ray.intersection.none = true;
 			return false;
 		}
-//		std::cout << "2i|";
+		std::cout << "2i|";
 		Point3D intersection = rayOrigin + t * rayDirection;
 		Vector3D normal = intersection - sphereOrigin;
 
@@ -140,7 +147,7 @@ bool UnitSphere::intersect( Ray3D& ray, const Matrix4x4& worldToModel,
 		ray.intersection.point = modelToWorld * intersection;
 		ray.intersection.t_value = t;
 	}
-
+	std::cout << "\n";
 	return !ray.intersection.none;
 }
 
