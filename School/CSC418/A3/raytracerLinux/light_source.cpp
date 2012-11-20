@@ -11,6 +11,28 @@
 #include <cmath>
 #include "light_source.h"
 
+Colour PointLight::calculateDiffuse(Vector3D& normal, Vector3D& dirLight,
+		Material*& mat) {
+	double magnitude = normal.dot(dirLight);
+	if (magnitude < 0)
+		magnitude = 0;
+
+	return magnitude * (_col_diffuse * mat->diffuse);
+}
+Colour PointLight::calculateAmbient(Material*& mat) {
+	return  _col_ambient * mat->ambient;
+}
+
+Colour PointLight::calculateSpecular(Vector3D normal, Vector3D dirLight,
+		Vector3D normalizedRay, Material* mat) {
+	Vector3D reflectionDir = 2.0 * (normal.dot(dirLight)) * normal - dirLight;
+	reflectionDir.normalize();
+	double delta = reflectionDir.dot(normalizedRay) - 1;
+	if (delta == 0)
+		delta = 1.0;
+
+	return delta * (_col_specular * mat->specular);
+}
 void PointLight::shade( Ray3D& ray ) {
 	// TODO: implement this function to fill in values for ray.col 
 	// using phong shading.  Make sure your vectors are normalized, and
@@ -44,24 +66,13 @@ void PointLight::shade( Ray3D& ray ) {
 	Material* mat = ray.intersection.mat;
 
 	// DIFFUSE CALCULATIONS
-
-	double magnitude = normal.dot(dirLight);
-	if (magnitude < 0)
-		magnitude = 0;
-
-	Colour diffuse = magnitude * (_col_diffuse * mat->diffuse);
+	Colour diffuse = calculateDiffuse(normal, dirLight, mat);
 
 	// AMBIENT CALCULATIONS
-	Colour ambient = _col_ambient * mat->ambient;
+	Colour ambient = calculateAmbient(mat);
 
 	// SPECULAR CALCULATIONS
-	Vector3D reflectionDir = 2.0 * (normal.dot(dirLight)) * normal - dirLight;
-	reflectionDir.normalize();
-	double delta = reflectionDir.dot(normalizedRay) - 1;
-	if (delta == 0)
-		delta = 1.0;
-
-	Colour specular = delta * (_col_specular * mat->specular);
+	Colour specular = calculateSpecular(normal, dirLight, normalizedRay, mat);
 
 	ray.col = diffuse + ambient + specular;
 	ray.col.clamp();

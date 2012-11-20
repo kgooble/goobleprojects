@@ -39,14 +39,9 @@ bool UnitSquare::intersect( Ray3D& ray, const Matrix4x4& worldToModel,
 	double dotProd = rayDirection.dot(surfaceNormal);
 
 	if (dotProd == 0){
-		// ray is parallel to plane
-		//TODO: check if ray lies along plane
-		// in that case, what is the intersection? many points...
-
 		ray.intersection.none = true;
 		return false;
 	}else{
-		// this isn't general at all
 		double t = (surfaceNormal.dot(topRight - rayOrigin)) / (surfaceNormal.dot(rayDirection));
 		Point3D intersection = rayOrigin + t * rayDirection;
 
@@ -60,26 +55,10 @@ bool UnitSquare::intersect( Ray3D& ray, const Matrix4x4& worldToModel,
 			ray.intersection.none = false;
 			ray.intersection.t_value = t;
 			ray.intersection.point = modelToWorld * intersection;
-			ray.intersection.normal = modelToWorld * surfaceNormal;
+			ray.intersection.normal = worldToModel.transpose() * surfaceNormal;
 		}else{
 			ray.intersection.none = true;
 		}
-
-//		// check if intersection is actually within the plane
-//		// by creating a ray on the plane starting at the intersection point
-//		// extending in any direction; count the number of intersections
-//		// with the sides of the polygon
-//		int prevPoint = numPoints - 1;
-//		for (int i = 0; i < numPoints; i++){
-//			int nextPoint = i == numPoints - 1? 0 : i + 1;
-//			Vector3D line = points[nextPoint] - points[i];
-//
-//		}
-//
-//		ray.intersection.none = false;
-//		ray.intersection.point = modelToWorld * intersection;
-//		ray.intersection.normal = modelToWorld * surfaceNormal;
-//		ray.intersection.t_value = t;
 
 	}
 
@@ -115,23 +94,20 @@ bool UnitSphere::intersect( Ray3D& ray, const Matrix4x4& worldToModel,
 		if (t < 0){
 			ray.intersection.none = true;
 		}else{
-			std::cout<< "Intersection occurred!\n";
-			ray.intersection.none = false;
 			Point3D intersection = rayOrigin + t * rayDirection;
 			Vector3D normal = (1 / radius) * (intersection - sphereOrigin);
-
-			ray.intersection.normal = modelToWorld * normal;
+			ray.intersection.none = false;
+			ray.intersection.normal = worldToModel.transpose() * normal;
 			ray.intersection.point = modelToWorld * intersection;
 			ray.intersection.t_value = t;
 		}
 	} else{
-		ray.intersection.none = false;
 		double t1 = (-B + discriminant) / A;
 		double t2 = (-B - discriminant) / A;
 
 		// take smaller t, this occurs "earlier" on the ray
 		// so it's on the front of the surface
-		double t = 0;
+		double t;
 		if (t1 > t2 && t2 > 0){
 			t = t2;
 		}else if (t2 > t1 && t1 > 0){
@@ -140,12 +116,12 @@ bool UnitSphere::intersect( Ray3D& ray, const Matrix4x4& worldToModel,
 			ray.intersection.none = true;
 			return false;
 		}
-		std::cout<< "Intersection occurred!\n";
 
 		Point3D intersection = rayOrigin + t * rayDirection;
 		Vector3D normal = (1 / radius) * (intersection - sphereOrigin);
 
-		ray.intersection.normal = modelToWorld * normal;
+		ray.intersection.none = false;
+		ray.intersection.normal = worldToModel.transpose() * normal;
 		ray.intersection.point = modelToWorld * intersection;
 		ray.intersection.t_value = t;
 	}
