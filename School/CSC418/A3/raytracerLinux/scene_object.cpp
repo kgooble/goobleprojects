@@ -37,6 +37,12 @@ bool UnitSquare::intersect( Ray3D& ray, const Matrix4x4& worldToModel,
 		ray.intersection.none = true;
 	}else{
 		double t = (surfaceNormal.dot(topRight - rayOrigin)) / dotProd;
+
+		if (t < 0){
+			ray.intersection.none = true;
+			return false;
+		}
+
 		Point3D intersection = rayOrigin + t * rayDirection;
 
 		double x = intersection[0];
@@ -44,8 +50,8 @@ bool UnitSquare::intersect( Ray3D& ray, const Matrix4x4& worldToModel,
 		double z = intersection[2];
 
 		ray.intersection.none = !(0.0001 > z && z > -0.0001 &&
-				0.5 > x && x > -0.5 &&
-				0.5 > y && y > -0.5);
+									 0.5 >= x && x >= -0.5 &&
+									 0.5 >= y && y >= -0.5);
 
 		if (!ray.intersection.none){
 			ray.intersection.t_value = t;

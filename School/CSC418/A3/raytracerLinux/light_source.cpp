@@ -17,7 +17,7 @@ Colour PointLight::calculateDiffuse(Vector3D& normal, Vector3D& dirLight,
 	return std::max(normal.dot(dirLight), 0.0) * (_col_diffuse * mat->diffuse);
 }
 Colour PointLight::calculateAmbient(Material*& mat) {
-	return  _col_ambient * mat->ambient;
+	return _col_ambient * mat->ambient;
 }
 
 Colour PointLight::calculateSpecular(Vector3D& normal, Vector3D& lightDir,
@@ -50,7 +50,7 @@ void PointLight::shade( Ray3D& ray ) {
 	Colour ambient = calculateAmbient(mat);
 	Colour specular = calculateSpecular(normal, lightDir, rayDir, mat);
 
-	ray.col = diffuse + ambient + specular;
+	ray.col = ambient + diffuse + specular;
 	ray.col.clamp();
 }
 
