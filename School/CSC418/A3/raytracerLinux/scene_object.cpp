@@ -100,11 +100,14 @@ bool UnitSphere::intersect( Ray3D& ray, const Matrix4x4& worldToModel,
 	double discriminant = B * B - A * C;
 	double epsilon = 0.0001;
 	if (discriminant < 0){ // no intersections
+//		std::cout << "d<0|";
 		ray.intersection.none = true;
 	} else if (discriminant < epsilon){ // exactly one intersection point
+		std::cout << "d=0|";
 		double t = -B / A;
 		ray.intersection.none = t < 0;
 		if (!ray.intersection.none){
+//			std::cout << "1i|";
 			Point3D intersection = rayOrigin + t * rayDirection;
 			Vector3D normal = intersection - sphereOrigin;
 			ray.intersection.none = false;
@@ -113,6 +116,7 @@ bool UnitSphere::intersect( Ray3D& ray, const Matrix4x4& worldToModel,
 			ray.intersection.t_value = t;
 		}
 	} else{ // two intersections
+//		std::cout << "d>0|";
 		double t1 = (-B + sqrt(discriminant)) / A;
 		double t2 = (-B - sqrt(discriminant)) / A;
 
@@ -127,7 +131,7 @@ bool UnitSphere::intersect( Ray3D& ray, const Matrix4x4& worldToModel,
 			ray.intersection.none = true;
 			return false;
 		}
-
+//		std::cout << "2i|";
 		Point3D intersection = rayOrigin + t * rayDirection;
 		Vector3D normal = intersection - sphereOrigin;
 
