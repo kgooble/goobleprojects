@@ -38,8 +38,8 @@ private:
 	Colour _col_diffuse; 
 	Colour _col_specular; 
 
-	Colour calculateSpecular(Vector3D normal, Vector3D dirLight,
-			Vector3D normalizedRay, Material* mat);
+	Colour calculateSpecular(Vector3D& normal, Vector3D& dirLight,
+			Vector3D& normalizedRay, Material* mat);
 	Colour calculateAmbient(Material*& mat);
 	Colour calculateDiffuse(Vector3D& normal, Vector3D& dirLight,
 			Material*& mat);

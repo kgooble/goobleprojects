@@ -20,8 +20,8 @@ Colour PointLight::calculateAmbient(Material*& mat) {
 	return  _col_ambient * mat->ambient;
 }
 
-Colour PointLight::calculateSpecular(Vector3D normal, Vector3D lightDir,
-		Vector3D rayDir, Material* mat) {
+Colour PointLight::calculateSpecular(Vector3D& normal, Vector3D& lightDir,
+		Vector3D& rayDir, Material* mat) {
 	Vector3D r = 2 * (normal.dot(lightDir)) * normal - lightDir;
 	r.normalize();
 	return pow(std::max(0.0, rayDir.dot(r)), mat->specular_exp) * (_col_specular * mat->specular);
