@@ -126,6 +126,8 @@ bool UnitSphere::intersect( Ray3D& ray, const Matrix4x4& worldToModel,
 		// take smaller t, this occurs "earlier" on the ray
 		// so it's on the front of the surface
 		double t = std::min(t1, t2);
+		if (t < 0)
+			t = std::max(t1, t2);
 
 		if (!ray.intersection.none && t > ray.intersection.t_value){
 			// earlier intersection occurred
