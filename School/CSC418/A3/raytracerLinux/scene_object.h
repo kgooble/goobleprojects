@@ -32,8 +32,5 @@ class UnitSphere : public SceneObject {
 public:
 	bool intersect( Ray3D& ray, const Matrix4x4& worldToModel,
 			const Matrix4x4& modelToWorld );
-
-private:
-	void printPoint(Ray3D& ray);
 };
 

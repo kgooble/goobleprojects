@@ -50,7 +50,9 @@ void PointLight::shade( Ray3D& ray ) {
 	Colour ambient = calculateAmbient(mat);
 	Colour specular = calculateSpecular(normal, lightDir, rayDir, mat);
 
-	ray.col = ambient + diffuse + specular;
+	ray.col = mat->diffuse;
 	ray.col.clamp();
+//	ray.col = ambient + diffuse + specular;
+//	ray.col.clamp();
 }
 

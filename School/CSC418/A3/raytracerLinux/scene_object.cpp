@@ -39,7 +39,7 @@ bool UnitSquare::intersect( Ray3D& ray, const Matrix4x4& worldToModel,
 	}else{
 		double t = (surfaceNormal.dot(topRight - rayOrigin)) / dotProd;
 
-		if (t < 0){
+		if (t < 0.0001){
 			return false;
 		}
 
@@ -67,10 +67,9 @@ bool UnitSquare::intersect( Ray3D& ray, const Matrix4x4& worldToModel,
 	}
 }
 
-void UnitSphere::printPoint(Ray3D& ray) {
-	std::cout << "intersection: " << ray.intersection.point[0] << ", "
-			<< ray.intersection.point[1] << ", " << ray.intersection.point[2]
-			<< std::endl;
+void printPoint(Point3D& point){
+	std::cout << "point: " << point[0] << ", " << point[1] << ", " << point[2]
+				<< std::endl;
 }
 
 void printVector(Vector3D& vector){
@@ -100,14 +99,14 @@ bool UnitSphere::intersect( Ray3D& ray, const Matrix4x4& worldToModel,
 
 	double A = rayDirection.dot(rayDirection);
 	double B = sphereOriginToRayOrigin.dot(rayDirection);
-	double C = sphereOriginToRayOrigin.dot(sphereOriginToRayOrigin) - 1;
+	double C = sphereOriginToRayOrigin.dot(sphereOriginToRayOrigin) - 0.25*0.25;
 	double discriminant = B * B - A * C;
 	double epsilon = 0.0001;
-	if (discriminant < 0){ // no intersections
+	if (discriminant < epsilon){ // no intersections
 		return false;
 	} else if (discriminant < epsilon){ // exactly one intersection point
 		double t = -B / A;
-		if (t < 0 || (!ray.intersection.none && t > ray.intersection.t_value)){
+		if (t < epsilon || (!ray.intersection.none && t > ray.intersection.t_value)){
 			// either intersection is behind camera
 			// or the ray has intersected something earlier
 			return false;
@@ -123,12 +122,12 @@ bool UnitSphere::intersect( Ray3D& ray, const Matrix4x4& worldToModel,
 		double t1 = (-B + sqrt(discriminant)) / A;
 		double t2 = (-B - sqrt(discriminant)) / A;
 
-		if (t1 < 0 && t2 < 0) // behind camera
+		if (t1 < epsilon && t2 < epsilon) // behind camera
 			return false;
 
 		// take smallest positive t
 		double t = std::min(t1, t2);
-		if (t < 0)
+		if (t < epsilon)
 			t = std::max(t1, t2);
 
 		if (!ray.intersection.none && t > ray.intersection.t_value){
