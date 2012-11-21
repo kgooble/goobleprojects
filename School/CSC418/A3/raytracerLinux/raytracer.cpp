@@ -312,13 +312,13 @@ int main(int argc, char* argv[])
 	// Apply some transformations to the unit square.
 	double factor1[3] = { 1.0, 2.0, 1.0 };
 	double factor2[3] = { 6.0, 6.0, 6.0 };
-	raytracer.translate(sphere, Vector3D(0, 0, -5));	
-	raytracer.rotate(sphere, 'x', -45); 
-	raytracer.rotate(sphere, 'z', 45); 
+	raytracer.translate(sphere, Vector3D(0, 0, -5));
+	raytracer.rotate(sphere, 'x', -45);
+	raytracer.rotate(sphere, 'z', 45);
 	raytracer.scale(sphere, Point3D(0, 0, 0), factor1);
 
-	raytracer.translate(plane, Vector3D(0, 0, -7));	
-	raytracer.rotate(plane, 'z', 45); 
+	raytracer.translate(plane, Vector3D(0, 0, -7));
+	raytracer.rotate(plane, 'z', 45);
 	raytracer.scale(plane, Point3D(0, 0, 0), factor2);
 
 	// Render the scene, feel free to make the image smaller for
