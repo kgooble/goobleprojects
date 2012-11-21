@@ -50,14 +50,16 @@ bool UnitSquare::intersect( Ray3D& ray, const Matrix4x4& worldToModel,
 		double z = intersection[2];
 
 		bool inPlane = (0.0001 > z && z > -0.0001 &&
-									 0.5 >= x && x >= -0.5 &&
-									 0.5 >= y && y >= -0.5);
+						 0.5 >= x && x >= -0.5 &&
+						 0.5 >= y && y >= -0.5);
 
-		if (((!ray.intersection.none && t < ray.intersection.t_value) || ray.intersection.none) && inPlane){
+		if (inPlane
+		&& (ray.intersection.none || (!ray.intersection.none && t < ray.intersection.t_value))){
+
 			ray.intersection.none = false;
 			ray.intersection.t_value = t;
 			ray.intersection.point = modelToWorld * intersection;
-			ray.intersection.normal = worldToModel.transpose() * surfaceNormal;
+			ray.intersection.normal = transNorm(worldToModel, surfaceNormal);
 			return true;
 		}else{
 			return false;
@@ -113,7 +115,7 @@ bool UnitSphere::intersect( Ray3D& ray, const Matrix4x4& worldToModel,
 		Point3D intersection = rayOrigin + t * rayDirection;
 		Vector3D normal = intersection - sphereOrigin;
 		ray.intersection.none = false;
-		ray.intersection.normal = worldToModel.transpose() * normal;
+		ray.intersection.normal = transNorm(worldToModel, normal);
 		ray.intersection.point = modelToWorld * intersection;
 		ray.intersection.t_value = t;
 		return true;
@@ -124,8 +126,7 @@ bool UnitSphere::intersect( Ray3D& ray, const Matrix4x4& worldToModel,
 		if (t1 < 0 && t2 < 0) // behind camera
 			return false;
 
-		// take smaller t, this occurs "earlier" on the ray
-		// so it's on the front of the surface
+		// take smallest positive t
 		double t = std::min(t1, t2);
 		if (t < 0)
 			t = std::max(t1, t2);
@@ -139,7 +140,7 @@ bool UnitSphere::intersect( Ray3D& ray, const Matrix4x4& worldToModel,
 		Vector3D normal = intersection - sphereOrigin;
 
 		ray.intersection.none = false;
-		ray.intersection.normal = worldToModel.transpose() * normal;
+		ray.intersection.normal = transNorm(worldToModel, normal);
 		ray.intersection.point = modelToWorld * intersection;
 		ray.intersection.t_value = t;
 		return true;

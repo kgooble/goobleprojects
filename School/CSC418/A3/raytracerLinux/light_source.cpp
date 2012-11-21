@@ -38,7 +38,7 @@ void PointLight::shade( Ray3D& ray ) {
 	Vector3D normal = ray.intersection.normal;
 	normal.normalize();
 
-	Vector3D lightDir = _pos - ray.intersection.point;
+	Vector3D lightDir = get_position() - ray.intersection.point;
 	lightDir.normalize();
 
 	Vector3D rayDir = ray.dir;
