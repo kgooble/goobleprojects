@@ -54,6 +54,7 @@ void PointLight::shade( Ray3D& ray, std::vector<Ray3D> shadowRays ) {
 	ray.col.clamp();
 }
 
+// Calculate the normal of the area light plane
 Vector3D AreaLight::calculateNormal(){
 	Vector3D line1 = _topLeft - _topRight;
 	Vector3D line2 = _topLeft - _bottomLeft;
@@ -62,12 +63,16 @@ Vector3D AreaLight::calculateNormal(){
 	return normal;
 }
 
+// Return just the position of the light, this is for a point
+// light and hard shadows
 std::vector<Point3D> PointLight::generateSamples(){
 	std::vector<Point3D> samples;
 	samples.push_back(get_position());
 	return samples;
 }
 
+// Generate a set of random points to take shadow samples from
+// for soft shadows
 std::vector<Point3D> AreaLight::generateSamples(){
 	double startX = _topRight[0];
 	double numX = _topRight[0] - _topLeft[0];
@@ -108,9 +113,11 @@ void AreaLight::shade( Ray3D& ray, std::vector<Ray3D> shadowRays ){
 
 	Colour col = calculateAmbient(_col_ambient, mat);
 
+	// if there aren't any shadow rays, shadows are probably disabled
 	if (shadowRays.empty()){
 		col = col + diffuse + specular;
 	} else{
+		// average all the colours for each ray
 		for (unsigned int i = 0; i < shadowRays.size(); i++){
 			col = col + ambient;
 			Ray3D shadowRay = shadowRays[i];

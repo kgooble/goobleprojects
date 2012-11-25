@@ -190,6 +190,8 @@ void Raytracer::computeShading( Ray3D& ray ) {
 
 		std::vector<Ray3D> shadowRays;
 		if (SHADOWS_ENABLED){
+			// generate shadow rays
+			// there will be just 1 for point lights and multiple for area lights
 			std::vector<Point3D> samples = curLight->light->generateSamples();
 			for (unsigned int i = 0; i < samples.size(); i++){
 				Ray3D shadowRay(ray.intersection.point, samples[i] - ray.intersection.point);
@@ -236,6 +238,7 @@ void Raytracer::flushPixelBuffer( char *file_name ) {
 	delete _bbuffer;
 }
 
+// Calculate the direction of the reflected ray
 Ray3D reflectRay(Ray3D& ray){
 	ray.dir.normalize();
 	ray.intersection.normal.normalize();
@@ -243,11 +246,15 @@ Ray3D reflectRay(Ray3D& ray){
 	return Ray3D (ray.intersection.point, direction);
 }
 
+// This is the value under the square root used in calculating
+// the refraction direction. There is no refraction if this value
+// is less than 0
 double getSqrtedValue(double refractionIndex, Vector3D dir, Vector3D normal){
 	double dDotN = dir.dot(normal);
 	return 1 - std::pow(refractionIndex, 2) * (1 - dDotN * dDotN);
 }
 
+// Calculate the direction of the refracted ray
 Vector3D calculateRefractionDirection(double refractionIndex, Vector3D dir, Vector3D normal){
 	double dDotN = dir.dot(normal);
 	double rootedValue = getSqrtedValue(refractionIndex, dir, normal);

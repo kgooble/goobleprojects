@@ -66,12 +66,12 @@ struct SceneDagNode {
 const int MAX_RAY_DEPTH = 3;
 const int AA_SAMPLE_SIZE = 3;
 const int DOF_SAMPLE_SIZE = 25;
-const double FOCAL_LENGTH = 5.0;
+const double FOCAL_LENGTH = 6.0;
 
 // Feature toggles
-const bool SHADOWS_ENABLED = false;
+const bool SHADOWS_ENABLED = true;
 const bool REFLECTION_ENABLED = true;
-const bool ANTIALIASING_ENABLED = false;
+const bool ANTIALIASING_ENABLED = true;
 const bool REFRACTION_ENABLED = true;
 const bool DEPTH_OF_FIELD_ENABLED = false;
 

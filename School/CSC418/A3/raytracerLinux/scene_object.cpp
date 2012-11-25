@@ -185,6 +185,8 @@ bool UnitCylinder::intersect( Ray3D& ray, const Matrix4x4& worldToModel,
 	Point3D intersection;
 	double halfCylHeight = CYLINDER_HEIGHT/2;
 	double tSurface = -1;
+	// figure out which point on the cylindrical surface we
+	// intersected first
 	if (withinZBound(intersection1, halfCylHeight)){
 		intersection = intersection1;
 		tSurface = solns.t1;
@@ -206,6 +208,7 @@ bool UnitCylinder::intersect( Ray3D& ray, const Matrix4x4& worldToModel,
 	Point3D circleIntersection;
 	Vector3D circleNormal;
 	double tCircle = -1;
+	// figure out which circle was intersected first
 	if (withinCircle(topCircleIntersection, 1.0) && tTopCircle > EPSILON){
 		if (withinCircle(bottomCircleIntersection, 1.0) && tBottomCircle > EPSILON && tBottomCircle < tTopCircle){
 			tCircle = tBottomCircle;
@@ -227,6 +230,7 @@ bool UnitCylinder::intersect( Ray3D& ray, const Matrix4x4& worldToModel,
 
 	Vector3D normal;
 	double t;
+	// figure out if we intersected a circle or the cylindrical surface first
 	if (tSurface < EPSILON || (tCircle < tSurface && tCircle > EPSILON)){
 		t = tCircle;
 		intersection = circleIntersection;
