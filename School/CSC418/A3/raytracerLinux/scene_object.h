@@ -10,6 +10,8 @@
 
 #include "util.h"
 
+const double EPSILON = 0.0001;
+
 // All primitives should provide a intersection function.  
 // To create more primitives, inherit from SceneObject.
 // Namely, you can create, Sphere, Cylinder, etc... classes
@@ -34,3 +36,10 @@ public:
 			const Matrix4x4& modelToWorld );
 };
 
+const double CYLINDER_HEIGHT = 1.0;
+
+class UnitCylinder : public SceneObject {
+public:
+	bool intersect( Ray3D& ray, const Matrix4x4& worldToModel,
+			const Matrix4x4& modelToWorld );
+};

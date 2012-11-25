@@ -15,6 +15,7 @@
 
 #include <iostream>
 #include <cmath>
+#include <cstdlib>
 
 #ifndef M_PI
 #define M_PI	3.14159265358979323846
@@ -143,6 +144,16 @@ struct Material {
 	double specular_exp;
 };
 
+struct Medium{
+	Medium() : transparent(false), refractionIndex(0.0), transparency(Colour(0.0, 0.0, 0.0)) {}
+	Medium(bool transparent, double refractionIndex, Colour transparency) :
+		transparent(transparent), refractionIndex(refractionIndex), transparency(transparency) {}
+
+	bool transparent;
+	double refractionIndex;
+	Colour transparency;
+};
+
 struct Intersection {
 	// Location of intersection.
 	Point3D point;
@@ -150,6 +161,8 @@ struct Intersection {
 	Vector3D normal;
 	// Material at the intersection.
 	Material* mat;
+	// Medium at intersection.
+	Medium* medium;
 	// Position of the intersection point on your ray.
 	// (i.e. point = ray.origin + t_value * ray.dir)
 	// This is used when you need to intersect multiply objects and

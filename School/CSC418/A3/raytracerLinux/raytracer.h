@@ -11,6 +11,7 @@
 
 ***********************************************************/
 
+#include <time.h>
 #include "util.h"
 #include "scene_object.h"
 #include "light_source.h"
@@ -30,23 +31,26 @@ struct LightListNode {
 // The scene graph, containing objects in the scene.
 struct SceneDagNode {
 	SceneDagNode() : 
-		obj(NULL), mat(NULL), 
+		obj(NULL), mat(NULL), medium(NULL),
 		next(NULL), parent(NULL), child(NULL) {
 	}	
 
-	SceneDagNode( SceneObject* obj, Material* mat ) : 
-		obj(obj), mat(mat), next(NULL), parent(NULL), child(NULL) {
+	SceneDagNode( SceneObject* obj, Material* mat, Medium* medium ) :
+		obj(obj), mat(mat), medium(medium), next(NULL), parent(NULL), child(NULL) {
 		}
 	
 	~SceneDagNode() {
 		if (!obj) delete obj;
 		if (!mat) delete mat;
+		if (!medium) delete medium;
 	}
 
 	// Pointer to geometry primitive, used for intersection.
 	SceneObject* obj;
 	// Pointer to material of the object, used in shading.
 	Material* mat;
+	// Pointer to object medium, used for refraction.
+	Medium* medium;
 	// Each node maintains a transformation matrix, which maps the 
 	// geometry from object space to world space and the inverse.
 	Matrix4x4 trans;
@@ -58,6 +62,18 @@ struct SceneDagNode {
 	SceneDagNode* parent;
 	SceneDagNode* child;
 };
+
+const int MAX_RAY_DEPTH = 3;
+const int AA_SAMPLE_SIZE = 3;
+const int DOF_SAMPLE_SIZE = 25;
+const double FOCAL_LENGTH = 5.0;
+
+// Feature toggles
+const bool SHADOWS_ENABLED = false;
+const bool REFLECTION_ENABLED = true;
+const bool ANTIALIASING_ENABLED = false;
+const bool REFRACTION_ENABLED = true;
+const bool DEPTH_OF_FIELD_ENABLED = false;
 
 class Raytracer {
 public:
@@ -73,8 +89,8 @@ public:
 	// Add an object into the scene, with material mat.  The function
 	// returns a handle to the object node you just added, use the 
 	// handle to apply transformations to the object.
-	SceneDagNode* addObject( SceneObject* obj, Material* mat ) {
-		return addObject(_root, obj, mat);
+	SceneDagNode* addObject( SceneObject* obj, Material* mat, Medium* medium ) {
+		return addObject(_root, obj, mat, medium);
 	}
 	
 	// Add an object into the scene with a specific parent node, 
@@ -82,7 +98,7 @@ public:
 	// modeling.  You could create nodes with NULL obj and mat, 
 	// in which case they just represent transformations.  
 	SceneDagNode* addObject( SceneDagNode* parent, SceneObject* obj, 
-			Material* mat );
+			Material* mat, Medium* medium );
 
 	// Add a light source.
 	LightListNode* addLightSource( LightSource* light );
@@ -110,7 +126,7 @@ private:
 
 	// Return the colour of the ray after intersection and shading, call 
 	// this function recursively for reflection and refraction.  
-	Colour shadeRay( Ray3D& ray ); 
+	Colour shadeRay( Ray3D& ray, int depth, double refractionIndex );
 
 	// Constructs a view to world transformation matrix based on the
 	// camera parameters.
@@ -123,6 +139,9 @@ private:
 	// After intersection, calculate the colour of the ray by shading it
 	// with all light sources in the scene.
 	void computeShading( Ray3D& ray );
+
+	// Calculate the average colour in the 3x3 box around given pixel
+	int *getAverageInSquareAround(int i, int j);
 	
 	// Width and height of the viewport.
 	int _scrWidth;
@@ -136,6 +155,11 @@ private:
 	unsigned char* _rbuffer;
 	unsigned char* _gbuffer;
 	unsigned char* _bbuffer;
+
+	// Sampling pixel buffers.
+	unsigned char* _rsamplebuffer;
+	unsigned char* _gsamplebuffer;
+	unsigned char* _bsamplebuffer;
 
 	// Maintain global transformation matrices similar to OpenGL's matrix
 	// stack.  These are used during scene traversal. 
