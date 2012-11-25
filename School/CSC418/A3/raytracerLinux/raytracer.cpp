@@ -11,10 +11,10 @@
 ***********************************************************/
 
 
-#include <cmath>
-#include <iostream>
 #include "raytracer.h"
 #include "bmp_io.h"
+#include <cmath>
+#include <iostream>
 
 Raytracer::Raytracer() : _lightSource(NULL) {
 	_root = new SceneDagNode();
@@ -289,15 +289,13 @@ Colour Raytracer::shadeRay( Ray3D& ray, int depth, double refractionIndex ) {
 
 				normal = dir * normal;
 
-				double mediumRefractionIndex = medium->refractionIndex;
-
-				double rIndex = refractionIndex / mediumRefractionIndex;
+				double rIndex = refractionIndex / medium->refractionIndex;
 				double cosI = -normal.dot(ray.dir);
 				double cosT2 = 1.0 - rIndex * rIndex * (1.0 - cosI * cosI);
 				if (cosT2 > EPSILON){
 					Vector3D refractionDir = (rIndex * ray.dir) + (rIndex * cosI - sqrt(cosT2)) * normal;
-					Ray3D refractionRay(ray.intersection.point, refractionDir);
-					col = shadeRay(refractionRay, depth + 1, mediumRefractionIndex);
+					Ray3D refractedRay(ray.intersection.point, refractionDir);
+					col = shadeRay(refractedRay, depth + 1, medium->refractionIndex);
 				}
 			}else{
 				col = col + reflectedColour;
@@ -487,6 +485,23 @@ int main(int argc, char* argv[])
 	raytracer.translate(plane, Vector3D(0, 0, -7));
 	raytracer.rotate(plane, 'z', 45);
 	raytracer.scale(plane, Point3D(0, 0, 0), factor2);
+
+	// Use the below transformations instead for DOF view
+	/*raytracer.translate(sphere, Vector3D(1, 0, -5));
+	raytracer.rotate(sphere, 'x', -45);
+	raytracer.rotate(sphere, 'y', 75);
+	raytracer.rotate(sphere, 'z', 45);
+	raytracer.scale(sphere, Point3D(0, 0, 0), factor1);*/
+
+	/*raytracer.translate(cylinder, Vector3D(5, 0, -5));
+	raytracer.rotate(cylinder, 'x', -45);
+	raytracer.rotate(cylinder, 'y', 75);
+	raytracer.rotate(cylinder, 'z', 45); */
+
+	/*raytracer.translate(plane, Vector3D(0, 0, -7));
+	raytracer.rotate(plane, 'z', 45);
+	raytracer.rotate(plane, 'y', 75);
+	raytracer.scale(plane, Point3D(0, 0, 0), factor2);*/
 
 	// Render the scene, feel free to make the image smaller for
 	// testing purposes.	
