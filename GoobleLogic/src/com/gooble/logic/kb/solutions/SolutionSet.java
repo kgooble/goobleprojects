@@ -28,7 +28,7 @@ public class SolutionSet {
 
    public void add(SolutionSet statementSolutions) {
       this.solutions.addAll(statementSolutions.list());
-      queryTrue &= statementSolutions.isQueryTrue();
+      queryTrue = statementSolutions.isQueryTrue() && queryTrue;
    }
 
    public int size() {
@@ -48,7 +48,7 @@ public class SolutionSet {
          log("expanded solution set: " + newSolSet);
          solutions = newSolSet.list();
       }
-      queryTrue &= newSolSet.isQueryTrue();
+      queryTrue = newSolSet.isQueryTrue() && queryTrue;
    }
 
    public void setSucceeded(boolean queryWithNoVariablesTrue) {

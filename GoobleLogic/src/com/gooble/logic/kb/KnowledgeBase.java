@@ -58,7 +58,7 @@ public class KnowledgeBase implements KnowledgeBaseFacade{
             List<Replacement> originalReplacements = statement.unifyWith(rule.getConsequence());
             Statement workingStatement = statement.applyReplacements(originalReplacements);
             SolutionSet subSolSet = collectSolutionsForRule(workingStatement, rule);
-            atLeastOneRuleSucceeded |= subSolSet.isQueryTrue();
+            atLeastOneRuleSucceeded = subSolSet.isQueryTrue() || atLeastOneRuleSucceeded;
             SolutionSet normalizedSoln = new Normalize(originalReplacements).solutions(subSolSet);
             solution.add(normalizedSoln);
          }
@@ -113,7 +113,7 @@ public class KnowledgeBase implements KnowledgeBaseFacade{
          if (stmt.match(statement)){
             log("statement : <<" + statement + ">> matched <<" + stmt + ">>");
             List<Replacement> replacements = statement.unifyWith(stmt);
-            matchesStatement |= (statement.containsVariables() != replacements.isEmpty());
+            matchesStatement = (statement.containsVariables() != replacements.isEmpty()) || matchesStatement;
             if (replacements.isEmpty())
                continue;
             Solution soln = new Solution();

@@ -25,7 +25,7 @@ public class Statement implements Comparable<Statement>{
       
       boolean allConstantsMatch = true;
       for (int i = 0; i < terms.length; i++){
-         allConstantsMatch &= (terms[i].match(other.terms[i]) || other.terms[i].match(terms[i])); 
+         allConstantsMatch = (terms[i].match(other.terms[i]) || other.terms[i].match(terms[i])) && allConstantsMatch; 
       }
       return other.name.equals(this.name) && allConstantsMatch;
    }
